@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <membership>
+                                        <title>Membership Settings</title> <!-- Used in resources tree -->
+                                    </membership>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    
+    <menu>
+        <customer>
+            <children>
+                <membership translate="title">
+                    <title>Additional services</title>
+                    <sort_order>200</sort_order>
+                    <action>membership/adminhtml_membership/index</action>
+                </membership>
+            </children>   
+        </customer>
+    </menu>
+</config>

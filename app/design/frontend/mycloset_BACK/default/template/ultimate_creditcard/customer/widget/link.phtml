@@ -1,0 +1,30 @@
+<?php
+/**
+ * Ultimate_creditcard extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Ultimate
+ * @package        Ultimate_creditcard
+ * @copyright      Copyright (c) 2015
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Customer link widget template
+ *
+ * @category    Ultimate
+ * @package     Ultimate_creditcard
+ * @author      Ultimate Module Creator
+ */
+?>
+<?php $_customer = $this->getCurrentCustomer();?>
+<?php if ($_customer) :?>
+    <div class="customer-widget-link">
+        <a href="<?php echo $_customer->getCustomerUrl()?>"><?php echo $_customer->getCreditcardNumber()?></a>
+    </div>
+<?php endif;?>

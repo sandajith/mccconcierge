@@ -1,0 +1,12 @@
+<?xml version="1.0"?>   
+<layout version="0.0.9">   
+  <creditcard_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="creditcard/index" name="creditcard_index" template="creditcard/index.phtml"/>   
+    </reference>   
+  </creditcard_index_index>   
+</layout>   
+	

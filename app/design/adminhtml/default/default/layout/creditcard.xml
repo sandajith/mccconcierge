@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <creditcard_adminhtml_creditcardbackend_index>
+	<reference name="content">
+	  <block type="creditcard/adminhtml_creditcardbackend" name="creditcardbackend" template="creditcard/creditcardbackend.phtml"/>
+	</reference>
+  </creditcard_adminhtml_creditcardbackend_index>
+</layout>

@@ -1,0 +1,337 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<div class="account-create">
+
+    <div class="page-title subhead ">
+        <h2><?php echo $this->__('CREATE AN ACCOUNT') ?></h2>  
+
+    </div>
+    <?php echo $this->getChildHtml('form_fields_before') ?>
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <div class="row loginRegister">
+        <div class="col-sm-6">
+            <form action="<?php echo $this->getUrl('membership/account/createPost', array( '_secure' => true)) ?>" method="post" id="form-validate">
+                <div class="col-md-12 bordered">
+                    <div class="fieldset">
+                        <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+                        <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+                        <h4 class="legend m-t-0"><?php echo $this->__('Personal Information') ?></h4>
+                        <div class="content">
+                            <ul class="form-list">
+                                <li class="fields">
+                                    <?php echo $this->getLayout()->createBlock('membership/widget_name')->setObject($this->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
+                                </li>
+                                <li>
+                                    <label for="email_address" class="required"><?php echo $this->__('Email Address') ?><em>*</em></label>
+                                    <div class="input-box">
+                                        <input type="text" name="email" id="email_address" value="<?php echo Mage::getSingleton('customer/session')->getMemEmail(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" class="input-text validate-email required-entry" />
+                                    </div>
+                                </li>
+
+                                <!-- mycloset fields-->
+                                <li>
+                                    <label for="cus_tele" class="required"><?php echo $this->__('Phone') ?><em>*</em></label>
+                                    <div class="input-box">
+                                        <input type="text" name="cus_tele" id="cus_tele" value="<?php echo Mage::getSingleton('customer/session')->getMemCustele(); ?>" title="<?php echo $this->__('Phone') ?>" class="input-text required-entry" />
+                                    </div>
+                                </li>
+                                <?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
+                                <?php if ($_dob->isEnabled()): ?>
+                                    <li><?php echo $_dob->setDate($this->getFormData()->getDob())->toHtml() ?></li>
+                                <?php endif ?>
+                                <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+                                <?php if ($_taxvat->isEnabled()): ?>
+                                    <li><?php echo $_taxvat->setTaxvat($this->getFormData()->getTaxvat())->toHtml() ?></li>
+                                <?php endif ?>
+                                <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
+                                <?php if ($_gender->isEnabled()): ?>
+                                    <li><?php echo $_gender->setGender($this->getFormData()->getGender())->toHtml() ?></li>
+                                <?php endif ?>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <?php if (!$this->getShowAddressFields()): ?>
+                        <div class="fieldset ">
+                            <input type="hidden" name="create_address" value="1" />
+                            <h4 class="legend"><?php echo $this->__('Address Information') ?></h4>
+                            <div class="content">
+                                <ul class="form-list">
+                                    <li class="fields">
+                                        <div class="field">
+                                            <label for="company"><?php echo $this->__('Company') ?></label>
+                                            <div class="input-box">
+                                                <input type="text" name="company" id="company" value="<?php echo Mage::getSingleton('customer/session')->getMemCompany(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Company')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+                                    <li class="wide">
+                                        <label for="street_1" class="required"><?php echo $this->__('Street Address') ?><em>*</em></label>
+                                        <div class="input-box">
+                                            <input type="text" name="street[]" value="<?php echo Mage::getSingleton('customer/session')->getMemStreet1(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" />
+                                        </div>
+                                    </li>
+                                    <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                                    <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+                                        <li class="wide">
+                                            <div class="input-box">
+                                                <input type="text" name="street[]" value="<?php echo Mage::getSingleton('customer/session')->getMemStreet2(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" />
+                                            </div>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <li class="fields">
+                                        <div class="field">
+                                            <label for="city" class="required"><?php echo $this->__('City') ?><em>*</em></label>
+                                            <div class="input-box">
+                                                <input type="text" name="city" value="<?php echo Mage::getSingleton('customer/session')->getMemCity(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                    <li class="fields">
+                                        <div class="field">
+                                            <label for="region_id" class="required"><?php echo $this->__('State/Province') ?><em>*</em></label>
+                                            <div class="input-box">
+                                                <?php
+//echo $countryId=$this->getCountryId();         
+//
+//
+//if($countryId == 'US'){
+                                                ?>
+                                                <div class="custom-select">
+                                                    <select id="region_id"  name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select">
+                                                        <option value=""><?php echo $this->__('Choose State') ?></option>
+                                                        <?php
+                                                        //$this->setData('country_id', 'US'); // or 'FR'..., default is 'US'
+                                                        $regions = $this->getRegionCollection();
+                                                        foreach ($regions as $region) {
+                                                           
+                                                          
+                                                          echo'<option value='. $region["region_id"].'> '. $region["name"].'</option>';
+                                                       }
+                                                        ?>
+
+                                                    </select>
+                                                    <input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getRegion()) ?>" title="<?php echo $this->__('State/Province') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" style="display:none;"   />
+                                                </div>
+
+<!--                                                <li class="fields" style="display: none;">
+                                                    <div class="field">
+                                                        <label for="region_id" class="required"><?php echo $this->__('State') ?><em>*</em></label>
+                                                        <div class="input-box">
+                                                            <input type="text" name="region_id" value=""  id="region_id" class="input-text validate " />
+                                                        </div>
+                                                    </div>                                  
+                                                </li>-->
+
+
+                                                <script type="text/javascript">
+                                                    //<![CDATA[
+                                                    $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
+                                                    //]]>
+                                                </script>                                              
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="fields">
+                                        <div class="field">
+                                            <label for="zip" class="required"><?php echo $this->__('Zip/Postal Code') ?><em>*</em></label>
+                                            <div class="input-box">
+                                                <input type="text" name="postcode" value="<?php echo Mage::getSingleton('customer/session')->getMemZip(); ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Zip/Postal Code')) ?>" id="zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                                            </div>
+                                        </div>                                  
+                                    </li>
+                                    <li class="fields">
+                                        <div class="field">
+                                            <label for="country" class="required"><?php echo $this->__('Country') ?><em>*</em></label>
+                                            <div class="input-box">
+                                                <!--<div class="custom-select" onchange="SubmitRequest(this.value);">-->
+                                                <div class="custom-select" >
+    <?php echo $this->getCountryHtmlSelect() ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+    //<![CDATA[
+        new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+    //]]>
+    </script>
+                                    </li>
+                                    <!--edited by neenu
+                                   If you have a referral code, please enter it here-->
+
+                                    <li>
+                                        <i><label for="cus_reference"><?php echo $this->__('If you have a referral code, please enter it here') ?>:</label></i>
+                                        <div class="input-box">
+                                            <input type="text" name="cus_reference" id="cus_reference" value="<?php echo Mage::getSingleton('customer/session')->getMemCusreference(); ?>" title="<?php echo $this->__('If you have a referral code, please enter it here') ?>" class="input-text" />
+                                        </div>
+                                    </li>
+                                    <li class="control">
+                                        <div class="input-box">
+                                            <label for="is_subscribed"><input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up For Our Newsletter') ?>" value="1" id="is_subscribed"<?php if ($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" /><?php echo $this->__('Sign Up For Our Newsletter') ?></label>
+
+                                        </div>
+                                    </li>
+
+                                    <li class="fields">
+                                        <h4 class="legend"><?php echo $this->__('Choose Membership Type') ?></h4>
+                                        <div class="field">                                        
+                                            <div class="input-box">
+                                                <?php
+                                                $collection = Mage::getModel('membership/types')->getCollection()
+                                                        ->setOrder('oder', 'ASC')
+                                                        ->addFieldToFilter('status','1')
+;
+                                                foreach ($collection as $types) {
+                                                    $id_m = $types->getId();
+                                                    $options= Mage::getModel('membership/types')->load($id_m);
+                                                    ?>
+                                                    <input type="radio" name="mem_type" value="<?php echo $options->getMembershipId(); ?>" onclick="GetPrice(this.value);" />&nbsp;<?php echo $options->getMembershipType(); ?><br>
+    <?php } ?>
+                                                <input type="radio" name="mem_type" checked="checked" value="0" onclick="GetPrice(this.value);" />&nbsp;Guest<br>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="membership_plan" class="required"><?php echo $this->__('Membership price') ?></label>
+
+                                            <div class="input-box" style="font-size: 15px;">
+                                                <div id="price_change" style="float: left;">
+    <?php
+    $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
+           $currency_symbol = Mage::app()->getLocale()->currency( $currency_code )->getSymbol();
+    echo $currency_symbol.$this->__('0') ?> <!--amount here-->
+                                                </div>                        </div>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                                <input type="hidden" name="default_billing" value="1" />
+                                <input type="hidden" name="default_shipping" value="1" />
+                                <input type="hidden" name="default_pickup" value="1" />
+
+                            </div>
+                        </div>
+<?php endif; ?>
+                    <div class="fieldset">
+                        <h4 class="legend"><?php echo $this->__('Login Information') ?></h4>
+                        <div class="content login-info">
+                            <ul class="form-list">
+                                <li class="fields">
+                                    <div class="field">
+                                        <label for="password" class="required"><?php echo $this->__('Password') ?><em>*</em></label>
+                                        <div class="input-box">
+                                            <input type="password" name="password" id="password" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Password')) ?>" class="input-text required-entry validate-password" />
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label for="confirmation" class="required"><?php echo $this->__('Confirm Password') ?><em>*</em></label>
+                                        <div class="input-box">
+                                            <input type="password" name="confirmation" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Confirm Password')) ?>" id="confirmation" class="input-text required-entry validate-cpassword" />
+                                        </div>
+                                    </div>
+                                </li>
+                                <?php echo $this->getChildHtml('form.additional.info'); ?>
+<?php echo $this->getChildHtml('persistent.remember.me'); ?>
+<!--
+                                <li class="fields">
+                                    <div class="field">
+                                        <label for="termservices" class="required pull-left">
+                                            <input type="checkbox" name="termservices"  id="termservices" class=" required-entry "> <?php echo $this->__('I agree to ') ?> :
+                                        <u class="show" onclick="SubmitRequest();">Terms and Conditions</u>
+                                        </label>
+                                        
+
+                                    </div>                           
+                                    <div class="popupWrapper">
+                                        <div class="popupBox" id="popupBox">
+                                        </div>                         
+                                    </div> 
+                                </li>-->
+                            </ul>
+                        </div>
+<?php echo $this->getChildHtml('persistent.remember.me.tooltip'); ?>
+                    </div>
+                    <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
+                        <input name="context" type="hidden" value="checkout" />
+<?php endif; ?>
+                </div>
+<div class="buttons-set">
+                <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Submit')) ?>" class="button"><span><span><?php echo $this->__('Next') ?></span></span></button>
+            </div>
+
+            </form>
+
+            
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        var dataForm = new VarienForm('form-validate', true);
+<?php if ($this->getShowAddressFields()): ?>
+            new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+<?php endif; ?>
+        //]]>
+    </script>
+</div>
+<script type="text/javascript">
+
+    function GetPrice(memid)
+    {
+
+        new Ajax.Request('<?php echo Mage::getUrl('',array('_secure' => true)) . "membership/payment/Getprice?memid=" ?>' + memid,
+                {
+                    method: "get",
+                    onSuccess: function (transport) {
+                        var response = transport.responseText || "no response text";
+                        node = $("price_change");
+                        //$("price_change").update = response;
+                        var res = response.split("@");
+                        var details = res[0];
+                        node.update(details);
+                        
+                        var amt = res[1];
+                        $('mem_amt').writeAttribute('value', amt);
+                    },
+                    onFailure: function () {
+                        alert("Something went wrong...")
+                    }
+                });
+
+
+    }
+
+
+  
+</script>
+
+

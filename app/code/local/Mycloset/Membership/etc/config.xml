@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mycloset_Membership>
+            <version>1.1.0</version>
+        </Mycloset_Membership>
+    </modules>
+    
+    <adminhtml>
+        <layout>
+            <updates>
+                <mycloset_membership>
+                    <file>mycloset_membership_admin.xml</file>
+                </mycloset_membership>
+            </updates>
+        </layout>
+    </adminhtml>    
+    
+    <admin>
+        <routers>
+            <membership>
+                <use>admin</use>
+                <args>
+                    <module>Mycloset_Membership</module>
+                    <frontName>mycloset</frontName>
+                </args>
+            </membership>
+            
+            <adminhtml>
+            <args>
+                <modules>
+                    <mycloset_membership before="Mage_Adminhtml">Mycloset_Membership_Adminhtml</mycloset_membership >
+                </modules>
+            </args>
+        </adminhtml> 
+        </routers>
+    </admin>
+    
+    <global>
+        <helpers>
+            <mycloset_membership>
+                <class>Mycloset_Membership_Helper</class>
+            </mycloset_membership>
+        </helpers>
+        
+        
+        <models>
+            <membership>
+                <class>Mycloset_Membership_Model</class>
+                <resourceModel>membership_mysql4</resourceModel>
+            </membership>
+            <membership_mysql4>
+                <class>Mycloset_Membership_Model_Mysql4</class>
+                <entities>
+                    <membership>
+                        <table>mycloset_membership</table>
+                    </membership>
+                    <cardtypes>
+                        <table>mycloset_cardtypes</table>
+                    </cardtypes>
+                    <payment>
+                        <table>mycloset_payment</table>
+                    </payment>
+                    <paymenthistory>
+                        <table>mycloset_payment_history</table>
+                    </paymenthistory>
+                    <chosenservices>
+                        <table>mycloset_chosen_services</table>
+                    </chosenservices>
+                      <pickupdetails>
+                        <table>pickup_details</table>
+                    </pickupdetails>
+                    <customermembership>
+                        <table>mycloset_customer_membership</table>
+                    </customermembership>
+                    <membershiphistory>
+                        <table>mycloset_membership_history</table>
+                    </membershiphistory>
+                </entities>
+            </membership_mysql4>
+            <directory>
+                <rewrite>
+                    <currency>Mycloset_Membership_Model_currency</currency>
+                </rewrite>
+            </directory>
+            <catalog>
+                  <rewrite>
+                    <product>Mycloset_Membership_Model_Product</product>
+                </rewrite>
+            </catalog>
+        </models> 
+        
+        <blocks> 
+            <membership> 
+                <class>Mycloset_Membership_Block</class> 
+            </membership>
+        </blocks> 
+    
+        <resources>
+            <mycloset_membership_setup>
+                <setup>
+                    <module>Mycloset_Membership</module>
+                    <class>Mage_Customer_Model_Resource_Setup</class>
+                </setup>
+            </mycloset_membership_setup>
+            
+        
+            <mycloset_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </mycloset_write>
+            
+            <mycloset_read> 
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </mycloset_read>
+     
+            
+        </resources>
+    </global>    
+    <frontend>
+        
+        <routers>
+          
+               
+            
+            <customer>
+                <use>standard</use>
+                <args>
+                    <module>Mycloset_Membership</module>
+                    <frontName>membership</frontName>              
+                </args> 
+            </customer>
+            
+            
+            <membership>
+                <use>standard</use>
+                <args>
+                    <module>Mycloset_Membership</module>
+                    <frontName>mycloset</frontName>              
+                </args>
+            </membership> 
+        
+            <customer> 
+                <rewrite>
+                    <account> 
+                        <to>membership/account</to> 
+                        <override_actions>true</override_actions>                   
+                    </account>
+                </rewrite>
+            </customer>
+            
+            
+            
+        </routers>
+        
+        <layout>
+            <updates>
+                <mycloset_membership>
+                    <file>mycloset_membership.xml</file>
+                </mycloset_membership>
+            </updates>
+        </layout>
+        
+        
+        <translate>
+            <modules>
+                <Mycloset_Membership>
+                    <files>
+                        <default>mycloset_membership.csv</default>
+                    </files>
+                </Mycloset_Membership>
+            </modules>
+        </translate>
+    </frontend>
+    
+    <default>
+        <membership>
+            <general>
+                <text_field></text_field>
+                <dropdown></dropdown>
+            </general>
+        </membership>
+    </default>
+
+    
+</config>

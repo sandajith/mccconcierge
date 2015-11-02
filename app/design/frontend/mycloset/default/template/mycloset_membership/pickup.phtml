@@ -1,0 +1,57 @@
+<?php 
+
+ $userid = Mage::getSingleton('customer/session')->getId();
+        if($userid=='') {?>
+<meta http-equiv="refresh" content="0; url=<?php echo $this->getUrl(''); ?>membership/account/login/" />
+          
+     <?php   } else { ?>
+<div class="row myBag">
+    <div class="subhead">
+        <h2 style="text-align: center;"><?php echo $this->__('Pick Up Information') ?></h2>
+    </div>
+    <form action="<?php echo $this->getUrl('') ?>mycloset/pickup/post/" method="post">
+        <div class="align_center">
+        <div class="col-md-12 dataTable">
+            <div class="row th">
+                <div class="col-md-4 col-xs-5">Select Category</div>
+                <div class="col-md-6 col-xs-5">Category </div>
+                <div class="col-md-2 col-xs-2">Qty </div>
+
+            </div>
+            <?php
+            $cat = Mage::getModel('catalog/category')->load(16);
+            $subcats = $cat->getChildren();
+            $all_sub_cat = explode(',', $subcats);
+            foreach ($all_sub_cat as $cat_id) {
+                $category = Mage::getModel('catalog/category')->load($cat_id);
+                $image = Mage::getBaseUrl('media') . 'catalog/category/' . $category->image;
+                ?> 
+                <div class="row">
+                    <div class="col-md-1 col-xs-2">
+                        <input type="checkbox" name="categoryname[<?php echo $category->getId(); ?>]" id="categoryid" value="<?php echo $category->getId(); ?>">
+                    </div>                            
+                    <div class="col-md-3 col-xs-3">
+                        <div class="thumb">
+                            <img src="<?php echo $image; ?>" width="40" height="40" alt="<?php echo $category->name; ?>"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-5">
+                        <?php echo $category->name; ?>           
+                    </div>                                
+                    <div class="col-md-2 col-xs-2">
+                        <input type="text" id="quantity" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value="" class="input-text qty">
+                    </div>
+
+                </div><?php } ?>
+            <div class="row th foot">
+                <div class="col-xs-12">
+                    <textarea class="form-control" rows="3" id="comment" class="input-text" placeholder="Comment" name="comment" value="" ></textarea>  
+                    <input type="submit"  class="button pull-right pickupinfo " value="<?php echo $this->__('Pick Me Up') ?>"/> 
+                </div>
+            </div>
+
+        </div>
+        </div>    
+    </form>
+</div>
+        <?php } ?>

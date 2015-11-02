@@ -1,0 +1,74 @@
+<?php
+$cat = Mage::getModel('catalog/category')->load(16);
+$subcats = $cat->getChildren();
+$all_sub_cat = explode(',', $subcats);
+?>
+<div class="row">
+    <?php
+    $hide_pickup = false;
+    foreach ($all_sub_cat as $cat_id) {
+        $userid = Mage::getSingleton('customer/session')->getId();
+//        $user_id = ($userid?$userid:0);  
+        $category = Mage::getModel('catalog/category')->load($cat_id);
+        $categories = Mage::getModel('catalog/category')->load($category->getId())
+                ->getProductCollection()
+                ->addAttributeToSelect('entity_id')
+                ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
+     
+             $products = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToFilter('customer_id', $userid)             
+                ->addCategoryFilter($category)
+                ->load()
+                ;
+       
+        
+       
+      
+        if ( $userid == 0 && ($categories->count() > 0 )&& ($products->count() > 0)) {
+            $hide_pickup = true;
+            ?>
+            <div class="col-sm-4 itemList">
+                <a href="<?php echo $category->url_path; ?>">
+                    <img src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/>
+                    <b><?php echo $category->name; ?></b>
+                </a>
+            </div>
+        <?php
+        }
+
+            if (($categories->count() > 0 ) && ($products->count() > 0) && ($userid > 0)) {
+                $hide_pickup = true;
+                ?>
+                <div class="col-sm-4 itemList">
+                    <a href="<?php echo $category->url_path; ?>">
+                        <img src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/>
+                        <b><?php echo $category->name; ?></b>
+                    </a>
+                </div>
+                <?php
+//            }
+        }
+    }
+
+    if (!$hide_pickup && (Mage::getSingleton('customer/session')->isLoggedIn())&& $userid >0) {
+        ?>
+        <div class="alignCenter">
+                <?php
+                $customer = Mage::getModel('customer/customer')->load($userid);
+             $groupid= $customer->getGroupId();      
+            echo  Mage::getSingleton('customer/session')->getThreshold();
+         if($groupid === '15'){ ?>
+                <a class="button" href="<?php echo $this->getUrl('',array('_secure' => true)) ?>mycloset/payment"> Pick up my clothing</a>
+         <?php    } else if($groupid === '1' ) {
+            ?>
+            <a class="button" href="<?php echo $this->getUrl('') ?>mycloset/pickup"> Pick up my clothing</a>
+              <?php
+    }
+    ?>
+        </div>
+        <?php
+    }
+    ?>
+</div>

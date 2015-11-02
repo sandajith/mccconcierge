@@ -1,0 +1,119 @@
+<?php
+$cusgroup = Mage::getModel('customer/customer')->load(Mage::app()->getRequest()->getParam('id'))->getGroupId();
+$group = Mage::getModel('customer/group')->load($cusgroup);
+$data = $this->getCustomerpayments();
+
+$customer_id = $data['customer_id'];
+$customer_profileId = $data['customer_profileId'];
+$payment_profileId = $data['payment_profileId'];
+$shipping_addressId = $data['shipping_addressId'];
+$membership_Id = $data['membership_Id'];
+$membership_price = $data['membership_price'];
+$membership_type = $data['membership_type'];
+?>
+
+<table cellspacing="0" class="form-edit">
+    <tr>
+        <td class="payment-section">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-customer-address-list"><?php echo Mage::helper('customer')->__('Membership Settings') ?></h4>
+            </div> 
+            <div class="fieldset">
+                <form action="<?php echo Mage::getBaseUrl(); ?>mycloset/payment/settings/" method="POST">
+      <input type="hidden" name="return_url" value="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/customer/edit/id', array('id' => Mage::app()->getRequest()->getParam('id'))) ?>" />
+                    <input type="hidden" name="customer_id" value="<?php echo Mage::app()->getRequest()->getParam('id'); ?>" />
+                    <?php if ($cusgroup === '1') {//members group  ?>
+                        <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                        <ul>
+
+                            <li>
+                                <h4>Upgrade Membership To</h4>
+                                <?php
+                                $model = Mage::getModel('membership/types');
+                                $info = $model->getCollection()->getData();
+                                foreach ($info as $options) {
+                                    if ($membership_Id !== $options['membership_id']) {
+                                        ?>
+
+                                        <input type="radio" name="mem_upgrade" value="<?php echo $options['membership_id']; ?>" onclick="javascript:GetUpgrade(this.value);" />
+                                        <?php echo $options['membership_type']; ?><br>
+                                    <?php }
+                                }
+                                ?>
+
+                            </li>
+                            <li>
+                                <h4>Lock Membership</h4>
+                                <input type="radio" name="locak_member" id="" value="6"  /><label> Lock Membership (move to notice period )</label></br>
+
+                            </li>
+                            <li>
+                                <h4>Close Membership</h4>
+                                <input type="radio" name="close_mem" id="" value="5"  /><label> Close membership</label></br>
+
+                            </li>
+
+                        </ul> 
+                        <button type='submit' class="scalable" value='Submit'  value="Submit">Submit settings</button>
+                    <?php } elseif ($cusgroup === '4') {//Waiting List group   
+                        ?>
+
+                        <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                        <ul>
+                            <li>
+
+                            <input type="radio" name="non_paid" id="" value="15"  /><label>Move to non paid membership </label></br> 
+                        </li> 
+                        </ul>
+                       
+                        <button type='submit' class="scalable" value='Submit'  value="Submit">Submit settings</button>
+                    <?php } elseif ($cusgroup === '6') {// notice period group   
+                        ?>
+
+                        <h4> Membership Status :<?php echo $group->getCode(); ?>Lock Membership</h4>
+                        <ul>
+                            <li>
+
+                                <input type="radio" name="unlock_mem" id="" value="1"  /><label> Unlock membership</label></br> 
+                                <input type="radio" name="cls_mem" id="" value="5"  /><label> Close membership</label></br> 
+                            </li>
+                        </ul>
+<button type='submit' class="scalable" value='Submit'  value="Submit">Submit settings</button>
+                    <?php } else {?>
+                            <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                    <?php }?>
+
+              
+                    
+
+                </form>
+
+            </div>
+    </tr>
+</table>
+
+<!--
+<script type="text/javascript">
+    
+      function GetUpgrade(memid)
+    {
+        
+
+//        new Ajax.Request('<?php echo Mage::getBaseUrl() . "membership/payment/Getprice?memid=" ?>' + memid,
+//                {
+//                    method: "get",
+//                    onSuccess: function (transport) {
+//                        var response = transport.responseText || "no response text";
+//                        node = $("price_change");
+//                        //$("price_change").update = response;
+//                        node.update(response);
+//                        $('mem_amt').writeAttribute('value', response);
+//                    },
+//                    onFailure: function () {
+//                        alert("Something went wrong...")
+//                    }
+//                });
+
+
+    }
+</script>-->

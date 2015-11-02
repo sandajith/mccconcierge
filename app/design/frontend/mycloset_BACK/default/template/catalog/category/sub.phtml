@@ -1,0 +1,44 @@
+<?php
+/**
+ * Sub Category images
+ *
+ * Needs code in static block {{block type="core/template" template="catalog/category/sub.phtml"}}
+ */
+?>
+ 
+<?php
+
+$category = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+$categories = $category->getCollection()
+        //->addAttributeToSelect(array('name', 'image', 'description', 'meta_title'))
+        ->addAttributeToSelect(array('name', 'image', 'meta_description'))
+        ->addAttributeToFilter('is_active', 1)
+        ->addAttributeToSort('position')
+        ->addIdFilter($category->getChildren());
+ 
+?>
+<div class="subcategories">
+    <?php foreach ($categories as $category): ?>
+        <div class="span-1-3">
+            <h3><?php echo $category->getName() ?></h3>
+            <div class="Collimg">
+                <a title="<?php echo $category->getName() ?> furniture" href="<?php echo $category->getUrl() ?>">
+ 
+                <?php $imageUrl = $category->getImageUrl() ?>
+ 
+                <?php if (!empty($imageUrl)) { ?>
+                    <img src="<?php echo $imageUrl ?>" alt="<?php echo $this->htmlEscape($category->getName()) ?>" />
+                <?php } else { ?>
+                    <img src="<?php echo $this->getSkinUrl('images/media/catalog/category/cat-bottoms.png'); ?>" alt="<?php echo $this->htmlEscape($category->getName()) ?>" />
+                <?php } ?>
+                </a>
+ 
+                <div class="toggletext">
+                  <?php /*?><?php echo $category->getDescription() ?><?php */?>
+                  <?php /*?><?php echo $category->getMetaTitle() ?><?php */?>
+                  <div><?php echo $category->getMetaDescription() ?></div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>

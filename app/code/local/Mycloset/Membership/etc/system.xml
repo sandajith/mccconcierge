@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <myconf translate="label">
+            <label>Membership</label>
+            <sort_order>150</sort_order>
+        </myconf>
+    </tabs>
+    
+    
+    
+    <sections>
+        <membership translate="label" module="adminhtml">
+            <label>Membership Settings</label>
+            <tab>myconf</tab>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label comment">
+                    <label>General</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>                      
+                        <threshold translate="membership" >
+                            <label>Accept New Membership?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>membership/system_config_source_dropdown_values</source_model>
+
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </threshold>
+                        
+                        <gatewayurl translate="membership" >
+                            <label>Gateway URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gatewayurl>
+                        
+                        <apilogin translate="membership" >
+                            <label>API Login ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </apilogin>
+                        
+                        <merchantmail translate="membership" >
+                            
+                            <label>Merchant E-mail</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </merchantmail>
+                        
+                        <transkey translate="membership" >
+                            <label>Transaction Key</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </transkey>                                                 		    
+                    </fields>
+                </general>
+            </groups>
+        </membership>
+    </sections>
+</config>

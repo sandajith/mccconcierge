@@ -1,0 +1,289 @@
+<?php
+$cusgroup = Mage::getModel('customer/customer')->load(Mage::app()->getRequest()->getParam('id'))->getGroupId(); // get customer group id
+$group = Mage::getModel('customer/group')->load($cusgroup); //Get customer Group name
+$info=$this->getCustomerpayment();
+$info['customer_pro_id'];
+$info['customer_payment_id'];
+ $info['customer_address_id'];
+ $info['membership_id'];
+ $info['getmembership_type'];
+$info['getamount'];
+?>
+<table cellspacing="0" class="form-edit">
+    <tr>
+        <td class="payment-section">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-customer-address-list"><?php echo Mage::helper('customer')->__('Membership Information') ?></h4>
+            </div>   
+
+            <div class="fieldset">                              
+                <input type="hidden" name="return_url" value="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/customer/edit/id', array('id' => Mage::app()->getRequest()->getParam('id'))) ?>" />
+                <input type="hidden" name="customer_entity_id" value="<?php echo Mage::app()->getRequest()->getParam('id'); ?>" />
+
+                <?php if ($cusgroup === '1') {//members group  ?>
+
+                    <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                    <h4> Membership type - <?php echo $info['getmembership_type'] ?> </h4>
+                    <h4> Membership amount - <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> </h4>
+                    <input type="checkbox" checked="checked" id="add5" value="<?php echo $info['getamount']; ?>"  onclick="UpdateCost();"> &nbsp;Include membership charge for payment
+
+                <?php } elseif ($cusgroup === '4') {//Waiting List group   ?>
+
+                    <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
+
+                <?php } elseif ($cusgroup === '15') {//Non paid member groop  ?>
+
+                    <h4> <label>Membership Status</label>: <?php echo $group->getCode(); ?></h4>
+
+                <?php } elseif ($cusgroup === '5') {//membership closed group   ?>
+
+                    <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
+
+                <?php } elseif ($cusgroup === '6') {// notice period group   ?>
+
+                    <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
+
+                <?php } else { ?>
+
+                    <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
+
+                <?php } ?>
+
+
+
+   <!--                <form action="<?php echo Mage::getBaseUrl(); ?>membership/payment/payme" type="post">-->
+                <input type="hidden" name="mem_type_name" value="<?php echo $info['getmembership_type'] ?>"/>
+                <input type="hidden" name="customer_pro_id" value="<?php echo $info['customer_pro_id'] ?>"/>
+                <input type="hidden" name="customer_payment_id" value="<?php echo $info['customer_payment_id'] ?>"/>
+                <input type="hidden" name="customer_address_id" value="<?php echo $info['customer_address_id'] ?>"/>
+                <input type="hidden" id="mem_choose_price" value="<?php echo $info['getamount'] ?>"/>
+                <input type="hidden" id="finalamount" value="<?php echo array_sum($price); ?>" name="amount" />
+
+                <!--                <button type="Submit" class="scalable" value="Pay for this customer" onclick="setLocation('http://localhost/bridge-member/index.php/membership/payment/payme/')">Pay for the customer</button>-->
+
+            </div>
+        </td>
+    </tr>
+
+</table>
+
+
+
+
+<div class="payment-sections">
+    <div id="customer_info_tabs_Membership payments_content" style="width: 38%; float: left; padding-right: 22px;">
+        <table class="form-edit" cellspacing="0">
+            <tbody><tr>
+                    <td class="payment-section">
+                        <div class="entry-edit-head">
+                            <h4 class="icon-head head-customer-address-list">Additional services</h4>
+                        </div>   
+
+                        <div class="fieldset">
+                            <input type="checkbox" id='add0' name="third_party" value="5"  onclick="UpdateCost()">&nbsp;Third party storage<br>
+                            <input type="checkbox" id='add1' name="shipping_charges" value="10" onclick="UpdateCost()">&nbsp;Shipping charges<br>
+                            <input type="checkbox" id='add2' name="delivery_charges"  value="15" onclick="UpdateCost()">&nbsp;Delivery charges<br>
+                            <input type="checkbox" id='add3' name="secondary_fees"  value="20" onclick="UpdateCost()">&nbsp;Secondary fees<br>
+                            <input type="checkbox" id='add4' name="parking_fees"  value="25" onclick="UpdateCost()">&nbsp;Parking fees<br>
+                            <div id="additional-amt" style="border: 1px solid #d6d6d6;padding: 10px;margin: 10px 0;">
+                                <b>Additional payments</b> <br>
+                                <textarea rows="3" cols="50" name="comment" style="resize: none;">Enter your comments here</textarea><br>
+                                Amount for the service<br><input type="text" id="addvalue" value="0" style="width: 30px;" onkeyup="UpdateCost()" /><br>
+
+                            </div>
+                            <div id="price"><h4>Total cost for additional services $ <span id="priceholder">0</span></h4></div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <input type="hidden" name="planup" id="planup" value="0">
+
+    <div id="customer_info_tabs_Membership payments_conten" style="width: 59%; float: right;">
+        <table class="form-edit" cellspacing="0">
+            <tbody><tr>
+                    <td class="payment-section">
+                        <div class="entry-edit-head">
+                            <h4 class="icon-head head-customer-address-list">Services used by the customer</h4>
+                        </div>   
+
+                        <div class="fieldset">
+                            <table class="data" id="customer_orders_grid_table" cellspacing="0">
+                                <colgroup><col width="200">
+                                    <col width="200">
+                                    <col width="100">
+                                </colgroup><thead>
+                                    <tr class="headings">
+                                        <th><span class="nobr"><a href="#" name="increment_id" title="asc" class="not-sort"><span class="sort-title">Service name</span></a></span></th>
+                                        <th><span class="nobr"><a href="#" name="created_at" title="asc" class="sort-arrow-desc"><span class="sort-title">Date</span></a></span></th>
+                                        <th><span class="nobr"><a href="#" name="billing_name" title="asc" class="not-sort"><span class="sort-title">Amount</span></a></span></th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $services = $this->getChosenservices();
+
+                                    if (count($services)) {
+
+
+                                        $price = array();
+
+                                        foreach ($services as $chosen) {
+                                            $price[] = $chosen[amount];
+                                            ?>
+
+                                            <tr>
+                                                <th>   <?php echo $chosen[servicename]; ?></th>
+                                                <th>   <?php echo $chosen[timestamp]; ?></th>
+                                                <th>   <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $chosen[amount]; ?></th>
+                                            </tr>
+
+                                            <?php
+                                        }
+                                    } else {
+                                        $price[] = array(0);
+                                    }
+                                    ?>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . array_sum($price); ?>
+
+        </h5>
+
+        <input id="servicesum" type="hidden" value="<?php echo array_sum($price); ?>"/>
+
+
+
+    </div>
+</div>
+
+
+<div class="sss" style="float: left ; width: 100%;">
+    <h2 id="final">Total amount to be paid : <span id="currency" style="color: #ff0033;"><?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol(); ?></span>&nbsp;<span id="finalpricedisplay" style="color: #ff0033;"><?php echo $info['getamount'] ?></span></h2>
+    <button type='submit' class="scalable" value='Submit' onclick='this.form.action = "<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/";' value="Submit">Pay for the customer</button>
+</div>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function Getplan(mem) {
+        document.getElementById("planup").value = mem;
+    }
+
+    function UpdateCost() {
+        var sum = 0;
+        var input, elem, element, memsum = 0;
+        element = document.getElementById('add5');
+        if (element.checked == true) {
+            memsum = element.value;
+        }
+        else {
+            memsum = 0;
+        }
+        var parameters="name="+sum;
+        
+        for (i = 0; i < 6; i++) {
+            input = 'add' + i;
+            elem = document.getElementById(input);
+           
+            if (elem.checked == true) {
+                
+                sum += Number(elem.value);
+                
+                    var xmlhttp;
+                    if (window.XMLHttpRequest)
+                    {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else
+                    {// code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function ()
+                    { 
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+                        {
+                        
+//                         
+                        }
+                    }
+                    xmlhttp.open("POST", "<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/", true);
+                    xmlhttp.send(parameters);
+               
+            }
+        }
+        sumtot = parseFloat(sum) + parseFloat(document.getElementById('servicesum').value) + parseFloat(document.getElementById('addvalue').value);
+
+        document.getElementById("priceholder").innerHTML = sum + parseFloat(document.getElementById('addvalue').value) - parseFloat(memsum);
+        document.getElementById("finalamount").value = sumtot.toFixed(2);
+        document.getElementById("finalpricedisplay").innerHTML = sumtot.toFixed(2);
+    }
+</script>
+
+<?php if ($this->getRequest()->getParam('q') == success): ?>
+
+    <script type="text/javascript">
+        document.observe("dom:loaded", function () {
+            node = $("messages");
+
+            node.update('<ul class="messages"><li class="success-msg"><ul><li><span>Payment processed successfully with transaction id <?php echo $this->getRequest()->getParam('tranid'); ?></span></li></ul></li></ul>');
+        });
+    </script>
+<?php elseif ($this->getRequest()->getParam('q') == error): ?>
+    <script type="text/javascript">
+        document.observe("dom:loaded", function () {
+            node = $("messages");
+
+            node.update('<ul class="messages"><li class="error-msg"><ul><li><span>Payment process error</span></li></ul></li></ul>');
+        });
+    </script>
+<?php elseif ($this->getRequest()->getParam('q') == act): ?>
+    <script type="text/javascript">
+        document.observe("dom:loaded", function () {
+            node = $("messages");
+
+            node.update('<ul class="messages"><li class="success-msg"><ul><li><span>Membership activated successfully</span></li></ul></li></ul>');
+        });
+    </script>
+
+<?php elseif ($this->getRequest()->getParam('q') == deact): ?>
+    <script type="text/javascript">
+        document.observe("dom:loaded", function () {
+            node = $("messages");
+
+            node.update('<ul class="messages"><li class="error-msg"><ul><li><span>Membership deactivated </span></li></ul></li></ul>');
+        });
+    </script>
+
+<?php elseif ($this->getRequest()->getParam('q') == saved): ?>
+    <script type="text/javascript">
+        document.observe("dom:loaded", function () {
+            node = $("messages");
+
+            node.update('<ul class="messages"><li class="success-msg"><ul><li><span>Membership saved successfully</span></li></ul></li></ul>');
+        });
+    </script>
+
+<?php endif; ?>

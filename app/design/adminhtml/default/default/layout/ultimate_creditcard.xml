@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Ultimate_creditcard extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Ultimate
+ * @package        Ultimate_creditcard
+ * @copyright      Copyright (c) 2015
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<layout>
+    <adminhtml_creditcard_customer_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>customer/ultimate_creditcard/customer</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="ultimate_creditcard/adminhtml_customer" name="customer">
+                <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                    <action method="setUseConfirm"><params>0</params></action>
+                </block>
+            </block>
+
+        </reference>
+    </adminhtml_creditcard_customer_index>
+    <adminhtml_creditcard_customer_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="ultimate_creditcard/adminhtml_customer_grid" name="customer_grid"/>
+        </block>
+    </adminhtml_creditcard_customer_grid>
+    <!-- Customer add/edit action -->
+    <adminhtml_creditcard_customer_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>customer/ultimate_creditcard/customer</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="ultimate_creditcard/adminhtml_customer_edit" name="customer_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="store_switcher" before="-"></block>
+            <block type="ultimate_creditcard/adminhtml_customer_edit_tabs" name="customer_tabs"></block>
+        </reference>
+        <reference name="head">
+            <action method="setCanLoadTinyMce"><load>1</load></action>
+        </reference>
+        <reference name="js">
+            <block type="core/template" name="catalog.wysiwyg.js" template="catalog/wysiwyg/js.phtml"/>
+        </reference>
+    </adminhtml_creditcard_customer_edit>
+
+    <adminhtml_creditcard_customer_attribute_index>
+        <reference name="content">
+            <block type="ultimate_creditcard/adminhtml_customer_attribute" name="attribute_grid"></block>
+        </reference>
+    </adminhtml_creditcard_customer_attribute_index>
+    <adminhtml_creditcard_customer_attribute_edit>
+        <reference name="left">
+            <block type="ultimate_creditcard/adminhtml_customer_attribute_edit_tabs" name="attribute_edit_tabs"></block>
+        </reference>
+        <reference name="content">
+            <block type="ultimate_creditcard/adminhtml_customer_attribute_edit" name="attribute_edit_content"></block>
+        </reference>
+        <reference name="js">
+            <block type="adminhtml/template" name="attribute_edit_js" template="ultimate_creditcard/attribute/js.phtml">
+                <action method="setMainEntityName"><name>customer</name></action>
+            </block>
+        </reference>
+    </adminhtml_creditcard_customer_attribute_edit>
+</layout>
