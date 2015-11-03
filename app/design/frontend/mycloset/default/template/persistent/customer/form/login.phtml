@@ -54,17 +54,10 @@
                 </div>                    
                 <div class=" divFooter">
                     <?php
-                    // echo Mage::getBaseUrl().'/membership/account/create/';
+$log_url = Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl());
 
-                    if (Mage::getStoreConfig('web/secure/use_in_frontend')) {
-                        if (!Mage::app()->getStore()->isCurrentlySecure()) {
-//replace hhp with https
-                            $log_url = Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl('', array('_secure' => true)));
-                            $secure_url = str_replace("http", "https", $log_url);
-                        }
-                    }
                     ?>
-                    <button type="button" title="<?php echo $this->__('Create an Account') ?>" class="pull-right btn" onclick="window.location = '<?php echo $secure_url ?>';"><span><span><?php echo $this->__('Create an Account') ?></span></span></button>
+                    <button type="button" title="<?php echo $this->__('Create an Account') ?>" class="pull-right btn" onclick="window.location = '<?php echo $log_url ?>';"><span><span><?php echo $this->__('Create an Account') ?></span></span></button>
                 </div>
 
             </div>
