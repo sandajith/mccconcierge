@@ -70,7 +70,7 @@
     <div class="col-2">
         <h3><?php echo $this->__('Login') ?></h3>
         <?php echo $this->getMessagesBlock()->toHtml() ?>
-        <form id="login-form" action="<?php echo $this->getPostAction() ?>" method="post">
+        <form id="login-form" action="<?php echo $this->getPostAction('',array( '_secure' => true)) ?>" method="post">
         <fieldset>
             <?php echo $this->getBlockHtml('formkey'); ?>
             <h4><?php echo $this->__('Already registered?') ?></h4>

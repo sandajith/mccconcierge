@@ -23,7 +23,19 @@ $attribute->setData('used_in_forms', array(
 $attribute->setData('is_user_defined', 0);
 $attribute->save();
 
+//
 
+/** @var Mage_Customer_Model_Resource_Setup $this */
+$this->addAttribute('customer','default_pickup', array(
+        'type' => 'int',
+        'label'  => 'Default PickUp Address',
+        'input'  => 'text',
+        'backend' => 'mycloset_membership/customer_attribute_backend_pickup',
+        'required'  => false,
+        'sort_order' => 82,
+        'visible' => false,
+    )
+);
 /*
  * reference field in the customer registration 1st form
  * edited by neenu
@@ -164,3 +176,5 @@ CREATE TABLE IF NOT EXISTS `closet_pickup_details` (
 INDEX ( `pickup_user_id` , `pickup_category_id` )
 ) ENGINE = innodb;
 ");
+
+

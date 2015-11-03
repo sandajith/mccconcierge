@@ -43,15 +43,13 @@ if (isset($ids[2])) {
 
 $_helper = $this->helper('catalog/output');
 $_product1 = $this->getProduct();
-$url_prefix = Mage::getBaseUrl();
-$url_prefix = 'https://www.myclosetconcierge.com/';
 ?>
 
 <script type="text/javascript">
     function SubmitRequest(productid)
     {
 
-        new Ajax.Request('<?php echo $url_prefix . "mycloset/popup?product_id=" ?>' + productid,
+        new Ajax.Request('<?php echo Mage::getUrl('',array('_secure' => true)) . "mycloset/popup?product_id=" ?>' + productid,
                 {
                     method: "get",
                     onSuccess: function (transport) {
@@ -196,7 +194,7 @@ $url_prefix = 'https://www.myclosetconcierge.com/';
                 </div>
                 <div class="modal-body">
                     <p>Please login into the site for further process..</p>
-                    <p>click here for login <a href="<?php echo $this->getUrl('') ?>membership/account/create/">Sign In</a></p>
+                    <p>click here for login <a href="<?php echo $this->getUrl('',array('_secure' => true)) ?>membership/account/create/">Sign In</a></p>
                 </div>
             </div>
         </div>

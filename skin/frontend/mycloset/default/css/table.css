@@ -1,0 +1,8 @@
+.table-responsive_margin{margin-top: 20px;}
+.table > thead > tr > th{background: #421457; color: #fff; font: 22px 'Oswald', sans-serif; border-left: 1px solid #f8f8f8;}
+.table > thead > tr > th:first-child{padding-left: 20px; border-left: 0px solid #f8f8f8;}
+.amt_column{text-align: center;}
+.table-striped > tbody > tr{background-color: #e3e1e1;}
+.table-striped > tbody > tr:nth-of-type(2n+1){background-color: #d2cece;}
+.table-striped > tbody > tr td{border-bottom: 1px solid #fff; border-left: 1px solid #f8f8f8;  font:bold 12px "arial"; text-align: center;}
+.table-striped > tbody > tr td:first-child{text-align: left;  padding-left: 20px;}

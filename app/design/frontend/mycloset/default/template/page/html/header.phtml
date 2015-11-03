@@ -42,7 +42,7 @@
         <?php echo $this->getChildHtml('topLinks') ?>
     </div>
     <div class="container quick-access">
-        <a href="<?php echo $this->getUrl('') ?>home" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+        <a href="<?php echo $this->getUrl('home'); ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
 
             <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
             <h1><?php echo $this->__('my closet conCierge') ?></h1>
@@ -56,7 +56,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">                 
                 <ul class="nav navbar-nav">
                     <li class="search-mobile">                        
-                        <a href="<?php echo $this->getUrl('') ?>home" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+                        <a href="<?php echo $this->getUrl('home');  ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
                             <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
                             <h1><?php echo $this->__('my closet conCierge') ?></h1>
                             <h2><?php echo $this->__('Open the door to your endless closet') ?></h2>                        
@@ -69,7 +69,7 @@
                     $_page = Mage::getModel('cms/page')->load('about-magento-demo-store', 'identifier');
                     if ($_page->getIsActive()) {
                         ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>about-magento-demo-store"><?php echo $this->__('ABOUT') ?></a></li>
+                        <li><a href="<?php echo $this->getUrl('about-magento-demo-store'); ?>"><?php echo $this->__('ABOUT') ?></a></li>
                     <?php } ?>
                     <?php
                     $_page = Mage::getModel('cms/page')->load('howitworks', 'identifier');
@@ -115,7 +115,7 @@
                                         <?php
                                     }
                                 }
-                                ?>                               
+                                ?>                             
                             </ul>  
                         </li>
                     <?php endif; ?>
@@ -126,7 +126,7 @@
                         ?>
                         <li><a href="<?php echo $this->getUrl('') ?>faq"><?php echo $this->__('FAQ') ?></a></li>    
                     <?php } ?>
-                    <li><a href="<?php echo $this->getUrl('') ?>blog/" target="_blank" ><?php echo $this->__('BLOG') ?></a></li>
+                    <li><a href="http://mycc.bridge-delivery.com/mgn/blog/" target="_blank" ><?php echo $this->__('BLOG') ?></a></li>
 
                 </ul>
                 <ul class="nav navbar-nav mobileFooter">

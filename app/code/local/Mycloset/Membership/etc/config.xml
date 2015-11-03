@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <config>
+  
     <modules>
         <Mycloset_Membership>
             <version>1.1.0</version>
         </Mycloset_Membership>
     </modules>
-    
+  
     <adminhtml>
         <layout>
             <updates>
@@ -14,6 +15,16 @@
                 </mycloset_membership>
             </updates>
         </layout>
+          <events>
+            <adminhtml_customer_prepare_save>
+                <observers>
+                     <mycloset_membership>
+                        <class>mycloset_membership/adminhtml_observer</class>
+                        <method>checkPickupAddress</method>
+                   </mycloset_membership>
+                </observers>
+            </adminhtml_customer_prepare_save>
+        </events>
     </adminhtml>    
     
     <admin>
@@ -88,12 +99,25 @@
                     <product>Mycloset_Membership_Model_Product</product>
                 </rewrite>
             </catalog>
+            <customer_resource>
+                    <rewrite>
+                 <customer>Mycloset_Membership_Model_Resource_Customer</customer>
+                </rewrite>
+               </customer_resource>
+            <mycloset_membership>
+                <class>Mycloset_Membership_Model</class>
+            </mycloset_membership>
         </models> 
         
         <blocks> 
             <membership> 
                 <class>Mycloset_Membership_Block</class> 
             </membership>
+              <adminhtml>
+                <rewrite>
+                    <customer_edit_tab_addresses>Mycloset_Membership_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
+                </rewrite>
+            </adminhtml>
         </blocks> 
     
         <resources>
@@ -187,3 +211,9 @@
 
     
 </config>
+
+
+
+
+   
+

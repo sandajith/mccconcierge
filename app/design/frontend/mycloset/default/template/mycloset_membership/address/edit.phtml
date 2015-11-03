@@ -149,7 +149,15 @@
                     <input type="hidden" name="default_shipping" value="1" />
                 <?php endif; ?>
             </li>
-          
+           <li<?php if($this->canSetAsDefaultPickup()) echo ' class="control"' ?>>
+                <?php if($this->isDefaultPickup()): ?>
+                    <strong><?php echo $this->__('Default Pickup Address') ?></strong>
+                <?php elseif($this->canSetAsDefaultPickup()): ?>
+                    <input type="checkbox" id="primary_pickup" name="default_pickup" value="1" title="<?php echo $this->__('Use as My Default Pickup Address') ?>" class="checkbox" /><label for="primary_pickup"><?php echo $this->__('Use as my default pickup address') ?></label>
+                <?php else: ?>
+                    <input type="hidden" name="default_pickup" value="1" />
+                <?php endif; ?>
+            </li>
         </ul>
     </div>
     <div class="buttons-set">

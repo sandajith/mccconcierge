@@ -245,6 +245,10 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
      * Create customer account action
      */
     public function createPostAction() {
+//        $postdata = $this->getRequest()->getPost();
+//         echo '<pre>';
+//         print_r($postdata);
+//        exit;
         /** @var $session Mage_Customer_Model_Session */
         $session = $this->_getSession();
         if ($session->isLoggedIn()) {
@@ -293,8 +297,6 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 if ($billingaddressId) {
                     $billingaddress = Mage::getModel('customer/address')->load($billingaddressId);
                 }
-
-
                 Mage::getSingleton('customer/session')->setMemCompany($billingaddress->getCompany());
                 Mage::getSingleton('customer/session')->setMemTele($billingaddress->getTelephone());
                 Mage::getSingleton('customer/session')->setMemStreet1($billingaddress->getStreet(1));
@@ -524,7 +526,9 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         }
         $address->setId(null)
                 ->setIsDefaultBilling($this->getRequest()->getParam('default_billing', false))
-                ->setIsDefaultShipping($this->getRequest()->getParam('default_shipping', false));
+                ->setIsDefaultShipping($this->getRequest()->getParam('default_shipping', false))
+                ->setIsDefaultPickup($this->getRequest()->getParam('default_pickup', false))
+                ;
         $addressForm->compactData($addressData);
         $customer->addAddress($address);
 

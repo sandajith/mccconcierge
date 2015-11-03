@@ -130,4 +130,37 @@
         </reference>                
     </membership_pickup_success>
     <!--success page-->
+    
+    
+     <membership_address_index translate="label">
+        <label>Customer My Account Address Book</label>
+        <!-- Mage_Customer -->
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="membership/membership/address_book" name="membership_address_book" template="mycloset_membership/address/book.phtml"/>
+        </reference>
+    </membership_address_index>
+
+<!--
+Customer account address edit page
+-->
+
+    <membership_address_form translate="label">
+        <label>Customer My Account Address Edit Form</label>
+        <!-- Mage_Customer -->
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="membership/membership/address_edit" name="membership_address_edit" template="mycloset_membership/address/edit.phtml"/>
+        </reference>
+    </membership_address_form>
+    
+    <membership_account_edit translate="label">
+        <label>Customer Account Edit Form</label>
+        <update handle="customer_account"/>
+       
+        <reference name="my.account.wrapper">
+            <block type="membership/membership/form_edit" name="membership_edit" template="mycloset_membership/form/edit.phtml"/>
+        </reference>
+
+    </membership_account_edit>
 </layout>

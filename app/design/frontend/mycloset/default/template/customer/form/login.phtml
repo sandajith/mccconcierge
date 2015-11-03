@@ -38,7 +38,7 @@
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php /* Extensions placeholder */ ?>
     <?php echo $this->getChildHtml('customer.form.login.extra')?>
-    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+    <form action="<?php echo $this->getPostActionUrl('',array( '_secure' => true)) ?>" method="post" id="login-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
         <div class="col2-set">
             <div class="col-1 new-users">
@@ -73,7 +73,18 @@
         <div class="col2-set">
             <div class="col-1 new-users">
                 <div class="buttons-set">
-                    <button type="button" title="<?php echo $this->__('Create an Account') ?>" class="button" onclick="window.location='<?php echo $this->getCreateAccountUrl() ?>';"><span><span><?php echo $this->__('Create an Account') ?></span></span></button>
+                       <?php
+                    // echo Mage::getBaseUrl().'/membership/account/create/';
+
+                    if (Mage::getStoreConfig('web/secure/use_in_frontend')) {
+                        if (!Mage::app()->getStore()->isCurrentlySecure()) {
+//replace hhp with https
+                            $log_url = Mage::helper('persistent')->getCreateAccountUrl($this->getCreateAccountUrl('', array('_secure' => true)));
+                            $secure_url = str_replace("http", "https", $log_url);
+                        }
+                    }
+                    ?>
+                    <button type="button" title="<?php echo $this->__('Create an Account') ?>" class="button" onclick="window.location='<?php echo $secure_url ?>';"><span><span><?php echo $this->__('Create an Account') ?></span></span></button>
                 </div>
             </div>
             <div class="col-2 registered-users">

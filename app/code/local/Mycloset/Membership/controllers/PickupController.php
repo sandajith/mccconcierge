@@ -19,8 +19,7 @@ class Mycloset_Membership_PickupController extends Mage_Core_Controller_Front_Ac
             if (!empty($vars)) {
                 $userid = Mage::getSingleton('customer/session')->getId();
                 $values = Mage::app()->getRequest()->getParams();
-                $products = Mage::getModel('catalog/product')->getCollection()
-                        ->addAttributeToFilter('customer_id', $userid);
+                $products = Mage::getModel('catalog/product')->getCollection()->addAttributeToFilter('customer_id', $userid);
 
                 if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                     $final = array();
@@ -40,18 +39,19 @@ class Mycloset_Membership_PickupController extends Mage_Core_Controller_Front_Ac
                     foreach ($final as $pickupinfo) {
                         $category = Mage::getModel('catalog/category')->load($pickupinfo['cat_id']);
                         $image = Mage::getBaseUrl('media') . 'catalog/category/' . $category->image;
-                        $content.= '  
-                                    <tr>
-                                        <td><img src="' . $image . '" width="40%" height="40%"/></td>
-                                        <td> ' . $category->getName() . '  </td>		
-                                        <td> ' . $pickupinfo['quantity'] . ' </td>
-                                    </tr>';
+                       $content.= '<tr>
+                       <td height="100px" v-align="middle"><img src="'. $image.'" alt="mycloset" width="80" height="80" border="0" /></td>
+                       <td style="font-family:Lato; font-size:13px; color:#000;" > ' . $category->getName() . ' </td>
+                       <td style="font-family:Lato; font-size:13px; color:#000;">' . $pickupinfo['quantity'] . '</td> 
+                    </tr>';
+                
                     }
                     $data = array(
                         'pickup_user_id' => $userid,
                         'pickup_info' => $info,
                         'pickup_comment' => $values['comment']
                     );
+                       
                     $model = Mage::getModel('membership/pickupdetails')->setData($data);
                     $model->save()->getId();
                     $model = Mage::getModel('membership/pickupdetails')->setData($data);

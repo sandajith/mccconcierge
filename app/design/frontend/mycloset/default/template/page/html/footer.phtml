@@ -36,8 +36,7 @@
                     $_page = Mage::getModel('cms/page')->load('about-magento-demo-store', 'identifier');
                     if ($_page->getIsActive()) {
                         ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>about-magento-demo-store">About</a>                       
-                        </li>
+                        <li><a href="<?php echo $this->getUrl('') ?>about-magento-demo-store">About</a></li>  
                     <?php } ?>
 
                     <?php
@@ -97,7 +96,6 @@
             </div>
         </nav>
         <div class="footerText">
-            <div style="float:left"><span id="siteseal"><script type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=71T5TYMRovXDFZJLwNjAkZJQg7P28t0HvZlbmwef1BYlpasQS7Awo3JjQngG"></script></span></div>
             <address><?php echo $this->getCopyright() ?></address>
             <div class="social">
                 <a href="#">
