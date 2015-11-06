@@ -175,6 +175,8 @@
         .homeGrid p {
             min-height: auto;
         }
+
+
         
     }
 
@@ -323,6 +325,28 @@
         
         .signature.visible-xs { color: #666666}
         .productdata { margin-bottom: 20px;}
+
+
+        .checkout-onepage-index .customer-name-middlename .field {
+            float:left;
+            width:100%;
+            padding:0;
+        }
+
+        .checkout-onepage-index .customer-name-middlename .field:nth-child(2n){
+            padding:0;
+        }
+
+        .checkout-onepage-index li.fields .field {
+            float:left;
+            width:100%;
+            padding:0;
+        }
+
+        .checkout-onepage-index li.fields .field:nth-child(2n) {
+            padding:0;
+        }
+
     }
     
 
