@@ -95,7 +95,7 @@
             $product_designer = $custom->getAttributeText('designer');
             $product_color = $custom->getAttributeText('color');
             $product_size = $custom->getAttributeText('size');
-            if ($product_status == 'You Have It') {
+            if ($product_status != 'We Have It') {
                 ?>
                 <div class="row">
                     <div class="col-sm-3">
@@ -120,7 +120,7 @@
         ?> 
     </div>
 </div>
-<div class="row myBag">
+<!--<div class="row myBag">
 
     <div class="col-md-12 dataTable" id="checkout-review-table">
 
@@ -133,39 +133,39 @@
 
         </div>
         <?php
-        foreach ($this->getItems() as $_item):
-            $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
-
-            $product_status = $custom->getAttributeText('product_status');
-            $product_price = $custom->getAttributeText('price');
-            $product_designer = $custom->getAttributeText('designer');
-            $product_color = $custom->getAttributeText('color');
-            $product_size = $custom->getAttributeText('size');
-            if ($product_status == 'Shipped To') {
+//        foreach ($this->getItems() as $_item):
+//            $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
+//
+//            $product_status = $custom->getAttributeText('product_status');
+//            $product_price = $custom->getAttributeText('price');
+//            $product_designer = $custom->getAttributeText('designer');
+//            $product_color = $custom->getAttributeText('color');
+//            $product_size = $custom->getAttributeText('size');
+//            if ($product_status == 'Shipped To') {
                 ?>
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="thumb">
-                            <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);       ?>" width="100" height="100"  />
+                            <img src="<?php // echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);       ?>" width="100" height="100"  />
                         </div>
                     </div>
                     <div class="col-sm-4 product-name">
-                        Designer: <?php echo $product_designer; ?><br>
-                        Size:<?php echo $product_size; ?> <br>
-                        Color:<?php echo $product_color; ?><br>
-                        Status:<?php echo $product_status; ?>
+                        Designer: <?php //echo $product_designer; ?><br>
+                        Size:<?php //echo $product_size; ?> <br>
+                        Color:<?php //echo $product_color; ?><br>
+                        Status:<?php //echo $product_status; ?>
                     </div>
                     <div class="col-sm-2">Included</div>
-                    <div class="col-sm-1"><?php echo $_item->getQty() ?></div>
+                    <div class="col-sm-1"><?php //echo $_item->getQty() ?></div>
                     <div class="col-sm-2">Included</div>
 
                 </div>
                 <?php
-            }
-        endforeach;
+         //   }
+    //    endforeach;
         ?> 
     </div>
-</div>
+</div>-->
 <div class="row myBag">
 
     <div class="col-md-12 dataTable" id="checkout-review-table">
