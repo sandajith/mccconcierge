@@ -60,6 +60,7 @@
                 <class>Mycloset_Membership_Model</class>
                 <resourceModel>membership_mysql4</resourceModel>
             </membership>
+            
             <membership_mysql4>
                 <class>Mycloset_Membership_Model_Mysql4</class>
                 <entities>
@@ -107,6 +108,11 @@
             <mycloset_membership>
                 <class>Mycloset_Membership_Model</class>
             </mycloset_membership>
+            <checkout>
+               <rewrite>
+            <type_onepage>Mycloset_Membership_Model_Checkout_Type_Onepage</type_onepage>
+                </rewrite>
+            </checkout>
         </models> 
         
         <blocks> 
@@ -118,6 +124,17 @@
                     <customer_edit_tab_addresses>Mycloset_Membership_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
                 </rewrite>
             </adminhtml>
+            <checkout>
+                <rewrite>
+                    <onepage>Mycloset_Membership_Block_Checkout_Onepage</onepage>
+                </rewrite>
+<!--                 <rewrite>
+            <test_cart> This can be any unique id 
+                <from><![CDATA[#^/checkout/onepage/#]]></from>   the URL which u want to override
+                <to>/membership/onepage/</to>   destination url 
+            </test_cart>
+        </rewrite>-->
+            </checkout>
         </blocks> 
     
         <resources>
@@ -143,6 +160,8 @@
      
             
         </resources>
+        
+ 
     </global>    
     <frontend>
         
@@ -158,7 +177,13 @@
                 </args> 
             </customer>
             
-            
+     <checkout>
+            <args>
+                <modules>
+                <Mycloset_Membership before="Mage_Checkout">Mycloset_Membership</Mycloset_Membership>
+                </modules>
+            </args>
+        </checkout>
             <membership>
                 <use>standard</use>
                 <args>

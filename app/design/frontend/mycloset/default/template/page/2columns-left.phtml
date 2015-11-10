@@ -43,25 +43,7 @@
         <div class="main-container col2-left-layout">
             <div class="main">
                 <div class="container">
-                        <?php
-                        
- $checkoutcls=$this->getBodyClass();
-if($checkoutcls===' checkout-onepage-index'){ ?>
-<div class="page-title subhead">
-    <h2><?php echo $this->__('CHECKOUT | SET APPOINMENT') ?></h2>
-</div>
-  <div class="row">
-                        <div class="col-sm-8 col-md-9 itemsWrapper">
-                            <?php echo $this->getChildHtml('global_messages') ?>
-                            <?php echo $this->getChildHtml('content') ?>
-                        </div>
-                        <div class="col-sm-4 col-md-3 checkout-progress-wrapper">
-                            <?php echo $this->getChildHtml('left') ?>
-                        </div>
-                        
-                        
-                    </div>
-<?php } else {?>
+
                     <div class="row">
                         <div class="col-sm-9 col-md-10 itemsWrapper">
                             <?php echo $this->getChildHtml('global_messages') ?>
@@ -73,7 +55,7 @@ if($checkoutcls===' checkout-onepage-index'){ ?>
                         
                         
                     </div>
-                    <?php } ?>
+                   
                 </div>
             </div>
         </div>
