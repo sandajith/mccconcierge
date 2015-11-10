@@ -1,6 +1,10 @@
 
       
-
+<div class="block block-progress opc-block-progress">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Your Checkout Progress') ?></span></strong>
+    </div>
+    <div class="block-content">
             <dl>
             <?php if ($this->getCheckout()->getStepData('billing', 'is_show')): ?>
             <div id="billing-progress-opcheckout">
@@ -52,3 +56,5 @@
             </div>
             <?php endif; ?>
         </dl>
+         </div>
+</div>
