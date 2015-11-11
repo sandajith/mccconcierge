@@ -176,14 +176,14 @@
                     <frontName>membership</frontName>              
                 </args> 
             </customer>
-            
-<!--     <checkout>
+            <!--rewrite for onepage controller-->
+     <checkout>
             <args>
                 <modules>
                 <Mycloset_Membership before="Mage_Checkout">Mycloset_Membership</Mycloset_Membership>
                 </modules>
             </args>
-        </checkout>-->
+        </checkout>
             <membership>
                 <use>standard</use>
                 <args>
