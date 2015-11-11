@@ -15,7 +15,7 @@
                 </mycloset_membership>
             </updates>
         </layout>
-          <events>
+<!--          <events>
             <adminhtml_customer_prepare_save>
                 <observers>
                      <mycloset_membership>
@@ -24,7 +24,7 @@
                    </mycloset_membership>
                 </observers>
             </adminhtml_customer_prepare_save>
-        </events>
+        </events>-->
     </adminhtml>    
     
     <admin>
@@ -119,11 +119,11 @@
             <membership> 
                 <class>Mycloset_Membership_Block</class> 
             </membership>
-              <adminhtml>
+<!--              <adminhtml>
                 <rewrite>
                     <customer_edit_tab_addresses>Mycloset_Membership_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
                 </rewrite>
-            </adminhtml>
+            </adminhtml>-->
 <!--            <checkout>
                 <rewrite>
                     <onepage>Mycloset_Membership_Block_Checkout_Onepage</onepage>
