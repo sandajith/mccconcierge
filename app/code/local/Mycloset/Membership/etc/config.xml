@@ -79,6 +79,9 @@
                     <chosenservices>
                         <table>mycloset_chosen_services</table>
                     </chosenservices>
+                    <additionalservices>
+                        <table>mycloset_additionalservices</table>
+                    </additionalservices>    
                       <pickupdetails>
                         <table>pickup_details</table>
                     </pickupdetails>
