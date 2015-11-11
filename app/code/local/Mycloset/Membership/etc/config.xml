@@ -124,17 +124,17 @@
                     <customer_edit_tab_addresses>Mycloset_Membership_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
                 </rewrite>
             </adminhtml>
-            <checkout>
+<!--            <checkout>
                 <rewrite>
                     <onepage>Mycloset_Membership_Block_Checkout_Onepage</onepage>
-                </rewrite>
+                </rewrite>-->
 <!--                 <rewrite>
             <test_cart> This can be any unique id 
                 <from><![CDATA[#^/checkout/onepage/#]]></from>   the URL which u want to override
                 <to>/membership/onepage/</to>   destination url 
             </test_cart>
         </rewrite>-->
-            </checkout>
+<!--            </checkout>-->
         </blocks> 
     
         <resources>
@@ -177,13 +177,13 @@
                 </args> 
             </customer>
             
-     <checkout>
+<!--     <checkout>
             <args>
                 <modules>
                 <Mycloset_Membership before="Mage_Checkout">Mycloset_Membership</Mycloset_Membership>
                 </modules>
             </args>
-        </checkout>
+        </checkout>-->
             <membership>
                 <use>standard</use>
                 <args>

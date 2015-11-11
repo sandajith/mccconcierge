@@ -170,7 +170,8 @@ Customer account address edit page
          <block type="membership/custom_order" name="custom.order" template="custom/order.phtml" after='sales.order.info' />
        </reference>
    </sales_order_view>
-   <checkout_onepage_index> <!-- Adding our new step to onepage block  -->
+   
+<!--   <checkout_onepage_index>  Adding our new step to onepage block  
    <reference name="root">
             <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
         </reference>
@@ -178,13 +179,14 @@ Customer account address edit page
             <action method='setTemplate'><template>custom/checkout/onepage.phtml</template></action>
             <block type="membership/checkout_onepage_pickup" name="checkout.onepage.excellence" as="excellence" template="custom/checkout/onepage/excellence.phtml"/> 
        </reference>
-       <reference name='checkout.progress'> <!-- Change the template of progress block -->
+       <reference name='checkout.progress'>  Change the template of progress block 
              <action method='setTemplate'><template>custom/checkout/onepage/progress.phtml</template></action>
-       </reference> <!-- Here we change the template of the progress block to our custom template created -->
+       </reference>  Here we change the template of the progress block to our custom template created 
    </checkout_onepage_index>
-   <checkout_onepage_progress>  <!-- Change the template of progress block -->
+   <checkout_onepage_progress>   Change the template of progress block 
        <reference name='root'>
            <action method='setTemplate'><template>custom/checkout/onepage/progress.phtml</template></action>
        </reference>
-   </checkout_onepage_progress>
+   </checkout_onepage_progress>-->
+   
 </layout>
