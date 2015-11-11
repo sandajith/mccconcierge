@@ -132,22 +132,22 @@
     <!--success page-->
     
     
-     <membership_address_index translate="label">
+<!--     <membership_address_index translate="label">
         <label>Customer My Account Address Book</label>
-        <!-- Mage_Customer -->
+         Mage_Customer 
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="membership/membership/address_book" name="membership_address_book" template="mycloset_membership/address/book.phtml"/>
         </reference>
-    </membership_address_index>
+    </membership_address_index>-->
 
 <!--
 Customer account address edit page
 -->
 
-    <membership_address_form translate="label">
+<!--    <membership_address_form translate="label">
         <label>Customer My Account Address Edit Form</label>
-        <!-- Mage_Customer -->
+         Mage_Customer 
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="membership/membership/address_edit" name="membership_address_edit" template="mycloset_membership/address/edit.phtml"/>
@@ -162,7 +162,7 @@ Customer account address edit page
             <block type="membership/membership/form_edit" name="membership_edit" template="mycloset_membership/form/edit.phtml"/>
         </reference>
 
-    </membership_account_edit>
+    </membership_account_edit>-->
     
          <sales_order_view> <!-- Code From Previous Module -->
        <reference name="my.account.wrapper">
