@@ -38,7 +38,7 @@
     <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
         <div class="step-title">
             <h3 class="number">
-                <span class="box"><?php echo $i ?></span> &nbsp;<?php echo $_stepInfo['label'] ?>
+                <span class="box"><?php echo $i ?></span> &nbsp;<?php if($_stepInfo['label']==''){ echo 'Pickup Information'; } else { echo $_stepInfo['label'];} ?>
             </h3>
           
         </div>
