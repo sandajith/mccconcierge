@@ -36,7 +36,7 @@
         $collection->addFieldToFilter('checkout', '1');
         foreach ($collection as $services) {
             $service = Mage::getModel('membership/additionalservices')->load($services->getId());   ?>
-        <input type="checkbox" name="<?php echo $service->getServiceName(); ?>" value="" ><label ><?php echo $service->getServiceName(); ?></label></br>
+        <input type="checkbox" name="<?php echo $service->getServiceName(); ?>" value="<?php echo $service->getServiceId(); ?>" ><label ><?php echo $service->getServiceName(); ?></label></br>
         <?php } ?>
     </div>
 </div>
