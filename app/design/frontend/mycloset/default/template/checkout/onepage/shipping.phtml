@@ -28,7 +28,7 @@
     <ul class="form-list">
     <?php if ($this->customerHasAddresses()): ?>
        <li class="wide">
-           <label for="shipping-address-select"><?php echo $this->__('Select a shipping address from your address book or enter a new address.') ?></label>
+           <label for="shipping-address-select"><?php echo $this->__('Select a delivery or pick up address from your address book or enter a new address.') ?></label>
            <div class="input-box">
                <?php echo $this->getAddressesHtmlSelect('shipping') ?>
            </div>
@@ -133,8 +133,8 @@
             <input type="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing" value="1"<?php if($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?> title="<?php echo $this->__('Use Billing Address') ?>" onclick="shipping.setSameAsBilling(this.checked)" class="checkbox" /><label for="shipping:same_as_billing"><?php echo $this->__('Use Billing Address') ?></label>
         </li>
               <li class="">
-                   <label for="shipping:shippingcomments"><?php echo $this->__('Add comments') ?></label><input type="text" name="shippingcomments" id="shipping:shippingcomments" value="" title="<?php echo $this->__('Add comments') ?>" />
-                 
+                  <label for="shipping:shippingcomments"><?php echo $this->__('Add comments') ?></label><br>                                   
+                  <textarea name="shippingcomments"  id="shipping:shippingcomments" placeholder="<?php echo $this->__('Please include any additional delivery/pick up details here. For example: “Please leave my items with the doorman”') ?>" title="<?php echo $this->__('Add comments') ?>" ></textarea>
         </li>
     </ul>
     <div class="buttons-set" id="shipping-buttons-container">
