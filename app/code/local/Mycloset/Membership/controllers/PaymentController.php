@@ -47,9 +47,10 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function authorizepaymentAction() {
-//        $postdata = $this->getRequest()->getPost();
+        $postdata = $this->getRequest()->getPost('x_card_num');
+       $creditcard =  substr($postdata,-4,4);
 //        print_r($postdata);
-//      exit;
+    
         $z_memtype1 = $this->getRequest()->getPost('mem_table_id');
         $taxrate = $this->getRequest()->getPost('tax_rate');
         if (Mage::getSingleton('customer/session')->getMemID() === '') {// if session data is available
@@ -245,7 +246,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'customer_id' => $customerid,
                     'customer_profile_id' => $parsed_customer_id,
                     'payment_profile_id' => $parsed_paymentprofile_id,
-                    'shipping_address_id' => $parsed_address_id
+                    'shipping_address_id' => $parsed_address_id,
+                    'creditcard_num' => $creditcard
                 );
                 $model = Mage::getModel('membership/payment')->setData($data);
                 $insertId = $model->save()->getId();

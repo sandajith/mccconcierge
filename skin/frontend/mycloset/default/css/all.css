@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
     font-family: 'Playfair Display';
     font-style: normal;
     font-weight: 400;
@@ -774,10 +774,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .dataTable > .row > div { float: left; height: 100%; display:inline-block; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: auto; padding: 10px;  text-align:center;}
 .dataTable > .row.th { background: #eee; border-bottom: 1px solid #ccc; border-left:1px solid #ccc; height: auto;}
 .dataTable > .row.th > div { border: 1px solid #eee;}
+.dataTable > .row.th > div:first-child{
+    text-align: left;
+}
 .dataTable > .row .product-name {
     font-size: 15px;
     line-height: 19px;
     text-align: left;
+}
+ .dataTable > .row .product-name p {
+    margin: 0;
 }
 .dataTable > .row > div h4 {margin: 0 ;
 text-align: left;}
@@ -894,7 +900,7 @@ footer .social a { margin-left: 5px;}
 .popupContent .flex-direction-nav a { margin:0;}
 
 .popupContent .carousel { border: 0; margin: 0; border-top:0px solid #ccc; margin:10px 0 0 0;}
-.popupContent .carousel .flex-direction-nav .flex-prev { background:url("../images/slide-prev-popup.png") no-repeat scroll 0 0; left: 10px; opacity: 1 top:20%!important;}
+.popupContent .carousel .flex-direction-nav .flex-prev { background:url("../images/slide-prev-popup.png") no-repeat scroll 0 0; left: 10px; opacity: 1; top:20%!important;}
 .popupContent .carousel .flex-direction-nav .flex-next { background:url("../images/slide-next-popup.png") no-repeat scroll right 0; opacity: 1; right: 10px}
 .productdata { margin: 0 20px}
 /*9/9/2015*/
@@ -1149,7 +1155,7 @@ margin-left:10px;
 }
 
 .checkout-onepage-index{
-
+font-weight: 100;
 }
 .checkout-onepage-index .page-title {
 
@@ -1170,6 +1176,7 @@ margin-left:10px;
     padding:10px;
     border-bottom:1px solid #c3c3c3;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 .checkout-onepage-index .opc .step-title .box {
@@ -1183,8 +1190,9 @@ margin-left:10px;
     position: relative;
 }
 
+
 .checkout-onepage-index .opc > li.section.active .step.a-item .please-wait{
-    background: rgba(0,0,0,.5);
+    background:url(../images/loader.gif) no-repeat center center rgba(256,256,256,.7);
     color: #fff;
     height: 100%;
     left: 0;
@@ -1193,9 +1201,15 @@ margin-left:10px;
     width: 100%;
 }
 
+.checkout-onepage-index .opc > li.section.active .step.a-item .please-wait img {
+    display: none;
+}
+
 .checkout-onepage-index .opc  .step.a-item {
     padding:5px 60px 20px 60px;
 }
+
+
 .checkout-onepage-index .opc p.required{
     color: #000;
     font-size: 14px;
@@ -1284,7 +1298,7 @@ margin-left:10px;
     border: 3px solid #ccc;
     float: left;
     margin-left: -10px;
-
+    max-width:100%;
 }
 
 .checkout-onepage-index .opc .dataTable > .row > div {
@@ -1298,6 +1312,38 @@ margin-left:10px;
     padding:5px 10px;
 }
 
+.checkout-onepage-index .opc .input-box .v-fix {
+    float:left;
+    width:50%;
+    padding-right:10px;
+}
+
+.checkout-onepage-index .opc .input-box .v-fix:nth-child(2n){
+    padding:0 0 0 10px;
+}
+
+.checkout-onepage-index .opc .tool-tip {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px;
+    bottom: 0;
+    box-shadow: 0 0 65px 0 #666;
+    height: auto;
+    overflow: hidden;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    top: auto !important;
+}
+
+.checkout-onepage-index .opc .tool-tip .btn-close {
+    background: #eee none repeat scroll 0 0;
+    border-radius: 3px;
+    float: right;
+    font-size: 13px;
+    margin: -10px 0 10px;
+    padding: 0 10px;
+}
+
 .checkout-onepage-index .checkout-progress-wrapper {
     float: right;
 }
@@ -1306,6 +1352,20 @@ margin-left:10px;
     background: #ececec;
     padding:20px;
     text-align: right;
+}
+
+.checkout-onepage-index .checkoutTotal p{
+    margin: 0;
+}
+
+.checkout-onepage-index .checkoutTotal  span.price{
+    float: right;
+    margin-left:10px;
+    min-width: 80px
+}
+
+.checkout-onepage-index .checkoutTotal strong {
+    font-size:18px;
 }
 
 .checkout-onepage-index .customer-name-middlename .field {
