@@ -31,6 +31,7 @@
 <?php else: ?>
     <dl class="sp-methods">
     <?php $shippingCodePrice = array(); ?>
+    
     <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): 
 
     
@@ -38,6 +39,7 @@
         <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
         <dd>
             <ul>
+                 <?php   $_rates = array_reverse($_rates); ?>
             <?php 
           
             $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): 
