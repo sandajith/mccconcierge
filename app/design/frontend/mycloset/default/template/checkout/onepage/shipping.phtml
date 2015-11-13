@@ -121,7 +121,7 @@
                         </div>
                     </li>
                 <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()):?>
-                    <li class="control">
+                    <li class="control control-display">
                         <input type="checkbox" name="shipping[save_in_address_book]" value="1" title="<?php echo $this->__('Save in address book') ?>" id="shipping:save_in_address_book" onchange="shipping.setSameAsBilling(false);"<?php if ($this->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?> class="checkbox" /><label for="shipping:save_in_address_book"><?php echo $this->__('Save in address book') ?></label></li>
                 <?php else:?>
                     <li class="no-display"><input type="hidden" name="shipping[save_in_address_book]" value="1" /></li>
@@ -129,7 +129,7 @@
                 </ul>
             </fieldset>
         </li>
-        <li class="control">
+        <li class="control control-display">
             <input type="checkbox" name="shipping[same_as_billing]" id="shipping:same_as_billing" value="1"<?php if($this->getAddress()->getSameAsBilling()): ?> checked="checked"<?php endif; ?> title="<?php echo $this->__('Use Billing Address') ?>" onclick="shipping.setSameAsBilling(this.checked)" class="checkbox" /><label for="shipping:same_as_billing"><?php echo $this->__('Use Billing Address') ?></label>
         </li>
               <li class="">
@@ -138,8 +138,8 @@
         </li>
     </ul>
     <div class="buttons-set" id="shipping-buttons-container">
-        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-        <p class="back-link"><a href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+        <p class="required control-display"><?php echo $this->__('* Required Fields') ?></p>
+        <p class="back-link control-display"><a href="#" onclick="checkout.back(); return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
         <button type="button" class="button" title="<?php echo $this->__('Continue') ?>" onclick="shipping.save()"><span><span><?php echo $this->__('Continue') ?></span></span></button>
         <span id="shipping-please-wait" class="please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading next step...') ?>" title="<?php echo $this->__('Loading next step...') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
