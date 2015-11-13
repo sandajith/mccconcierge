@@ -1414,7 +1414,7 @@ font-weight: 100;
     padding:20px;
     background: #eee;
     margin:10px 0;
-    text-transform: capitalize
+  
 }
 .checkout-onepage-index .opc .qtyBox input[type="text"]{
   float: left;
