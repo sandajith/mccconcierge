@@ -42,7 +42,7 @@ class Mycloset_Membership_Model_Currency extends Mage_Directory_Model_Currency
         }
         if ($includeContainer) {
             return '<span class="price" >' . ($addBrackets ? '[' : '') . $this->formatTxt($price, $options) .
-                ($addBrackets ? ']' : '') . '</span><br>';
+                ($addBrackets ? ']' : '') . '</span><div class="separate"></div>';
         }
         return $this->formatTxt($price, $options);
     }
