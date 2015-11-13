@@ -132,22 +132,22 @@
     <!--success page-->
     
     
-     <membership_address_index translate="label">
+<!--     <membership_address_index translate="label">
         <label>Customer My Account Address Book</label>
-        <!-- Mage_Customer -->
+         Mage_Customer 
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="membership/membership/address_book" name="membership_address_book" template="mycloset_membership/address/book.phtml"/>
         </reference>
-    </membership_address_index>
+    </membership_address_index>-->
 
 <!--
 Customer account address edit page
 -->
 
-    <membership_address_form translate="label">
+<!--    <membership_address_form translate="label">
         <label>Customer My Account Address Edit Form</label>
-        <!-- Mage_Customer -->
+         Mage_Customer 
         <update handle="customer_account"/>
         <reference name="my.account.wrapper">
             <block type="membership/membership/address_edit" name="membership_address_edit" template="mycloset_membership/address/edit.phtml"/>
@@ -162,7 +162,7 @@ Customer account address edit page
             <block type="membership/membership/form_edit" name="membership_edit" template="mycloset_membership/form/edit.phtml"/>
         </reference>
 
-    </membership_account_edit>
+    </membership_account_edit>-->
     
          <sales_order_view> <!-- Code From Previous Module -->
        <reference name="my.account.wrapper">
@@ -170,22 +170,23 @@ Customer account address edit page
          <block type="membership/custom_order" name="custom.order" template="custom/order.phtml" after='sales.order.info' />
        </reference>
    </sales_order_view>
-   <checkout_onepage_index> <!-- Adding our new step to onepage block  -->
+   
+<!--   <checkout_onepage_index>  Adding our new step to onepage block  
    <reference name="root">
             <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
         </reference>
-       <reference name='checkout.onepage'>
+      <reference name='checkout.onepage'>
             <action method='setTemplate'><template>custom/checkout/onepage.phtml</template></action>
-            <block type="membership/checkout_onepage_excellence" name="checkout.onepage.excellence" as="excellence" template="custom/checkout/onepage/excellence.phtml"/> <!-- Here we change the template of onepage block to our custom template -->
-            <!--<block type="custom/checkout_onepage_excellence" name="checkout.onepage.excellence" as="excellence" template="custom/checkout/onepage/excellence.phtml"/>  Here we change the template of onepage block to our custom template -->
+            <block type="membership/checkout_onepage_pickup" name="checkout.onepage.excellence" as="excellence" template="custom/checkout/onepage/excellence.phtml"/> 
        </reference>
-       <reference name='checkout.progress'> <!-- Change the template of progress block -->
+       <reference name='checkout.progress'>  Change the template of progress block 
              <action method='setTemplate'><template>custom/checkout/onepage/progress.phtml</template></action>
-       </reference> <!-- Here we change the template of the progress block to our custom template created -->
+       </reference>  Here we change the template of the progress block to our custom template created 
    </checkout_onepage_index>
-   <checkout_onepage_progress>  <!-- Change the template of progress block -->
+   <checkout_onepage_progress>   Change the template of progress block 
        <reference name='root'>
            <action method='setTemplate'><template>custom/checkout/onepage/progress.phtml</template></action>
        </reference>
-   </checkout_onepage_progress>
+   </checkout_onepage_progress>-->
+   
 </layout>

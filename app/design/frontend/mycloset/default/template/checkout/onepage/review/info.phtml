@@ -29,9 +29,19 @@
 
 
 <div class="row myBag">
-
+    <div class="col-md-12 dataTable">
+        <div class="row th"><div class="col-sm-3">Additional Services</div></div>
+        <?php
+        $collection = Mage::getModel('membership/additionalservices')->getCollection();
+        $collection->addFieldToFilter('checkout', '1');
+        foreach ($collection as $services) {
+            $service = Mage::getModel('membership/additionalservices')->load($services->getId());   ?>
+        <input type="checkbox" name="<?php echo $service->getServiceName(); ?>" value="<?php echo $service->getServiceId(); ?>" ><label ><?php echo $service->getServiceName(); ?></label></br>
+        <?php } ?>
+    </div>
+</div>
+<div class="row myBag">
     <div class="col-md-12 dataTable" id="checkout-review-table">
-
         <div class="row th">
             <div class="col-sm-3">Articles to ship</div>
             <div class="col-sm-4"></div>
@@ -54,7 +64,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="thumb">
-                            <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);       ?>" width="100" height="100"  />
+                            <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);        ?>" width="100" height="100"  />
                         </div>
                     </div>
                     <div class="col-sm-4 product-name">
@@ -100,7 +110,7 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="thumb">
-                            <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);       ?>" width="100" height="100"  />
+                            <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);        ?>" width="100" height="100"  />
                         </div>
                     </div>
                     <div class="col-sm-4 product-name">
@@ -132,7 +142,7 @@
             <div class="col-sm-2">subtotal</div>
 
         </div>
-        <?php
+<?php
 //        foreach ($this->getItems() as $_item):
 //            $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
 //
@@ -142,28 +152,28 @@
 //            $product_color = $custom->getAttributeText('color');
 //            $product_size = $custom->getAttributeText('size');
 //            if ($product_status == 'Shipped To') {
-                ?>
+?>
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="thumb">
-                            <img src="<?php // echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);       ?>" width="100" height="100"  />
+                            <img src="<?php // echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);        ?>" width="100" height="100"  />
                         </div>
                     </div>
                     <div class="col-sm-4 product-name">
-                        Designer: <?php //echo $product_designer; ?><br>
-                        Size:<?php //echo $product_size; ?> <br>
-                        Color:<?php //echo $product_color; ?><br>
-                        Status:<?php //echo $product_status; ?>
+                        Designer: <?php //echo $product_designer;  ?><br>
+                        Size:<?php //echo $product_size;  ?> <br>
+                        Color:<?php //echo $product_color;  ?><br>
+                        Status:<?php //echo $product_status;  ?>
                     </div>
                     <div class="col-sm-2">Included</div>
-                    <div class="col-sm-1"><?php //echo $_item->getQty() ?></div>
+                    <div class="col-sm-1"><?php //echo $_item->getQty()  ?></div>
                     <div class="col-sm-2">Included</div>
 
                 </div>
-                <?php
-         //   }
-    //    endforeach;
-        ?> 
+<?php
+//   }
+//    endforeach;
+?> 
     </div>
 </div>-->
 <div class="row myBag">
@@ -180,12 +190,12 @@
         </div>
         <?php
         foreach ($this->getItems() as $_item):
-                $custom = Mage::getModel('catalog/product')->load($_item->getProductId())
-                        ->getAttributeText('product_status');
-                if (empty($custom)) {
-                    echo $this->getItemHtml($_item);
-                }
-            endforeach
+            $custom = Mage::getModel('catalog/product')->load($_item->getProductId())
+                    ->getAttributeText('product_status');
+            if (empty($custom)) {
+                echo $this->getItemHtml($_item);
+            }
+        endforeach
         ?> 
     </div>
 </div>
@@ -202,20 +212,20 @@
 
 <!--old design-->
 
-      
-    
 
-            <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
-        <div class="row myBag">
-                  <div class="row th"> <?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></div>
-                  <div class="row th"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></div>
-                     <div class="row th"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></div>
-                     <div class="row th"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></div>
-             </div>
-            <?php endif; ?>
-    
-        <?php echo $this->getChildHtml('totals'); ?>
-  
+
+
+<?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+    <div class="row myBag">
+        <div class="row th"> <?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></div>
+        <div class="row th"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></div>
+        <div class="row th"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></div>
+        <div class="row th"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></div>
+    </div>
+<?php endif; ?>
+
+<?php echo $this->getChildHtml('totals'); ?>
+
 <?php echo $this->getChildHtml('items_after'); ?>
 <script type="text/javascript">
 //<![CDATA[

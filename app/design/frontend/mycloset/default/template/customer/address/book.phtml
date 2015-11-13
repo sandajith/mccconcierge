@@ -68,21 +68,21 @@
                 <p><?php echo $this->__('You have no default shipping address in your address book.') ?></p>
             </li>
         <?php endif ?>
-            
-               <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultPickup()): ?>
-            <li class="item">
-                <h3><?php echo $this->__('Default Pickup Address') ?></h3>
+            <!--           pickup address for registration time (In My Account Dashboard )-->
+               <?php // if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultPickup()): ?>
+<!--            <li class="item">
+                <h3><?php // echo $this->__('Default Pickup Address') ?></h3>
                 <address>
-                    <?php echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
+                    <?php // echo $this->getAddressHtml(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>
                 </address>
-                <p><a href="<?php echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php echo $this->__('Change pickup Address') ?></a></p>
-           </li>
-        <?php else: ?>
-            <li class="item">
-                <h3><?php echo $this->__('Default Pickup Address') ?></h3>
-                <?php echo $this->__('You have no default Pickup address in your address book.') ?>
-            </li>
-        <?php endif ?>
+                <p><a href="<?php // echo $this->getAddressEditUrl(Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)) ?>"><?php // echo $this->__('Change pickup Address') ?></a></p>
+           </li>-->
+        <?php // else: ?>
+<!--            <li class="item">
+                <h3><?php // echo $this->__('Default Pickup Address') ?></h3>
+                <?php // echo $this->__('You have no default Pickup address in your address book.') ?>
+            </li>-->
+        <?php // endif ?>
         </ol>
     </div>
     <div class="col-2 addresses-additional">

@@ -31,11 +31,19 @@
 <?php else: ?>
     <dl class="sp-methods">
     <?php $shippingCodePrice = array(); ?>
-    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
+    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): 
+
+    
+        ?>
         <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
         <dd>
             <ul>
-            <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+            <?php 
+          
+            $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): 
+                
+                // print_r($_rates);
+            ?>
                 <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
                 <li>
                    <?php if ($_rate->getErrorMessage()): ?>
@@ -55,20 +63,27 @@
                         <?php endif; ?>
 
                         <?php endif; ?>
-                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php if ($code=="ups"){echo 'UPS ';}echo $this->escapeHtml($_rate->getMethodTitle()) ?>
                         <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                         <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                        <?php echo $_excl; ?>
+                        <?php //echo $_excl; ?>
                         <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
                             (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                         <?php endif; ?>
                         </label>
+                        
                    <?php endif ?>
                 </li>
             <?php endforeach; ?>
+                
             </ul>
         </dd>
     <?php endforeach; ?>
+        <dd>
+           <p class="note"> <em>*</em><?php echo $this->__('Final cost of shipping is contingent upon weight of items.'
+                                ."<br>" .'My Closet Concierge will contact you to confirm.'); ?></p>
+        </dd>
+        
     </dl>
 <script type="text/javascript">
 //<![CDATA[
