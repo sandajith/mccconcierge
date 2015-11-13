@@ -176,7 +176,7 @@
             min-height: auto;
         }
 
-
+        
         
     }
 
@@ -353,6 +353,7 @@
     @media only screen and (min-width : 616px) {
        
         header .loginDetails .links { display: block !important;}
+        
     }
 
     @media only screen and (max-width : 615px) {
@@ -387,7 +388,14 @@
             padding-bottom: 4px;
             float: left
         }
-
+        
+        .checkout-onepage-index .opc .qtyBox .qtyCol {
+            float:left;
+            width:100%;
+        }
+        .qtyHead {
+            display:none;
+        }
 
     }
 

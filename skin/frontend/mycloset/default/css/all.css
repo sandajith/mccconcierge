@@ -1410,4 +1410,19 @@ font-weight: 100;
 .col-main{margin-top: 5%;}
 
 */
+.checkout-onepage-index .opc .qtyBox{
+    padding:20px;
+    background: #eee;
+    margin:10px 0;
+    text-transform: capitalize
+}
+.checkout-onepage-index .opc .qtyBox input[type="text"]{
+  float: left;
+  width: 30px;
+  margin-right: 10px;
+  
+}
 
+.checkout-onepage-index .opc .qtyBox .qty-Head {
+    padding-bottom:10px;
+}
