@@ -171,7 +171,7 @@
                 </li>
                 <?php endif; ?>
                 <?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()):?>
-                    <li class="control control-display">
+                    <li class="control ">
                         <input type="checkbox"  name="billing[save_in_address_book]" value="1" title="<?php echo $this->__('Save in address book') ?>" id="billing:save_in_address_book" onchange="if(window.shipping) shipping.setSameAsBilling(false);"<?php if ($this->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?> class="checkbox" /><label for="billing:save_in_address_book"><?php echo $this->__('Save in address book') ?></label>
                     </li>
                 <?php else:?>
@@ -184,9 +184,9 @@
     <?php /* Extensions placeholder */ ?>
     <?php echo $this->getChildHtml('checkout.onepage.billing.extra')?>
     <?php if ($this->canShip()): ?>
-        <li class="control control-display">
+        <li class="control ">
             <input type="radio"  name="billing[use_for_shipping]" id="billing:use_for_shipping_no" value="0"<?php if (!$this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?> title="<?php echo  $this->__('') ?>" onclick="$('shipping:same_as_billing').checked = false;" class="radio" /><label for="billing:use_for_shipping_no"><?php echo  $this->__('') ?></label></li>
-        <li class="control control-display">
+        <li class="control ">
             <input type="radio"  name="billing[use_for_shipping]" id="billing:use_for_shipping_yes" value="1"<?php if ($this->isUseBillingAddressForShipping()) {?> checked="checked"<?php }?> title="<?php echo $this->__('Delivery/Pick Up to different address') ?>" onclick="$('shipping:same_as_billing').checked = true;" class="radio" /><label for="billing:use_for_shipping_yes"><?php echo $this->__('Delivery/Pick Up to different addresskkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk') ?></label>
         </li>
     <?php endif; ?>
