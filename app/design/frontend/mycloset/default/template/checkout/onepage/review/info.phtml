@@ -57,6 +57,7 @@ foreach ($this->getItems() as $_item) {
     }
 }
 ?>
+<form action="checkout/onepage/saveOrder" method="post">
 <?php if ($delivery_cnt) { ?>
     <div class = "row myBag">
         <div class = "col-md-12 dataTable" id = "checkout-review-table">
@@ -210,7 +211,7 @@ if ($product_cnt) {
 </div>
 
 
-
+</form>
 
 
 
