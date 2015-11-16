@@ -62,11 +62,11 @@ foreach ($this->getItems() as $_item) {
     <div class = "row myBag">
         <div class = "col-md-12 dataTable" id = "checkout-review-table">
             <div class = "row th">
-                <div class = "col-sm-3">Articles to Deliver</div>
+                <div class = "col-sm-3"> <strong> Articles to Deliver </strong> </div>
                 <div class = "col-sm-4"></div>
-                <div class = "col-sm-2">Price</div>
-                <div class = "col-sm-1">Qty</div>
-                <div class = "col-sm-2">Subtotal</div>
+                <div class = "col-sm-2"> <strong> Price </strong> </div>
+                <div class = "col-sm-1"> <strong> Qty </strong> </div>
+                <div class = "col-sm-2"> <strong> Subtotal </strong> </div>
 
             </div>
             <?php
@@ -87,10 +87,10 @@ foreach ($this->getItems() as $_item) {
                             </div>
                         </div>
                         <div class="col-sm-4 product-name">
-                            Designer: <?php echo $product_designer; ?><br>
-                            Size:<?php echo $product_size; ?> <br>
-                            Color:<?php echo $product_color; ?><br>
-                            Status:<?php echo $product_status; ?>
+                           <strong> Designer:</strong> <?php echo $product_designer; ?><br>
+                           <strong> Size:</strong><?php echo $product_size; ?> <br>
+                           <strong>   Color: </strong> <?php echo $product_color; ?><br>
+                           <strong>   Status: </strong> <?php echo $product_status; ?>
                         </div>
                         <div class="col-sm-2">Included</div>
                         <div class="col-sm-1"><?php echo $_item->getQty() ?></div>
@@ -112,11 +112,11 @@ if ($pickup_cnt) {
         <div class="col-md-12 dataTable" id="checkout-review-table">
 
             <div class="row th">
-                <div class="col-sm-3">Articles to Pick Up</div>
+                <div class="col-sm-3"><strong>Articles to Pick Up</strong></div>
                 <div class="col-sm-4"></div>
-                <div class="col-sm-2">Price</div>
-                <div class="col-sm-1">Qty</div>
-                <div class="col-sm-2">Subtotal</div>
+                <div class="col-sm-2"><strong>Price</strong></div>
+                <div class="col-sm-1"><strong>Qty</strong></div>
+                <div class="col-sm-2"><strong>Subtotal</strong></div>
 
             </div>
             <?php
@@ -136,10 +136,10 @@ if ($pickup_cnt) {
                             </div>
                         </div>
                         <div class="col-sm-4 product-name">
-                            Designer: <?php echo $product_designer; ?><br>
-                            Size:<?php echo $product_size; ?> <br>
-                            Color:<?php echo $product_color; ?><br>
-                            Status:<?php echo $product_status; ?>
+                           <strong> Designer:</strong> <?php echo $product_designer; ?><br>
+                            <strong>Size:</strong><?php echo $product_size; ?> <br>
+                           <strong> Color:</strong><?php echo $product_color; ?><br>
+                           <strong> Status:</strong><?php echo $product_status; ?>
                         </div>
                         <div class="col-sm-2">Included</div>
                         <div class="col-sm-1"><?php echo $_item->getQty() ?></div>
@@ -161,11 +161,11 @@ if ($product_cnt) {
         <div class="col-md-12 dataTable" id="checkout-review-table">
 
             <div class="row th">
-                <div class="col-sm-3">Product</div>
+                <div class="col-sm-3"><strong>Product</strong></div>
                 <div class="col-sm-4"></div>
-                <div class="col-sm-2">Price</div>
-                <div class="col-sm-1">Qty</div>
-                <div class="col-sm-2">Subtotal</div>
+                <div class="col-sm-2"><strong>Price</strong></div>
+                <div class="col-sm-1"><strong>Qty</strong></div>
+                <div class="col-sm-2"><strong>Subtotal</strong></div>
 
             </div>
             <?php
@@ -184,7 +184,7 @@ if ($product_cnt) {
 ?>
 
 <div class="row myBag">
-    <?php echo $this->__('Anything to Else Pick Up?') ?><br>
+   <strong> <?php echo $this->__('Anything to Else Pick Up?') ?></strong><br>
     <?php echo $this->__('Please enter the quantity for each additional pick up article') ?><br>
     <div class="qtyBox " id="checkout-review-table">
         <div class="row ">
@@ -202,7 +202,7 @@ if ($product_cnt) {
                 $catname = ucfirst(strtolower($category->name));
                 ?> 
                 <div class="col-md-4 col-sm-6 col-xs-6 qtyCol">                
-                    <input  type="text" id="quantity" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value=""><?php echo $catname; ?> 
+                    <input  type="text" id="quantity" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value=""> <strong> <?php echo $catname; ?>  </strong> 
                 </div>
             <?php } ?>
 
@@ -245,7 +245,7 @@ if ($product_cnt) {
 <div id="checkout-review-submit">
     <?php echo $this->getChildHtml('agreements') ?>
     <div class="buttons-set" id="review-buttons-container">
-        <p class="f-left"><?php echo $this->__('Forgot something?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('Edit your order') ?></a></p>
+        <p class="f-left"><?php echo $this->__('Forgot something?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><u><?php echo $this->__('Edit your order') ?></u></a></p>
         <?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
