@@ -166,6 +166,8 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
      */
     public function saveOrderAction()
     {
+   
+     
         if (!$this->_validateFormKey()) {
             $this->_redirect('*/*');
             return;
@@ -179,7 +181,8 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
         try {
             $requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds();
             if ($requiredAgreements) {
-                $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
+              $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
+             
                 $diff = array_diff($requiredAgreements, $postedAgreements);
                 if ($diff) {
                     $result['success'] = false;
@@ -201,7 +204,14 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             }
 
             $this->getOnepage()->saveOrder();
-
+//          $values = Mage::app()->getRequest()->getParams();
+//          print_r($values);
+$quoteItem  = Mage::getModel('sales/order')->load($this->getOnepage()->getQuote()->getId(), 'quote_id');
+$quoteItem->setShippingComment($this->getRequest()->getPost('shippingcomments'));
+$quoteItem->save();
+//            $this->getOnepage()->saveOrder()->setShippingComment('gggggggggggggg')->save();
+//            Magento Save data in sales_flat_order table
+//$this->getOnepage()->getQuote()->setShippingComment()->save();
             $redirectUrl = $this->getOnepage()->getCheckout()->getRedirectUrl();
             $result['success'] = true;
             $result['error']   = false;
