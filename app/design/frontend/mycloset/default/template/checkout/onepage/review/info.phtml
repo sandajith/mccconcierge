@@ -57,7 +57,8 @@ foreach ($this->getItems() as $_item) {
     }
 }
 ?>
-<form action="checkout/onepage/saveOrder" method="post">
+<form action="checkout/onepage/saveOrder" method="post" id="co-overreview-form">
+    <input type="text" name="otherdata" value="dfggfgdf"/>
 <?php if ($delivery_cnt) { ?>
     <div class = "row myBag">
         <div class = "col-md-12 dataTable" id = "checkout-review-table">
@@ -254,7 +255,7 @@ if ($product_cnt) {
     </div>
     <script type="text/javascript">
         //<![CDATA[
-        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
+        review = new Review( '<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('checkout-agreements'));
         //]]>
     </script>
 </div>
