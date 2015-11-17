@@ -208,6 +208,7 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
 //          print_r($values);
 $quoteItem  = Mage::getModel('sales/order')->load($this->getOnepage()->getQuote()->getId(), 'quote_id');
 $quoteItem->setShippingComment($this->getRequest()->getPost('shippingcomments'));
+$quoteItem->setOtherData($this->getRequest()->getPost('otherdata'));
 $quoteItem->save();
 //            $this->getOnepage()->saveOrder()->setShippingComment('gggggggggggggg')->save();
 //            Magento Save data in sales_flat_order table
