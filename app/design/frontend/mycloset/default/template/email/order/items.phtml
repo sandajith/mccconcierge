@@ -26,9 +26,47 @@
 ?>
 <?php $_order = $this->getOrder() ?>
 <?php if ($_order): ?>
-  
-   
-      <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #d9d9d9; background:#f2f2f2;">
+    <?php
+    $status = array();
+    foreach ($_order->getAllItems() as $_item):
+
+        $ee = $_item['product_id'];
+        $dd = Mage::getResourceModel('catalog/product')
+                ->getAttributeRawValue($ee, 'product_status', 1);
+        $product = Mage::getModel('catalog/product')
+                ->setStoreId(1)
+                ->setData('product_status', $dd);
+        $text = $product->getAttributeText('product_status');
+
+
+
+        if (($text == 'You Have It')) {
+            $status[0][] = 'Articles to Pick Up';
+            ?>
+            <!--<h4 style="font-family: 'Lato', sans-serif;">Articles to Pick Up</h4>-->
+
+        <?php } if (($text == 'We Have It')) { 
+            $status[1][] = 'Articles to Deliver';
+            ?>
+            <!--<h4 style="font-family: 'Lato', sans-serif;">Articles to Deliver</h4>-->
+
+        <?php }
+            
+    endforeach;
+    
+    if(!empty($status[0]) && !empty($status[1])) { ?>
+        <h4 style="font-family: 'Lato', sans-serif;">Articles to Deliver and pickup</h4>
+    <?php } else {
+        if(!empty($status[0])) { ?>
+            <h4 style="font-family: 'Lato', sans-serif;">Articles to Pick Up</h4>
+     <?php   } else { ?>
+            <h4 style="font-family: 'Lato', sans-serif;">Articles to Deliver</h4>
+   <?php     }
+    }
+    
+    ?>
+
+    <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #d9d9d9; background:#f2f2f2;">
         <tr style="background:#d9d9d9">
             <td valign="top" align="left" style="padding:5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9" class="data-table-th">
                 Item Name
@@ -43,56 +81,20 @@
                 Quantity
             </td>
         </tr> 
- <?php $i = 0;
-        foreach ($_order->getAllItems() as $_item): ?>
-                <?php if ($_item->getParentItem()) continue;
-                else $i++; ?>
+        <?php
+        $i = 0;
+        foreach ($_order->getAllItems() as $_item):
+            ?>
+            <?php
+            if ($_item->getParentItem())
+                continue;
+            else
+                $i++;
+            ?>
             <tbody<?php echo $i % 2 ? ' bgcolor="#F6F6F6"' : '' ?>>
-            <?php echo $this->getItemHtml($_item) ?>
+        <?php echo $this->getItemHtml($_item) ?>
             </tbody>
-            <?php endforeach; ?>
+    <?php endforeach; ?>
     </table>
-    <!--old start-->
-<!--   <table cellspacing="0" cellpadding="0" border="0" width="650" style="border:1px solid #EAEAEA;">
-        <thead>
-            <tr>
-                <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Item Name') ?></th>
-                <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Sku') ?></th>
-                <th align="center" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Category') ?></th>
-                <th align="right" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><?php echo $this->__('Qty') ?></th>
-            </tr>
-        </thead>
 
-       
-
-     
-    </table> -->
-
-<!--old end-->
-
-
-    <?php if ($this->helper('giftmessage/message')->isMessagesAvailable('order', $_order, $_order->getStore()) && $_order->getGiftMessageId()): ?>
-        <?php $_giftMessage = $this->helper('giftmessage/message')->getGiftMessage($_order->getGiftMessageId()); ?>
-        <?php if ($_giftMessage): ?>
-            <br />
-            <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #EAEAEA;">
-                <thead>
-                    <tr>
-                        <th align="left" bgcolor="#EAEAEA" style="font-size:13px; padding:3px 9px"><strong><?php echo $this->__('Gift Message for this Order') ?></strong></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td colspan="4" align="left" style="padding:3px 9px">
-                            <strong><?php echo $this->__('From:'); ?></strong> <?php echo $this->escapeHtml($_giftMessage->getSender()) ?>
-                            <br /><strong><?php echo $this->__('To:'); ?></strong> <?php echo $this->escapeHtml($_giftMessage->getRecipient()) ?>
-                            <br /><strong><?php echo $this->__('Message:'); ?></strong><br /> <?php echo $this->escapeHtml($_giftMessage->getMessage()) ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    <?php endif; ?>
 <?php endif; ?>
