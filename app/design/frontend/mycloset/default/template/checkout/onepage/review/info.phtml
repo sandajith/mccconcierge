@@ -127,7 +127,7 @@ if ($pickup_cnt) {
                 $product_designer = $custom->getAttributeText('designer');
                 $product_color = $custom->getAttributeText('color');
                 $product_size = $custom->getAttributeText('size');
-                if ($product_status != 'We Have It') {
+                if (($product_status == 'You Have It') || ($product_status == 'Shipped To')) {
                     ?>
                     <div class="row">
                         <div class="col-sm-3">
