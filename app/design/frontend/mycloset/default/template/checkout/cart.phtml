@@ -41,12 +41,9 @@
     </div>
     <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
-
-
         <div class="row myBag">
             <h4><?php echo $this->__('Deliver Me') ?></h4>
             <div class="col-md-12 dataTable">
-
                 <div class="row th">
                     <div class="col-sm-1"></div>
                     <div class="col-sm-4">CATEGORY</div>
@@ -70,15 +67,12 @@
                             <div class="col-sm-4">
                                 <?php
                                 //Get category name by product id
-
-
                                 $cats = $custom->getCategoryIds();
                                 foreach ($cats as $categoryId) {
                                     $category = Mage::getModel('catalog/category')->load($categoryId);
                                     echo $category->getName();
                                 }
                                 ?>
-
                             </div>
                             <div class="col-sm-4"><?php echo $custom->getAttributeText('designer'); ?></div>
                             <div class="col-sm-1"><?php echo $custom->getAttributeText('color'); ?></div>
@@ -94,17 +88,11 @@
                         <a href="<?php echo $this->getUrl('') ?>my-closet.html" class="pull-left cartButton">
                             choose items to deliver
                         </a>
-
-
-
                         <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=19" class=" btn-empty pull-right cartButton" >clear all items</a>                                  
                     </div>
                 </div>
             </div>
         </div>
-
-
-
         <div class="row myBag">
             <h4><?php echo $this->__('PickUp Me') ?></h4>
             <div class="col-md-12 dataTable">
@@ -116,46 +104,33 @@
                     <div class="col-sm-1">SIZE</div>
                     <div class="col-sm-1"></div>
                 </div>
-                <?php
-//               echo'itemid'. $this->getItems();
-              
-               
-                foreach ($this->getItems() as $_item):
-               
-                     $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
-                 
+                <?php                          
+                foreach ($this->getItems() as $_item):              
+                     $custom = Mage::getModel('catalog/product')->load($_item->getProductId());                 
                     $product_status = $custom->getAttributeText('product_status');
-                    if ($product_status == 'You Have It' || $product_status == 'Shipped To' ) {
-                          
+                    if ($product_status == 'You Have It' || $product_status == 'Shipped To' ) {                          
                         ?>
-
                         <div class="row">
                             <div class="col-sm-1">
                                 <div class="thumb">
-                                    <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="75"  />
-                              
+                                    <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="75"  />                              
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <?php
                                 //Get category name by product id
-
-
                                 $cats = $custom->getCategoryIds();
                                 foreach ($cats as $categoryId) {
                                     $category = Mage::getModel('catalog/category')->load($categoryId);
                                     echo $category->getName();
                                 }
                                 ?>
-
                             </div>
                             <div class="col-sm-4"><?php echo $custom->getAttributeText('designer'); ?></div>
                             <div class="col-sm-1"><?php echo $custom->getAttributeText('color'); ?></div>
                             <div class="col-sm-1"><?php echo $custom['size']; ?></div>
                             <div class="col-sm-1"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
-
                         </div>
-
                         <?php
                     }
                 endforeach;
@@ -165,16 +140,11 @@
                         <a href="<?php echo $this->getUrl('') ?>my-closet.html" class="pull-left cartButton">
                             choose items to pickup
                         </a>
-
                         <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=20" class=" btn-empty pull-right cartButton" >clear all items</a>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
         <div class="row myBag">
             <h4><?php echo $this->__('Products') ?></h4>
             <div class="col-md-12 dataTable">
