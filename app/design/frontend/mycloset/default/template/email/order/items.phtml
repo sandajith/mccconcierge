@@ -24,34 +24,23 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $_order = $this->getOrder() ?>
-<?php if ($_order): ?>
-    <?php
+<?php
+$_order = $this->getOrder();
+if ($_order):
     $status = array();
     foreach ($_order->getAllItems() as $_item):
-
         $ee = $_item['product_id'];
-        $dd = Mage::getResourceModel('catalog/product')
-                ->getAttributeRawValue($ee, 'product_status', 1);
-        $product = Mage::getModel('catalog/product')
-                ->setStoreId(1)
-                ->setData('product_status', $dd);
+        $dd = Mage::getResourceModel('catalog/product')->getAttributeRawValue($ee, 'product_status', 1);
+        $product = Mage::getModel('catalog/product')->setStoreId(1)->setData('product_status', $dd);
         $text = $product->getAttributeText('product_status');
-
-
-
         if (($text == 'You Have It') || ($text == 'Shipped To')) {
             $status[0][] = 'Articles to Pick Up';
-           
         } if (($text == 'We Have It')) {
             $status[1][] = 'Articles to Deliver';
-            
-        } if(empty($text)) {
-             $status[2][] = 'Product';
+        } if (empty($text)) {
+            $status[2][] = 'Product';
         }
-
     endforeach;
-    
     if (!empty($status[0])) {
         ?>
         <h4 style="font-family: 'Lato', sans-serif;">Articles to Pick Up</h4>
@@ -73,82 +62,29 @@
             <?php
             $i = 0;
             foreach ($_order->getAllItems() as $_item):
-                ?>
-                <?php
                 if ($_item->getParentItem())
                     continue;
                 else
                     $i++;
                 ?>
                 <tbody<?php echo $i % 2 ? ' bgcolor="#F6F6F6"' : '' ?>>
-                   <?php   $ee = $_item['product_id'];
-        $dd = Mage::getResourceModel('catalog/product')
-                ->getAttributeRawValue($ee, 'product_status', 1);
-        $product = Mage::getModel('catalog/product')
-                ->setStoreId(1)
-                ->setData('product_status', $dd);
-        $text1 = $product->getAttributeText('product_status');
-
-
-
-        if (($text1 == 'You Have It') || ($text1 == 'Shipped To')) {?>
-            <?php echo $this->getItemHtml($_item) ?>
-           
-      <?php  }?>
-           
+                    <?php
+                    $ee = $_item['product_id'];
+                    $dd = Mage::getResourceModel('catalog/product')->getAttributeRawValue($ee, 'product_status', 1);
+                    $product = Mage::getModel('catalog/product')->setStoreId(1)->setData('product_status', $dd);
+                    $text1 = $product->getAttributeText('product_status');
+                    if (($text1 == 'You Have It') || ($text1 == 'Shipped To')) {
+                        echo $this->getItemHtml($_item);
+                    }
+                    ?>
                 </tbody>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
         </table>
-    <?php } 
-    if (!empty($status[1]))  { ?>
+        <?php
+    }
+    if (!empty($status[1])) {
+        ?>
         <h4 style="font-family: 'Lato', sans-serif;">Articles to Deliver</h4>
-        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #d9d9d9; background:#f2f2f2;">
-            <tr style="background:#d9d9d9">
-                <td valign="top" align="left" style="padding:5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9" class="data-table-th">
-                    Item Name
-                </td>
-                <td valign="top" align="left" style="padding:5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9;  text-align:center;" class="data-table-th">
-                    SKU
-                </td>
-                <td valign="top" align="left" style="padding: 5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9; text-align:center;" class="data-table-th">
-                    Category
-                </td>
-                <td valign="top" align="left" style="padding: 5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9;  text-align:center;" class="data-table-th">
-                    Quantity
-                </td>
-            </tr> 
-              <?php
-            $i = 0;
-            foreach ($_order->getAllItems() as $_item):
-                ?>
-                <?php
-                if ($_item->getParentItem())
-                    continue;
-                else
-                    $i++;
-                ?>
-                <tbody<?php echo $i % 2 ? ' bgcolor="#F6F6F6"' : '' ?>>
-                   <?php   $ee = $_item['product_id'];
-        $dd = Mage::getResourceModel('catalog/product')
-                ->getAttributeRawValue($ee, 'product_status', 1);
-        $product = Mage::getModel('catalog/product')
-                ->setStoreId(1)
-                ->setData('product_status', $dd);
-        $text1 = $product->getAttributeText('product_status');
-
-
-
-        if (($text1 == 'We Have It')) {?>
-            <?php echo $this->getItemHtml($_item) ?>
-           
-      <?php  }?>
-           
-                </tbody>
-        <?php endforeach; ?>
-        </table>
-    <?php
-    } if( $status[2]){ ?>
-      <h4 style="font-family: 'Lato', sans-serif;"> Product </h4>
         <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #d9d9d9; background:#f2f2f2;">
             <tr style="background:#d9d9d9">
                 <td valign="top" align="left" style="padding:5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9" class="data-table-th">
@@ -167,35 +103,64 @@
             <?php
             $i = 0;
             foreach ($_order->getAllItems() as $_item):
-                ?>
-                <?php
                 if ($_item->getParentItem())
                     continue;
                 else
                     $i++;
                 ?>
                 <tbody<?php echo $i % 2 ? ' bgcolor="#F6F6F6"' : '' ?>>
-                   <?php   $ee = $_item['product_id'];
-        $dd = Mage::getResourceModel('catalog/product')
-                ->getAttributeRawValue($ee, 'product_status', 1);
-        $product = Mage::getModel('catalog/product')
-                ->setStoreId(1)
-                ->setData('product_status', $dd);
-        $text12 = $product->getAttributeText('product_status');
+                    <?php
+                    $ee = $_item['product_id'];
+                    $dd = Mage::getResourceModel('catalog/product')->getAttributeRawValue($ee, 'product_status', 1);
+                    $product = Mage::getModel('catalog/product')->setStoreId(1)->setData('product_status', $dd);
+                    $text1 = $product->getAttributeText('product_status');
+                    if (($text1 == 'We Have It')) {
+                        echo $this->getItemHtml($_item);
+                    }
+                    ?>
+                </tbody>
+            <?php endforeach; ?>
+        </table>
+    <?php } if ($status[2]) {
+        ?>
+        <h4 style="font-family: 'Lato', sans-serif;"> Product </h4>
+        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border:1px solid #d9d9d9; background:#f2f2f2;">
+            <tr style="background:#d9d9d9">
+                <td valign="top" align="left" style="padding:5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9" class="data-table-th">
+                    Item Name
+                </td>
+                <td valign="top" align="left" style="padding:5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9;  text-align:center;" class="data-table-th">
+                    SKU
+                </td>
+                <td valign="top" align="left" style="padding: 5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9; text-align:center;" class="data-table-th">
+                    Category
+                </td>
+                <td valign="top" align="left" style="padding: 5px; font-family: 'Lato', sans-serif; font-size: 14px; line-height: 1.3; color: #000000; font-weight: bold; border-bottom: 1px solid #d9d9d9;  text-align:center;" class="data-table-th">
+                    Quantity
+                </td>
+            </tr> 
+            <?php
+            $i = 0;
+            foreach ($_order->getAllItems() as $_item):
+                if ($_item->getParentItem())
+                    continue;
+                else
+                    $i++;
+                ?>
+                <tbody<?php echo $i % 2 ? ' bgcolor="#F6F6F6"' : '' ?>>
+                    <?php
+                    $ee = $_item['product_id'];
+                    $dd = Mage::getResourceModel('catalog/product')->getAttributeRawValue($ee, 'product_status', 1);
+                    $product = Mage::getModel('catalog/product')->setStoreId(1)->setData('product_status', $dd);
+                    $text12 = $product->getAttributeText('product_status');
+                    if (empty($text12)) {
+                        echo $this->getItemHtml($_item);
+                    }
+                    ?>
 
-
-
-        if (empty($text12)) {?>
-            <?php echo $this->getItemHtml($_item) ?>
-           
-      <?php  }?>
-           
                 </tbody>
         <?php endforeach; ?>
         </table>   
-   <?php }
-    ?>
-
-
-
-<?php endif; ?>
+    <?php }
+endif;
+?>
