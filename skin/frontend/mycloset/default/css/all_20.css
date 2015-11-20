@@ -195,24 +195,16 @@ header .search:after {
     z-index: 10;
 
 }
-.mainMenu .nav li ul.sub-nav { display: none; position: absolute; min-width: 100%; top: 100%; left: 0; background:rgba(256,256,256,0.92); margin: 0; padding:5px 0; box-shadow: 0 1px 5px -1px #888; -moz-box-shadow:0 1px 5px -1px #888; -webkit-box-shadow:0 1px 5px -1px #888; -o-box-shadow:0 1px 5px -1px #888;}
+.mainMenu .nav li ul.sub-nav { display: none; position: absolute; min-width: 100%; top: 100%; left: 0; background:#000; margin: 0; padding: 0}
 .mainMenu .nav li ul.sub-nav li { display: block; float: 100%}
 /*edited by neenu
 for sub menu width changes
 */
-.mainMenu .nav li ul.sub-nav li a { 
-    border-bottom: 0 none;
-    color: #000;
-    display: block;
-    padding: 5px 20px;
-    text-align: left;
-    text-decoration: none;
-    width: 100%;
-}
+.mainMenu .nav li ul.sub-nav li a { color: #ffffff; display: block; border-bottom: 1px solid #ffffff;   text-decoration: none; width: 174px;}
 .mainMenu .nav li a{
     padding:12px 44px;
 }
-.mainMenu .nav li a:hover { background: none;}
+.mainMenu .nav li a:hover { color: #000}
 .mainMenu .nav li.search-mobile {  border-bottom: 1px solid #fff;
     color: #000;
     display: none;
@@ -881,9 +873,9 @@ footer .social a { margin-left: 5px;}
     position: absolute;
     width: 948px;
     z-index: 109;
-     -webkit-box-shadow:0 0 25px -14px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0 0 25px -14px rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 25px -14px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
 }
 .popupHead { position: absolute; right:26px; top: 12px; line-height:19px}
 .popupHead a { margin-left: 20px; font-size: 17px; color: #000000; opacity: 1}
@@ -891,7 +883,6 @@ footer .social a { margin-left: 5px;}
 .popupContent .image img {max-height: 600px; max-width: 100%;}
 .popupContent .details {font: italic 16px/26px 'Lato';}
 .popupContent  h2 { font: normal 27px 'Lato'; margin:0px 0 10px 0}/*20px*/
-.popupContent .details .button { width: 227px; max-width: 100%; margin:20px 0; padding: 8px 15px}
 .popupContent .details .colorBox { margin-bottom: 10px;}
 .popupContent .details .signature { font-size:17px;}
 .popupContent .details .tags { margin:10px 0 20px 0; display: block; width: 100%; float: left;}
@@ -1192,7 +1183,6 @@ font-weight: 100;
     background: #fff;
     padding:5px 14px;
     display:inline-block;
-    margin-right: 5px;
 }
 .checkout-onepage-index .opc > li.section.active .step.a-item{
     border-bottom:1px solid #c3c3c3;
@@ -1272,7 +1262,7 @@ font-weight: 100;
     border-radius: 0;
     box-shadow: none;
     float: right;
-    margin: 0;
+    margin: -265;
     padding: 2px 12px;
 }
 
@@ -1424,7 +1414,7 @@ font-weight: 100;
     padding:20px;
     background: #eee;
     margin:10px 0;
-
+  
 }
 .checkout-onepage-index .opc .qtyBox input[type="text"]{
   float: left;
@@ -1445,7 +1435,3 @@ font-weight: 100;
 /*.control-display{
     display: none;
 }*/
-.opc .step-title a {
-   text-decoration: none; outline: none !important;color: #000; cursor: default;
-       
-}
