@@ -34,6 +34,17 @@
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <?php echo $this->getChildHtml('form_before') ?>
 <?php $expression = $this->getItems();
+foreach ($expression as $_item) {
+    $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
+    $product_status = $custom->getAttributeText('product_status');
+    if ($product_status == 'We Have It') {
+        $delivery_cnt = true;
+    } else if (($product_status == 'You Have It') || ($product_status == 'Shipped To')) {
+        $pickup_cnt = true;
+    } else {
+        $product_cnt = true;
+    }
+}
 ?>  
 <div class="cart">   
     <div class="page-title title-buttons subhead">
@@ -41,6 +52,7 @@
     </div>
     <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
+         <?php //if ($delivery_cnt) { ?>
         <div class="row myBag">
             <h4><?php echo $this->__('Deliver Me') ?></h4>
             <div class="col-md-12 dataTable">
@@ -93,6 +105,9 @@
                 </div>
             </div>
         </div>
+           <?php
+   // } if ($pickup_cnt) {
+        ?>
         <div class="row myBag">
             <h4><?php echo $this->__('PickUp Me') ?></h4>
             <div class="col-md-12 dataTable">
@@ -145,6 +160,9 @@
                 </div>
             </div>
         </div>
+           <?php
+   // } if ($product_cnt) {
+        ?>
         <div class="row myBag">
             <h4><?php echo $this->__('Products') ?></h4>
             <div class="col-md-12 dataTable">
@@ -206,6 +224,9 @@
                 </div>
             </div>
         </div>
+            <?php
+//    }
+    ?>
 <!--            <script type="text/javascript">decorateTable('shopping-cart-table')</script>-->
         <?php // endif;      ?>
     </form>

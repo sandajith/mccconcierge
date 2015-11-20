@@ -123,15 +123,6 @@
  }
  .homeGrid p {  min-height: 138px;}
 
-        .checkout-onepage-index .opc .step.a-item {
-            padding:10px;
-        }
-
-        .checkout-onepage-index .opc .step.a-item .order-review {
-            padding:0 15px;
-        }
-
-
     }
 
     /* Small Devices, Tablets */
@@ -185,32 +176,8 @@
             min-height: auto;
         }
 
-        .checkout-onepage-index .opc .dataTable > .row.th {
-            margin: 15px -25px 0;
-        }
-        .checkout-onepage-index .opc .dataTable > .row.th > div {
-            text-align: left;
-        }
-
-        .checkout-onepage-index .opc .dataTable > .row .thumb {
-            width:100%;
-        }
-        .dataTable > .row .product-name {
-            font-size: 14px;
-            line-height: 19px;
-            padding: 10px 0;
-            text-align: left;
-        }
-
-        .checkout-onepage-index .checkoutTotal {
-            margin:20px -25px;
-        }
-
-        .mainMenu .nav li ul.sub-nav {
-            background: none;
-            padding:0;
-        }
-
+        
+        
     }
 
 
@@ -380,30 +347,13 @@
             padding:0;
         }
 
-       .checkout-onepage-index .opc .step.a-item {
-            padding:10px;
-        }
-
-        
-
-        .checkout-onepage-index .itemsWrapper {
-            width:100%;
-        }
-
     }
-     @media only screen and (min-width : 1200px) {
-        .dataTable > .row > div {
-            padding-top:40px;
-        }
-
-        .dataTable > .row > div:first-child{
-            padding-top:10px;
-        }
-    }
+    
 
     @media only screen and (min-width : 616px) {
        
         header .loginDetails .links { display: block !important;}
+        
     }
 
     @media only screen and (max-width : 615px) {
@@ -438,7 +388,7 @@
             padding-bottom: 4px;
             float: left
         }
-
+        
         .checkout-onepage-index .opc .qtyBox .qtyCol {
             float:left;
             width:100%;
@@ -464,13 +414,9 @@
         header .logo{
             
         }
-      header .loginDetails a { margin: 1px 5px 0; font-size: 11px !important}
-      .opc .step-title a{
-          font-size: 13px;
-      }
-      .checkout-onepage-index .opc label {
-          font-size: 13px;
-      }
+      
+       
+		header .loginDetails a { margin: 1px 5px 0; font-size: 11px !important}
     }
 
 

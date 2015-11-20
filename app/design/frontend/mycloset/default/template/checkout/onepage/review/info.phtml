@@ -44,12 +44,10 @@ foreach ($this->getItems() as $_item) {
         <div class = "row myBag">
             <div class = "col-md-12 dataTable" id = "checkout-review-table">
                 <div class = "row th">
-                    <div class = "col-sm-3"> <strong> Articles to Deliver </strong> </div>
-                    <div class = "col-sm-4"></div>
-                    <div class = "col-sm-2"> <strong> Price </strong> </div>
-                    <div class = "col-sm-1"> <strong> Qty </strong> </div>
-                    <div class = "col-sm-2"> <strong> Subtotal </strong> </div>
-
+                    <div class="col-sm-7 col-xs-12">Articles to Deliver</div>
+                    <div class="col-sm-2 hidden-xs">price</div>
+                    <div class="col-sm-1 hidden-xs">Qty</div>
+                    <div class="col-sm-2 hidden-xs">subtotal</div>
                 </div>
                 <?php
                 foreach ($this->getItems() as $_item):
@@ -62,20 +60,25 @@ foreach ($this->getItems() as $_item) {
                     if ($product_status == 'We Have It') {
                         ?>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-3 col-xs-6">
                                 <div class="thumb">
-                                    <img src="<?php echo $custom->getThumbnailUrl();?>"  />
+                                    <img src="<?php echo  Mage::helper('catalog/image')->init($custom, 'image')->resize(135,135);  ?>"  />
                                 </div>
                             </div>
-                            <div class="col-sm-4 product-name">
-                                <strong> Designer: </strong><?php echo $product_designer; ?><br>
-                                <strong> Size: </strong><?php echo $product_size; ?> <br>
-                                <strong> Color: </strong><?php echo $product_color; ?><br>
-                                <strong> Status: </strong><?php echo $product_status; ?>
+                            <div class="col-sm-4 col-xs-6 product-name">
+                                <p><b>Designer:</b> <span><?php echo $product_designer; ?></span></p>
+                                <p><b>Size:</b> <span><?php echo $product_size; ?></span> </p>
+                                <p><b>Color:</b> <span><?php echo $product_color; ?></span></p>
+                                <p><b>Status:</b><span> <?php echo $product_status; ?></span></p>
+
+                                <p class="visible-xs"><b>Price:</b><span> Included</span></p>
+                                <p class="visible-xs"><b>Qty:</b><span> <?php echo $_item->getQty() ?></span></p>
+                                <p class="visible-xs"><b>subtotal:</b><span> Included</span></p>
                             </div>
-                            <div class="col-sm-2">Included</div>
-                            <div class="col-sm-1"><?php echo $_item->getQty() ?></div>
-                            <div class="col-sm-2">Included</div>
+                            <div class="col-sm-2 hidden-xs">Included</div>
+                            <div class="col-sm-1 hidden-xs"><?php echo $_item->getQty() ?></div>
+                            <div class="col-sm-2 hidden-xs">Included</div>
+
                         </div>
                         <?php
                     }
@@ -89,37 +92,46 @@ foreach ($this->getItems() as $_item) {
         <div class="row myBag">
             <div class="col-md-12 dataTable" id="checkout-review-table">
                 <div class="row th">
-                    <div class="col-sm-3"><strong>Articles to Pick Up</strong></div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-2"><strong>Price</strong></div>
-                    <div class="col-sm-1"><strong>Qty</strong></div>
-                    <div class="col-sm-2"><strong>Subtotal</strong></div>
+                    <div class="col-sm-7 col-xs-12">Articles to PickUp</div>
+                    <div class="col-sm-2 hidden-xs">price</div>
+                    <div class="col-sm-1 hidden-xs">Qty</div>
+                    <div class="col-sm-2 hidden-xs">subtotal</div>
+
                 </div>
                 <?php
                 foreach ($this->getItems() as $_item):
                     $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
+                  
+                    
                     $product_status = $custom->getAttributeText('product_status');
                     $product_price = $custom->getAttributeText('price');
                     $product_designer = $custom->getAttributeText('designer');
                     $product_color = $custom->getAttributeText('color');
                     $product_size = $custom->getAttributeText('size');
+                   // $product_ShippedTo = $custom->getAttributeValue('shipped_to');
+                    
                     if (($product_status == 'You Have It') || ($product_status == 'Shipped To')) {
                         ?>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-3 col-xs-6">
                                 <div class="thumb">
-                                    <img src="<?php echo $custom->getThumbnailUrl();  ?>"  />
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($custom, 'image')->resize(135,135); ?>"  />
                                 </div>
                             </div>
-                            <div class="col-sm-4 product-name">
-                                <strong> Designer: </strong> <?php echo $product_designer; ?><br>
-                                <strong>Size: </strong><?php echo $product_size; ?> <br>
-                                <strong> Color: </strong><?php echo $product_color; ?><br>
-                                <strong> Status: </strong><?php echo $product_status; ?>
+                            <div class="col-sm-4 col-xs-6 product-name">
+                                <p><b>Designer:</b> <span><?php echo $product_designer; ?></span></p>
+                                <p><b>Size:</b> <span><?php echo $product_size; ?></span> </p>
+                                <p><b>Color:</b> <span><?php echo $product_color; ?></span></p>
+                                <p><b>Status:</b><span> <?php echo $product_status.' '. $custom['shipped_to']; ?></span></p>
+
+                                <p class="visible-xs"><b>Price:</b><span> Included</span></p>
+                                <p class="visible-xs"><b>Qty:</b><span> <?php echo $_item->getQty() ?></span></p>
+                                <p class="visible-xs"><b>subtotal:</b><span> Included</span></p>
                             </div>
-                            <div class="col-sm-2">Included</div>
-                            <div class="col-sm-1"><?php echo $_item->getQty() ?></div>
-                            <div class="col-sm-2">Included</div>
+                            <div class="col-sm-2 hidden-xs">Included</div>
+                            <div class="col-sm-1 hidden-xs"><?php echo $_item->getQty() ?></div>
+                            <div class="col-sm-2 hidden-xs">Included</div>
+
                         </div>
                         <?php
                     }
@@ -133,11 +145,11 @@ foreach ($this->getItems() as $_item) {
         <div class="row myBag">
             <div class="col-md-12 dataTable" id="checkout-review-table">
                 <div class="row th">
-                    <div class="col-sm-3"><strong>Product</strong></div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-2"><strong>Price</strong></div>
-                    <div class="col-sm-1"><strong>Qty</strong></div>
-                    <div class="col-sm-2"><strong>Subtotal</strong></div>
+                   
+                     <div class="col-sm-7 col-xs-12"> Product </div>
+            <div class="col-sm-2 hidden-xs">price</div>
+            <div class="col-sm-1 hidden-xs">Qty</div>
+            <div class="col-sm-2 hidden-xs">subtotal</div>
                 </div>
                 <?php
                 foreach ($this->getItems() as $_item):
