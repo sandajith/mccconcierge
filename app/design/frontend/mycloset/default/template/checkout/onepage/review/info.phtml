@@ -62,7 +62,7 @@ foreach ($this->getItems() as $_item) {
                         <div class="row">
                             <div class="col-sm-3 col-xs-6">
                                 <div class="thumb">
-                                    <img src="<?php echo  Mage::helper('catalog/image')->init($custom, 'image')->resize(135,135);  ?>"  />
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($custom, 'image')->resize(135, 135); ?>"  />
                                 </div>
                             </div>
                             <div class="col-sm-4 col-xs-6 product-name">
@@ -101,28 +101,28 @@ foreach ($this->getItems() as $_item) {
                 <?php
                 foreach ($this->getItems() as $_item):
                     $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
-                  
-                    
+
+
                     $product_status = $custom->getAttributeText('product_status');
                     $product_price = $custom->getAttributeText('price');
                     $product_designer = $custom->getAttributeText('designer');
                     $product_color = $custom->getAttributeText('color');
                     $product_size = $custom->getAttributeText('size');
-                   // $product_ShippedTo = $custom->getAttributeValue('shipped_to');
-                    
+                    // $product_ShippedTo = $custom->getAttributeValue('shipped_to');
+
                     if (($product_status == 'You Have It') || ($product_status == 'Shipped To')) {
                         ?>
                         <div class="row">
                             <div class="col-sm-3 col-xs-6">
                                 <div class="thumb">
-                                    <img src="<?php echo Mage::helper('catalog/image')->init($custom, 'image')->resize(135,135); ?>"  />
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($custom, 'image')->resize(135, 135); ?>"  />
                                 </div>
                             </div>
                             <div class="col-sm-4 col-xs-6 product-name">
                                 <p><b>Designer:</b> <span><?php echo $product_designer; ?></span></p>
                                 <p><b>Size:</b> <span><?php echo $product_size; ?></span> </p>
                                 <p><b>Color:</b> <span><?php echo $product_color; ?></span></p>
-                                <p><b>Status:</b><span> <?php echo $product_status.' '. $custom['shipped_to']; ?></span></p>
+                                <p><b>Status:</b><span> <?php echo $product_status . ' ' . $custom['shipped_to']; ?></span></p>
 
                                 <p class="visible-xs"><b>Price:</b><span> Included</span></p>
                                 <p class="visible-xs"><b>Qty:</b><span> <?php echo $_item->getQty() ?></span></p>
@@ -145,11 +145,11 @@ foreach ($this->getItems() as $_item) {
         <div class="row myBag">
             <div class="col-md-12 dataTable" id="checkout-review-table">
                 <div class="row th">
-                   
-                     <div class="col-sm-7 col-xs-12"> Product </div>
-            <div class="col-sm-2 hidden-xs">price</div>
-            <div class="col-sm-1 hidden-xs">Qty</div>
-            <div class="col-sm-2 hidden-xs">subtotal</div>
+
+                    <div class="col-sm-7 col-xs-12"> Product </div>
+                    <div class="col-sm-2 hidden-xs">price</div>
+                    <div class="col-sm-1 hidden-xs">Qty</div>
+                    <div class="col-sm-2 hidden-xs">subtotal</div>
                 </div>
                 <?php
                 foreach ($this->getItems() as $_item):
@@ -184,15 +184,33 @@ foreach ($this->getItems() as $_item) {
                     $catname = ucfirst(strtolower($category->name));
                     ?> 
                     <div class="col-md-4 col-sm-6 col-xs-6 qtyCol">                
-                        <input  type="text" id="quantity" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value=""> <strong> <?php echo $catname; ?>  </strong> 
+                        <input  type="text" class="qtybox" id="<?php echo $category->getId(); ?>" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value=""> <strong> <?php echo $catname; ?>  </strong> 
                     </div>
-                <?php } ?>
+                <?php 
+              
+                } ?>
             </div>        
         </div>
     </div>
 </form>
 
 <script type="text/javascript">
+    
+var dummybox = document.getElementById("qtybox").value;
+        var seperate = dummybox.split(',');
+//console.log(seperate);
+
+        for (var j = 0; j < seperate.length - 1; j++) {
+            var qtyval = seperate[j];
+            var qtyspl = qtyval.split(':');
+            console.log(qtyspl)
+            var catid = qtyspl[0];
+           
+            var catqty = qtyspl[1];
+//            console.log(catid + '-' + catqty);
+ document.getElementById(catid).value = catqty;
+
+        }
 //<![CDATA[
     decorateTable('checkout-review-table');
     truncateOptions();
@@ -215,8 +233,12 @@ foreach ($this->getItems() as $_item) {
             $current_date = date();
             $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
             echo $delivery_date;
-            ?> <a onclick="shipping.save()" > | Change</a></p>
-        <?php echo $this->getChildHtml('button') ?>
+            ?> 
+            <a onclick="checkout.changeSection('opc-shipping_method');                   
+                     SaveAction();
+
+                    return false;" href="#shipping_method"> | Change</a></p>
+<?php echo $this->getChildHtml('button') ?>
         <span class="please-wait" id="review-please-wait" style="display:none;">
             <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
         </span>
@@ -225,5 +247,7 @@ foreach ($this->getItems() as $_item) {
         //<![CDATA[
         review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('co-overreview-form'));
         //]]>
+
     </script>
 </div>
+
