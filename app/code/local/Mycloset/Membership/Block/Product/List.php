@@ -284,4 +284,5 @@ if($topParent=='16'){
             $this->getItemsTags($this->_getProductCollection())
         );
     }
+  
 }
