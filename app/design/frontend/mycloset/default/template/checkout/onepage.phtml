@@ -27,34 +27,57 @@
 
 <script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
-<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout_rwd.js') ?>"></script>
 
 <ol class="opc opc-firststep-<?php echo $this->getActiveStep() ?>" id="checkoutSteps">
-<?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
-<?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
-    <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
-        <div class="step-title">
-            <a href="#"> <span class=" box"><?php echo $i ?></span>
-            <?php echo $_stepInfo['label'] ?>
-         </a>
-        </div>
-        <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
-            <?php echo $this->getChildHtml($_stepId) ?>
-        </div>
-    </li>
+    <?php
+    $i = 0;
+    foreach ($this->getSteps() as $_stepId => $_stepInfo):
+        ?>
+        <?php
+        if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue;
+        endif;
+        $i++
+        ?>
+        <li id="opc-<?php echo $_stepId ?>" class="section<?php echo!empty($_stepInfo['allow']) ? ' allow' : '' ?><?php echo!empty($_stepInfo['complete']) ? ' saved' : '' ?>">
+            <div class="step-title">
+                <a href="#"> <span class=" box"><?php echo $i ?></span>
+    <?php echo $_stepInfo['label'] ?>
+                </a>
+            </div>
+            <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
+    <?php echo $this->getChildHtml($_stepId) ?>
+            </div>
+        </li>
 <?php endforeach ?>
 </ol>
+<input type="hidden" value="" id="qtybox" name="dummy_qty">
 <script type="text/javascript">
 //<![CDATA[
     var accordion = new Accordion('checkoutSteps', '.step-title', true);
-    <?php if($this->getActiveStep()): ?>
-    accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
-    <?php endif ?>
-    var checkout = new Checkout(accordion,{
+<?php if ($this->getActiveStep()): ?>
+        accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
+<?php endif ?>
+    var checkout = new Checkout(accordion, {
         progress: '<?php echo $this->getUrl('checkout/onepage/progress') ?>',
         review: '<?php echo $this->getUrl('checkout/onepage/review') ?>',
         saveMethod: '<?php echo $this->getUrl('checkout/onepage/saveMethod') ?>',
         failure: '<?php echo $this->getUrl('checkout/cart') ?>'}
     );
 //]]>
+
+    function SaveAction() {
+        document.getElementById("qtybox").value = '';
+        var x = document.getElementsByClassName("qtybox");
+
+        var i;
+        for (i = 0; i < x.length; i++) {
+            if (x[i].value)
+            {
+                var dummybox = document.getElementById("qtybox").value + x[i].id + ':' + x[i].value + ',';
+                document.getElementById("qtybox").value = dummybox;
+            }
+        }
+
+    }
+
 </script>
