@@ -700,6 +700,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .paging a:hover { background: #ccc;}
 
 
+
 .loginRegister .bordered {
     border: 2px solid #dcdcdc;
     margin-bottom: 20px;
@@ -707,21 +708,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
     padding-right: 22px;
 }
 
+.customer-account-create .loginRegister .bordered { margin-bottom: 2px;}
 .loginRegister .bordered h4 { font-weight: bold; margin: 17px 0 20px}
+.customer-account-create .loginRegister .bordered h4 { margin:29px 0 0;}
 .loginRegister .bordered h4.m-t-0 { margin-top: 20px; margin-bottom: 0px;}
-.loginRegister .bordered .content { min-height: 290px; margin-bottom: 15px;}
+.loginRegister .bordered .content { min-height: 310px; margin-bottom: 15px;}
 
 .loginRegister .bordered .content label { display: block; margin:0}
 .loginRegister .loginBox .bordered .content label { margin: 20px 0 0 0}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 250px;}
 .loginRegister .bordered  .select,
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
-
-.loginRegister .bordered .content label { display: block; padding:5px 0; margin:7px 0 -1px 0; font-weight:normal}
+.loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px;}
+.loginRegister .bordered .content label { display: block; padding:5px 0; margin:7px 0 -3px; font-weight:normal}
 .loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:10px 0 5px}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
 .loginRegister .bordered  select,
-.loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:1px 5px; margin-bottom:0px;}
+.loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:1px 5px; margin-bottom:0px; height: 26px;}
 
 .loginRegister .bordered p.required{color:#000; font-size:12px; position: absolute; bottom: 0; right:0;}
 .loginRegister .bordered .content{position:relative;}
@@ -745,6 +748,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
     text-indent: 0.01px;
     text-overflow: '';
 }
+.customer-account-create .buttons-set { float: left; width: 100%}
+.customer-account-create .buttons-set .button { min-width: 100px; border-radius: 8px;}
+.customer-account-create .buttons-set p { margin: 0 0 -7px}
+.customer-account-create .loginRegister .bordered .content { min-height: auto;}
+
 .custom-select { position:relative; float:left;}
 .custom-select::after {
     border-left: 5px solid transparent;
@@ -766,7 +774,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 }
 
 
-.divFooter { background: #dadada; display: block; overflow: hidden; margin: 0 -20px;}
+.divFooter { background: #dadada; display: block; overflow: hidden; margin: 0 -22px;}
 .divFooter .btn { background: #b3b3b3; margin: 5px; border-radius:0; color: #ffffff; text-transform: uppercase;}
 .divFooter .btn:hover { background: #333; color: #fff}
 .divFooter .lnk { margin: 10px 0 0 15px; color: #000000; text-transform: uppercase;}
@@ -941,8 +949,8 @@ footer .social a { margin-left: 5px;}
 .account-create.register ul.form-list li .customer-name .field .input-box,
 .account-create.register ul.form-list li label,
 .account-create.register ul.form-list li .input-box{
-	 width: 145px;
-	 display: inline-block;
+     width: 145px;
+     display: inline-block;
 }
 
 .account-create.register .fieldset{
@@ -1064,6 +1072,7 @@ p.required { font-size:11px; text-align:right; color:#EB340A; }
 
 
 .intro p.alrdyMember{font: 14px/20px arial;}
+.intro p.alrdyMember a { text-decoration: underline;}
 .block-subscribe .actions{text-align: center;}
 .block-subscribe .actions button.button{margin:15px 0px; }
 .success_title{text-align: center; }

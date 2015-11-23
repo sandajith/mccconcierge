@@ -66,6 +66,13 @@
 
     }
 
+    @media only screen and (min-width: 1260px){
+        .customer-account-create .main-container > .main > .container,
+        .customer-account-login .main-container > .main > .container {
+            width: 1230px;
+        }
+    }
+
     /* Medium Devices, Desktops */
     @media only screen and (max-width : 992px) {
         
