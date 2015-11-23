@@ -16,7 +16,7 @@ $this->_options[] = array(
             foreach ($users as $user) {
                 $this->_options[] = array(
                     'value' => $user['entity_id'],
-                    'label' => $user['firstname']
+                    'label' =>  ucfirst($user['firstname']).' '.ucfirst($user['lastname'])
                 );
             }
         }
