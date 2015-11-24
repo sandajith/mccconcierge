@@ -38,7 +38,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         }
         $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
         $currency_symbol = Mage::app()->getLocale()->currency($currency_code)->getSymbol();
-        echo $currency_symbol . $finalPrice . '<br>' . $details . '@' . $finalPrice. '@'.$membershipType.'@'.$membershipId;
+        echo $currency_symbol . $finalPrice . '<br>' . $details . '@' . $finalPrice . '@' . $membershipType . '@' . $membershipId;
     }
 
     public function confirmpaymentAction() {
@@ -48,9 +48,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
     public function authorizepaymentAction() {
         $postdata = $this->getRequest()->getPost('x_card_num');
-       $creditcard =  substr($postdata,-4,4);
+        $creditcard = substr($postdata, -4, 4);
 //        print_r($postdata);
-    
+
         $z_memtype1 = $this->getRequest()->getPost('mem_table_id');
         $taxrate = $this->getRequest()->getPost('tax_rate');
         if (Mage::getSingleton('customer/session')->getMemID() === '') {// if session data is available
@@ -66,16 +66,16 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $emailid = $this->getRequest()->getPost('emailid');
             $customerid = $this->getRequest()->getPost('cust_id');
         }
-   
+
         if ($taxrate === '') {
             $mem_amount = $this->getRequest()->getPost('amt');
         } else {
-          $taxrate;
-          $taxval= $taxrate/100;
-           $taxable_amount = $this->getRequest()->getPost('amt')*$taxval  ;
-           $amt=$this->getRequest()->getPost('amt');
-        $mem_amount = $amt+$taxable_amount;
-        
+            $taxrate;
+            $taxval = $taxrate / 100;
+            $taxable_amount = $this->getRequest()->getPost('amt') * $taxval;
+            $amt = $this->getRequest()->getPost('amt');
+            $mem_amount = $amt + $taxable_amount;
+
 //            You Chose Satndard closet
 //Membership amount : $150
 //Tax               : $y
@@ -90,12 +90,12 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
 
 
-     $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
-  
+        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
+
         $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
-  
-       $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);    
-         $g_apipath = "/xml/v1/request.api";    
+
+        $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
+        $g_apipath = "/xml/v1/request.api";
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
 
 
@@ -110,10 +110,10 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</profile>" .
                 "</createCustomerProfileRequest>";
 
-       
+
         $response = send_xml_request($g_apihost, $g_apipath, $content);
 
-       
+
         $parsedresponse = parse_api_response($response);
         $parsed_customer_id = $parsedresponse->customerProfileId;
 
@@ -226,7 +226,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $z_lastname = $lname;
             $z_email = $emailid;
             $z_memtype = $this->getRequest()->getPost('mem_type');
-         $z_amount = $mem_amount;
+            $z_amount = $mem_amount;
 
             if ("1" == $responseCode) {
                 //Email sending to the customer upon successful payment
@@ -326,7 +326,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function paymeAction() {
-
+       
         $payment_details = array();
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
         $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
