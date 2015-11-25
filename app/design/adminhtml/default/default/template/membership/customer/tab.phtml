@@ -21,7 +21,7 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
 
 <table cellspacing="0" class="form-edit">
     <tr>
-        <td class="payment-section">
+        <td class="payment-section" >
             <div class="entry-edit-head">
                 <h4 class="icon-head head-customer-address-list"><?php echo Mage::helper('customer')->__('Membership Information') ?></h4>
             </div>   
@@ -59,19 +59,20 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                                 ->addAttributeToFilter('visibility', 4);
                         echo $myclosetcount = $products->count();
                         ?></h4>
-                        <input type="hidden" id="myclosetcount" value="<?php echo $myclosetcount; ?>" name="myclosetcount" />
-                        <input type="text" id="constantamount" value="3" name="constantamount"/>
+                    <input type="hidden" id="items_num" value="<?php echo $myclosetcount ?>"/>
+                    <h4>Amount per item( 50 minimum ):<?php echo '3'; ?> </h4>
+                    <input type="hidden" id="items_amt" value="3"/>
                     <input type="checkbox" checked="checked" id="add5" value="<?php
                     if ($region_id == '43') {
                         echo $mem_amount;
                     } else {
                         echo $info['getamount'];
                     }
-                    ?>"  onclick="UpdateCost();"> &nbsp;Include membership charge for payment
-                    
-                    
-                    
-                       <?php } elseif ($cusgroup === '4') {//Waiting List group    ?>
+                    ?>"  onclick="UpdateCost();"> &nbsp;Include membership charge for payment <br>
+
+                    <input type="checkbox" checked="checked" id="storageitems" value="<?php echo $myclosetcount ?>"  onclick="UpdateCost();"> &nbsp;Include storage charge for payment
+
+                <?php } elseif ($cusgroup === '4') {//Waiting List group    ?>
                     <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
                 <?php } elseif ($cusgroup === '15') {//Non paid member groop   ?>
                     <h4> <label>Membership Status</label>: <?php echo $group->getCode(); ?></h4>
@@ -89,6 +90,8 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                 <input type="hidden" id="finalamount" value="<?php echo array_sum($price); ?>" name="amount" />                
             </div>
         </td>
+
+
     </tr>
 </table>
 <div class="payment-sections">
@@ -145,27 +148,27 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                                 <tbody>
                                     <?php
 //                  
-                                    echo 'customerid=' . $customerid = Mage::app()->getRequest()->getParam('id');
+                                    $customerid = Mage::app()->getRequest()->getParam('id');
                                     $orders = Mage::getResourceModel('sales/order_collection')
                                             ->addFieldToSelect('*')
                                             ->addFieldToFilter('customer_id', $customerid)
 //        ->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
                                             ->setOrder('created_at', 'desc');
 //     $this->setOrders($orders); 
+                                    $sum1 = 0;
                                     foreach ($orders as $order):
-                                       // echo '<pre>';
-                                      //  print_r($order);
+//                                        echo '<pre>';
+//                                        print_r($order);
                                         ?>
                                         <tr>
-                                            <th><a href="http://localhost/mgn/magento/index.php/admin/sales_order/view/order_id/<?php echo$order->getEntityId();?>/key/"><?php echo $order->getRealOrderId(); ?></a></th>
+                                            <th><a href="http://localhost/mgn/magento/index.php/admin/sales_order/view/order_id/<?php echo$order->getEntityId(); ?>/key/"><?php echo $order->getRealOrderId(); ?></a></th>
                                             <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
-                                            <th>
-                                                <label>shipping :</label><?php echo  $order->formatPrice($order->getGrandTotal()); ?>
-                                                <label>Product :</label><?php echo  $order->formatPrice($order->getGrandTotal()); ?>
-                                            
+                                            <th>                                              
+                                                <label>Shipping: </label><?php echo $order->formatPrice($order->getShippingAmount()) ?><label>product: </label><?php echo $order->formatPrice($order->getSubtotal()) ?>                                                                                                                                           
                                             </th>
-                                        </tr>
+                                        </tr>                                
                                         <?php
+                                        $sum1 = floatval($sum1) + floatval($order->getGrandTotal());
                                     endforeach;
                                     ?>
                                 </tbody>
@@ -175,9 +178,8 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                 </tr>
             </tbody>
         </table>
-        <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . array_sum(); ?>
-        </h5>
-        <input id="servicesum" type="hidden" value="<?php echo array_sum($price); ?>"/>
+        <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '' . $sum1; ?></h5>
+        <input id="servicesum" type="hidden" value="<?php echo $sum1; ?>"/>
     </div>
 </div>
 <div class="sss" style="float: left ; width: 100%;">
@@ -188,9 +190,9 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
             <?php
             //for New York region check ;43->New York
             if ($region_id == '43') {
-                echo $mem_amount;
+                echo $grandtotal = $mem_amount + $sum1 + 3;
             } else {
-                echo $info['getamount'];
+                echo $grandtotal = $info['getamount'] + $sum1 + 3;
             }
             ?>
         </span>
@@ -204,15 +206,19 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
 
     function UpdateCost() {
         var sum = 0;
-        var input, elem, element,element1,element3, memsum = 0;
+        var input, elem, element, itemsamt, itemsnum, memsum = 0;
         element = document.getElementById('add5');
-        element1 = document.getElementById('constantamount');
-        element3 = document.getElementById('myclosetcount');
-           var constantamt = element1.value;
-        if(element3 >=50){
-            constantamt =constantamt*element3;
-        }else{
-            constantamt;
+        itemsnum = document.getElementById('storageitems');
+        itemsamt = document.getElementById('items_amt').value;
+
+        if (itemsnum.checked == true) {
+            if (itemsnum.value > 50) {
+                itemsamt = itemsamt * itemsnum;
+            } else {
+                itemsamt;
+            }
+        } else {
+            itemsamt = 0;
         }
         if (element.checked == true) {
             memsum = element.value;
@@ -220,7 +226,7 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
         else {
             memsum = 0;
         }
-     
+
         var parameters = "name=" + sum;
 
         for (i = 0; i < 6; i++) {
@@ -253,8 +259,8 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
 
             }
         }
-        sumtot =  parseFloat(constantamt)+ parseFloat(sum) + parseFloat(document.getElementById('servicesum').value) + parseFloat(document.getElementById('addvalue').value);
-        document.getElementById("priceholder").innerHTML = constantamt + sum + parseFloat(document.getElementById('addvalue').value) - parseFloat(memsum);
+        sumtot = parseFloat(itemsamt) + parseFloat(sum) + parseFloat(document.getElementById('servicesum').value) + parseFloat(document.getElementById('addvalue').value);
+        document.getElementById("priceholder").innerHTML = sum + parseFloat(document.getElementById('addvalue').value) - parseFloat(memsum);
         document.getElementById("finalamount").value = sumtot.toFixed(2);
         document.getElementById("finalpricedisplay").innerHTML = sumtot.toFixed(2);
     }
