@@ -9,6 +9,8 @@ $info['customer_address_id'];
 $info['membership_id'];
 $info['getmembership_type'];
 $info['getamount'];
+$info['storage_amt'];
+$info['min_storage'];
 // calculate tax
 $customerData = Mage::getModel('customer/customer')->load($cust_id);
 $taxCalculation = Mage::getModel('tax/calculation')->setCustomer($customerData);
@@ -17,21 +19,35 @@ $address = Mage::getModel('customer/address')->load($address_id);
 $region_id = $address->getRegionId();
 // get additional services
 $collection = Mage::getModel('membership/additionalservices')->getCollection();
+$userid = Mage::getSingleton('customer/session')->getId();
+$products = Mage::getModel('catalog/product')
+        ->getCollection()
+        ->addAttributeToSelect('entity_id')
+        ->addAttributeToFilter('status', 1)
+        ->addAttributeToFilter('customer_id', Mage::app()->getRequest()->getParam('id'))
+        ->addAttributeToFilter('visibility', 4);
+$myclosetcount = $products->count();
+if ($myclosetcount > $info['min_storage']) {
+    $storageAmount = $myclosetcount * $info['storage_amt'];
+} else {
+    $storageAmount = $info['min_storage'] * $info['storage_amt'];
+}
 ?>
 
+<input type="hidden" id="storeamt" value="<?php echo $storageAmount; ?>"/>
 <table cellspacing="0" class="form-edit">
     <tr>
         <td class="payment-section" >
             <div class="entry-edit-head">
                 <h4 class="icon-head head-customer-address-list"><?php echo Mage::helper('customer')->__('Membership Information') ?></h4>
-            </div>   
-            <div class="fieldset">                              
                 <input type="hidden" name="return_url" value="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/customer/edit/id', array('id' => Mage::app()->getRequest()->getParam('id'))) ?>" />
                 <input type="hidden" name="customer_entity_id" value="<?php echo Mage::app()->getRequest()->getParam('id'); ?>" />
-                <?php if ($cusgroup === '1') {//members group   ?>
-                    <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
-                    <h4> Membership type - <?php echo $info['getmembership_type'] ?> </h4>
-                    <h4> Membership amount - <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> </h4>
+            </div>   
+            <div class="fieldset">                              
+                <?php if ($cusgroup === '1') {//members group    ?>
+                   <label>Membership Status :</label>&nbsp;&nbsp;<?php echo $group->getCode(); ?><br>
+                <label>Membership type :</label>&nbsp;&nbsp;<?php echo $info['getmembership_type'] ?> <br>
+                <label>Membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> <br>
                     <?php
                     if ($region_id == '43') {
                         $request = $taxCalculation->getRateRequest($address, null, null);
@@ -43,25 +59,15 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                         $mem_amount111 = $info['getamount'] + $taxable_amount;
                         $mem_amount = number_format($mem_amount111, 2)
                         ?>
-                        <h4> Tax Rate - <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $taxable_amount ?> </h4>
-                        <h4> Total membership amount - <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $mem_amount ?> </h4>
+                <label> Tax Rate :</label> &nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $taxable_amount ?> <br>
+                <label> Total membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $mem_amount ?><br> 
                         <input type="hidden" id="mem_choose_price" value="<?php echo $mem_amount ?>"/>
                     <?php } else { ?>
                         <input type="hidden" id="mem_choose_price" value="<?php echo $info['getamount'] ?>"/>
                     <?php } ?>
-                    <h4> Number of items in MyCloset - <?php
-                        echo $userid = Mage::getSingleton('customer/session')->getId();
-                        $products = Mage::getModel('catalog/product')
-                                ->getCollection()
-                                ->addAttributeToSelect('entity_id')
-                                ->addAttributeToFilter('status', 1)
-                                ->addAttributeToFilter('customer_id', Mage::app()->getRequest()->getParam('id'))
-                                ->addAttributeToFilter('visibility', 4);
-                        echo $myclosetcount = $products->count();
-                        ?></h4>
-                    <input type="hidden" id="items_num" value="<?php echo $myclosetcount ?>"/>
-                    <h4>Amount per item( 50 minimum ):<?php echo '3'; ?> </h4>
-                    <input type="hidden" id="items_amt" value="3"/>
+                        <label>Number of items in MyCloset :</label> <?php echo $myclosetcount; ?></br>                                    
+            <label>Storage Amount :</label> <?php echo $storageAmount; ?></br>
+                    <input type="hidden" id="items_amt" value="<?php echo $info['storage_amt']; ?>"/>
                     <input type="checkbox" checked="checked" id="add5" value="<?php
                     if ($region_id == '43') {
                         echo $mem_amount;
@@ -70,9 +76,9 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                     }
                     ?>"  onclick="UpdateCost();"> &nbsp;Include membership charge for payment <br>
 
-                    <input type="checkbox" checked="checked" id="storageitems" value="<?php echo $myclosetcount ?>"  onclick="UpdateCost();"> &nbsp;Include storage charge for payment
+                    <input type="checkbox" checked="checked" id="storageitems" value="<?php echo $storageAmount ?>"  onclick="UpdateCost();"> &nbsp;Include storage charge for payment
 
-                <?php } elseif ($cusgroup === '4') {//Waiting List group    ?>
+                <?php } elseif ($cusgroup === '4') {//Waiting List group     ?>
                     <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
                 <?php } elseif ($cusgroup === '15') {//Non paid member groop   ?>
                     <h4> <label>Membership Status</label>: <?php echo $group->getCode(); ?></h4>
@@ -135,14 +141,21 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                         </div>   
                         <div class="fieldset">
                             <table class="data" id="customer_orders_grid_table" cellspacing="0">
-                                <colgroup><col width="200">
+                                <colgroup>
+                                    <col width="200">
                                     <col width="200">
                                     <col width="100">
-                                </colgroup><thead style="border: 1px solid black; background: #d6d6d6;">
+                                    <col width="100">
+                                    <col width="100">
+
+                                </colgroup>
+                                <thead style=" background: #d6d6d6;">
                                     <tr class="headings">
                                         <th><span class="nobr"><span class="sort-title">Order Id</span></span></th>
-                                        <th><span class="nobr"><span class="sort-title">Date</span></span></th>
-                                        <th><span class="nobr"><span class="sort-title">Amount</span></span></th>
+                                        <th><span class="nobr"><span class="sort-title">Place Order On</span></span></th>
+                                        <th><span class="nobr"><span class="sort-title">Shipping</span></span></th>
+                                        <th><span class="nobr"><span class="sort-title">Product  </span></span></th>
+                                        <th><span class="nobr"><span class="sort-title">  Total</span></span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -152,23 +165,34 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
                                     $orders = Mage::getResourceModel('sales/order_collection')
                                             ->addFieldToSelect('*')
                                             ->addFieldToFilter('customer_id', $customerid)
-//        ->addFieldToFilter('state', array('in' => Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates()))
+                                            ->addFieldToFilter('status', 'Pending')
                                             ->setOrder('created_at', 'desc');
-//     $this->setOrders($orders); 
                                     $sum1 = 0;
+                                    $i = 0;
                                     foreach ($orders as $order):
-//                                        echo '<pre>';
-//                                        print_r($order);
+                                        $i++;
+                                        if ($i == 1 && $info['membership_id']=='3') {
+                                            ?>
+                                            <tr style="text-decoration: line-through">                                          
+                                                <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
+                                                <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
+                                                <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
+                                                <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
+                                                <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th> 
+                                            </tr>  
+                                            <?php
+                                            continue;
+                                        }
                                         ?>
                                         <tr>
-                                            <th><a href="http://localhost/mgn/magento/index.php/admin/sales_order/view/order_id/<?php echo$order->getEntityId(); ?>/key/"><?php echo $order->getRealOrderId(); ?></a></th>
+                                            <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
                                             <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
-                                            <th>                                              
-                                                <label>Shipping: </label><?php echo $order->formatPrice($order->getShippingAmount()) ?><label>product: </label><?php echo $order->formatPrice($order->getSubtotal()) ?>                                                                                                                                           
-                                            </th>
+                                            <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
+                                            <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
+                                            <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th>                                                                                                                                      
                                         </tr>                                
                                         <?php
-                                        $sum1 = floatval($sum1) + floatval($order->getGrandTotal());
+                                        $sum1 = $sum1 + $order->getGrandTotal();
                                     endforeach;
                                     ?>
                                 </tbody>
@@ -190,9 +214,9 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
             <?php
             //for New York region check ;43->New York
             if ($region_id == '43') {
-                echo $grandtotal = $mem_amount + $sum1 + 3;
+                echo $grandtotal = $mem_amount + $sum1 + $storageAmount;
             } else {
-                echo $grandtotal = $info['getamount'] + $sum1 + 3;
+                echo $grandtotal = $info['getamount'] + $sum1 + $storageAmount;
             }
             ?>
         </span>
@@ -206,17 +230,14 @@ $collection = Mage::getModel('membership/additionalservices')->getCollection();
 
     function UpdateCost() {
         var sum = 0;
-        var input, elem, element, itemsamt, itemsnum, memsum = 0;
+        var input, elem, element, itemsamt, storageitems, memsum = 0, min_storage;
         element = document.getElementById('add5');
-        itemsnum = document.getElementById('storageitems');
-        itemsamt = document.getElementById('items_amt').value;
+        storageitems = document.getElementById('storageitems');
 
-        if (itemsnum.checked == true) {
-            if (itemsnum.value > 50) {
-                itemsamt = itemsamt * itemsnum;
-            } else {
-                itemsamt;
-            }
+
+        if (storageitems.checked == true) {
+            itemsamt = document.getElementById('storeamt').value;
+
         } else {
             itemsamt = 0;
         }

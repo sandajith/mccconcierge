@@ -27,6 +27,8 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab extends Mage_Adminhtml_Bl
         $info['getamount'] = $model2->getMembershipPrice();
         $info['membership_id'] = $customermembership->getMembershipId();
         $info['getmembership_type'] = $model2->getMembershipType();
+        $info['storage_amt'] = $model2->getStorageAmt();
+        $info['min_storage'] = $model2->getMinStorage();
 //        order details
         
         return $info;
