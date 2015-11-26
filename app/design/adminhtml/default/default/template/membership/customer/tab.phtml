@@ -33,8 +33,8 @@ if ($myclosetcount > $info['min_storage']) {
     $storageAmount = $info['min_storage'] * $info['storage_amt'];
 }
 ?>
-<form action="<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/" method="post" id="payme_form" >
-<input type="hidden" id="storeamt" value="<?php echo $storageAmount; ?>"/>
+<!--<form action="<?php // echo Mage::getBaseUrl();  ?>membership/payment/payme/" method="post" id="payme_form" >-->
+
 <table cellspacing="0" class="form-edit">
     <tr>
         <td class="payment-section" >
@@ -45,9 +45,9 @@ if ($myclosetcount > $info['min_storage']) {
             </div>   
             <div class="fieldset">                              
                 <?php if ($cusgroup === '1') {//members group    ?>
-                   <label>Membership Status :</label>&nbsp;&nbsp;<?php echo $group->getCode(); ?><br>
-                <label>Membership type :</label>&nbsp;&nbsp;<?php echo $info['getmembership_type'] ?> <br>
-                <label>Membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> <br>
+                    <label>Membership Status :</label>&nbsp;&nbsp;<?php echo $group->getCode(); ?><br>
+                    <label>Membership type :</label>&nbsp;&nbsp;<?php echo $info['getmembership_type'] ?> <br>
+                    <label>Membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> <br>
                     <?php
                     if ($region_id == '43') {
                         $request = $taxCalculation->getRateRequest($address, null, null);
@@ -59,14 +59,14 @@ if ($myclosetcount > $info['min_storage']) {
                         $mem_amount111 = $info['getamount'] + $taxable_amount;
                         $mem_amount = number_format($mem_amount111, 2)
                         ?>
-                <label> Tax Rate :</label> &nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $taxable_amount ?> <br>
-                <label> Total membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $mem_amount ?><br> 
+                        <label> Tax Rate :</label> &nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $taxable_amount ?> <br>
+                        <label> Total membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $mem_amount ?><br> 
                         <input type="hidden" id="mem_choose_price" value="<?php echo $mem_amount ?>"/>
                     <?php } else { ?>
                         <input type="hidden" id="mem_choose_price" value="<?php echo $info['getamount'] ?>"/>
                     <?php } ?>
-                        <label>Number of items in MyCloset :</label> <?php echo $myclosetcount; ?></br>                                    
-            <label>Storage Amount :</label> <?php echo $storageAmount; ?></br>
+                    <label>Number of items in MyCloset :</label> <?php echo $myclosetcount; ?></br>                                    
+                    <label>Storage Amount :</label> <?php echo $storageAmount; ?></br>
                     <input type="hidden" id="items_amt" value="<?php echo $info['storage_amt']; ?>"/>
                     <input type="checkbox" checked="checked" id="add5" value="<?php
                     if ($region_id == '43') {
@@ -93,7 +93,7 @@ if ($myclosetcount > $info['min_storage']) {
                 <input type="hidden" name="customer_pro_id" value="<?php echo $info['customer_pro_id'] ?>"/>
                 <input type="hidden" name="customer_payment_id" value="<?php echo $info['customer_payment_id'] ?>"/>
                 <input type="hidden" name="customer_address_id" value="<?php echo $info['customer_address_id'] ?>"/>
-                <input type="hidden" id="finalamount" value="<?php echo $grandtotal; ?>" name="amount" />                
+
             </div>
         </td>
 
@@ -173,7 +173,7 @@ if ($myclosetcount > $info['min_storage']) {
                                     $i = 0;
                                     foreach ($orders as $order):
                                         $i++;
-                                        if ($i == 1 && $info['membership_id']=='3') {
+                                        if ($i == 1 && $info['membership_id'] == '3') {
                                             ?>
                                             <tr style="text-decoration: line-through">
                                                 <th></th>
@@ -188,17 +188,21 @@ if ($myclosetcount > $info['min_storage']) {
                                         }
                                         ?>
                                         <tr>
-                                            <th><input type="checkbox" checked="checked" id="ordercheck" value="" name="ordercheck"/></th>
-                                            <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
+                                            <?php
+                                            ?>
+                                            <th> <input type="checkbox" checked="checked" class="ordercheck"  value="<?php echo $order->getGrandTotal(); ?>" onclick="UpdateCost()"/> </th>
+                                            <th><input type="hidden" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $i; ?>]"<a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
                                             <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
                                             <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
                                             <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
-                                            <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th>                                                                                                                                      
-                                        </tr>                                
-                                        <?php
-                                        $sum1 = $sum1 + $order->getGrandTotal();
-                                    endforeach;
-                                    ?>
+                                            <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th>  
+    <?php ?>
+                                        </tr> 
+
+    <?php
+    $sum1 = $sum1 + $order->getGrandTotal();
+endforeach;
+?>
                                 </tbody>
                             </table>
                         </div>
@@ -206,14 +210,16 @@ if ($myclosetcount > $info['min_storage']) {
                 </tr>
             </tbody>
         </table>
-        <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '' . $sum1; ?></h5>
+        <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() ?> <span id="ordersum"><?php echo $sum1 ?></span></h5>
         <input id="servicesum" type="hidden" value="<?php echo $sum1; ?>" name="servicesum"/>
+        <input type="hidden" id="storeamt" value="<?php echo $storageAmount; ?>" name="storeamt"/>
+        <input type="hidden" id="myclosetcount" value="<?php echo $myclosetcount; ?>" name="myclosetcount"/>
     </div>
 </div>
 <div class="sss" style="float: left ; width: 100%;">
     <h2 id="final">Total amount to be paid : 
         <span id="currency" style="color: #ff0033;">
-            <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol(); ?>
+<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol(); ?>
         </span><span id="finalpricedisplay" style="color: #ff0033;">
             <?php
             //for New York region check ;43->New York
@@ -224,10 +230,12 @@ if ($myclosetcount > $info['min_storage']) {
             }
             ?>
         </span>
+
     </h2>
+    <input type="hidden" id="finalamount" value="<?php echo $grandtotal; ?>" name="amount" />   
     <button type="submit" class="scalable"  onclick="this.form.action = '<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/'" value="Submit">Pay for the customer</button>
 </div>
-</form>
+<!--</form>-->
 <script type="text/javascript">
     function Getplan(mem) {
         document.getElementById("planup").value = mem;
@@ -235,6 +243,7 @@ if ($myclosetcount > $info['min_storage']) {
 
     function UpdateCost() {
         var sum = 0;
+        var sum12 = 0;
         var input, elem, element, itemsamt, storageitems, memsum = 0, min_storage;
         element = document.getElementById('add5');
         storageitems = document.getElementById('storageitems');
@@ -252,6 +261,20 @@ if ($myclosetcount > $info['min_storage']) {
         else {
             memsum = 0;
         }
+        var ordercheck = document.getElementsByClassName('ordercheck');
+
+        count = 0;
+//grandtotal=0;
+        for (var i = 0; i < ordercheck.length; i++) {
+            element12 = ordercheck[i];
+            if (element12.checked) {
+
+                sum12 += Number(element12.value);
+                count++;
+            }
+        }
+
+
 
         var parameters = "name=" + sum;
 
@@ -285,7 +308,9 @@ if ($myclosetcount > $info['min_storage']) {
 
             }
         }
-        sumtot = parseFloat(itemsamt) + parseFloat(sum) + parseFloat(document.getElementById('servicesum').value) + parseFloat(document.getElementById('addvalue').value);
+        document.getElementById("ordersum").innerHTML = sum12;
+        document.getElementById("servicesum").value = sum12;
+        sumtot = parseFloat(itemsamt) + parseFloat(sum) + parseFloat(sum12) + parseFloat(document.getElementById('addvalue').value);
         document.getElementById("priceholder").innerHTML = sum + parseFloat(document.getElementById('addvalue').value) - parseFloat(memsum);
         document.getElementById("finalamount").value = sumtot.toFixed(2);
         document.getElementById("finalpricedisplay").innerHTML = sumtot.toFixed(2);

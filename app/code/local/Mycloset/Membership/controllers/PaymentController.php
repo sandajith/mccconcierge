@@ -326,10 +326,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function paymeAction() {
-$postdata=$this->getRequest()->getPost();
-echo '<pre>';
-print_r($postdata);
-exit();
         $payment_details = array();
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
         $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
@@ -341,7 +337,7 @@ exit();
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
                 "<transaction>" .
                 "<profileTransAuthOnly>" .
-                "<amount>" . $this->getRequest()->getPost('servicesum') . "</amount>" . // should include tax, shipping, and everything.
+                "<amount>" . $this->getRequest()->getPost('amount') . "</amount>" . // should include tax, shipping, and everything.
                 "<shipping>" .
                 "<amount>0.00</amount>" .
                 "<name>Free Shipping</name>" .
@@ -365,21 +361,16 @@ exit();
                 "</transaction>" .
                 "</createCustomerProfileTransactionRequest>";
         $customerid = $this->getRequest()->getPost('customer_entity_id');
+// product count
+        $payment_details['product_count'] = $this->getRequest()->getPost('myclosetcount');
 //storage price
-        $products = Mage::getModel('catalog/category')->load()
-                ->getProductCollection()
-                ->addAttributeToSelect('entity_id')
-                ->addAttributeToFilter('customer_id', $customerid)
-                ->addAttributeToFilter('status', 1)
-                ->addAttributeToFilter('visibility', 4);
-        $payment_details['product_count'] = $products->count();
-        $unitprice = 3;
-        $storage_price = $payment_details['productcount'] * $unitprice;
-        $payment_details['storage_price'] = $storage_price;
-//additional charges
-        $payment_details['storage_price'] = $this->getRequest()->getPost('name');
+        $payment_details['storage_price'] = $this->getRequest()->getPost('storeamt');
 // Additional payments comment
         $payment_details['comment'] = $this->getRequest()->getPost('comment');
+//oreder charges
+        $payment_details['service_sum'] = $this->getRequest()->getPost('servicesum');
+// Amount to be paid
+        $payment_details['amount_paid'] = $this->getRequest()->getPost('amount');
 //serialized array for payment_details
         $payment_details1 = serialize($payment_details);
 
@@ -397,7 +388,7 @@ exit();
                     'customer_id' => $customerid,
                     'transaction_id' => $transId,
                     'payment_details' => $payment_details1,
-                    'amount_paid' => $this->getRequest()->getPost('servicesum')
+                    'amount_paid' => $this->getRequest()->getPost('amount')
                 );
 
                 $model = Mage::getModel('membership/paymenthistory')->setData($data);
@@ -406,57 +397,23 @@ exit();
                 $path = $this->getRequest()->getPost('return_url') . '?q=success' . '&tranid=' . $transId;
                 $this->_redirectUrl($path);
 //// Automatically changed  invoice/ship status to 'complete' after payment
-                $order = $observer->getEvent()->getOrder();
- 
-//        $orders = Mage::getModel('sales/order_invoice')->getCollection()
-//                        ->addAttributeToFilter('order_id', array('eq'=>$order->getId()));
-//        $orders->getSelect()->limit(1);  
-                try {
-                    if (!$order->canInvoice()) {
-                        $order->addStatusHistoryComment(' Order cannot be invoiced.', false);
-                        $order->save();
-                    }
-
-//START Handle Invoice
-                    $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
-
-                    $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE);
-                    $invoice->register();
-
-                    $invoice->getOrder()->setCustomerNoteNotify(false);
-                    $invoice->getOrder()->setIsInProcess(true);
-                    $order->addStatusHistoryComment('Automatically INVOICED by MyCloset_Invoicer.', false);
-
-                    $transactionSave = Mage::getModel('core/resource_transaction')
-                            ->addObject($invoice)
-                            ->addObject($invoice->getOrder());
-
-                    $transactionSave->save();
-//END Handle Invoice
-//START Handle Shipment
-                    $shipment = $order->prepareShipment();
-                    $shipment->register();
-
-                    $order->setIsInProcess(true);
-                    $order->addStatusHistoryComment('Automatically SHIPPED by MyCloset_Invoicer.', false);
-
-                    $transactionSave = Mage::getModel('core/resource_transaction')
-                            ->addObject($shipment)
-                            ->addObject($shipment->getOrder())
-                            ->save();
-                } catch (Exception $e) {
-                    $order->addStatusHistoryComment('MyCloset_Invoicer: Exception occurred during automaticallyInvoiceShipCompleteOrder action. Exception message: ' . $e->getMessage(), false);
+                $ordernum = $this->getRequest()->getPost('order_id');
+                foreach ($ordernum as $order_id) {
+                    $order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
+                    $order->setData('state', "complete");
+                    $order->setStatus("complete");
+                    $history = $order->addStatusHistoryComment('Order was set to Complete by our automation tool.', false);
+                    $history->setIsCustomerNotified(false);
                     $order->save();
                 }
-
-//// END CODE Automatically changed  invoice/ship status to 'complete' after payment  
-            } else if ("2" == $responseCode) {
-                $path = $this->getRequest()->getPost('return_url') . '?q=error';
-                $this->_redirectUrl($path);
-            } else {
-                $path = $this->getRequest()->getPost('return_url') . '?q=error';
-                $this->_redirectUrl($path);
             }
+//// END CODE Automatically changed  invoice/ship status to 'complete' after payment  
+        } else if ("2" == $responseCode) {
+            $path = $this->getRequest()->getPost('return_url') . '?q=error';
+            $this->_redirectUrl($path);
+        } else {
+            $path = $this->getRequest()->getPost('return_url') . '?q=error';
+            $this->_redirectUrl($path);
         }
     }
 
