@@ -33,7 +33,7 @@ if ($myclosetcount > $info['min_storage']) {
     $storageAmount = $info['min_storage'] * $info['storage_amt'];
 }
 ?>
-
+<form action="<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/" method="post" id="payme_form" >
 <input type="hidden" id="storeamt" value="<?php echo $storageAmount; ?>"/>
 <table cellspacing="0" class="form-edit">
     <tr>
@@ -93,7 +93,7 @@ if ($myclosetcount > $info['min_storage']) {
                 <input type="hidden" name="customer_pro_id" value="<?php echo $info['customer_pro_id'] ?>"/>
                 <input type="hidden" name="customer_payment_id" value="<?php echo $info['customer_payment_id'] ?>"/>
                 <input type="hidden" name="customer_address_id" value="<?php echo $info['customer_address_id'] ?>"/>
-                <input type="hidden" id="finalamount" value="<?php echo array_sum($price); ?>" name="amount" />                
+                <input type="hidden" id="finalamount" value="<?php echo $grandtotal; ?>" name="amount" />                
             </div>
         </td>
 
@@ -142,6 +142,7 @@ if ($myclosetcount > $info['min_storage']) {
                         <div class="fieldset">
                             <table class="data" id="customer_orders_grid_table" cellspacing="0">
                                 <colgroup>
+                                    <col width="100">
                                     <col width="200">
                                     <col width="200">
                                     <col width="100">
@@ -151,6 +152,7 @@ if ($myclosetcount > $info['min_storage']) {
                                 </colgroup>
                                 <thead style=" background: #d6d6d6;">
                                     <tr class="headings">
+                                        <th><span class="nobr"><span class="sort-title"></span></span></th>
                                         <th><span class="nobr"><span class="sort-title">Order Id</span></span></th>
                                         <th><span class="nobr"><span class="sort-title">Place Order On</span></span></th>
                                         <th><span class="nobr"><span class="sort-title">Shipping</span></span></th>
@@ -166,14 +168,15 @@ if ($myclosetcount > $info['min_storage']) {
                                             ->addFieldToSelect('*')
                                             ->addFieldToFilter('customer_id', $customerid)
                                             ->addFieldToFilter('status', 'Pending')
-                                            ->setOrder('created_at', 'desc');
+                                            ->setOrder('created_at', 'asc');
                                     $sum1 = 0;
                                     $i = 0;
                                     foreach ($orders as $order):
                                         $i++;
                                         if ($i == 1 && $info['membership_id']=='3') {
                                             ?>
-                                            <tr style="text-decoration: line-through">                                          
+                                            <tr style="text-decoration: line-through">
+                                                <th></th>
                                                 <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
                                                 <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
                                                 <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
@@ -185,6 +188,7 @@ if ($myclosetcount > $info['min_storage']) {
                                         }
                                         ?>
                                         <tr>
+                                            <th><input type="checkbox" checked="checked" id="ordercheck" value="" name="ordercheck"/></th>
                                             <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
                                             <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
                                             <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
@@ -203,7 +207,7 @@ if ($myclosetcount > $info['min_storage']) {
             </tbody>
         </table>
         <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '' . $sum1; ?></h5>
-        <input id="servicesum" type="hidden" value="<?php echo $sum1; ?>"/>
+        <input id="servicesum" type="hidden" value="<?php echo $sum1; ?>" name="servicesum"/>
     </div>
 </div>
 <div class="sss" style="float: left ; width: 100%;">
@@ -221,8 +225,9 @@ if ($myclosetcount > $info['min_storage']) {
             ?>
         </span>
     </h2>
-    <button type='submit' class="scalable" value='Submit' onclick='this.form.action = "<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/";' value="Submit">Pay for the customer</button>
+    <button type="submit" class="scalable"  onclick="this.form.action = '<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/'" value="Submit">Pay for the customer</button>
 </div>
+</form>
 <script type="text/javascript">
     function Getplan(mem) {
         document.getElementById("planup").value = mem;

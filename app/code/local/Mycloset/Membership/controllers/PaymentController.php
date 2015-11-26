@@ -99,7 +99,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
 
 
-        // Create new customer profile
+// Create new customer profile
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
@@ -118,7 +118,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $parsed_customer_id = $parsedresponse->customerProfileId;
 
 
-        // Add payment profile
+// Add payment profile
 
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerPaymentProfileRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
@@ -168,7 +168,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
 
 
-        //Making a payment for the customerprofileid
+//Making a payment for the customerprofileid
 
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
@@ -199,9 +199,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</transaction>" .
                 "</createCustomerProfileTransactionRequest>";
 
-        //echo "Raw request: " . htmlspecialchars($content) . "<br><br>";
+//echo "Raw request: " . htmlspecialchars($content) . "<br><br>";
         $response = send_xml_request($g_apihost, $g_apipath, $content);
-        //  echo "Raw response: " . htmlspecialchars($response) . "<br><br>";
+//  echo "Raw response: " . htmlspecialchars($response) . "<br><br>";
         $parsedresponse = parse_api_response($response);
 //        if ("Ok" == $parsedresponse_payment->messages->resultCode) {
 //            echo "A transaction was successfully created for customerProfileId <b>"
@@ -221,7 +221,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $approvalCode = $directResponseFields[4]; // Authorization code
             $transId = $directResponseFields[6];
 
-            //Variables to send e-mail
+//Variables to send e-mail
             $z_firstname = Mage::getSingleton('customer/session')->getMemFname();
             $z_lastname = $lname;
             $z_email = $emailid;
@@ -229,13 +229,13 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $z_amount = $mem_amount;
 
             if ("1" == $responseCode) {
-                //Email sending to the customer upon successful payment
+//Email sending to the customer upon successful payment
                 $templateId = 'Success Mycloset Registration';
                 $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
                 $vars = array('first_name' => $z_firstname, 'last_name' => $z_lastname, 'email' => $z_email, 'mem_type' => $z_memtype, 'mem_amt' => $z_amount);
                 $emailTemplate->getProcessedTemplate($vars);
                 $admin_email = Mage::getStoreConfig('trans_email/ident_general/email');
-                // $email = array($admin_email,$z_email);
+// $email = array($admin_email,$z_email);
                 $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
                 $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
                 $emailTemplate->send($z_email, 'Mycloset mail', $vars);
@@ -269,10 +269,10 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
 
 
-                //logging-in the customer after successful payment
+//logging-in the customer after successful payment
                 $session = $this->_getSession();
                 $customer = Mage::getModel('customer/customer')->load($customerid);
-                //changing customer group
+//changing customer group
                 $customerid = $customerid;
                 $update = array(
                     'entity_id' => $customerid,
@@ -294,11 +294,11 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
-                //changing customer group end
+//changing customer group end
                 $session->setCustomerAsLoggedIn($customer);
                 $this->_redirect('mycloset/payment/confirmpayment');
 
-                //echo "The transaction was successful.<br>";
+//echo "The transaction was successful.<br>";
             } else if ("2" == $responseCode) {
                 $log_path = Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/authorizenet.txt';
                 $fp = fopen($log_path, 'a+');
@@ -311,11 +311,11 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $message = "Payment failed !" . htmlspecialchars($responseReasonText) . "<br>";
                 Mage::getSingleton('core/session')->addError($message);
                 $this->_redirect('mycloset/payment');
-                //echo "The transaction resulted in an error.<br>";
-                //echo "responseReasonCode = " . htmlspecialchars($responseReasonCode) . "<br>";
-                //echo "responseReasonText = " . htmlspecialchars($responseReasonText) . "<br>";
-                //echo "approvalCode = " . htmlspecialchars($approvalCode) . "<br>";
-                //echo "transId = " . htmlspecialchars($transId) . "<br>";
+//echo "The transaction resulted in an error.<br>";
+//echo "responseReasonCode = " . htmlspecialchars($responseReasonCode) . "<br>";
+//echo "responseReasonText = " . htmlspecialchars($responseReasonText) . "<br>";
+//echo "approvalCode = " . htmlspecialchars($approvalCode) . "<br>";
+//echo "transId = " . htmlspecialchars($transId) . "<br>";
             }
         }
 //                }
@@ -326,20 +326,22 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function paymeAction() {
-       
+$postdata=$this->getRequest()->getPost();
+echo '<pre>';
+print_r($postdata);
+exit();
         $payment_details = array();
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
         $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
         require_once (Mage::getBaseDir('code') . '\local\Mycloset\Membership\Api\util.php');
-
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
                 "<transaction>" .
                 "<profileTransAuthOnly>" .
-                "<amount>" . $this->getRequest()->getPost('amount') . "</amount>" . // should include tax, shipping, and everything.
+                "<amount>" . $this->getRequest()->getPost('servicesum') . "</amount>" . // should include tax, shipping, and everything.
                 "<shipping>" .
                 "<amount>0.00</amount>" .
                 "<name>Free Shipping</name>" .
@@ -350,7 +352,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<name>" . $this->getRequest()->getPost('mem_type_name') . "</name>" .
                 "<description>Membership Renewal/Upgrade</description>" .
                 "<quantity>1</quantity>" .
-                "<unitPrice>" . $this->getRequest()->getPost('amount') . "</unitPrice>" .
+                "<unitPrice>" . $this->getRequest()->getPost('servicesum') . "</unitPrice>" .
                 "<taxable>false</taxable>" .
                 "</lineItems>" .
                 "<customerProfileId>" . $this->getRequest()->getPost('customer_pro_id') . "</customerProfileId>" .
@@ -363,7 +365,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</transaction>" .
                 "</createCustomerProfileTransactionRequest>";
         $customerid = $this->getRequest()->getPost('customer_entity_id');
-        //storage price
+//storage price
         $products = Mage::getModel('catalog/category')->load()
                 ->getProductCollection()
                 ->addAttributeToSelect('entity_id')
@@ -378,7 +380,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $payment_details['storage_price'] = $this->getRequest()->getPost('name');
 // Additional payments comment
         $payment_details['comment'] = $this->getRequest()->getPost('comment');
-        //serialized array for payment_details
+//serialized array for payment_details
         $payment_details1 = serialize($payment_details);
 
         $response = send_xml_request($g_apihost, $g_apipath, $content);
@@ -395,7 +397,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'customer_id' => $customerid,
                     'transaction_id' => $transId,
                     'payment_details' => $payment_details1,
-                    'amount_paid' => $this->getRequest()->getPost('amount')
+                    'amount_paid' => $this->getRequest()->getPost('servicesum')
                 );
 
                 $model = Mage::getModel('membership/paymenthistory')->setData($data);
@@ -403,6 +405,51 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
                 $path = $this->getRequest()->getPost('return_url') . '?q=success' . '&tranid=' . $transId;
                 $this->_redirectUrl($path);
+//// Automatically changed  invoice/ship status to 'complete' after payment
+                $order = $observer->getEvent()->getOrder();
+ 
+//        $orders = Mage::getModel('sales/order_invoice')->getCollection()
+//                        ->addAttributeToFilter('order_id', array('eq'=>$order->getId()));
+//        $orders->getSelect()->limit(1);  
+                try {
+                    if (!$order->canInvoice()) {
+                        $order->addStatusHistoryComment(' Order cannot be invoiced.', false);
+                        $order->save();
+                    }
+
+//START Handle Invoice
+                    $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+
+                    $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE);
+                    $invoice->register();
+
+                    $invoice->getOrder()->setCustomerNoteNotify(false);
+                    $invoice->getOrder()->setIsInProcess(true);
+                    $order->addStatusHistoryComment('Automatically INVOICED by MyCloset_Invoicer.', false);
+
+                    $transactionSave = Mage::getModel('core/resource_transaction')
+                            ->addObject($invoice)
+                            ->addObject($invoice->getOrder());
+
+                    $transactionSave->save();
+//END Handle Invoice
+//START Handle Shipment
+                    $shipment = $order->prepareShipment();
+                    $shipment->register();
+
+                    $order->setIsInProcess(true);
+                    $order->addStatusHistoryComment('Automatically SHIPPED by MyCloset_Invoicer.', false);
+
+                    $transactionSave = Mage::getModel('core/resource_transaction')
+                            ->addObject($shipment)
+                            ->addObject($shipment->getOrder())
+                            ->save();
+                } catch (Exception $e) {
+                    $order->addStatusHistoryComment('MyCloset_Invoicer: Exception occurred during automaticallyInvoiceShipCompleteOrder action. Exception message: ' . $e->getMessage(), false);
+                    $order->save();
+                }
+
+//// END CODE Automatically changed  invoice/ship status to 'complete' after payment  
             } else if ("2" == $responseCode) {
                 $path = $this->getRequest()->getPost('return_url') . '?q=error';
                 $this->_redirectUrl($path);
@@ -584,11 +631,11 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $vars = array('first_name' => $z_firstname, 'last_name' => $z_lastname, 'email' => $z_email, 'mem_type' => $z_memtype, 'mem_amt' => $z_amount);
         $emailTemplate->getProcessedTemplate($vars);
         $admin_email = Mage::getStoreConfig('trans_email/ident_general/email');
-        $email = array('sreedarsh.bridge@gmail.com', 'sreedarsh88@gmail.com');
+        $email = array('neenurobin28@gmail.com', 'neenwil@gmail.com');
         $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
         $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
-        $emailTemplate->send('sreedarsh88@gmail.com', 'Mycloset mail', $vars);
-        $emailTemplate->send('sreedarsh.bridge@gmail.com', 'Mycloset mail', $vars);
+        $emailTemplate->send('neenurobin28@gmail.com', 'Mycloset mail', $vars);
+        $emailTemplate->send('neenurobin28@gmail.com', 'Mycloset mail', $vars);
     }
 
     public function neeAction() {
