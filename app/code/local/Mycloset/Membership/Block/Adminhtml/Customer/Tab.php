@@ -19,6 +19,7 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab extends Mage_Adminhtml_Bl
         $customermembership->getMembershipId();
         $membership_id = $customermembership->getMembershipId();
         $model2 = Mage::getModel('membership/membership')->load($membership_id, 'membership_id');
+       
       
         $info = array();
         $info['customer_pro_id'] = $model->getCustomerProfileId();

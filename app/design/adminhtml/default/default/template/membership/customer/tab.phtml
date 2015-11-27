@@ -68,7 +68,7 @@ if ($myclosetcount > $info['min_storage']) {
                     <label>Number of items in MyCloset :</label> <?php echo $myclosetcount; ?></br>                                    
                     <label>Storage Amount :</label> <?php echo $storageAmount; ?></br>
                     <input type="hidden" id="items_amt" value="<?php echo $info['storage_amt']; ?>"/>
-                    <input type="checkbox" checked="checked" id="add5" value="<?php
+                    <input type="checkbox" checked="checked" id="add5" name="include_membershipcharge" value="<?php
                     if ($region_id == '43') {
                         echo $mem_amount;
                     } else {
@@ -173,7 +173,7 @@ if ($myclosetcount > $info['min_storage']) {
                                     $i = 0;
                                     foreach ($orders as $order):?>
                                       
-                               <input type="text" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $order['increment_id']; ?>]" />
+                                <input type="hidden" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $order['increment_id']; ?>]" />
                                         <?php 
                                         $i++;
                                         if ($i == 1 && $info['membership_id'] == '3') {

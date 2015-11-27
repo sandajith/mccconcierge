@@ -217,6 +217,10 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             $quoteItem->setShippingComment($this->getOnepage()->getQuote()->getShippingComment());
             $quoteItem->setOtherData($info);
             $quoteItem->save();
+             $userid = Mage::getSingleton('customer/session')->getId();
+            $freeshipping = Mage::getModel('membership/customermembership')
+                ->load($userid, 'customer_id')
+                    ->setFreeshippingFlag(0)->save();
 
             
                if ($quoteItem->getCanSendNewEmailFlag()) {

@@ -326,6 +326,10 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function paymeAction() {
+        $customerid = $this->getRequest()->getPost('customer_entity_id');
+ $include_membershipcharge = $this->getRequest()->getPost('include_membershipcharge');
+
+
         $payment_details = array();
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
         $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
@@ -360,7 +364,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</profileTransAuthOnly>" .
                 "</transaction>" .
                 "</createCustomerProfileTransactionRequest>";
-        $customerid = $this->getRequest()->getPost('customer_entity_id');
+      
 // product count
         $payment_details['product_count'] = $this->getRequest()->getPost('myclosetcount');
 //storage price
@@ -388,7 +392,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'customer_id' => $customerid,
                     'transaction_id' => $transId,
                     'payment_details' => $payment_details1,
-                    'amount_paid' => $this->getRequest()->getPost('amount')
+                    'amount_paid' => $this->getRequest()->getPost('amount'),
+                    'monthly_payment'=>'1'
                 );
 
                 $model = Mage::getModel('membership/paymenthistory')->setData($data);
@@ -418,7 +423,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 //                            ->addObject($invoice->getOrder());
 //
 //                    $transactionSave->save();
-                }
+            
 
 //
 //                    try {
@@ -444,8 +449,14 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                         ->addObject($invoice->getOrder());
 $order->addStatusHistoryComment('Invoice processing by MyCloset Admin.', false);
                 $transactionSave->save();
-
+if($include_membershipcharge){      
+            $freeshipping = Mage::getModel('membership/customermembership')
+                ->load($customerid, 'customer_id')
+                    ->setFreeshippingFlag(1)->save();
+    
+}
                  }
+                     }
 ////END Handle Invoice
 ////START Handle Shipment
 ////                    $shipment = $order->prepareShipment();

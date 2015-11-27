@@ -30,89 +30,117 @@
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>
     <dl class="sp-methods">
-    <?php $shippingCodePrice = array(); ?>
-    
-    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): 
+        <?php $shippingCodePrice = array(); ?>
 
-    
-        ?>
-        <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
-        <dd>
-            <ul>
-                 <?php   $_rates = array_reverse($_rates); ?>
-            <?php 
-          
-            $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): 
-                
-                // print_r($_rates);
-            ?>
-                <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
-                <li>
-                   <?php if ($_rate->getErrorMessage()): ?>
-                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
-                   <?php else: ?>
-                        <?php if ($_sole) : ?>
-                        <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
-                        <?php else: ?>
-                        <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+        <?php
+        $userid = Mage::getSingleton('customer/session')->getId();
+        $model2 = Mage::getModel('membership/customermembership')->load($userid, 'customer_id');
+        $free_shipping = $model2->getFreeshippingFlag();
+        $membership_id = $model2->getMembershipId();
+        if ($membership_id == 3) {
+            $freeshipping = 1;
+        }
 
-                        <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
-                        <script type="text/javascript">
-                            //<![CDATA[
-                                lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
-                            //]]>
-                        </script>
-                        <?php endif; ?>
+        $_sole = count($_shippingRateGroups) == 1;
+        foreach ($_shippingRateGroups as $code => $_rates):
 
-                        <?php endif; ?>
-                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php if ($code=="ups"){echo 'UPS ';}echo $this->escapeHtml($_rate->getMethodTitle()) ?>
-                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                        <?php //echo $_excl; ?>
-                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-                        <?php endif; ?>
-                        </label>
-                        
-                   <?php endif ?>
-                </li>
-            <?php endforeach; ?>
-                
-            </ul>
-        </dd>
-    <?php endforeach; ?>
-        <dd>
-           <p class="note"> <em>*</em><?php echo $this->__('Final cost of shipping is contingent upon weight of items.'
-                                ."<br>" .'My Closet Concierge will contact you to confirm.'); ?></p>
-        </dd>
-        
-    </dl>
-<script type="text/javascript">
-//<![CDATA[
-    <?php if (!empty($shippingCodePrice)): ?>
-        var shippingCodePrice = {<?php echo implode(',',$shippingCodePrice); ?>};
-    <?php endif; ?>
 
-    $$('input[type="radio"][name="shipping_method"]').each(function(el){
-        Event.observe(el, 'click', function(){
-            if (el.checked == true) {
-                var getShippingCode = el.getValue();
-                <?php if (!empty($shippingCodePrice)): ?>
-                    var newPrice = shippingCodePrice[getShippingCode];
-                    if (!lastPrice) {
-                        lastPrice = newPrice;
-                        quoteBaseGrandTotal += newPrice;
-                    }
-                    if (newPrice != lastPrice) {
-                        quoteBaseGrandTotal += (newPrice-lastPrice);
-                        lastPrice = newPrice;
-                    }
-                <?php endif; ?>
-                checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
-                return false;
+            if (($freeshipping == 1 ) && ($code != 'freeshipping')) {
+                continue;
             }
-       });
-    });
-//]]>
-</script>
+            if (($freeshipping == 0 ) && ($code == 'freeshipping')) {
+                continue;
+            }
+            if ($freeshipping == 1) {
+                $_sole = true;
+            }
+            ?>
+            <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+            <dd>
+                <ul>
+            <?php $_rates = array_reverse($_rates); ?>
+        <?php
+        $_sole = $_sole && count($_rates) == 1;
+
+        foreach ($_rates as $_rate):
+
+//                 print_r($_rates);
+            ?>
+                        <?php $shippingCodePrice[] = "'" . $_rate->getCode() . "':" . (float) $_rate->getPrice(); ?>
+                        <li>
+                        <?php if ($_rate->getErrorMessage()): ?>
+                                <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                        <?php else: ?>
+                                <?php ?>
+                                <?php if ($_sole) : ?>
+                                    <span class="no-display" style="display: none;"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked"  /></span>
+                                <?php else: ?>
+                                    <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if ($_rate->getCode() === $this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+
+                                    <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                                        <script type="text/javascript">
+                                            //<![CDATA[
+                                            lastPrice = <?php echo (float) $_rate->getPrice(); ?>;
+                                            //]]>
+                                        </script>
+                                    <?php endif; ?>
+
+                <?php endif; ?>
+                                <label <?php echo ($_sole ? 'style="display: none;"' : ''); ?> for="s_method_<?php echo $_rate->getCode() ?>"><?php
+                if ($code == "ups") {
+                    echo 'UPS ';
+                }echo $this->escapeHtml($_rate->getMethodTitle())
+                ?>
+                                <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                    <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                    <?php //echo $_excl;  ?>
+                                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                        (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                    <?php endif; ?>
+                                </label>
+
+                                <?php endif ?>
+                        </li>
+                            <?php endforeach; ?>
+
+                </ul>
+            </dd>
+                    <?php endforeach; ?>
+                <?php if ($freeshipping == 0) { ?>
+            <dd>
+                <p class="note"> <em>*</em><?php
+                    echo $this->__('Final cost of shipping is contingent upon weight of items.'
+                            . "<br>" . 'My Closet Concierge will contact you to confirm.');
+                    ?></p>
+            </dd>
+    <?php } ?>
+    </dl>
+    <script type="text/javascript">
+    //<![CDATA[
+                <?php if (!empty($shippingCodePrice)): ?>
+            var shippingCodePrice = {<?php echo implode(',', $shippingCodePrice); ?>};
+        <?php endif; ?>
+
+        $$('input[type="radio"][name="shipping_method"]').each(function (el) {
+            Event.observe(el, 'click', function () {
+                if (el.checked == true) {
+                    var getShippingCode = el.getValue();
+    <?php if (!empty($shippingCodePrice)): ?>
+                        var newPrice = shippingCodePrice[getShippingCode];
+                        if (!lastPrice) {
+                            lastPrice = newPrice;
+                            quoteBaseGrandTotal += newPrice;
+                        }
+                        if (newPrice != lastPrice) {
+                            quoteBaseGrandTotal += (newPrice - lastPrice);
+                            lastPrice = newPrice;
+                        }
+    <?php endif; ?>
+                    checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+                    return false;
+                }
+            });
+        });
+    //]]>
+    </script>
 <?php endif; ?>
