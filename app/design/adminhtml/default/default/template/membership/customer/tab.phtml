@@ -167,11 +167,14 @@ if ($myclosetcount > $info['min_storage']) {
                                     $orders = Mage::getResourceModel('sales/order_collection')
                                             ->addFieldToSelect('*')
                                             ->addFieldToFilter('customer_id', $customerid)
-                                            ->addFieldToFilter('status', 'Pending')
+                                            ->addFieldToFilter('status', 'Processing')
                                             ->setOrder('created_at', 'asc');
                                     $sum1 = 0;
                                     $i = 0;
-                                    foreach ($orders as $order):
+                                    foreach ($orders as $order):?>
+                                      
+                               <input type="text" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $order['increment_id']; ?>]" />
+                                        <?php 
                                         $i++;
                                         if ($i == 1 && $info['membership_id'] == '3') {
                                             ?>
@@ -191,7 +194,7 @@ if ($myclosetcount > $info['min_storage']) {
                                             <?php
                                             ?>
                                             <th> <input type="checkbox" checked="checked" class="ordercheck"  value="<?php echo $order->getGrandTotal(); ?>" onclick="UpdateCost()"/> </th>
-                                            <th><input type="hidden" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $i; ?>]"<a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
+                                             <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
                                             <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
                                             <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
                                             <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          

@@ -400,12 +400,69 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $ordernum = $this->getRequest()->getPost('order_id');
                 foreach ($ordernum as $order_id) {
                     $order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
-                    $order->setData('state', "complete");
-                    $order->setStatus("complete");
-                    $history = $order->addStatusHistoryComment('Order was set to Complete by our automation tool.', false);
-                    $history->setIsCustomerNotified(false);
-                    $order->save();
+                 //   $order->setData('state', "complete");
+                //    $order->setStatus("complete");
+                  //  $history = $order->addStatusHistoryComment('Order was set to Complete by our automation tool.', false);
+                  //  $history->setIsCustomerNotified(false);
+                   // $order->save();
+
+
+
+//$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+//                    $invoice->setRequestedCaptureCase(
+//                            Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE
+//                    );
+//                    $invoice->register();
+//                    $transactionSave = Mage::getModel('core/resource_transaction')
+//                            ->addObject($invoice)
+//                            ->addObject($invoice->getOrder());
+//
+//                    $transactionSave->save();
                 }
+
+//
+//                    try {
+//
+//                        if (!$order->canInvoice()) {
+//                            $order->addStatusHistoryComment(' Order cannot be invoiced.', false);
+//                            $order->save();
+//                        }
+//
+//////START Handle Invoice
+                 if ($order->canInvoice()) {
+                $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+
+                $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+                $invoice->register();
+
+                $invoice->getOrder()->setCustomerNoteNotify(false);
+                $invoice->getOrder()->setIsInProcess(true);
+                
+
+                $transactionSave = Mage::getModel('core/resource_transaction')
+                        ->addObject($invoice)
+                        ->addObject($invoice->getOrder());
+$order->addStatusHistoryComment('Invoice processing by MyCloset Admin.', false);
+                $transactionSave->save();
+
+                 }
+////END Handle Invoice
+////START Handle Shipment
+////                    $shipment = $order->prepareShipment();
+////                    $shipment->register();
+////
+////                    $order->setIsInProcess(true);
+////                    $order->addStatusHistoryComment('Automatically SHIPPED by MyCloset_Invoicer.', false);
+////
+////                    $transactionSave = Mage::getModel('core/resource_transaction')
+////                            ->addObject($shipment)
+////                            ->addObject($shipment->getOrder())
+////                            ->save();
+////                   } catch (Exception $e) {
+////                       $order->addStatusHistoryComment('MyCloset_Invoicer: Exception occurred during automaticallyInvoiceShipCompleteOrder action. Exception message: ' . $e->getMessage(), false);
+////                       $order->save();
+////                   }
+                //}
             }
 //// END CODE Automatically changed  invoice/ship status to 'complete' after payment  
         } else if ("2" == $responseCode) {
