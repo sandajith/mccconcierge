@@ -37,7 +37,7 @@
         $model2 = Mage::getModel('membership/customermembership')->load($userid, 'customer_id');
         $free_shipping = $model2->getFreeshippingFlag();
         $membership_id = $model2->getMembershipId();
-        if ($membership_id == 3) {
+        if (($membership_id == 3)&&($free_shipping == 1)) {
             $freeshipping = 1;
         }
 
@@ -51,7 +51,7 @@
             if (($freeshipping == 0 ) && ($code == 'freeshipping')) {
                 continue;
             }
-            if ($freeshipping == 1) {
+            if (($freeshipping == 1)) {
                 $_sole = true;
             }
             ?>

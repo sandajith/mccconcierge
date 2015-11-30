@@ -327,7 +327,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
     public function paymeAction() {
         $customerid = $this->getRequest()->getPost('customer_entity_id');
- $include_membershipcharge = $this->getRequest()->getPost('include_membershipcharge');
+        $include_membershipcharge = $this->getRequest()->getPost('include_membershipcharge');
 
 
         $payment_details = array();
@@ -335,7 +335,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
-        require_once (Mage::getBaseDir('code') . '\local\Mycloset\Membership\Api\util.php');
+        require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
@@ -364,7 +364,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</profileTransAuthOnly>" .
                 "</transaction>" .
                 "</createCustomerProfileTransactionRequest>";
-      
+
 // product count
         $payment_details['product_count'] = $this->getRequest()->getPost('myclosetcount');
 //storage price
@@ -393,7 +393,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'transaction_id' => $transId,
                     'payment_details' => $payment_details1,
                     'amount_paid' => $this->getRequest()->getPost('amount'),
-                    'monthly_payment'=>'1'
+                    'monthly_payment' => '1'
                 );
 
                 $model = Mage::getModel('membership/paymenthistory')->setData($data);
@@ -405,14 +405,11 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $ordernum = $this->getRequest()->getPost('order_id');
                 foreach ($ordernum as $order_id) {
                     $order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
-                 //   $order->setData('state', "complete");
-                //    $order->setStatus("complete");
-                  //  $history = $order->addStatusHistoryComment('Order was set to Complete by our automation tool.', false);
-                  //  $history->setIsCustomerNotified(false);
-                   // $order->save();
-
-
-
+                    //   $order->setData('state', "complete");
+                    //    $order->setStatus("complete");
+                    //  $history = $order->addStatusHistoryComment('Order was set to Complete by our automation tool.', false);
+                    //  $history->setIsCustomerNotified(false);
+                    // $order->save();
 //$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
 //                    $invoice->setRequestedCaptureCase(
 //                            Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE
@@ -423,8 +420,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 //                            ->addObject($invoice->getOrder());
 //
 //                    $transactionSave->save();
-            
-
 //
 //                    try {
 //
@@ -434,29 +429,28 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 //                        }
 //
 //////START Handle Invoice
-                 if ($order->canInvoice()) {
-                $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
+                    if ($order->canInvoice()) {
+                        $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
 
-                $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-                $invoice->register();
+                        $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
+                        $invoice->register();
 
-                $invoice->getOrder()->setCustomerNoteNotify(false);
-                $invoice->getOrder()->setIsInProcess(true);
-                
+                        $invoice->getOrder()->setCustomerNoteNotify(false);
+                        $invoice->getOrder()->setIsInProcess(true);
 
-                $transactionSave = Mage::getModel('core/resource_transaction')
-                        ->addObject($invoice)
-                        ->addObject($invoice->getOrder());
-$order->addStatusHistoryComment('Invoice processing by MyCloset Admin.', false);
-                $transactionSave->save();
-if($include_membershipcharge){      
-            $freeshipping = Mage::getModel('membership/customermembership')
-                ->load($customerid, 'customer_id')
-                    ->setFreeshippingFlag(1)->save();
-    
-}
-                 }
-                     }
+
+                        $transactionSave = Mage::getModel('core/resource_transaction')
+                                ->addObject($invoice)
+                                ->addObject($invoice->getOrder());
+                        $order->addStatusHistoryComment('Invoice processing by MyCloset Admin.', false);
+                        $transactionSave->save();
+                        if ($include_membershipcharge) {
+                            $freeshipping = Mage::getModel('membership/customermembership')
+                                            ->load($customerid, 'customer_id')
+                                            ->setFreeshippingFlag(0)->save();
+                        }
+                    }
+                }
 ////END Handle Invoice
 ////START Handle Shipment
 ////                    $shipment = $order->prepareShipment();

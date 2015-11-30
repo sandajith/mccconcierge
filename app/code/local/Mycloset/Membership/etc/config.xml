@@ -15,7 +15,7 @@
                 </mycloset_membership>
             </updates>
         </layout>
-<!--          <events>
+        <!--          <events>
             <adminhtml_customer_prepare_save>
                 <observers>
                      <mycloset_membership>
@@ -38,12 +38,12 @@
             </membership>
             
             <adminhtml>
-            <args>
-                <modules>
-                    <mycloset_membership before="Mage_Adminhtml">Mycloset_Membership_Adminhtml</mycloset_membership >
-                </modules>
-            </args>
-        </adminhtml> 
+                <args>
+                    <modules>
+                        <mycloset_membership before="Mage_Adminhtml">Mycloset_Membership_Adminhtml</mycloset_membership >
+                    </modules>
+                </args>
+            </adminhtml> 
         </routers>
     </admin>
     
@@ -82,7 +82,7 @@
                     <additionalservices>
                         <table>mycloset_additionalservices</table>
                     </additionalservices>    
-                      <pickupdetails>
+                    <pickupdetails>
                         <table>pickup_details</table>
                     </pickupdetails>
                     <customermembership>
@@ -99,21 +99,21 @@
                 </rewrite>
             </directory>
             <catalog>
-                  <rewrite>
+                <rewrite>
                     <product>Mycloset_Membership_Model_Product</product>
                 </rewrite>
             </catalog>
             <customer_resource>
-                    <rewrite>
-                 <customer>Mycloset_Membership_Model_Resource_Customer</customer>
+                <rewrite>
+                    <customer>Mycloset_Membership_Model_Resource_Customer</customer>
                 </rewrite>
-               </customer_resource>
+            </customer_resource>
             <mycloset_membership>
                 <class>Mycloset_Membership_Model</class>
             </mycloset_membership>
             <checkout>
-               <rewrite>
-            <type_onepage>Mycloset_Membership_Model_Checkout_Type_Onepage</type_onepage>
+                <rewrite>
+                    <type_onepage>Mycloset_Membership_Model_Checkout_Type_Onepage</type_onepage>
                 </rewrite>
             </checkout>
         </models> 
@@ -122,22 +122,7 @@
             <membership> 
                 <class>Mycloset_Membership_Block</class> 
             </membership>
-<!--              <adminhtml>
-                <rewrite>
-                    <customer_edit_tab_addresses>Mycloset_Membership_Block_Adminhtml_Customer_Edit_Tab_Addresses</customer_edit_tab_addresses>
-                </rewrite>
-            </adminhtml>-->
-<!--            <checkout>
-                <rewrite>
-                    <onepage>Mycloset_Membership_Block_Checkout_Onepage</onepage>
-                </rewrite>-->
-<!--                 <rewrite>
-            <test_cart> This can be any unique id 
-                <from><![CDATA[#^/checkout/onepage/#]]></from>   the URL which u want to override
-                <to>/membership/onepage/</to>   destination url 
-            </test_cart>
-        </rewrite>-->
-<!--            </checkout>-->
+            
         </blocks> 
     
         <resources>
@@ -180,13 +165,24 @@
                 </args> 
             </customer>
             <!--rewrite for onepage controller-->
-     <checkout>
-            <args>
-                <modules>
-                <Mycloset_Membership before="Mage_Checkout">Mycloset_Membership</Mycloset_Membership>
-                </modules>
-            </args>
-        </checkout>
+            <checkout>
+                <args>
+                    <modules>
+                        <Mycloset_Membership before="Mage_Checkout">Mycloset_Membership</Mycloset_Membership>
+                    </modules>
+                </args>
+            </checkout>
+            
+<!--               <adminhtml>
+                <sales>         
+                    <args>
+                        <modules>
+                            <mycloset_membership before="Mage_Adminhtml_Block_Sales">Mycloset_Membership_Block_Adminhtml_Sales</mycloset_membership>
+                        </modules>
+                    </args>
+                </sales>
+            </adminhtml>-->
+          
             <membership>
                 <use>standard</use>
                 <args>

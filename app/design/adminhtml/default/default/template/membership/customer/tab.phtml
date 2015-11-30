@@ -33,7 +33,7 @@ if ($myclosetcount > $info['min_storage']) {
     $storageAmount = $info['min_storage'] * $info['storage_amt'];
 }
 ?>
-<!--<form action="<?php // echo Mage::getBaseUrl();  ?>membership/payment/payme/" method="post" id="payme_form" >-->
+<!--<form action="<?php // echo Mage::getBaseUrl();   ?>membership/payment/payme/" method="post" id="payme_form" >-->
 
 <table cellspacing="0" class="form-edit">
     <tr>
@@ -171,41 +171,41 @@ if ($myclosetcount > $info['min_storage']) {
                                             ->setOrder('created_at', 'asc');
                                     $sum1 = 0;
                                     $i = 0;
-                                    foreach ($orders as $order):?>
-                                      
-                                <input type="hidden" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $order['increment_id']; ?>]" />
-                                        <?php 
-                                        $i++;
-                                        if ($i == 1 && $info['membership_id'] == '3') {
-                                            ?>
-                                            <tr style="text-decoration: line-through">
-                                                <th></th>
-                                                <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
-                                                <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
-                                                <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
-                                                <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
-                                                <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th> 
-                                            </tr>  
-                                            <?php
-                                            continue;
-                                        }
+                                    foreach ($orders as $order):
                                         ?>
-                                        <tr>
-                                            <?php
-                                            ?>
-                                            <th> <input type="checkbox" checked="checked" class="ordercheck"  value="<?php echo $order->getGrandTotal(); ?>" onclick="UpdateCost()"/> </th>
-                                             <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
-                                            <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
-                                            <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
-                                            <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
-                                            <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th>  
-    <?php ?>
-                                        </tr> 
 
-    <?php
-    $sum1 = $sum1 + $order->getGrandTotal();
-endforeach;
-?>
+                                    <input type="hidden" value="<?php echo $order->getRealOrderId(); ?>" name="order_id[<?php echo $order['increment_id']; ?>]" />
+                                    <?php
+//                                    $i++;
+//                                    if ($i == 1 && $info['membership_id'] == '3') {
+//                                        ?>
+<!--                                        <tr style="text-decoration: line-through">
+                                            <th></th>
+                                            <th><a href="<?php //echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
+                                            <th><?php //echo $order->getCreatedAtStoreDate(); ?></th>
+                                            <th><?php// echo $order->formatPrice($order->getShippingAmount()) ?></th>
+                                            <th><?php //echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
+                                            <th><?php// echo $order->formatPrice($order->getGrandTotal()) ?></th> 
+                                        </tr>  -->
+                                        <?php
+//                                        continue;
+//                                    }
+                                    ?>
+                                    <tr>
+                                        <?php ?>
+                                        <th> <input type="checkbox" checked="checked" class="ordercheck"  value="<?php echo $order->getGrandTotal(); ?>" onclick="UpdateCost()"/> </th>
+                                        <th><a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view/order_id/', array('order_id' => $order->getEntityId())); ?>"><?php echo $order->getRealOrderId(); ?></a></th>
+                                        <th><?php echo $order->getCreatedAtStoreDate(); ?></th>
+                                        <th><?php echo $order->formatPrice($order->getShippingAmount()) ?></th>
+                                        <th><?php echo $order->formatPrice($order->getSubtotalInclTax()) ?></th>                                                                                                                                          
+                                        <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th>  
+                                        <?php ?>
+                                    </tr> 
+
+                                    <?php
+                                    $sum1 = $sum1 + $order->getGrandTotal();
+                                endforeach;
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -222,7 +222,7 @@ endforeach;
 <div class="sss" style="float: left ; width: 100%;">
     <h2 id="final">Total amount to be paid : 
         <span id="currency" style="color: #ff0033;">
-<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol(); ?>
+            <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol(); ?>
         </span><span id="finalpricedisplay" style="color: #ff0033;">
             <?php
             //for New York region check ;43->New York
@@ -250,7 +250,10 @@ endforeach;
         var input, elem, element, itemsamt, storageitems, memsum = 0, min_storage;
         element = document.getElementById('add5');
         storageitems = document.getElementById('storageitems');
-
+        var addvalue = document.getElementById('addvalue').value;
+        if (addvalue == "") {
+            addvalue = 0;
+        }
 
         if (storageitems.checked == true) {
             itemsamt = document.getElementById('storeamt').value;
@@ -313,8 +316,8 @@ endforeach;
         }
         document.getElementById("ordersum").innerHTML = sum12;
         document.getElementById("servicesum").value = sum12;
-        sumtot = parseFloat(itemsamt) + parseFloat(sum) + parseFloat(sum12) + parseFloat(document.getElementById('addvalue').value);
-        document.getElementById("priceholder").innerHTML = sum + parseFloat(document.getElementById('addvalue').value) - parseFloat(memsum);
+        sumtot = parseFloat(itemsamt) + parseFloat(sum) + parseFloat(sum12) + parseFloat(addvalue);
+        document.getElementById("priceholder").innerHTML = sum + parseFloat(addvalue) - parseFloat(memsum);
         document.getElementById("finalamount").value = sumtot.toFixed(2);
         document.getElementById("finalpricedisplay").innerHTML = sumtot.toFixed(2);
     }
