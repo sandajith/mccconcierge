@@ -444,6 +444,16 @@ a.button, button.button, input.button {
 .itemsWrapper .customDropDown.pull-left {
     margin: 0 0 15px 45px
 }
+.itemsWrapper .popupBox .customDropDown.pull-left {
+     margin: 15px 0 -15px 20px;
+}
+.itemsWrapper .popupBox .customDropDown .dropContentBox > ul {
+    top:auto;
+    bottom:0px;
+}
+.itemsWrapper .popupBox .customDropDown:after{
+    display: none;
+}
 .itemsWrapper .customDropDown.pull-right {
     margin: 0 45px 15px 0
 }
@@ -614,9 +624,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .customDropDown span { margin: 0 20px 0 20px; position: relative; font-style:italic}
 .customDropDown ul { position: absolute;  background:rgba(256,256,256,0.7); border: 3px solid #c3c3c3; list-style: none; padding: 0; top: -5px; right: 0; display: none; width: -moz-min-content; width: -webkit-min-content; width: min-content; z-index: 5;}
 .customDropDown ul li { padding: 5px 17px; font-style: italic;  white-space: nowrap;}
-.customDropDown ul li:first-child { background: #ffffff}
+.customDropDown > ul li:first-child { background: #ffffff}
 .customDropDown ul li b { font-weight: bold; margin-bottom: 5px; display: block}
-.customDropDown ul li ul { position: relative; border:0;}
+.customDropDown ul li ul { position: relative; border:0; background: none;}
 .customDropDown ul li ul li { padding:4px 0 4px 5px}
 .customDropDown ul li:hover{ background: #dddddd}
 .customDropDown ul li.selected { background: #dddddd}
@@ -708,7 +718,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
     padding-right: 22px;
 }
 
-.customer-account-create .loginRegister .bordered { margin-bottom: 2px;}
+
 .loginRegister .bordered h4 { font-weight: bold; margin: 17px 0 20px}
 .customer-account-create .loginRegister .bordered h4 { margin:29px 0 0;}
 .loginRegister .bordered h4.m-t-0 { margin-top: 20px; margin-bottom: 0px;}
@@ -721,12 +731,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
 .loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px;}
 .loginRegister .bordered .content label { display: block; padding:5px 0; margin:7px 0 -3px; font-weight:normal}
-.loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:10px 0 5px}
+.loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:8px 0 3px}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
+.loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;}
 .loginRegister .bordered  select,
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:1px 5px; margin-bottom:0px; height: 26px;}
 
-.loginRegister .bordered p.required{color:#000; font-size:12px; position: absolute; bottom: 0; right:0;}
+.loginRegister .bordered p.required{ bottom: -2px; color: #000; font-size: 15px; margin: 0; position: absolute; right: -3px;}
 .loginRegister .bordered .content{position:relative;}
 .loginRegister .bordered  .wide .input-text {margin-bottom: 5px;}
 
@@ -748,10 +759,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
     text-indent: 0.01px;
     text-overflow: '';
 }
+.customer-account-create .loginRegister .bordered { margin-bottom: 2px; width: 581px; max-width: 100%;}
+.customer-account-create .loginRegister .bordered select, 
+.customer-account-create .loginRegister .bordered .input-text {  width: 266px;}
 .customer-account-create .buttons-set { float: left; width: 100%}
 .customer-account-create .buttons-set .button { min-width: 100px; border-radius: 8px;}
 .customer-account-create .buttons-set p { margin: 0 0 -7px}
-.customer-account-create .loginRegister .bordered .content { min-height: auto;}
+.customer-account-create .loginRegister .bordered .input-box {
+    margin: 7px 0 -3px;
+    padding: 5px 0;
+}
 
 .custom-select { position:relative; float:left;}
 .custom-select::after {
@@ -775,9 +792,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 
 
 .divFooter { background: #dadada; display: block; overflow: hidden; margin: 0 -22px;}
-.divFooter .btn { background: #b3b3b3; margin: 5px; border-radius:0; color: #ffffff; text-transform: uppercase;}
+.divFooter .btn { background: #b3b3b3; margin: 6px 8px 5px 0; padding: 4px 10px; border-radius:0; color: #ffffff; text-transform: uppercase;}
 .divFooter .btn:hover { background: #333; color: #fff}
-.divFooter .lnk { margin: 10px 0 0 15px; color: #000000; text-transform: uppercase;}
+.divFooter .lnk { margin: 10px 0 0 15px; color: #000000; text-transform: uppercase; font-size: 13px;}
 .divFooter .lnk:hover { color:#666666;}
 .mtop30 { margin-top:30px;}
 .button.submit { margin:5px 0; min-width: 100px}

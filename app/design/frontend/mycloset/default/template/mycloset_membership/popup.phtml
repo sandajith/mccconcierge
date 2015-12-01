@@ -1,7 +1,7 @@
 <?php
 $p = $this->getProductdetails();
 $user_id = Mage::getSingleton('customer/session')->getId(); // login user id
-$userid = ($user_id?$user_id:0);
+$userid = ($user_id ? $user_id : 0);
 $cat = Mage::getModel('catalog/category')->load(16);
 $subcats = $cat->getChildren();
 $all_sub_cat = explode(',', $subcats);
@@ -12,11 +12,6 @@ foreach ($cats as $category_id) {
     $catname = $_cat->getName();
 }
 $_product = Mage::registry('current_product');
-// $productIds = $p['id'];
-////    $products = Mage::getModel('catalog/product')->getCollection($productIds);
-// $product = Mage::getModel('catalog/product')->load($productIds);      
-//   
-
 ?>
 <div class="popupHead">
     <div class="sku dress-code hidden-xs"> <?php echo $p['sku']; ?></div>
@@ -25,17 +20,17 @@ $_product = Mage::registry('current_product');
 
 <div class="popupContent">
     <div class="row productdata" id="productdata">
-         <div class="col-sm-12 visible-xs center-align">
-            <h2><?php echo $catname;?></h2>
+        <div class="col-sm-12 visible-xs center-align">
+            <h2><?php echo $catname; ?></h2>
             <p class="signature visible-xs"><?php echo $p['designer']; ?></p>
         </div>
         <div class="col-sm-7 image " style="min-height: 200px;">
-           
+
             <img alt="" src="<?php echo $p['ImageUrl']; ?>"/>                                                                                
         </div>
         <div class="col-sm-5 details">
             <!--category name-->
-            <h2 class="hidden-xs"><?php echo $catname;?></h2>
+            <h2 class="hidden-xs"><?php echo $catname; ?></h2>
             <p class="visible-xs productId"> <b>Product ID</b> : <?php echo $p['sku']; ?></p>
             <p class="signature hidden-xs"><?php echo $p['designer']; ?></p>
             <div class="colorBox">
@@ -43,14 +38,14 @@ $_product = Mage::registry('current_product');
             </div>
             <div class="size"><i>Size <?php echo $p['size']; ?></i></div>
             <div class="season"><i><?php echo $p['season']; ?></i></div>
-<!--            tag details
-                        <div class="tags">
-                            <b>Tags</b>
-                            <div>
-                            <span class="tagitem"><a>Formal</a> <i class='tagclose'>X</i></span>                          
-                            <span id="remove" class="add"><input type="text" class="inputz" name="tagss" value=""></span>
-                            </div>
-                        </div>-->
+            <!--            tag details
+                                    <div class="tags">
+                                        <b>Tags</b>
+                                        <div>
+                                        <span class="tagitem"><a>Formal</a> <i class='tagclose'>X</i></span>                          
+                                        <span id="remove" class="add"><input type="text" class="inputz" name="tagss" value=""></span>
+                                        </div>
+                                    </div>-->
             <p class="description">
                 <?php echo $p['ShortDescription']; ?>
             </p>
@@ -70,18 +65,19 @@ $_product = Mage::registry('current_product');
             } else {
                 if ($p['product_status'] == 'We Have It') {
                     ?>
-                    <a  title="<?php echo $this->__('Deliver Me') ?>" class="button btn-cart" href="<?php echo $this->getUrl('',array('_secure' => true)) ?>membership/account/create/"><span><span><?php echo $this->__('Deliver Me') ?></span></span></a>
+                    <a  title="<?php echo $this->__('Deliver Me') ?>" class="button btn-cart" href="<?php echo $this->getUrl('', array('_secure' => true)) ?>membership/account/create/"><span><span><?php echo $this->__('Deliver Me') ?></span></span></a>
                 <?php } else { ?>
-                    <a title="<?php echo $this->__('Pick Me Up') ?>" class="button btn-cart" href="<?php echo $this->getUrl('',array('_secure' => true)) ?>membership/account/create/"><?php echo $this->__('Pick Me Up') ?></a>  
+                    <a title="<?php echo $this->__('Pick Me Up') ?>" class="button btn-cart" href="<?php echo $this->getUrl('', array('_secure' => true)) ?>membership/account/create/"><?php echo $this->__('Pick Me Up') ?></a>  
                     <?php
                 }
             }
             ?> 
         </div>
     </div>
-<!--    <div>
+    <!--SHOW BY-->
+    <div>
 
-        SHOW BY
+
         <div class="customDropDown pull-left">
             <div class="dropContentBox">
                 <b>SORT BY</b>
@@ -89,7 +85,7 @@ $_product = Mage::registry('current_product');
                 <ul>
                     <li> <b>Category</b>
                         <ul>  
-                            <li> All Categories</li>
+                            <!--                            <li> All Categories</li>-->
                             <?php
                             foreach ($all_sub_cat as $cat_id) {
                                 $category = Mage::getModel('catalog/category')->load($cat_id);
@@ -116,7 +112,6 @@ $_product = Mage::registry('current_product');
                                     <li >                       
                                         <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
                                     </li> 
-
                                     <?php
                                 }
                             }
@@ -125,54 +120,98 @@ $_product = Mage::registry('current_product');
                     </li>
                     <li><b>Designer</b>
                         <ul>
-             
-                      
+                            <?php
+                            $collection123 = Mage::getResourceModel('catalog/product_collection')
+                                    ->addAttributeToFilter('customer_id', $userid);
+                            foreach ($collection123 as $product) {
+                                $_product = Mage::getModel('catalog/product')->load($product->getId());
+                                $valdata = $_product->getCategoryIds();
+                                ?>
+
+                                <?php ?>              
+                                <li >                     
+                                    <a class="getdesignerid" relpro="<?php echo $_product['designer']; ?>"><?php echo $_product->getAttributeText('designer'); ?></a> 
+                                </li>    
+                                <?php
+                            }
+                            ?>
                         </ul> 
                     </li>
                     <li>
                         <b>Color</b>
                         <ul>
-                            <?php ?>    
-                            <li class="getcatid" rel="<?php echo $category->getId(); ?>"  >
-                                <?php echo 'black'; ?> 
-                            </li>
-                            <?php ?>
+                            <?php
+                            $collection111 = Mage::getResourceModel('catalog/product_collection')
+                                    ->addAttributeToFilter('customer_id', $userid);
+                            foreach ($collection111 as $product) {
+                                $_product = Mage::getModel('catalog/product')->load($product->getId());
+                                ?>
+
+                                <li> <a class="getcolorid" relcolor="<?php echo $_product['color']; ?>"><?php echo $_product->getAttributeText('color'); ?></a>  </li> 
+                            <?php }
+                            ?>
                         </ul>
                     </li>
-                    <li><b>Status</b></li>
-                    <li><b>My Tag</b></li>
-                    <li><b>Season</b></li>
+                    <li><b>Status</b>
+                        <ul>
+                            <?php
+                            $collection666 = Mage::getResourceModel('catalog/product_collection')
+                                    ->addAttributeToFilter('customer_id', $userid);
+                            foreach ($collection666 as $product) {
+                                $_product = Mage::getModel('catalog/product')->load($product->getId());
+                                ?>
+
+                                <li> <a class="getproduct_statusid" relproduct_status="<?php echo $_product['product_status']; ?>"><?php echo $_product->getAttributeText('product_status'); ?></a>  </li> 
+                            <?php }
+                            ?>
+                        </ul> 
+                    </li>
+                    <!--                    <li><b>My Tag</b></li>-->
+                    <li><b>Season</b>
+                        <ul>
+                            <?php
+                            $collection888 = Mage::getResourceModel('catalog/product_collection')
+                                    ->addAttributeToFilter('customer_id', $userid);
+                            foreach ($collection888 as $product) {
+                                $_product = Mage::getModel('catalog/product')->load($product->getId());
+                                ?>
+
+                                <li> <a class="getseasonid" relseason="<?php echo $_product['season']; ?>"><?php echo $_product->getAttributeText('season'); ?></a>  </li> 
+                            <?php }
+                            ?>
+                        </ul>  
+                    </li>
                 </ul>
                 <span></span>
             </div>
         </div>
-    </div>-->
+    </div>
     <!--slider-->
     <div class="flexsliderPopup flexslider carousel">
         <ul class="slides">
             <?php
             foreach ($all_sub_cat as $cat_id) {
-              //  $userid = Mage::getSingleton('customer/session')->getId();
                 $category = Mage::getModel('catalog/category')->load($cat_id);
                 $categories = Mage::getModel('catalog/category')->load($category->getId())
                         ->getProductCollection()
                         ->addAttributeToSelect('entity_id')
                         ->addAttributeToFilter('status', 1)
                         ->addAttributeToFilter('visibility', 4);
-                
+
 
                 $products = Mage::getModel('catalog/product')
                         ->getCollection()
                         ->addAttributeToFilter('customer_id', $userid)
                         ->addCategoryFilter($category)
                         ->load();
-                if ($products->count() > 0 ) {
+                if ($products->count() > 0) {
                     ?>              
                     <li >                       
                         <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/></a> 
                     </li>    
 
-                <?php } 
+                    <?php
+                }
             }
             ?>
         </ul>
@@ -190,11 +229,13 @@ $_product = Mage::registry('current_product');
         jqCustom('.getcatid').click(function () {
             var catid = jqCustom(this).attr('rel');
 
+
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/slider",
                 type: 'post',
                 data: {
                     categoryId: catid
+
                 },
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
@@ -210,7 +251,110 @@ $_product = Mage::registry('current_product');
                 }
             });
         });
+//        designer showby
+        jqCustom('.getdesignerid').click(function () {
+            var productid = jqCustom(this).attr('relpro');
 
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productdesigner",
+                type: 'post',
+                data: {
+                    ProductIds: productid
+
+                },
+                success: function (data) {
+
+                    jqCustom('.flexsliderPopup').remove();
+                    jqCustom(data).appendTo(".popupContent");
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
+                }
+            });
+        });
+//        color
+        jqCustom('.getcolorid').click(function () {
+            var productid = jqCustom(this).attr('relcolor');
+
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productcolor",
+                type: 'post',
+                data: {
+                    ProductIds: productid
+
+                },
+                success: function (data) {
+
+                    jqCustom('.flexsliderPopup').remove();
+                    jqCustom(data).appendTo(".popupContent");
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
+                }
+            });
+        });
+        //getproduct_statusid
+        jqCustom('.getproduct_statusid').click(function () {
+            var productid = jqCustom(this).attr('relproduct_status');
+
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productstatus",
+                type: 'post',
+                data: {
+                    ProductIds: productid
+
+                },
+                success: function (data) {
+
+                    jqCustom('.flexsliderPopup').remove();
+                    jqCustom(data).appendTo(".popupContent");
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
+                }
+            });
+        });
+        //getseasonid
+        jqCustom('.getseasonid').click(function () {
+            var productid = jqCustom(this).attr('relseason');
+
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/season",
+                type: 'post',
+                data: {
+                    ProductIds: productid
+
+                },
+                success: function (data) {
+
+                    jqCustom('.flexsliderPopup').remove();
+                    jqCustom(data).appendTo(".popupContent");
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
+                }
+            });
+        });
         var footHeight = jqCustom("footer").outerHeight();
         jqCustom(".footFix").css({"paddingBottom": footHeight + "px"});
         jqCustom("header .loginDetails span").click(function () {
@@ -233,7 +377,8 @@ $_product = Mage::registry('current_product');
         jqCustom(".customDropDown").click(function () {
             if (jqCustom(this).children().children("ul").css('display') == 'none')
             {
-                jqCustom(this).children().children("ul").slideDown();
+                var getPosition = jqCustom(this).children().children("b").width() + 20;
+                jqCustom(this).children().children("ul").css({"left": getPosition + "px"}).slideDown();
             }
 
         });
@@ -264,17 +409,17 @@ $_product = Mage::registry('current_product');
 
                 jqCustom("input.inputz").val('');
             }
-            
-             jqCustom(".tagclose").on("click",function () {
+
+            jqCustom(".tagclose").on("click", function () {
                 jqCustom(this).parent('span').remove();
             });
         });
-        
-        jqCustom(".tagclose").on("click",function () {
+
+        jqCustom(".tagclose").on("click", function () {
             jqCustom(this).parent('span').remove();
         });
-        
-       
+
+
         jqCustom(".close,.popClose").click(function () {
             jqCustom(".popupWrapper").fadeOut();
             jqCustom(".popupBox").empty();

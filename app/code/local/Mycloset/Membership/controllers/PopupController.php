@@ -9,61 +9,115 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
 
     public function sliderAction() {
         $categoryIds = Mage::app()->getRequest()->getParam('categoryId');
-//        $customerId = Mage::app()->getRequest()->getParam('productowner');
-        $user_id = Mage::getSingleton('customer/session')->getId();
-        $userid = ($user_id?$user_id:0);
-        //if($userid){
+            $user_id = Mage::getSingleton('customer/session')->getId();
+            $userid = ($user_id ? $user_id : 0);
+            //if($userid){
             $collection = Mage::getModel('catalog/product')
-                ->getCollection()
-                ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
-                ->addAttributeToSelect('*')        
-                 ->addAttributeToFilter('customer_id', $userid)
-                ->addAttributeToFilter('category_id', array('in' => $categoryIds));
-        $i = 0;
-       /* }else {
-           $collection = Mage::getModel('catalog/product')
-                ->getCollection()
-                ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
-                ->addAttributeToSelect('*')              
-                ->addAttributeToFilter('category_id', array('in' => $categoryIds));
-        $i = 0; 
-        }*/
-        
-        ?>
-<?php
-
-    if($collection->count()>0){
-?>
-        <div class="flexsliderPopup carousel">
-            <ul class="slides">
-                <?php
-                foreach ($collection as $_product):
-                  
-                    $productowner = Mage::getModel('catalog/product')->load($_product->getId())->getCustomerId();                    
-                    Mage::getSingleton('core/session')->setProductOwner($productowner); 
-                  $customerid = Mage::getSingleton('core/session')->getProductOwner();
-          
-                    if ($_product->getCustomerId()===$userid) {
-                       
-                        ?>
-                        <li>
-                            <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $_product->getId(); ?>" >
-                                <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" alt=""/></a>
-                        </li>  
-                        <?php
-                    }  else {?>
-                            <li>
-                            <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $_product->getId(); ?>" >
-                                <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" alt=""/></a>
-                        </li> 
-                   <?php }
-                endforeach;
+                    ->getCollection()
+                    ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
+                    ->addAttributeToSelect('*')
+                    ->addAttributeToFilter('customer_id', $userid)
+                    ->addAttributeToFilter('category_id', array('in' => $categoryIds));
+            $i = 0;
+            if ($collection->count() > 0) {
                 ?>
-            </ul>
-        </div>
-<?php
+                <div class="flexsliderPopup carousel">
+                    <ul class="slides">
+                        <?php
+                        foreach ($collection as $_product):
+
+                            $productowner = Mage::getModel('catalog/product')->load($_product->getId())->getCustomerId();
+                            Mage::getSingleton('core/session')->setProductOwner($productowner);
+                            $customerid = Mage::getSingleton('core/session')->getProductOwner();
+
+                            if ($_product->getCustomerId() === $userid) {
+                                ?>
+                                <li>
+                                    <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $_product->getId(); ?>" >
+                                        <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" alt=""/></a>
+                                </li>  
+                            <?php } else {
+                                ?>
+                                <li>
+                                    <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $_product->getId(); ?>" >
+                                        <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" alt=""/></a>
+                                </li> 
+                                <?php
+                            }
+                        endforeach;
+                        ?>
+                    </ul>
+                </div>
+                <?php
+            }
+            ?>
+            <script>
+                var jqCustom = jQuery.noConflict();
+                jqCustom('.getproductid').click(function () {
+                    var productid = jqCustom(this).attr('rel');
+                    jqCustom.ajax({
+                        url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/product?productid=" + productid,
+                        type: 'get',
+                        dataType: "json",
+                        success: function (data) {
+
+                            jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
+                            jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
+                            jqCustom('.signature').html(data['designer']);
+                            jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
+                            jqCustom('.description').html(data['Description']);
+                            jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
+                            jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                            jqCustom('.season').html('<i>' + data['season'] + '</i>');
+
+                        }
+                    });
+                });
+            </script> 
+            <?php
+        
     }
-    ?>
+
+    public function productdesignerAction() {
+        $designer = Mage::app()->getRequest()->getParam('ProductIds');
+        $user_id = Mage::getSingleton('customer/session')->getId();
+        $userid = ($user_id ? $user_id : 0);
+        $collection = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('customer_id', $userid)
+                ->addAttributeToFilter('designer', $designer);
+        if ($collection->count() > 0) {
+            ?>
+            <div class="flexsliderPopup carousel">
+                <ul class="slides">
+                    <?php
+                    foreach ($collection as $dddd) {
+                        $productowner1 = Mage::getModel('catalog/product')->load($dddd->getId())->getCustomerId();
+                        Mage::getSingleton('core/session')->setProductOwner($productowner);
+                        $customerid = Mage::getSingleton('core/session')->getProductOwner();
+
+                        if ($dddd->getCustomerId() === $userid) {
+                            ?>
+                            <li>
+                                <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li>  
+                        <?php } else {
+                            ?>
+                            <li>
+                                <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li> 
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+            <?php
+        }
+        ?>
         <script>
             var jqCustom = jQuery.noConflict();
             jqCustom('.getproductid').click(function () {
@@ -86,10 +140,204 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     }
                 });
             });
-        </script>
+        </script> 
         <?php
     }
+    public function productcolorAction() {
+        $designer = Mage::app()->getRequest()->getParam('ProductIds');
+        $user_id = Mage::getSingleton('customer/session')->getId();
+        $userid = ($user_id ? $user_id : 0);
+        $collection = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('customer_id', $userid)
+                ->addAttributeToFilter('color', $designer);
+        if ($collection->count() > 0) {
+            ?>
+            <div class="flexsliderPopup carousel">
+                <ul class="slides">
+                    <?php
+                    foreach ($collection as $dddd) {
+                        $productowner1 = Mage::getModel('catalog/product')->load($dddd->getId())->getCustomerId();
+                        Mage::getSingleton('core/session')->setProductOwner($productowner);
+                        $customerid = Mage::getSingleton('core/session')->getProductOwner();
 
+                        if ($dddd->getCustomerId() === $userid) {
+                            ?>
+                            <li>
+                                <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li>  
+                        <?php } else {
+                            ?>
+                            <li>
+                                <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li> 
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+            <?php
+        }
+        ?>
+        <script>
+            var jqCustom = jQuery.noConflict();
+            jqCustom('.getproductid').click(function () {
+                var productid = jqCustom(this).attr('rel');
+                jqCustom.ajax({
+                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/product?productid=" + productid,
+                    type: 'get',
+                    dataType: "json",
+                    success: function (data) {
+
+                        jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
+                        jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
+                        jqCustom('.signature').html(data['designer']);
+                        jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
+                        jqCustom('.description').html(data['Description']);
+                        jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
+                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        jqCustom('.season').html('<i>' + data['season'] + '</i>');
+
+                    }
+                });
+            });
+        </script> 
+        <?php
+    }
+ public function productstatusAction() {
+        $designer = Mage::app()->getRequest()->getParam('ProductIds');
+        $user_id = Mage::getSingleton('customer/session')->getId();
+        $userid = ($user_id ? $user_id : 0);
+        $collection = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('customer_id', $userid)
+                ->addAttributeToFilter('product_status', $designer);
+        if ($collection->count() > 0) {
+            ?>
+            <div class="flexsliderPopup carousel">
+                <ul class="slides">
+                    <?php
+                    foreach ($collection as $dddd) {
+                        $productowner1 = Mage::getModel('catalog/product')->load($dddd->getId())->getCustomerId();
+                        Mage::getSingleton('core/session')->setProductOwner($productowner);
+                        $customerid = Mage::getSingleton('core/session')->getProductOwner();
+
+                        if ($dddd->getCustomerId() === $userid) {
+                            ?>
+                            <li>
+                                <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li>  
+                        <?php } else {
+                            ?>
+                            <li>
+                                <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li> 
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+            <?php
+        }
+        ?>
+        <script>
+            var jqCustom = jQuery.noConflict();
+            jqCustom('.getproductid').click(function () {
+                var productid = jqCustom(this).attr('rel');
+                jqCustom.ajax({
+                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/product?productid=" + productid,
+                    type: 'get',
+                    dataType: "json",
+                    success: function (data) {
+
+                        jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
+                        jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
+                        jqCustom('.signature').html(data['designer']);
+                        jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
+                        jqCustom('.description').html(data['Description']);
+                        jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
+                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        jqCustom('.season').html('<i>' + data['season'] + '</i>');
+
+                    }
+                });
+            });
+        </script> 
+        <?php
+    }
+    public function seasonAction() {
+        $designer = Mage::app()->getRequest()->getParam('ProductIds');
+        $user_id = Mage::getSingleton('customer/session')->getId();
+        $userid = ($user_id ? $user_id : 0);
+        $collection = Mage::getModel('catalog/product')
+                ->getCollection()
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('customer_id', $userid)
+                ->addAttributeToFilter('season', $designer);
+        if ($collection->count() > 0) {
+            ?>
+            <div class="flexsliderPopup carousel">
+                <ul class="slides">
+                    <?php
+                    foreach ($collection as $dddd) {
+                        $productowner1 = Mage::getModel('catalog/product')->load($dddd->getId())->getCustomerId();
+                        Mage::getSingleton('core/session')->setProductOwner($productowner);
+                        $customerid = Mage::getSingleton('core/session')->getProductOwner();
+
+                        if ($dddd->getCustomerId() === $userid) {
+                            ?>
+                            <li>
+                                <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li>  
+                        <?php } else {
+                            ?>
+                            <li>
+                                <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
+                                    <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
+                            </li> 
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+            <?php
+        }
+        ?>
+        <script>
+            var jqCustom = jQuery.noConflict();
+            jqCustom('.getproductid').click(function () {
+                var productid = jqCustom(this).attr('rel');
+                jqCustom.ajax({
+                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/product?productid=" + productid,
+                    type: 'get',
+                    dataType: "json",
+                    success: function (data) {
+
+                        jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
+                        jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
+                        jqCustom('.signature').html(data['designer']);
+                        jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
+                        jqCustom('.description').html(data['Description']);
+                        jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
+                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        jqCustom('.season').html('<i>' + data['season'] + '</i>');
+
+                    }
+                });
+            });
+        </script> 
+        <?php
+    }
     public function productAction() {
         $product_id = Mage::app()->getRequest()->getParam('productid');
         $product = array();
