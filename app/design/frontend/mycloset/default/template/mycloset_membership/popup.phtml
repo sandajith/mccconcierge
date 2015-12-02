@@ -1,11 +1,42 @@
 <?php
 $p = $this->getProductdetails();
+ $rel_product = $p['rel_id'];
+$prefix = Mage::getConfig()->getTablePrefix();
+echo $prefix;
+//$tagIds = Mage::getModel('tag/tag_relation')
+//            ->setProductId($rel_product)
+//            ->getRelatedTagIds();
+//var_dump($tagIds);
+//
+//$tag2 = Mage::getModel('tag/tag_relation')
+//       ->load();
+//foreach ($tag2 as $va) {
+//    echo '<pre>';
+//    print_r($va);
+//    
+// 
+//   // Mage::getModel('tag/tag_relation')
+//}
+//   exit;
+//var_dump($tag2);
+//     ->addFieldToFilter('product_id')
+//        ->load();
+//        ->addFieldToFilter('customer_id','173');
+
+//$tag1 = Mage::getModel('tag/tag')->getCollection()
+////        $collection = Mage::getModel('tag/tag_relation')     
+//        ->setName($tagvalue)
+//        ->setStatus(1)
+//        ->setFirstCustomerId($userid);
+
 $user_id = Mage::getSingleton('customer/session')->getId(); // login user id
 $userid = ($user_id ? $user_id : 0);
 $cat = Mage::getModel('catalog/category')->load(16);
 $subcats = $cat->getChildren();
 $all_sub_cat = explode(',', $subcats);
 $product = $p['id'];
+//currebt product id
+
 $cats = $product->getCategoryIds();
 foreach ($cats as $category_id) {
     $_cat = Mage::getModel('catalog/category')->load($category_id);
@@ -38,21 +69,45 @@ $_product = Mage::registry('current_product');
             </div>
             <div class="size"><i>Size <?php echo $p['size']; ?></i></div>
             <div class="season"><i><?php echo $p['season']; ?></i></div>
-            <!--            tag details
-                                    <div class="tags">
-                                        <b>Tags</b>
-                                        <div>
-                                        <span class="tagitem"><a>Formal</a> <i class='tagclose'>X</i></span>                          
-                                        <span id="remove" class="add"><input type="text" class="inputz" name="tagss" value=""></span>
-                                        </div>
-                                    </div>-->
+
+            <!--            tag details   -->              
+
+            <div class="tags">
+                <b>Tags</b>
+                <div>
+                     <?php
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
+
+$query = 'SELECT * FROM `'.$prefix.'tag_relation`';
+$results = $readConnection->fetchAll($query);
+foreach ($results as $tagname) {
+   $tagId= $tagname['tag_id'];
+   $gg= Mage::getModel('tag/tag')->getCollection()
+          ->addFieldToFilter('tag_id',$tagId);
+    foreach ($gg as $value) {
+      
+        ?>
+      
+        <span class="tagitem"><a><?php echo $value['name']; ?></a> <i class='tagclose'>X</i></span>                          
+        <input type="hidden" value="<?php echo $value['tag_id']; ?>" name="tagid" class="removetagid"/>
+  <?php      
+    }
+}
+
+?>
+           <span id="remove" class="add"><input type="text" class="inputz" pro="<?php echo $rel_product; ?>" name="tagss" value=""></span>       
+                </div>
+            </div>
+            <!--ShortDescription-->
             <p class="description">
                 <?php echo $p['ShortDescription']; ?>
             </p>
+
             <p class="status">
                 <b>Status</b> : <?php echo $p['product_status']; ?>
             </p>
-
+            <!--product_status-->
             <?php
             if ($userid) {
                 if ($p['product_status'] == 'We Have It') {
@@ -80,7 +135,7 @@ $_product = Mage::registry('current_product');
 
         <div class="customDropDown pull-left">
             <div class="dropContentBox">
-                <b>SORT BY</b>
+                <b>SHOW</b>
 
                 <ul>
                     <li> <b>Category</b>
@@ -221,7 +276,11 @@ $_product = Mage::registry('current_product');
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
     jqCustom(document).ready(function () {
+        //tag added into tag db table by ajax
 
+        jqCustom('.getcatid').click(function () {
+            var catid = jqCustom(this).attr('rel');
+        });
         //slider change images by 'show by' click
 
 
@@ -405,18 +464,53 @@ $_product = Mage::registry('current_product');
             var key = e.which;
             if (key == 13)  // the enter key code
             {
-                jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'>X</i></span>").prependTo(".tags > div");
+                var tag = jqCustom('.inputz').val();
+                var productid = jqCustom(this).attr('pro');
 
-                jqCustom("input.inputz").val('');
+                jqCustom.ajax({
+                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
+                    type: 'post',
+                    data: {
+                        tag: tag,
+                        productid: productid
+
+                    },
+                    success: function (data) {
+                        jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'>X</i></span>").prependTo(".tags > div");
+                        jqCustom("input.inputz").val('');
+                    }
+                });
+
+
+
+
             }
 
-            jqCustom(".tagclose").on("click", function () {
-                jqCustom(this).parent('span').remove();
+            jqCustom(".tagclose").on("click", function () {           
+              jqCustom(this).parent('span').remove();                
             });
         });
 
         jqCustom(".tagclose").on("click", function () {
-            jqCustom(this).parent('span').remove();
+         {
+             
+                var tag = jqCustom('.removetagid').val();
+                jqCustom.ajax({
+                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                    type: 'post',
+                    data: {
+                        tag: tag
+                    },
+                    success: function (data) {
+           jqCustom(this).parent('span').remove();
+                    }
+                });
+//           
+//
+//
+//
+            }
+          
         });
 
 
