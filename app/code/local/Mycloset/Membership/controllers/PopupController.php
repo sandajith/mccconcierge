@@ -398,7 +398,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
 //         $tag = Mage::getModel('tag/tag')->load($tagvalue);
 //            $tag->delete();
              $model = Mage::getModel('tag/tag_relation');
-             $model->loadByTagCustomer(null, $tagvalue, $userid)->delete();;
+             $model->loadByTagCustomer(null, $tagvalue, $userid)->delete();
 //        $prefix = Mage::getConfig()->getTablePrefix();
 //        $resource = Mage::getSingleton('core/resource');
 //        $write = $resource->getConnection('core_write');
