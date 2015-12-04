@@ -935,7 +935,7 @@ footer .social a { margin-left: 5px;}
 
 .popupContent .carousel { border: 0; margin: 0; border-top:0px solid #ccc; margin:10px 0 0 0;}
 .popupContent .carousel .flex-direction-nav .flex-prev { background:url("../images/slide-prev-popup.png") no-repeat scroll 0 0; left: 10px; opacity: 1; top:20%!important;}
-.popupContent .carousel .flex-direction-nav .flex-next { background:url("../images/slide-next-popup.png") no-repeat scroll right 0; opacity: 1; right: 10px}
+.popupContent .carousel .flex-direction-nav .flex-next { background:url("../images/slide-next-popup.png") no-repeat scroll right 0; opacity: 1; right: 10px; top:20%!important;}
 .productdata { margin: 0 20px}
 /*9/9/2015*/
 .dress-code{
