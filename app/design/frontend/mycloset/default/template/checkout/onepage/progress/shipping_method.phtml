@@ -29,12 +29,12 @@
     <?php echo $this->__('Shipping Method') ?> <span class="changelink"><span class="separator">|</span> <a
             href="#shipping_method"
             onclick="checkout.changeSection('opc-shipping_method');
-                        return false;"><?php echo $this->__('Change') ?></a></span>
+                    return false;"><?php echo $this->__('Change') ?></a></span>
     </dt>
     <dd class="complete">
         <?php
         if ($this->getShippingMethod()):
-            $ShippingDescription = $this->getShippingDescription();            
+             $ShippingDescription = $this->getShippingDescription();
             echo str_replace("United Parcel Service -", "UPS", $ShippingDescription);
             ?>
 
@@ -46,14 +46,51 @@
                 <?php // echo $_excl;  ?>
             <?php endif; ?>
             <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                (<?php //echo $this->__('Incl. Tax');  ?> <?php // echo $_incl;  ?>)
+                (<?php //echo $this->__('Incl. Tax');   ?> <?php // echo $_incl;   ?>)
             <?php endif; ?>
 
         <?php else: ?>
             <?php echo $this->__('Shipping method has not been selected yet') ?>
         <?php endif; ?>
+
+        <?php
+        if (strpos($ShippingDescription, '1DA') !== false) {
+                $add = 1;
+                $current_date = date();
+                $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
+               
+                 echo '</br>'.$this->__('Delivery Date: ').$delivery_date ;
+            } else if (strpos($ShippingDescription, '2DA') !== false) {
+                $add = 2;
+                $current_date = date();
+                $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
+                echo '</br>'.$this->__('Delivery Date: ').$delivery_date ;
+            } else if (strpos($ShippingDescription, 'White glove delivery') !== false) {
+                 $userid = Mage::getSingleton('customer/session')->getId();
+            $collection = Mage::getModel('sales/quote')->getCollection()
+                    ->addFieldToSelect('*')
+                    ->addFieldToFilter('customer_id', $userid)
+                    ->setOrder('updated_at', 'DESC');
+            $i = 0;
+            foreach ($collection as $shippingtime) {
+                $i++;
+                if ($i == 1) {
+                    $shpdate = $shippingtime['shipping_date'];
+//                    $shippingtime;
+                     echo '</br>'.$this->__('Delivery/Pick Up Date: ').$delivery_date = date('F d, Y', strtotime($shpdate));
+//                   }
+                }
+            }
+        }else {
+          $add = 3;
+                    $current_date = date();
+                    $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
+                     echo '</br>'. $delivery_date;
+        }
+        ?>
+
     </dd>
-<?php else: ?>
+    <?php else: ?>
     <dt>
     <?php echo $this->__('Shipping Method') ?>
     </dt>

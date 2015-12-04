@@ -37,14 +37,14 @@
         $model2 = Mage::getModel('membership/customermembership')->load($userid, 'customer_id');
         $free_shipping = $model2->getFreeshippingFlag();
         $membership_id = $model2->getMembershipId();
-        if (($membership_id == 3)&&($free_shipping == 1)) {
+        if (($membership_id == 3) && ($free_shipping == 1)) {
             $freeshipping = 1;
         }
 
         $_sole = count($_shippingRateGroups) == 1;
         foreach ($_shippingRateGroups as $code => $_rates):
 
-
+            
             if (($freeshipping == 1 ) && ($code != 'freeshipping')) {
                 continue;
             }
@@ -58,68 +58,120 @@
             <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
             <dd>
                 <ul>
-            <?php $_rates = array_reverse($_rates); ?>
-        <?php
-        $_sole = $_sole && count($_rates) == 1;
+                    <?php $_rates = array_reverse($_rates); ?>
+                    <?php
+                    $_sole = $_sole && count($_rates) == 1;
 
-        foreach ($_rates as $_rate):
-
-//                 print_r($_rates);
-            ?>
+                    foreach ($_rates as $_rate):
+                        
+                        ?>
                         <?php $shippingCodePrice[] = "'" . $_rate->getCode() . "':" . (float) $_rate->getPrice(); ?>
                         <li>
-                        <?php if ($_rate->getErrorMessage()): ?>
+                            <?php if ($_rate->getErrorMessage()) { ?>
                                 <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
-                        <?php else: ?>
-                                <?php ?>
-                                <?php if ($_sole) : ?>
-                                    <span class="no-display" style="display: none;"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked"  /></span>
-                                <?php else: ?>
-                                    <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if ($_rate->getCode() === $this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+                            <?php } else { ?>
 
-                                    <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                                <?php if ($_sole) { ?>
+                                    <span class="no-display" style="display: none;"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked"  /></span>
+                                <?php } else { ?>
+
+                                    <?php
+                                    $methodval = $_rate->getCode();
+                                    if ($methodval === 'flatrate_flatrate') {
+                                        ?>
+                                        <input name="shipping_method"  type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if ($_rate->getCode() === $this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio localdeliveryshow"/>
+                                    <?php }else { ?>
+
+                                        <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if ($_rate->getCode() === $this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio localdeliveryhide"/>
+                                    <?php } ?>
+
+                                    <?php if ($_rate->getCode() === $this->getAddressShippingMethod()) { ?>
                                         <script type="text/javascript">
                                             //<![CDATA[
                                             lastPrice = <?php echo (float) $_rate->getPrice(); ?>;
                                             //]]>
                                         </script>
-                                    <?php endif; ?>
+                                    <?php } ?>
 
-                <?php endif; ?>
+                                <?php } ?>
+
                                 <label <?php echo ($_sole ? 'style="display: none;"' : ''); ?> for="s_method_<?php echo $_rate->getCode() ?>"><?php
-                if ($code == "ups") {
-                    echo 'UPS ';
-                }echo $this->escapeHtml($_rate->getMethodTitle())
-                ?>
-                                <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                    if ($code == "ups") {
+                                        echo 'UPS ';
+                                    }echo $this->escapeHtml($_rate->getMethodTitle())
+                                    ?>
+                                    <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                                     <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
                                     <?php //echo $_excl;  ?>
-                                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl) { ?>
                                         (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-                                    <?php endif; ?>
+                                    <?php } ?>
                                 </label>
 
-                                <?php endif ?>
+                            <?php } ?>
+
+
                         </li>
-                            <?php endforeach; ?>
+                        
+                          <?php
+//                         echo $_rate->getCode();
+//                         echo strpos($_rate->getCode(), '1DA');
+            if ($_rate->getCode()== 'ups_1DA4') {
+                $add = 1;
+                $current_date = date();
+                $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
+                $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
+                ?> <input type="hidden" name="inputDatetatorval" value="<?php echo $delivery_date_db; ?>"> <?php
+            } else if ($_rate->getCode()== 'ups_2DA') {
+                $add = 2;
+                $current_date = date();
+                $delivery_date = date(' d, Y', strtotime($current_date . ' +' . $add . 'day'));
+                $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
+                ?> <input type="hidden"  name="inputDatetatorval" value="<?php echo $delivery_date_db; ?>"> <?php
+            } else if ($_rate->getCode()== 'flatrate_flatrate') {
+                ?>
+                <div class="methoddatepicker" style="display: none">
+                    <label for="inputDatetator1">
+                        <b>Set delivery/pick:</b>
+                    </label>
+                    <input id="inputDatetator1" name="inputDatetator1" value="">                                  
+                </div> 
+            <?php
+        } else {
+            $add = 3;
+            $current_date = date();
+            $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
+            $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
+            ?> <input type="hidden"  name="inputDatetatorval" value="<?php echo $delivery_date_db; ?>">
+            <?php }
+            ?>
+                        
+                        
+                    <?php endforeach; ?>
 
                 </ul>
             </dd>
-                    <?php endforeach; ?>
-                <?php if ($freeshipping == 0) { ?>
+          
+        <?php endforeach; ?>
+
+
+
+        <?php if ($freeshipping == 0) { ?>
             <dd>
                 <p class="note"> <em>*</em><?php
-                    echo $this->__('Final cost of shipping is contingent upon weight of items.'
-                            . "<br>" . 'My Closet Concierge will contact you to confirm.');
-                    ?></p>
+        echo $this->__('Final cost of shipping is contingent upon weight of items.'
+                . "<br>" . 'My Closet Concierge will contact you to confirm.');
+            ?></p>
             </dd>
-    <?php } ?>
+                <?php } ?>
     </dl>
+
+
     <script type="text/javascript">
-    //<![CDATA[
-                <?php if (!empty($shippingCodePrice)): ?>
+        //<![CDATA[
+    <?php if (!empty($shippingCodePrice)): ?>
             var shippingCodePrice = {<?php echo implode(',', $shippingCodePrice); ?>};
-        <?php endif; ?>
+    <?php endif; ?>
 
         $$('input[type="radio"][name="shipping_method"]').each(function (el) {
             Event.observe(el, 'click', function () {
@@ -141,6 +193,28 @@
                 }
             });
         });
-    //]]>
+        //]]>
     </script>
 <?php endif; ?>
+<script type="text/javascript">
+    var jqCustom = jQuery.noConflict();
+   var check= jqCustom(".localdeliveryshow");
+    jqCustom(".localdeliveryshow").click(function () {
+        jqCustom("div.methoddatepicker").show();
+    });
+    if(check.is(":checked"))
+    {
+         jqCustom("div.methoddatepicker").show();
+    }
+    jqCustom(".localdeliveryhide").click(function () {
+        jqCustom("div.methoddatepicker").hide();
+    });
+    jqCustom(function () {
+        var inputDatetator1 = jqCustom('#inputDatetator1');
+        if (inputDatetator1.data('datetator') === undefined) {
+            inputDatetator1.datetator({
+                useDimmer: false
+            });
+        }
+    });
+</script>

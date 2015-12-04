@@ -1475,3 +1475,9 @@ font-weight: 100;
    text-decoration: none; outline: none !important;color: #000; cursor: default;
        
 }
+#inputDatetator1,
+		#inputDatetator2 {
+			width: 300px;
+			padding: 8px 16px;
+			box-sizing: border-box;
+		}

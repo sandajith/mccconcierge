@@ -4,82 +4,6 @@ require_once 'Mage/Checkout/controllers/OnepageController.php';
 
 class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageController {
 
-//    public function saveExcellenceAction() {
-//
-//     if ($this->_expireAjax()) {
-//            return;
-//        }
-//        if ($this->getRequest()->isPost()) {
-////             echo  $data = $this->getRequest()->getPost();
-//          
-//            $data = $this->getRequest()->getPost('excellence', array());
-//
-//            $result = $this->getOnepage()->saveExcellence($data);
-//// 
-////            if (!isset($result['error'])) {
-//            $result['goto_section'] = 'shipping_method';
-//            $result['update_section'] = array(
-//                'name' => 'shipping-method',
-//                'html' => $this->_getShippingMethodsHtml()
-//            );
-////            }
-//
-//            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-//        }
-//    }
-//    public function saveBillingAction() {
-//        if ($this->_expireAjax()) {
-//            return;
-//        }
-//        if ($this->getRequest()->isPost()) {
-//            //            $postData = $this->getRequest()->getPost('billing', array());
-//            //            $data = $this->_filterPostData($postData);
-//            $data = $this->getRequest()->getPost('billing', array());
-//            $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
-//
-//            if (isset($data['email'])) {
-//                $data['email'] = trim($data['email']);
-//            }
-//            $result = $this->getOnepage()->saveBilling($data, $customerAddressId);
-//
-//            if (!isset($result['error'])) {
-//                /* check quote for virtual */
-//                if ($this->getOnepage()->getQuote()->isVirtual()) {
-//                    $result['goto_section'] = 'payment';
-//                    $result['update_section'] = array(
-//                        'name' => 'payment-method',
-//                        'html' => $this->_getPaymentMethodsHtml()
-//                    );
-//                } elseif (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
-//                    $result['goto_section'] = 'excellence';  //Goes to our step
-//                    $result['allow_sections'] = array('shipping');
-//                    $result['duplicateBillingInfo'] = 'true';
-//                } else {
-//                    $result['goto_section'] = 'shipping';
-//                }
-//            }
-//
-//            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-//        }
-//    }
-//    public function saveShippingAction() {
-//  
-//        if ($this->_expireAjax()) {
-//            return;
-//        }
-//        if ($this->getRequest()->isPost()) {
-//            $data = $this->getRequest()->getPost('shipping', array());
-//            $customerAddressId = $this->getRequest()->getPost('shipping_address_id', false);
-//            $result = $this->getOnepage()->saveShipping($data, $customerAddressId);
-//
-//            if (!isset($result['error'])) {
-//                $result['goto_section'] = 'excellence'; //Go to our step
-//            }
-//             $result['goto_section'] = 'excellence'; //Go to our step
-//            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-//        }
-//    }
-
     public function saveShippingAction() {
         if ($this->_expireAjax()) {
             return;
@@ -101,6 +25,46 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
                     'html' => $this->_getShippingMethodsHtml()
                 );
             }
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+        }
+    }
+
+    public function saveShippingMethodAction() {
+        if ($this->_expireAjax()) {
+            return;
+        }
+        if ($this->getRequest()->isPost()) {
+            if(!($this->getRequest()->getPost('inputDatetator1'))){
+                 $shipping_date = $this->getRequest()->getPost('inputDatetatorval');    
+            } else {
+                $shipping_date = $this->getRequest()->getPost('inputDatetator1');
+            }
+            
+           
+
+            $data = $this->getRequest()->getPost('shipping_method', '');
+
+            $result = $this->getOnepage()->saveShippingMethod($data);
+            // $result will contain error data if shipping method is empty
+            if (!$result) {
+                Mage::dispatchEvent(
+                        'checkout_controller_onepage_save_shipping_method', array(
+                    'request' => $this->getRequest(),
+                    'quote' => $this->getOnepage()->getQuote()));
+                $this->getOnepage()->getQuote()->collectTotals();
+                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+
+                $result['goto_section'] = 'payment';
+                $result['update_section'] = array(
+                    'name' => 'payment-method',
+                    'html' => $this->_getPaymentMethodsHtml()
+                );
+            }
+
+            $this->getOnepage()->getQuote()->collectTotals()->save();
+
+            $this->getOnepage()->getQuote()->setShippingDate($shipping_date)->save();
+//          $this->getOnepage()->getQuote()->setShippingDate('2015-12-05')->save();
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
@@ -195,35 +159,36 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             }
 
             $this->getOnepage()->saveOrder();
-                $rr = Mage::app()->getRequest()->getPost();
+            $rr = Mage::app()->getRequest()->getPost();
 //            $rr = $this->getRequest()->getPost();
- $final = array();
-                    $i = 0;
-                    foreach ($rr['quantity'] as $key => $val) {
-                       $final[$i]['cat_id'] = $key;
-                        $category = Mage::getModel('catalog/category')->load($final[$i]['cat_id']);
-                       
-                        $final[$i]['categoryname'] = $category->name;
-                        $final[$i]['quantity'] = $val['quantity'];
-                       $i++;
-                    }
+            $final = array();
+            $i = 0;
+            foreach ($rr['quantity'] as $key => $val) {
+                $final[$i]['cat_id'] = $key;
+                $category = Mage::getModel('catalog/category')->load($final[$i]['cat_id']);
+
+                $final[$i]['categoryname'] = $category->name;
+                $final[$i]['quantity'] = $val['quantity'];
+                $i++;
+            }
 
 //            $fp = fopen('data.txt', 'a+');
 //            fwrite($fp, print_r($final, true));
 //            fclose($fp);
-                     $info = serialize($final);
-                    
+            $info = serialize($final);
+
             $quoteItem = Mage::getModel('sales/order')->load($this->getOnepage()->getQuote()->getId(), 'quote_id');
             $quoteItem->setShippingComment($this->getOnepage()->getQuote()->getShippingComment());
+            $quoteItem->setShippingDate($this->getOnepage()->getQuote()->getShippingDate());
             $quoteItem->setOtherData($info);
             $quoteItem->save();
-             $userid = Mage::getSingleton('customer/session')->getId();
+            $userid = Mage::getSingleton('customer/session')->getId();
             $freeshipping = Mage::getModel('membership/customermembership')
-                ->load($userid, 'customer_id')
-                    ->setFreeshippingFlag(0)->save();
+                            ->load($userid, 'customer_id')
+                            ->setFreeshippingFlag(0)->save();
 
-            
-               if ($quoteItem->getCanSendNewEmailFlag()) {
+
+            if ($quoteItem->getCanSendNewEmailFlag()) {
                 try {
                     $quoteItem->queueNewOrderEmail();
                 } catch (Exception $e) {
@@ -231,14 +196,14 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
                 }
             }
 
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
             $redirectUrl = $this->getOnepage()->getCheckout()->getRedirectUrl();
             $result['success'] = true;
             $result['error'] = false;

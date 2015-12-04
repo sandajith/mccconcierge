@@ -37,13 +37,17 @@ Default layout, loads most of the pages
         <action method="addItem"><type>skin_js</type><name>js/jquery-ui.min.js</name><params/></action>
         <action method="addItem"><type>skin_js</type><name>js/jquery.flexslider-min.js</name><params/></action>
         <action method="addItem"><type>skin_js</type><name>js/custom.js</name><params/></action>
-        <action method="addItem"><type>skin_js</type><name>js/bootstrap.min.js</name><params/></action>
+        <action method="addItem"><type>skin_js</type><name>js/bootstrap.min.js</name><params/></action>        
+        <action method="addItem"><type>skin_js</type><name>js/jquery-1.11.0.min.js</name><params/></action>
+        <action method="addItem"><type>skin_js</type><name>js/fm.datetator.jquery.js</name><params/></action>
      
         <action method="addItem"><type>skin_css</type><name>css/bootstrap.min.css</name></action>
         <action method="addItem"><type>skin_css</type><name>css/flexslider.css</name></action>
         <action method="addItem"><type>skin_css</type><name>css/jquery-ui.min.css</name></action>
         <action method="addItem"><type>skin_css</type><name>css/all.css</name></action>
-        <action method="addItem"><type>skin_css</type><name>css/responsive.css</name></action>
+        <action method="addItem"><type>skin_css</type><name>css/responsive.css</name></action>      
+        <action method="addItem"><type>skin_css</type><name>css/fm.datetator.jquery.css</name></action>
+      
     </reference>
 </default>
 
