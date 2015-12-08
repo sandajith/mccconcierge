@@ -1,33 +1,8 @@
 <?php
 $p = $this->getProductdetails();
-$rel_product = $p['rel_id'];
-$prefix = Mage::getConfig()->getTablePrefix();
-//echo $prefix;
-//$tagIds = Mage::getModel('tag/tag_relation')
-//            ->setProductId($rel_product)
-//            ->getRelatedTagIds();
-//var_dump($tagIds);
-//
-//$tag2 = Mage::getModel('tag/tag_relation')
-//       ->load();
-//foreach ($tag2 as $va) {
-//    echo '<pre>';
-//    print_r($va);
-//    
-// 
-//   // Mage::getModel('tag/tag_relation')
-//}
-//   exit;
-//var_dump($tag2);
-//     ->addFieldToFilter('product_id')
-//        ->load();
-//        ->addFieldToFilter('customer_id','173');
-//$tag1 = Mage::getModel('tag/tag')->getCollection()
-////        $collection = Mage::getModel('tag/tag_relation')     
-//        ->setName($tagvalue)
-//        ->setStatus(1)
-//        ->setFirstCustomerId($userid);
+ $rel_product = $p['rel_id'];
 
+$prefix = Mage::getConfig()->getTablePrefix();
 $user_id = Mage::getSingleton('customer/session')->getId(); // login user id
 $userid = ($user_id ? $user_id : 0);
 $cat = Mage::getModel('catalog/category')->load(16);
@@ -39,14 +14,13 @@ $cats = $product->getCategoryIds();
 foreach ($cats as $category_id) {
     $_cat = Mage::getModel('catalog/category')->load($category_id);
     $catname = $_cat->getName();
+
 }
-$_product = Mage::registry('current_product');
 ?>
 <div class="popupHead">
     <div class="sku dress-code hidden-xs"> <?php echo $p['sku']; ?></div>
     <a class="close" style="float: right;">X</a>
 </div>
-
 <div class="popupContent">
     <div class="row productdata" id="productdata">
         <div class="col-sm-12 visible-xs center-align">
@@ -54,7 +28,6 @@ $_product = Mage::registry('current_product');
             <p class="signature visible-xs"><?php echo $p['designer']; ?></p>
         </div>
         <div class="col-sm-7 image " style="min-height: 200px;">
-
             <img alt="" src="<?php echo $p['ImageUrl']; ?>"/>                                                                                
         </div>
         <div class="col-sm-5 details">
@@ -67,39 +40,44 @@ $_product = Mage::registry('current_product');
             </div>
             <div class="size"><i>Size <?php echo $p['size']; ?></i></div>
             <div class="season"><i><?php echo $p['season']; ?></i></div>
-
-            <!--            tag details   -->              
-
-<!--            <div class="tags">
+            <!--            tag details   -->
+            <div class="tags">
                 <b>Tags</b>
                 <div>
-                    <?php
-                    $resource = Mage::getSingleton('core/resource');
-                    $readConnection = $resource->getConnection('core_read');
+<?php
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
 
-                    $query = 'SELECT * FROM `' . $prefix . 'tag_relation`';
-                    $results = $readConnection->fetchAll($query);
-                    foreach ($results as $tagname) {
-                        $tagId = $tagname['tag_id'];
-                        $gg = Mage::getModel('tag/tag')->getCollection()
-                                ->addFieldToFilter('tag_id', $tagId);
-                        foreach ($gg as $value) {
-                            ?>
+$query ='SELECT * FROM '.$prefix.'tag_relation WHERE product_id='.$rel_product;
 
-                            <span class="tagitem"><a><?php echo $value['name']; ?></a> <i class='tagclose'>X</i></span>                          
-                            <input type="hidden" value="<?php echo $value['tag_id']; ?>" name="tagid" class="removetagid"/>
+$results = $readConnection->fetchAll($query);
+foreach ($results as $tagname) {
+    $tagId = $tagname['tag_id'];
+    $gg = Mage::getModel('tag/tag')->getCollection()
+            ->addFieldToFilter('tag_id', $tagId);
+
+    foreach ($gg as $tagivalue) {  
+       $tag_name =  $tagivalue['name'];
+      $tag_id =  $tagivalue['tag_id'];
+      
+
+        ?>
+                            <span class="tagitem">
+                                <a><?php echo $tag_name; ?></a>
+                                <i class="tagclose" tagval="<?php echo $tag_id; ?>">X</i>                             
+                            </span>                          
         <?php
     }
 }
 ?>
-                    <span id="remove" class="add"><input type="text" class="inputz" pro="<?php echo $rel_product; ?>" name="tagss" value=""></span>       
+                    <span id="remove" class="add add-text"><input type="text" class="inputz" pro="<?php echo $rel_product; ?>" name="tagss" value=""></span>       
+                    <span id="remove pluse" class="tagpluse"><i class='tagadd'>+</i></span>       
                 </div>
-            </div>-->
+            </div>
             <!--ShortDescription-->
             <p class="description">
 <?php echo $p['ShortDescription']; ?>
             </p>
-
             <p class="status">
                 <b>Status</b> : <?php echo $p['product_status']; ?>
             </p>
@@ -126,17 +104,14 @@ if ($userid) {
         </div>
     </div>
     <!--SHOW BY-->
-<!--    <div>
-
-
+    <div>
         <div class="customDropDown pull-left">
             <div class="dropContentBox">
                 <b>SHOW</b>
-
                 <ul>
                     <li> <b>Category</b>
                         <ul>  
-                                                        <li> All Categories</li>
+                            <!--<li> All Categories</li>-->
 <?php
 foreach ($all_sub_cat as $cat_id) {
     $category = Mage::getModel('catalog/category')->load($cat_id);
@@ -159,7 +134,6 @@ foreach ($all_sub_cat as $cat_id) {
 
     <?php } else if (($categories->count() > 0) && (!$userid)) {
         ?>
-
                                     <li >                       
                                         <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
                                     </li> 
@@ -211,13 +185,12 @@ $collection666 = Mage::getResourceModel('catalog/product_collection')
 foreach ($collection666 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
     ?>
-
                                 <li> <a class="getproduct_statusid" relproduct_status="<?php echo $_product['product_status']; ?>"><?php echo $_product->getAttributeText('product_status'); ?></a>  </li> 
                             <?php }
                             ?>
                         </ul> 
                     </li>
-                                        <li><b>My Tag</b></li>
+                    <!--<li><b>My Tag</b></li>-->
                     <li><b>Season</b>
                         <ul>
 <?php
@@ -226,7 +199,6 @@ $collection888 = Mage::getResourceModel('catalog/product_collection')
 foreach ($collection888 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
     ?>
-
                                 <li> <a class="getseasonid" relseason="<?php echo $_product['season']; ?>"><?php echo $_product->getAttributeText('season'); ?></a>  </li> 
                             <?php }
                             ?>
@@ -236,9 +208,8 @@ foreach ($collection888 as $product) {
                 <span></span>
             </div>
         </div>
-    </div>-->
+    </div>
     <!--slider-->
-    
     <div class="flexsliderPopup flexslider carousel">
         <ul class="slides">
 <?php
@@ -249,8 +220,6 @@ foreach ($all_sub_cat as $cat_id) {
             ->addAttributeToSelect('entity_id')
             ->addAttributeToFilter('status', 1)
             ->addAttributeToFilter('visibility', 4);
-
-
     $products = Mage::getModel('catalog/product')
             ->getCollection()
             ->addAttributeToFilter('customer_id', $userid)
@@ -261,7 +230,6 @@ foreach ($all_sub_cat as $cat_id) {
                     <li >                       
                         <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/></a> 
                     </li>    
-
         <?php
     }
 }
@@ -273,8 +241,6 @@ foreach ($all_sub_cat as $cat_id) {
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
     jqCustom(document).ready(function () {
-        //tag added into tag db table by ajax
-
         jqCustom('.getcatid').click(function () {
             var catid = jqCustom(this).attr('rel');
         });
@@ -286,7 +252,6 @@ foreach ($all_sub_cat as $cat_id) {
                 type: 'post',
                 data: {
                     categoryId: catid
-
                 },
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
@@ -306,16 +271,13 @@ foreach ($all_sub_cat as $cat_id) {
 //        designer showby
         jqCustom('.getdesignerid').click(function () {
             var productid = jqCustom(this).attr('relpro');
-
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productdesigner",
                 type: 'post',
                 data: {
                     ProductIds: productid
-
                 },
                 success: function (data) {
-
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
                     setTimeout(function () {
@@ -332,16 +294,13 @@ foreach ($all_sub_cat as $cat_id) {
 //        color
         jqCustom('.getcolorid').click(function () {
             var productid = jqCustom(this).attr('relcolor');
-
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productcolor",
                 type: 'post',
                 data: {
                     ProductIds: productid
-
                 },
                 success: function (data) {
-
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
                     setTimeout(function () {
@@ -358,16 +317,13 @@ foreach ($all_sub_cat as $cat_id) {
         //getproduct_statusid
         jqCustom('.getproduct_statusid').click(function () {
             var productid = jqCustom(this).attr('relproduct_status');
-
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productstatus",
                 type: 'post',
                 data: {
                     ProductIds: productid
-
                 },
                 success: function (data) {
-
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
                     setTimeout(function () {
@@ -384,16 +340,13 @@ foreach ($all_sub_cat as $cat_id) {
         //getseasonid
         jqCustom('.getseasonid').click(function () {
             var productid = jqCustom(this).attr('relseason');
-
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/season",
                 type: 'post',
                 data: {
                     ProductIds: productid
-
                 },
                 success: function (data) {
-
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
                     setTimeout(function () {
@@ -424,7 +377,6 @@ foreach ($all_sub_cat as $cat_id) {
             {
                 jqCustom(this).next("div").slideUp();
             }
-
         })
         jqCustom(".customDropDown").click(function () {
             if (jqCustom(this).children().children("ul").css('display') == 'none')
@@ -448,72 +400,62 @@ foreach ($all_sub_cat as $cat_id) {
         jqCustom(".customDropDown ul li ul li").click(function () {
             jqCustom(".customDropDown ul li ul li.selected").removeClass("selected");
             var thisHtml = jqCustom(this).html();
-            console.log(thisHtml);
+            
             jqCustom(".customDropDown ul").fadeOut(100);
             jqCustom(this).addClass("selected").parents("ul").siblings("span").html(thisHtml);
-
         });
-        jqCustom('.inputz').keypress(function (e) {
-            var key = e.which;
-            if (key == 13)  // the enter key code
-            {
-                var tag = jqCustom('.inputz').val();
-                var productid = jqCustom(this).attr('pro');
-
-                jqCustom.ajax({
-                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
-                    type: 'post',
-                    data: {
-                        tag: tag,
-                        productid: productid
-
-                    },
-                    success: function (data) {
-                        jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'>X</i></span>").prependTo(".tags > div");
-                        jqCustom("input.inputz").val('');
-                    }
-                });
-
-
-
-
-            }
-
-            jqCustom(".tagclose").on("click", function () {
-                jqCustom(this).parent('span').remove();
+        jqCustom('.inputz').blur(function (e) {
+            var tag = jqCustom('.inputz').val();
+            var productid = jqCustom(this).attr('pro');
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
+                type: 'post',
+                data: {
+                    tag: tag,
+                    productid: productid
+                },
+                success: function (data1) {
+                    var data = parseInt(data1);
+                    jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>").prependTo(".tags > div");
+                    jqCustom("input.inputz").val('');
+                    jqCustom(".tagclose").on("click", function () {
+                        var tag1233 = jqCustom(this).attr("tagval");
+                        jqCustom.ajax({
+                            url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                            type: 'post',
+                            data: {
+                                tag: tag1233
+                            },
+                            success: function () {
+                            }
+                        });
+                        jqCustom(this).parent('span').remove();
+                    });
+                }
             });
         });
-
         jqCustom(".tagclose").on("click", function () {
-            {
-
-                var tag = jqCustom('.removetagid').val();
-                jqCustom.ajax({
-                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
-                    type: 'post',
-                    data: {
-                        tag: tag
-                    },
-                    success: function (data) {
-
-                    }
-                });
-//           
-                jqCustom(this).parent('span').remove();
-//
-//
-            }
-
+            var tag123 = jqCustom(this).attr("tagval");
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                type: 'post',
+                data: {
+                    tag: tag123
+                },
+                success: function () {
+                }
+            });
+            jqCustom(this).parent('span').remove();
         });
-
-
+        jqCustom(".tagadd").on("click", function () {
+            jqCustom(".add-text").show();
+            jqCustom(".tagpluse").hide();
+        });
         jqCustom(".close,.popClose").click(function () {
             jqCustom(".popupWrapper").fadeOut();
             jqCustom(".popupBox").empty();
         });
-
     });
-
     jqCustom(window).resize(function () {
         var footHeight = jqCustom("footer").outerHeight();
         jqCustom(".footFix").css({"paddingBottom": footHeight + "px"})
@@ -524,7 +466,6 @@ foreach ($all_sub_cat as $cat_id) {
             itemMargin: 5
         });
     });
-
     jqCustom(window).load(function () {
         jqCustom('.flexslider').flexslider({
             animation: "slide",
