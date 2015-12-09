@@ -9,8 +9,8 @@ class Mycloset_Membership_Block_Extra_Links extends Mage_Core_Block_Template
             $text = $this->__('917.684.0609');
 //            $url=$this->__('tel:917.684.0609');
             $parentBlock->addLink(
-                $text, "callto:917.684.0609", $text,
-                true, array('_secure' => true), 40, null,
+                $text,'', $text,
+                true, array('callto:917.684.0609'), 40, null,
                 'onclick="javascript:return false;" class="top-link-phone" '
             );
 
