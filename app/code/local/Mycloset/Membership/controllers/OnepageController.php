@@ -34,24 +34,27 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             return;
         }
         if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getPost('inputDatetator1')) {
-                $shipping_date1 = $this->getRequest()->getPost('inputDatetator1');
-                $dateArray = explode("(", $shipping_date1);
-                if ($dateArray > 0) {
-                    $shipping_date = date('Y-m-d', strtotime(trim($dateArray[0])));
-                }
-            } else if (($this->getRequest()->getPost('inputDatetator2'))) {
 
-                $shipping_date = $this->getRequest()->getPost('inputDatetator2');
-            } else if (($this->getRequest()->getPost('inputDatetator3'))) {
-
-                $shipping_date = $this->getRequest()->getPost('inputDatetator3');
-            } else if (($this->getRequest()->getPost('inputDatetator4'))) {
-
-                $shipping_date = $this->getRequest()->getPost('inputDatetator4');
+            $shipping_method = $this->getRequest()->getPost('shipping_method');
+            switch ($shipping_method) {
+                case 'flatrate_flatrate':
+                    $shipping_date1 = $this->getRequest()->getPost('inputDatetator1');
+                    $dateArray = explode("(", $shipping_date1);
+                    if ($dateArray > 0) {
+                        date_default_timezone_set('UTC');
+                        $shipping_date = date('Y-m-d', strtotime(trim($dateArray[0])));
+                    }
+                    break;
+                case 'ups_1DA':
+                    $shipping_date = $this->getRequest()->getPost('inputDatetatorval2');
+                    break;
+                case 'ups_2DA':
+                    $shipping_date = $this->getRequest()->getPost('inputDatetatorval3');
+                    break;
+                case 'ups_GND':
+                    $shipping_date = $this->getRequest()->getPost('inputDatetatorval4');
+                    break;
             }
-//            
-
 
             $data = $this->getRequest()->getPost('shipping_method', '');
 
@@ -183,11 +186,12 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
                 $i++;
             }
 
-//            $fp = fopen('data.txt', 'a+');
-//            fwrite($fp, print_r($final, true));
-//            fclose($fp);
-            $info = serialize($final);
 
+            $info = serialize($final);
+//            $shippingdate = $this->getOnepage()->getQuote()->getShippingDate();
+//            $fp = fopen('shippingdate.txt', 'a+');
+//            fwrite($fp, print_r($shippingdate, true));
+//            fclose($fp);
             $quoteItem = Mage::getModel('sales/order')->load($this->getOnepage()->getQuote()->getId(), 'quote_id');
             $quoteItem->setShippingComment($this->getOnepage()->getQuote()->getShippingComment());
             $quoteItem->setShippingDate($this->getOnepage()->getQuote()->getShippingDate());
