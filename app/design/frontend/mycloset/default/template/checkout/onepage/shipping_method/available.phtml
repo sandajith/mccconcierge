@@ -116,25 +116,25 @@
                           <?php
 //                         echo $_rate->getCode();
 //                         echo strpos($_rate->getCode(), '1DA');
-            if ($_rate->getCode()== 'ups_1DA4') {
+            if ($_rate->getCode()== 'ups_1DA') {
                 $add = 1;
                 $current_date = date();
                 $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
                 $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
-                ?> <input type="hidden" name="inputDatetatorval" value="<?php echo $delivery_date_db; ?>"> <?php
+                ?> <input type="hidden" name="inputDatetatorval2" value="<?php echo $delivery_date_db; ?>"> <?php
             } else if ($_rate->getCode()== 'ups_2DA') {
                 $add = 2;
                 $current_date = date();
                 $delivery_date = date(' d, Y', strtotime($current_date . ' +' . $add . 'day'));
                 $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
-                ?> <input type="hidden"  name="inputDatetatorval" value="<?php echo $delivery_date_db; ?>"> <?php
+                ?> <input type="hidden"  name="inputDatetatorval3" value="<?php echo $delivery_date_db; ?>"> <?php
             } else if ($_rate->getCode()== 'flatrate_flatrate') {
                 ?>
                 <div class="methoddatepicker" style="display: none;margin-left: 20px">
                     <label for="inputDatetator1">
                         <b>Set delivery/pick up date:</b>
                     </label>
-                    <input id="inputDatetator1" name="inputDatetator1" value=""> 
+                    <input type="hidden" id="inputDatetator1" name="inputDatetator1" value=""> 
 <p class="note cutoff">Cutoff for next day delivery/pick up 3.00 PM EST</p>					
                 </div> 
             <?php
@@ -143,7 +143,7 @@
             $current_date = date();
             $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
             $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
-            ?> <input type="hidden"  name="inputDatetatorval" value="<?php echo $delivery_date_db; ?>">
+            ?> <input type="hidden"  name="inputDatetatorval4" value="<?php echo $delivery_date_db; ?>">
             <?php }
             ?>
                         
