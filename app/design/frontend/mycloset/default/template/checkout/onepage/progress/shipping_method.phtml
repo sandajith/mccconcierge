@@ -54,18 +54,20 @@
         <?php endif; ?>
 
         <?php
-        if (strpos($ShippingDescription, '1DA') !== false) {
+       
+        if (strpos($ShippingDescription, 'Next Day Air') !== false) {        
                 $add = 1;
                 $current_date = date();
                 $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
                
                  echo '</br>'.$this->__('Delivery Date: ').$delivery_date ;
-            } else if (strpos($ShippingDescription, '2DA') !== false) {
+            } else if (strpos($ShippingDescription, '2nd Day Air') !== false) {             
                 $add = 2;
                 $current_date = date();
                 $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
                 echo '</br>'.$this->__('Delivery Date: ').$delivery_date ;
             } else if (strpos($ShippingDescription, 'White glove delivery') !== false) {
+               
                  $userid = Mage::getSingleton('customer/session')->getId();
             $collection = Mage::getModel('sales/quote')->getCollection()
                     ->addFieldToSelect('*')
@@ -81,7 +83,9 @@
 //                   }
                 }
             }
-        }else {
+        } 
+        else {
+
           $add = 3;
                     $current_date = date();
                     $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
