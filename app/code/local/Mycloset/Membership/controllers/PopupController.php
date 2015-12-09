@@ -69,7 +69,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
                         jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div>');
+                        jqCustom('.tags').html('<div class="tags"><b>Tags</b><div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
             var productid = jqCustom(this).attr('pro');
@@ -82,7 +82,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 },
                 success: function (data1) {
                     var data = parseInt(data1);
-                   jqCustom('.tags').append("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                   jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
                     jqCustom(".tagclose").on("click", function () {
                         var tag1233 = jqCustom(this).attr("tagval");
@@ -175,7 +175,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
                         jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
-                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div>');
+                         jqCustom('.tags').html('<div class="tags"><b>Tags</b><div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
             var productid = jqCustom(this).attr('pro');
@@ -188,7 +188,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 },
                 success: function (data1) {
                     var data = parseInt(data1);
-                   jqCustom('.tags').append("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                   jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
                     jqCustom(".tagclose").on("click", function () {
                         var tag1233 = jqCustom(this).attr("tagval");
@@ -281,7 +281,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
                         jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
-                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div>');
+                         jqCustom('.tags').html('<div class="tags"><b>Tags</b><div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
             var productid = jqCustom(this).attr('pro');
@@ -294,7 +294,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 },
                 success: function (data1) {
                     var data = parseInt(data1);
-                   jqCustom('.tags').append("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                   jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
                     jqCustom(".tagclose").on("click", function () {
                         var tag1233 = jqCustom(this).attr("tagval");
@@ -387,7 +387,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
                         jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
-                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div>');
+                         jqCustom('.tags').html('<div class="tags"><b>Tags</b><div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
             var productid = jqCustom(this).attr('pro');
@@ -400,7 +400,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 },
                 success: function (data1) {
                     var data = parseInt(data1);
-                   jqCustom('.tags').append("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                   jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
                     jqCustom(".tagclose").on("click", function () {
                         var tag1233 = jqCustom(this).attr("tagval");
@@ -492,7 +492,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status']);
                         jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div>');
+                        jqCustom('.tags').html('<div class="tags"><b>Tags</b><div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
             var productid = jqCustom(this).attr('pro');
