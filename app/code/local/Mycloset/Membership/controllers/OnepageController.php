@@ -34,13 +34,24 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             return;
         }
         if ($this->getRequest()->isPost()) {
-            if(!($this->getRequest()->getPost('inputDatetator1'))){
-                 $shipping_date = $this->getRequest()->getPost('inputDatetatorval');    
-            } else {
-                $shipping_date = $this->getRequest()->getPost('inputDatetator1');
+            if ($this->getRequest()->getPost('inputDatetator1')) {
+                $shipping_date1 = $this->getRequest()->getPost('inputDatetator1');
+                $dateArray = explode("(", $shipping_date1);
+                if ($dateArray > 0) {
+                    $shipping_date = date('Y-m-d', strtotime(trim($dateArray[0])));
+                }
+            } else if (($this->getRequest()->getPost('inputDatetator2'))) {
+
+                $shipping_date = $this->getRequest()->getPost('inputDatetator2');
+            } else if (($this->getRequest()->getPost('inputDatetator3'))) {
+
+                $shipping_date = $this->getRequest()->getPost('inputDatetator3');
+            } else if (($this->getRequest()->getPost('inputDatetator4'))) {
+
+                $shipping_date = $this->getRequest()->getPost('inputDatetator4');
             }
-            
-           
+//            
+
 
             $data = $this->getRequest()->getPost('shipping_method', '');
 
@@ -64,7 +75,7 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             $this->getOnepage()->getQuote()->collectTotals()->save();
 
             $this->getOnepage()->getQuote()->setShippingDate($shipping_date)->save();
-//          $this->getOnepage()->getQuote()->setShippingDate('2015-12-05')->save();
+//          $this->getOnepage()->getQuote()->setShippingDate('2015-12-25')->save();
             $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
         }
     }
