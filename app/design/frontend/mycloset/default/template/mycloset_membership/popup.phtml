@@ -147,7 +147,9 @@ foreach ($all_sub_cat as $cat_id) {
                         <ul>
 <?php
 $collection123 = Mage::getResourceModel('catalog/product_collection')
-        ->addAttributeToFilter('customer_id', $userid);
+        ->addAttributeToFilter('customer_id', $userid)
+          ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
 foreach ($collection123 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
     $valdata = $_product->getCategoryIds();
@@ -167,7 +169,9 @@ foreach ($collection123 as $product) {
                         <ul>
 <?php
 $collection111 = Mage::getResourceModel('catalog/product_collection')
-        ->addAttributeToFilter('customer_id', $userid);
+        ->addAttributeToFilter('customer_id', $userid)
+          ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
 foreach ($collection111 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
     ?>
@@ -181,7 +185,9 @@ foreach ($collection111 as $product) {
                         <ul>
 <?php
 $collection666 = Mage::getResourceModel('catalog/product_collection')
-        ->addAttributeToFilter('customer_id', $userid);
+        ->addAttributeToFilter('customer_id', $userid)
+        ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
 foreach ($collection666 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
     ?>
@@ -195,7 +201,9 @@ foreach ($collection666 as $product) {
                         <ul>
 <?php
 $collection888 = Mage::getResourceModel('catalog/product_collection')
-        ->addAttributeToFilter('customer_id', $userid);
+        ->addAttributeToFilter('customer_id', $userid)
+          ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
 foreach ($collection888 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
     ?>

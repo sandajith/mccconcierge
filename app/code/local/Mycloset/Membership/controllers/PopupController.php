@@ -17,6 +17,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 ->joinField('category_id', 'catalog/category_product', 'category_id', 'product_id = entity_id', null, 'left')
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('customer_id', $userid)
+                 ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4)
                 ->addAttributeToFilter('category_id', array('in' => $categoryIds));
         $i = 0;
         if ($collection->count() > 0) {
@@ -125,6 +127,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 ->getCollection()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('customer_id', $userid)
+                  ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4)
                 ->addAttributeToFilter('designer', $designer);
         if ($collection->count() > 0) {
             ?>
@@ -231,6 +235,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 ->getCollection()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('customer_id', $userid)
+                  ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4)
                 ->addAttributeToFilter('color', $designer);
         if ($collection->count() > 0) {
             ?>
@@ -337,7 +343,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 ->getCollection()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('customer_id', $userid)
-                ->addAttributeToFilter('product_status', $designer);
+                ->addAttributeToFilter('product_status', $designer)
+                  ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
         if ($collection->count() > 0) {
             ?>
             <div class="flexsliderPopup carousel">
@@ -443,7 +451,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 ->getCollection()
                 ->addAttributeToSelect('*')
                 ->addAttributeToFilter('customer_id', $userid)
-                ->addAttributeToFilter('season', $designer);
+                ->addAttributeToFilter('season', $designer)
+                  ->addAttributeToFilter('status', 1)
+                ->addAttributeToFilter('visibility', 4);
         if ($collection->count() > 0) {
             ?>
             <div class="flexsliderPopup carousel">
