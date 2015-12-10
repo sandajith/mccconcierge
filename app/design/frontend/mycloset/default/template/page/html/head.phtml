@@ -27,7 +27,28 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="<?php echo $this->getContentType() ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php echo $this->getTitle() ?></title>
+<title><?php
+    if ($this->getTitle() == "My Account") {
+        echo "My Account| My Closet Concierge";
+    } else if ($this->getTitle() == "Shopping Cart") {
+        echo "My Bag | My Closet Concierge";
+    } else if ($this->getTitle() == "Create New Customer Account") {
+        echo "Register | My Closet Concierge";
+    } else if ($this->getTitle() == "Customer Login") {
+        echo "Login | My Closet Concierge";
+    } else if ($this->getTitle() == "Checkout") {
+        echo "Checkout | My Closet Concierge";
+    }
+    else if($this->getTitle() == "Mycloset | My Closet Concierge"){
+ if (!Mage::getSingleton('customer/session')->isLoggedIn()):
+            echo "Sample Closet | My Closet Concierge";
+        else:
+            echo "Mycloset | My Closet Concierge";
+        endif;
+    }else {
+        echo $this->getTitle();
+    }
+    ?></title>
 <meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
 <meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
 <meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
@@ -49,4 +70,3 @@
 
 
 
-  
