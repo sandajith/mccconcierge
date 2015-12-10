@@ -1479,27 +1479,36 @@ font-weight: 100;
        
 }
 #inputDatetator1,
-		#inputDatetator2 {
-			width: 300px;
-			padding: 8px 16px;
-			box-sizing: border-box;
-		}
-                .methoddatepicker label{
-                    margin-right: 5px;
-                }
-                .datetator{
-                    font-size: 14px;
-                }
-                .methoddatepicker p{
-                    font-size: 13px;
-                }
-                .methoddatepicker .datetator_holder{
-                    width:195px;
-                    display: inline-block;
-                } 
-                .methoddatepicker .datetator_holder input{
-                    width: 100%;
-                }
-                .cutoff{
-                    margin-left: 185px
-                }
+#inputDatetator2 {
+        width: 300px;
+        padding: 8px 16px;
+        box-sizing: border-box;
+}
+.methoddatepicker label{
+    margin-right: 5px;
+}
+.datetator{
+    font-size: 14px;
+}
+.methoddatepicker p{
+    font-size: 13px;
+}
+.methoddatepicker .datetator_holder{
+    width:195px;
+    display: inline-block;
+} 
+.methoddatepicker .datetator_holder input{
+    width: 100%;
+}
+.cutoff{
+    margin-left: 185px
+}
+
+.flexsliderPopup.carousel ul li {
+    text-align: center;
+}
+
+.flexsliderPopup.carousel ul li p{
+    font-size: 12px;
+    margin: 0;
+}

@@ -103,15 +103,18 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
      * Login post action
      */
     public function loginPostAction() {
+      
         if (!$this->_validateFormKey()) {
             $this->_redirect('*/*/');
             return;
         }
 
         if ($this->_getSession()->isLoggedIn()) {
+             
             $this->_redirect('*/*/');
             return;
         }
+   
         //restricting user to login based on group  
         $login = $this->getRequest()->getPost('login');
         $customer = Mage::getModel('customer/customer')
@@ -122,6 +125,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $session = $this->_getSession();
             $message = 'Your membership is not activated or it has been closed';
             $session->addError($message);
+              
             $this->_loginPostRedirect();
         } else {
             //user is granted login to website after the group verification
@@ -131,7 +135,10 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 if (!empty($login['username']) && !empty($login['password'])) {
                     try {
                         $session->login($login['username'], $login['password']);
+                               $this->_redirect('*/*/my-closet.html');      
+      
                         if ($session->getCustomer()->getIsJustConfirmed()) {
+                        
                             $this->_welcomeCustomer($session->getCustomer(), true);
                         }
                     } catch (Mage_Core_Exception $e) {

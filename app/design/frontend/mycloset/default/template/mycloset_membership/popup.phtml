@@ -239,7 +239,7 @@ foreach ($all_sub_cat as $cat_id) {
     if ($products->count() > 0) {
         ?>              
                     <li >                       
-                        <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/></a> 
+                        <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo $category->name; ?></p></a> 
                     </li>    
         <?php
     }
