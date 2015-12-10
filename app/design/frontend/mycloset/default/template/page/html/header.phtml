@@ -84,8 +84,39 @@
                         <li><a href="<?php echo $this->getUrl('') ?>services"><?php echo $this->__('SERVICES') ?></a></li>  
                     <?php } ?>                           
                     <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>my-closet.html"><?php echo $this->__('SAMPLE CLOSET') ?></a></li>
-                    <?php else: ?>
+                        <li><a href="<?php echo $this->getUrl('') ?>my-closet.html"><?php echo $this->__('SAMPLE CLOSET') ?></a>
+                        <ul class="sub-nav">
+                                <?php
+                                $cat = Mage::getModel('catalog/category')->load(16);
+                                $subcats = $cat->getChildren();
+                                $all_sub_cat = explode(',', $subcats);
+                                foreach ($all_sub_cat as $cat_id) {
+                                    $userid = Mage::getSingleton('customer/session')->getId();
+                                    $category = Mage::getModel('catalog/category')->load($cat_id);
+                                    $categories = Mage::getModel('catalog/category')->load($category->getId())
+                                            ->getProductCollection()
+                                            ->addAttributeToSelect('entity_id')
+                                            ->addAttributeToFilter('status', 1)
+                                            ->addAttributeToFilter('visibility', 4);
+
+                                    $products = Mage::getModel('catalog/product')
+                                            ->getCollection()
+                                            ->addAttributeToFilter('customer_id', 0)
+                                            ->addCategoryFilter($category)
+                                            ->load();
+                                    if (($products->count() > 0)) {
+                                        ?>
+                                        <li >
+                                            <a class="" href="<?php echo $category->getUrl() ?>"><?php echo $category->name; ?> </a>
+                                        </li>
+                                        <?php
+                                    }
+                                }
+                                ?>                             
+                            </ul>
+                        </li>
+                     
+ <?php else: ?>
                         <li>
                             <a href="<?php echo $this->getUrl('') ?>my-closet.html"><?php echo $this->__('MY CLOSET') ?></a>
                             <ul class="sub-nav">
