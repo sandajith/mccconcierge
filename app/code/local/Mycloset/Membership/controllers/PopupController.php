@@ -74,6 +74,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
+           
+                    if(tag!= null){
             var productid = jqCustom(this).attr('pro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
@@ -84,6 +86,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 },
                 success: function (data1) {
                     var data = parseInt(data1);
+                     var tagname = jqCustom('.inputz').val();
+                    if(tagname!= null){
                    jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
                     jqCustom(".tagclose").on("click", function () {
@@ -100,7 +104,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom(this).parent('span').remove();
                     });
                 }
+                }
             });
+            }
         });            
   
         jqCustom(".tagadd").on("click", function () {
@@ -182,6 +188,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                          jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
+             if(tag!= null){
             var productid = jqCustom(this).attr('pro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
@@ -191,6 +198,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     productid: productid
                 },
                 success: function (data1) {
+                     var tagname = jqCustom('.inputz').val();
+                    if(tagname!= null){
                     var data = parseInt(data1);
                    jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
@@ -208,7 +217,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom(this).parent('span').remove();
                     });
                 }
+                }
             });
+            }
         });            
   
         jqCustom(".tagadd").on("click", function () {
@@ -290,6 +301,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                          jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
+             if(tag!= null){
             var productid = jqCustom(this).attr('pro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
@@ -299,6 +311,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     productid: productid
                 },
                 success: function (data1) {
+                     var tagname = jqCustom('.inputz').val();
+                    if(tagname!= null){
                     var data = parseInt(data1);
                    jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
@@ -316,7 +330,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom(this).parent('span').remove();
                     });
                 }
+                }
             });
+            }
         });            
   
         jqCustom(".tagadd").on("click", function () {
@@ -398,6 +414,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                          jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
   jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
+             if(tag!= null){
             var productid = jqCustom(this).attr('pro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
@@ -407,6 +424,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     productid: productid
                 },
                 success: function (data1) {
+                     var tagname = jqCustom('.inputz').val();
+                    if(tagname!= null){
                     var data = parseInt(data1);
                    jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
@@ -424,7 +443,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom(this).parent('span').remove();
                     });
                 }
+                }
             });
+            }
         });            
   
         jqCustom(".tagadd").on("click", function () {
@@ -505,6 +526,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                jqCustom('.inputz').blur(function (e) {
             var tag = jqCustom('.inputz').val();
+             if(tag!= null){
             var productid = jqCustom(this).attr('pro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
@@ -514,6 +536,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     productid: productid
                 },
                 success: function (data1) {
+                     var tagname = jqCustom('.inputz').val();
+                    if(tagname!= null){
                     var data = parseInt(data1);
                    jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
                     jqCustom("input.inputz").val('');
@@ -530,8 +554,10 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         });
                         jqCustom(this).parent('span').remove();
                     });
+                    }
                 }
             });
+            }
         });            
   
         jqCustom(".tagadd").on("click", function () {
@@ -600,6 +626,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
     public function inserttagAction() {
         $tagvalue = Mage::app()->getRequest()->getParam('tag');
         $productid = Mage::app()->getRequest()->getParam('productid');
+        if(!empty($tagvalue)){
         $user_id = Mage::getSingleton('customer/session')->getId();
         $userid = ($user_id ? $user_id : 0);
         $collection = Mage::getModel('tag/tag')
@@ -618,6 +645,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                 ->setActive(1)
                 ->save();
         return $insertId;
+        } return false;
     }
 
     public function deletetagAction() {
