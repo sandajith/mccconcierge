@@ -1,5 +1,6 @@
 <?php
 $p = $this->getProductdetails();
+
  $rel_product = $p['rel_id'];
 
 $prefix = Mage::getConfig()->getTablePrefix();
@@ -79,7 +80,7 @@ foreach ($results as $tagname) {
 <?php echo $p['ShortDescription']; ?>
             </p>
             <p class="status">
-                <b>Status</b> : <?php echo $p['product_status']; ?>
+                <b>Status</b> : <?php echo $p['product_status'].' '.$p['shipped_to']; ?>
             </p>
             <!--product_status-->
 <?php
@@ -190,6 +191,8 @@ $collection666 = Mage::getResourceModel('catalog/product_collection')
                 ->addAttributeToFilter('visibility', 4);
 foreach ($collection666 as $product) {
     $_product = Mage::getModel('catalog/product')->load($product->getId());
+
+
     ?>
                                 <li> <a class="getproduct_statusid" relproduct_status="<?php echo $_product['product_status']; ?>"><?php echo $_product->getAttributeText('product_status'); ?></a>  </li> 
                             <?php }
