@@ -60,10 +60,12 @@ $all_sub_cat = explode(',', $subcats);
              $groupid= $customer->getGroupId();      
             echo  Mage::getSingleton('customer/session')->getThreshold();
          if($groupid === '15'){ ?>
-                <a class="button" href="<?php echo $this->getUrl('',array('_secure' => true)) ?>mycloset/payment"> Pick up my clothing</a>
+            <img src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/truck.jpg' ; ?>" alt=""/> </br>
+                <a class="button" href="<?php echo $this->getUrl('',array('_secure' => true)) ?>mycloset/payment"> Schedule a Pickup</a>
          <?php    } else if($groupid === '1' ) {
             ?>
-            <a class="button" href="<?php echo $this->getUrl('') ?>mycloset/pickup"> Pick up my clothing</a>
+                <img src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/truck.jpg' ; ?>" alt=""/> </br> 
+            <a class="button" href="<?php echo $this->getUrl('') ?>mycloset/pickup"> Schedule a Pickup</a>
               <?php
     }
     ?>
