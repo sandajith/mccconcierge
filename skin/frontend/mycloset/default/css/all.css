@@ -114,6 +114,9 @@ header .loginDetails a {
 header .loginDetails a:hover{
     text-decoration: underline;
 }
+header .loginDetails a.top-link-phone{
+     text-decoration: none;
+}
 header .loginDetails a:first-child {
     /* comment by neenu
     font-size: 16px; */
@@ -729,11 +732,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 250px;}
 .loginRegister .bordered  .select,
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
-.loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px;}
+.loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px; }
 .loginRegister .bordered .content label { display: block; padding:5px 0; margin:7px 0 -3px; font-weight:normal}
 .loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:8px 0 3px}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
-.loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;}
+.loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;max-width:100%}
 .loginRegister .bordered  select,
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:1px 5px; margin-bottom:0px; height: 26px;}
 
