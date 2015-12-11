@@ -132,7 +132,7 @@ header .search input{
     border-radius: 30px;
     color: #333333;
     padding: 2px 30px 2px 9px;
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 header .search:after {
