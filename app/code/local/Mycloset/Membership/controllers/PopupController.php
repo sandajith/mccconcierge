@@ -108,7 +108,19 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             });
             }
         });            
-  
+    jqCustom(".tagclose").on("click", function () {
+            var tag123 = jqCustom(this).attr("tagval");
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                type: 'post',
+                data: {
+                    tag: tag123
+                },
+                success: function () {
+                }
+            });
+            jqCustom(this).parent('span').remove();
+        });
         jqCustom(".tagadd").on("click", function () {
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
@@ -221,7 +233,19 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             });
             }
         });            
-  
+    jqCustom(".tagclose").on("click", function () {
+            var tag123 = jqCustom(this).attr("tagval");
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                type: 'post',
+                data: {
+                    tag: tag123
+                },
+                success: function () {
+                }
+            });
+            jqCustom(this).parent('span').remove();
+        });
         jqCustom(".tagadd").on("click", function () {
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
@@ -334,7 +358,19 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             });
             }
         });            
-  
+    jqCustom(".tagclose").on("click", function () {
+            var tag123 = jqCustom(this).attr("tagval");
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                type: 'post',
+                data: {
+                    tag: tag123
+                },
+                success: function () {
+                }
+            });
+            jqCustom(this).parent('span').remove();
+        });
         jqCustom(".tagadd").on("click", function () {
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
@@ -447,7 +483,19 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             });
             }
         });            
-  
+    jqCustom(".tagclose").on("click", function () {
+            var tag123 = jqCustom(this).attr("tagval");
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                type: 'post',
+                data: {
+                    tag: tag123
+                },
+                success: function () {
+                }
+            });
+            jqCustom(this).parent('span').remove();
+        });
         jqCustom(".tagadd").on("click", function () {
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
@@ -559,7 +607,19 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             });
             }
         });            
-  
+    jqCustom(".tagclose").on("click", function () {
+            var tag123 = jqCustom(this).attr("tagval");
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
+                type: 'post',
+                data: {
+                    tag: tag123
+                },
+                success: function () {
+                }
+            });
+            jqCustom(this).parent('span').remove();
+        });
         jqCustom(".tagadd").on("click", function () {
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
@@ -612,7 +672,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             foreach ($gg as $tagivalue) {                
               $tag_name = $tagivalue['name'];                
               $tag_id .= $tagivalue['tag_id'];              
-                $tag_details.= "<span class='tagitem'><a>" . $tag_name . "</a><i class='tagclose' tagval='".$tag_id."'>X</i></span>  ";
+                $tag_details.= "<span class='tagitem'><a>" . $tag_name . "</a><i class='tagclose' tagval='" . $tag_id . "'>X</i></span>  ";
                 $i++;
             }
         }
