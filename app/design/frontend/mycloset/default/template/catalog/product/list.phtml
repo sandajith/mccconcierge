@@ -130,7 +130,7 @@ $_product1 = $this->getProduct();
                     <div class="row">
                         <div class="col-sm-12 col-xs-6">
                             <a class="show"  onclick="SubmitRequest(<?php echo $_product->getId(); ?>);"  title="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="product-image">
-                                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(200); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" /></a>
+                                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(236,354); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" /></a>
                         </div>
                         <div class="col-sm-12 col-xs-6">
                             <ul>
