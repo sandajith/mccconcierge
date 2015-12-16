@@ -104,6 +104,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
      */
     public function loginPostAction() {
       
+      Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('my-closet.html'));
         if (!$this->_validateFormKey()) {
             $this->_redirect('*/*/');
             return;
