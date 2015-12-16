@@ -109,18 +109,15 @@ $imploded_data = implode(',', $alldates);
                 $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
             }
 
-            for ($i = 0; $i < $added_day;) {
-
-                $dayOfWeek = date('w', strtotime($delivery_date_db1));
-                if ((in_array($delivery_date_db1, $alldates)) || ($dayOfWeek == 0) || ($dayOfWeek == 6)) {
-
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                    $i = $i;
-                } else {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                    $i = $i + 1;
-                }
-            }
+              for ($i = 0; $i < $added_day;) {
+                            $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                            $dayOfWeek = date('w', strtotime($delivery_date_db1));
+                            if ((in_array($delivery_date_db1, $alldates)) || ($dayOfWeek == 0) || ($dayOfWeek == 6)) {
+                                $i = $i;
+                            } else {
+                                $i = $i + 1;
+                            }
+                        }
 
 
             echo '</br>' . $this->__('Delivery Date: ') . date('F d, Y', strtotime($delivery_date_db1));
