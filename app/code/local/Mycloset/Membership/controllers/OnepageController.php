@@ -39,20 +39,23 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             switch ($shipping_method) {
                 case 'flatrate_flatrate':
                     $shipping_date1 = $this->getRequest()->getPost('inputDatetator1');
+                   
                     $dateArray = explode("(", $shipping_date1);
+                    
                     if ($dateArray > 0) {
-                        date_default_timezone_set('UTC');
-                        $shipping_date = date('Y-m-d', strtotime(trim($dateArray[0])));
+//                        date_default_timezone_set('UTC');
+                        date_default_timezone_set('America/New_York');
+                      echo 'flatrate_flatrate' .$shipping_date =  date('Y-m-d', strtotime(date('Y-m-d', strtotime(trim($dateArray[0])))+1));
                     }
                     break;
                 case 'ups_1DA':
-                    $shipping_date = $this->getRequest()->getPost('inputDatetatorval2');
+                  $shipping_date = $this->getRequest()->getPost('ups_1DA');
                     break;
                 case 'ups_2DA':
-                    $shipping_date = $this->getRequest()->getPost('inputDatetatorval3');
+               $shipping_date = $this->getRequest()->getPost('ups_2DA');
                     break;
                 case 'ups_GND':
-                    $shipping_date = $this->getRequest()->getPost('inputDatetatorval4');
+                 $shipping_date = $this->getRequest()->getPost('ups_GND');
                     break;
             }
 

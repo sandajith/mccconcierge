@@ -24,6 +24,27 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php
+$prefix = Mage::getConfig()->getTablePrefix();
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
+$query = 'SELECT * FROM ' . $prefix . 'mycloset_holiday';
+$results = $readConnection->fetchAll($query);
+$current_year = date("Y");
+$year_upto = $current_year + 1;
+//  $imploded_data = array();
+for ($i = $current_year; $i <= $year_upto; $i++) {
+
+    foreach ($results as $holiday) {
+
+
+        $alldates[] = date('Y-m-d', strtotime($holiday['holiday_string'] . ' ' . $i));
+    }
+}
+$imploded_data = implode(',', $alldates);
+?>
+<input type="hidden" value="<?php echo $imploded_data; ?>" name="holiday_date" id="holiday_date"/>
+
 <?php if ($this->getCheckout()->getStepData('shipping_method', 'complete')): ?>
     <dt class="complete">
     <?php echo $this->__('Shipping Method') ?> <span class="changelink"><span class="separator">|</span> <a
@@ -46,7 +67,7 @@
                 <?php // echo $_excl;  ?>
             <?php endif; ?>
             <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                (<?php //echo $this->__('Incl. Tax');    ?> <?php // echo $_incl;    ?>)
+                (<?php //echo $this->__('Incl. Tax');     ?> <?php // echo $_incl;     ?>)
             <?php endif; ?>
 
         <?php else: ?>
@@ -57,62 +78,8 @@
         date_default_timezone_set('America/New_York');
         $current_date11 = date('Y-m-d');
         $current_time = date("H");
-        if (strpos($ShippingDescription, 'Next Day Air') !== false) {
-//               
 
-            $add = 1;
-            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11 . ' +' . $add . 'day'));
-            $cnt = 0;
-            while (1 == 1) {
-                $cnt++;
-                if ($cnt > 30) {
-                    break;
-                }
-                if (in_array($delivery_date_db1, $alldates)) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                    continue;
-                }
-
-                $dayOfWeek = date('w', strtotime($delivery_date_db1));
-                if ($dayOfWeek == 0 || $dayOfWeek == 6) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                    continue;
-                }
-                if ($current_time >= 15) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                }
-                $delivery_date_db1;
-                break;
-            }
-            echo '</br>' . $this->__('Delivery Date: ') . date('F d, Y', strtotime($delivery_date_db1));
-        } else if (strpos($ShippingDescription, '2nd Day Air') !== false) {
-
-            $add = 2;
-            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11 . ' +' . $add . 'day'));
-            $cnt = 0;
-            while (1 == 1) {
-                $cnt++;
-                if ($cnt > 30) {
-                    break;
-                }
-                if (in_array($delivery_date_db1, $alldates)) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                    continue;
-                }
-
-                $dayOfWeek = date('w', strtotime($delivery_date_db1));
-                if ($dayOfWeek == 0 || $dayOfWeek == 6) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                    continue;
-                }
-                if ($current_time >= 15) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                }
-                $delivery_date_db1;
-                break;
-            }
-            echo '</br>' . $this->__('Delivery Date: ') . date('F d, Y', strtotime($delivery_date_db1));
-        } else if (strpos($ShippingDescription, 'White glove delivery') !== false) {
+        if (strpos($ShippingDescription, 'White glove delivery') !== false) {
 
             $userid = Mage::getSingleton('customer/session')->getId();
             $collection = Mage::getModel('sales/quote')->getCollection()
@@ -130,40 +97,42 @@
                 }
             }
         } else {
-            $add = 5;
-            $delivery_date_db1 = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
+            
+            if (strpos($ShippingDescription, 'Next Day Air') !== false) {
+               $added_day = 1;
+        } else if (strpos($ShippingDescription, '2nd Day Air') !== false) {
+               $added_day = 2;
+        } else {
+               $added_day = 5;
+        }
+        
+           $delivery_date_db1 = date('Y-m-d', strtotime($current_date11));
+        if ($current_time >= 15) {
+            $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+        }
+    
+        for ($i = 0; $i < $added_day;) {
 
-            $cnt = 0;
-            while (1 == 1) {
-                $cnt++;
-                if ($cnt > 30) {
-                    break;
-                }                   
-                if (in_array($delivery_date_db1, $alldates)) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));                   
-                    continue;
-                }
+            $dayOfWeek = date('w', strtotime($delivery_date_db1));
+            if ((in_array($delivery_date_db1, $alldates)) || ($dayOfWeek == 0) || ($dayOfWeek == 6)) {
 
-                $dayOfWeek = date('w', strtotime($delivery_date_db1));
-                if ($dayOfWeek == 0 || $dayOfWeek == 6) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));                   
-                    continue;
-                }
-                if ($current_time >= 15) {
-                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                }
-                $delivery_date_db1;
-                break;
-//
+                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                $i = $i;
+            } else {
+                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                $i = $i + 1;
             }
-            echo '</br>' . $this->__('Delivery Date: ') . $delivery_date = date('F d, Y', strtotime($delivery_date_db1));
+        }
+
+
+        echo '</br>' . $this->__('Delivery Date: ') . date('F d, Y', strtotime($delivery_date_db1));
         }
         ?>
 
     </dd>
-    <?php else: ?>
+<?php else: ?>
     <dt>
-        <?php echo $this->__('Shipping Method') ?>
+    <?php echo $this->__('Shipping Method') ?>
     </dt>
 <?php endif; ?>
 

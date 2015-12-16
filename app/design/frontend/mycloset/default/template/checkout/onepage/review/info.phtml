@@ -25,7 +25,28 @@
  */
 ?>
 <?php
- $userid = Mage::getSingleton('customer/session')->getId();
+$prefix = Mage::getConfig()->getTablePrefix();
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
+$query = 'SELECT * FROM ' . $prefix . 'mycloset_holiday';
+$results = $readConnection->fetchAll($query);
+$current_year = date("Y");
+$year_upto = $current_year + 1;
+//  $imploded_data = array();
+for ($i = $current_year; $i <= $year_upto; $i++) {
+
+    foreach ($results as $holiday) {
+
+
+        $alldates[] = date('Y-m-d', strtotime($holiday['holiday_string'] . ' ' . $i));
+    }
+}
+$imploded_data = implode(',', $alldates);
+?>
+<input type="hidden" value="<?php echo $imploded_data; ?>" name="holiday_date" id="holiday_date"/>
+
+<?php
+$userid = Mage::getSingleton('customer/session')->getId();
 echo $this->getChildHtml('items_before');
 $product = $this->getItems();
 foreach ($this->getItems() as $_item) {
@@ -217,133 +238,69 @@ foreach ($this->getItems() as $_item) {
         <p class="f-left pull-left"><?php echo $this->__('Forgot something?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><u><?php echo $this->__('Edit your order') ?></u></a></p>
         <p class="f-right pull-right"> <b>Delivery/Pick Up Date: </b><?php
             $shipmthd = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getShippingMethod();
-      
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
         date_default_timezone_set('America/New_York');
-                        $current_date11 = date('Y-m-d');
-                        $current_time = date("H");
-        if ($shipmthd == 'ups_1DA') {                     
-               
-                          $add = 1;
-                            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11 . ' +' . $add . 'day'));
-                            if ($current_time >= 15) {
-                                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                            }
-                            $cnt = 0;
-                            while (1 == 1) {
-                                $cnt++;
-                                if ($cnt > 31) {
-                                    break;
-                                }
-                                if (in_array($delivery_date_db1, $alldates)) {
-                                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                                    continue;
-                                }
-                                $dayOfWeek = date('w', strtotime($delivery_date_db1));
-                                if ($dayOfWeek == 0 || $dayOfWeek == 6) {
-                                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                                    continue;
-                                }
-                                $delivery_date_db1;
-                                break;
-                            }
-                               echo $delivery_date  = date('F d, Y', strtotime($delivery_date_db1));
-             
-            } else if ($shipmthd == 'ups_2DA') {            
-             
-                $add1 = 2;
-                            $dayOfWeek = date('w', strtotime($current_date11));
-                            if ($dayOfWeek == 5) {
-                                $add1 = 4;
-                            }
-                            $delivery_date_db3 = date('Y-m-d', strtotime($current_date11 . ' +' . $add1 . 'day'));
+        $current_date11 = date('Y-m-d');
+        $current_time = date("H");
 
-                            $cnt = 0;
-                            while (1 == 1) {
-                                $cnt++;
-                                if ($cnt > 31) {
-                                    break;
-                                }
-                                $dayOfWeek = date('w', strtotime($current_date11));
-                                if (in_array($delivery_date_db3, $alldates) || $dayOfWeek == 0 || $dayOfWeek == 6) {
-                                  $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
-                                    continue;
-                                }
-                                if ($current_time >= 15) {
-                                    $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
-                                }
-
-                                break;
-                            }
-                               echo $delivery_date  = date('F d, Y', strtotime($delivery_date_db3));
-             
-             
-           } else if ($shipmthd == 'flatrate_flatrate') {
-               
-        $collection = Mage::getModel('sales/quote')->getCollection()
-                        ->addFieldToSelect('*')
-                        ->addFieldToFilter('customer_id', $userid)
-                        ->setOrder('updated_at', 'DESC');
-                $i = 0;
-                foreach ($collection as $shippingtime) {
-                    $i++;
-                    if ($i == 1) {
-                       $shpdate= $shippingtime['shipping_date'];
-//                    $shippingtime;
-                            echo    $delivery_date = date('F d, Y', strtotime($shpdate));
-//                   }
-                    }
+        if ($shipmthd == 'flatrate_flatrate') {
+            $collection = Mage::getModel('sales/quote')->getCollection()
+                    ->addFieldToSelect('*')
+                    ->addFieldToFilter('customer_id', $userid)
+                    ->setOrder('updated_at', 'DESC');
+            $i = 0;
+            foreach ($collection as $shippingtime) {
+                $i++;
+                if ($i == 1) {
+                    $shpdate = $shippingtime['shipping_date'];
+                    echo $delivery_date = date('F d, Y', strtotime($shpdate));
                 }
-        
-         } else {
-     $add1 = 5;
+            }
+        }else {
+         if ($shipmthd == 'ups_1DA') {
+             $added_day = 1;
+        } elseif ($shipmthd == 'ups_2DA') {
+             $added_day = 2;
+        } else {
+             $added_day = 5;
+        }
+           $delivery_date_db1 = date('Y-m-d', strtotime($current_date11));
+        if ($current_time >= 15) {
+            $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+        }
+    
+        for ($i = 0; $i < $added_day;) {
 
-                $current_date11;
-                $dayOfWeek = date('w', strtotime($current_date11));
-                if ($dayOfWeek == 5) {
-                    $add1 = 7;
-                }
-                $delivery_date_db3 = date('Y-m-d', strtotime($current_date11 . '+' . $add1 . 'day'));
-                $i = 0;
-                $cnt = 0;
-                while (1 == 1) {
-                    $cnt++;
-                    if ($cnt >= 31) {
-                        break;
-                    }
+            $dayOfWeek = date('w', strtotime($delivery_date_db1));
+            if ((in_array($delivery_date_db1, $alldates)) || ($dayOfWeek == 0) || ($dayOfWeek == 6)) {
 
-
-                    $dayOfWeek = date('w', strtotime($delivery_date_db3));
-                    if (in_array($delivery_date_db3, $alldates) || $dayOfWeek == 0 || $dayOfWeek == 6) {
-                        $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
-                        continue;
-                    }          
-
-                    if ($current_time >= 15) {
-                        $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
-                    }
-                    break;
-                }
-                          echo  $delivery_date  = date('F d, Y', strtotime($delivery_date_db3));
+                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                $i = $i;
+            } else {
+                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                $i = $i + 1;
+            }
+        }
+        echo $delivery_date = date('F d, Y', strtotime($delivery_date_db1));
         }
         ?>
-                <a onclick="checkout.changeSection('opc-shipping_method');
-                        SaveAction();
+        <a onclick="checkout.changeSection('opc-shipping_method');
+                    SaveAction();
 
-                        return false;" href="#shipping_method"> | Change</a></p>
-                   <?php echo $this->getChildHtml('button') ?>
-            <span class="please-wait" id="review-please-wait" style="display:none;">
-                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
-            </span>
-        </div>
-        <script type="text/javascript">
-            //<![CDATA[
-            review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('co-overreview-form'));
+                    return false;" href="#shipping_method"> | Change</a></p>
+           <?php echo $this->getChildHtml('button') ?>
+        <span class="please-wait" id="review-please-wait" style="display:none;">
+            <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+        </span>
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        review = new Review('<?php echo $this->getUrl('checkout/onepage/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>', '<?php echo $this->getUrl('checkout/onepage/success') ?>', $('co-overreview-form'));
         //]]>
 
     </script>
