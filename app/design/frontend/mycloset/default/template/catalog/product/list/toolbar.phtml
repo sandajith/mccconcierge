@@ -53,6 +53,13 @@
         </div>
         <?php echo $this->getPagerHtml() ?>
         <?php if ($this->isExpanded()): ?>
+        <div class="pull-right sortingwrapper">
+            <?php if($this->getCurrentDirection() == 'desc'): ?>
+                <a href="<?php echo $this->getOrderUrl(null, 'asc') ?>" title="<?php echo $this->__('Set Ascending Direction') ?>" class="pull-right glyphicon glyphicon-menu-down"></a>
+            <?php else: ?>
+                <a href="<?php echo $this->getOrderUrl(null, 'desc') ?>" title="<?php echo $this->__('Set Descending Direction') ?>" class="pull-right glyphicon glyphicon-menu-up"></a>
+            <?php endif; ?>
+        <?php endif; ?>
             <div class="customDropDown pull-right">
                 <?php if ($this->isEnabledViewSwitcher()): ?>
 
@@ -72,8 +79,10 @@
                     </ul>
 
                 </div>
+                 
             </div>
-        <?php endif; ?>
+        
+        </div>
     </div>
     <?php
  endif ?>
