@@ -122,8 +122,7 @@ $imploded_data = implode(',', $alldates);
                                     }echo $this->escapeHtml($_rate->getMethodTitle())
                                     ?>
                                     <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                                    <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                                    <?php //echo $_excl;   ?>
+                                    <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>                                   
                                     <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl) { ?>
                                         (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                                     <?php } ?>
@@ -156,8 +155,7 @@ $imploded_data = implode(',', $alldates);
                         $delivery_date_db1 = date('Y-m-d', strtotime($current_date11));
                         if ($current_time >= 15) {
                             $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                        }
-                      
+                        }                      
                         for ($i = 0; $i < $added_day;) {
 
                             $dayOfWeek = date('w', strtotime($delivery_date_db1));

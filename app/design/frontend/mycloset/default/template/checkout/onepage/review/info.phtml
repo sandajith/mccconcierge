@@ -238,12 +238,6 @@ foreach ($this->getItems() as $_item) {
         <p class="f-left pull-left"><?php echo $this->__('Forgot something?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><u><?php echo $this->__('Edit your order') ?></u></a></p>
         <p class="f-right pull-right"> <b>Delivery/Pick Up Date: </b><?php
             $shipmthd = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getShippingMethod();
-
-
-
-
-
-
         date_default_timezone_set('America/New_York');
         $current_date11 = date('Y-m-d');
         $current_time = date("H");
@@ -272,8 +266,7 @@ foreach ($this->getItems() as $_item) {
            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11));
         if ($current_time >= 15) {
             $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-        }
-    
+        }    
         for ($i = 0; $i < $added_day;) {
 
             $dayOfWeek = date('w', strtotime($delivery_date_db1));

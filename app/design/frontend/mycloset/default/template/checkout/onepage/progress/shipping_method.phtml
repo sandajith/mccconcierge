@@ -67,7 +67,7 @@ $imploded_data = implode(',', $alldates);
                 <?php // echo $_excl;  ?>
             <?php endif; ?>
             <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                (<?php //echo $this->__('Incl. Tax');     ?> <?php // echo $_incl;     ?>)
+                (<?php //echo $this->__('Incl. Tax');      ?> <?php // echo $_incl;      ?>)
             <?php endif; ?>
 
         <?php else: ?>
@@ -91,41 +91,39 @@ $imploded_data = implode(',', $alldates);
                 $i++;
                 if ($i == 1) {
                     $shpdate = $shippingtime['shipping_date'];
-//                    $shippingtime;
                     echo '</br>' . $this->__('Delivery Date: ') . $delivery_date = date('F d, Y', strtotime($shpdate));
-//                   }
                 }
             }
         } else {
-            
+
             if (strpos($ShippingDescription, 'Next Day Air') !== false) {
-               $added_day = 1;
-        } else if (strpos($ShippingDescription, '2nd Day Air') !== false) {
-               $added_day = 2;
-        } else {
-               $added_day = 5;
-        }
-        
-           $delivery_date_db1 = date('Y-m-d', strtotime($current_date11));
-        if ($current_time >= 15) {
-            $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-        }
-    
-        for ($i = 0; $i < $added_day;) {
-
-            $dayOfWeek = date('w', strtotime($delivery_date_db1));
-            if ((in_array($delivery_date_db1, $alldates)) || ($dayOfWeek == 0) || ($dayOfWeek == 6)) {
-
-                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                $i = $i;
+                $added_day = 1;
+            } else if (strpos($ShippingDescription, '2nd Day Air') !== false) {
+                $added_day = 2;
             } else {
-                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
-                $i = $i + 1;
+                $added_day = 5;
             }
-        }
+
+            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11));
+            if ($current_time >= 15) {
+                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+            }
+
+            for ($i = 0; $i < $added_day;) {
+
+                $dayOfWeek = date('w', strtotime($delivery_date_db1));
+                if ((in_array($delivery_date_db1, $alldates)) || ($dayOfWeek == 0) || ($dayOfWeek == 6)) {
+
+                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                    $i = $i;
+                } else {
+                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                    $i = $i + 1;
+                }
+            }
 
 
-        echo '</br>' . $this->__('Delivery Date: ') . date('F d, Y', strtotime($delivery_date_db1));
+            echo '</br>' . $this->__('Delivery Date: ') . date('F d, Y', strtotime($delivery_date_db1));
         }
         ?>
 
