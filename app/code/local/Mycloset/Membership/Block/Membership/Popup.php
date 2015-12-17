@@ -27,12 +27,13 @@ class Mycloset_Membership_Block_Membership_Popup extends Mage_Catalog_Block_Prod
         $product['sku'] = $model->getSku();
          
                                  
-                                   if($product['sku']==''){
+                            
+        $product['size'] = $model->getAttributeText('size'); //product's thumbnail image url      
+                 if($product['size']==''){
                                        echo 'Not Applicable';
                                    }else{
-                                      echo $product['sku']; 
-                                   }     
-        $product['size'] = $model->getAttributeText('size'); //product's thumbnail image url      
+                                      echo $product['size']; 
+                                   }  
         $product['designer'] = $model->getAttributeText('designer'); //product's thumbnail image url
         $product['product_status'] = $model->getAttributeText('product_status'); //product's thumbnail image url
         $product['season'] = $model->getAttributeText('season'); //product's thumbnail image url
