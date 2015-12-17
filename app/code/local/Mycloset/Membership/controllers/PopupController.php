@@ -62,16 +62,18 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-                        if ((data['size'] == null) || data['size'] == false) {
-                            data['size'] = "Not Applicable";
-                        }
+                     
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
                         jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
-                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                       if (data['size'] === false) {
+                            jqCustom('.size').html('<i>Size Not Applicable</i>');
+                        } else {
+                            jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        }
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                         jqCustom('.inputz').blur(function (e) {
@@ -190,16 +192,18 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-                        if ((data['size'] == null) || data['size'] == false) {
-                            data['size'] = "Not Applicable";
-                        }
+                    
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
                         jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
-                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        if (data['size'] === false) {
+                            jqCustom('.size').html('<i>Size Not Applicable</i>');
+                        } else {
+                            jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        }
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                         jqCustom('.inputz').blur(function (e) {
@@ -317,16 +321,18 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-                        if ((data['size'] == null) || data['size'] == false) {
-                            data['size'] = "Not Applicable";
-                        }
+                    
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
                         jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
-                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        if (data['size'] === false) {
+                            jqCustom('.size').html('<i>Size Not Applicable</i>');
+                        } else {
+                            jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        }
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                         jqCustom('.inputz').blur(function (e) {
@@ -444,16 +450,18 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-                        if ((data['size'] == null) || data['size'] == false) {
-                            data['size'] = "Not Applicable";
-                        }
+                      
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
                         jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
-                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        if (data['size'] === false) {
+                            jqCustom('.size').html('<i>Size Not Applicable</i>');
+                        } else {
+                            jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        }
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                         jqCustom('.inputz').blur(function (e) {
@@ -571,16 +579,18 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-                        if ((data['size'] == null) || data['size'] == false) {
-                            data['size'] = "Not Applicable";
-                        }
+                      
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
                         jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
-                        jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        if (data['size'] === false) {
+                            jqCustom('.size').html('<i>Size Not Applicable</i>');
+                        } else {
+                            jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
+                        }
                         jqCustom('.season').html('<i>' + data['season'] + '</i>');
                         jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
                         jqCustom('.inputz').blur(function (e) {
@@ -663,9 +673,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
         $product['sku'] = $model->getSku(); //product's thumbnail image url      
         $product['size'] = $model->getAttributeText('size'); //product's thumbnail image url      
         if ($product['size'] == '') {
-            echo 'Not Applicable';
+            $product['size'] = ' Not Applicable';
         } else {
-            echo $product['size'];
+            $product['size'];
         }
         $product['designer'] = $model->getAttributeText('designer'); //product's thumbnail image url
         $product['product_status'] = $model->getAttributeText('product_status'); //product's thumbnail image url
