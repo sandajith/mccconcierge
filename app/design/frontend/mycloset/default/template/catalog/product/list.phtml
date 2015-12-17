@@ -141,7 +141,13 @@ $_product1 = $this->getProduct();
                                     <?php echo $_product->getAttributeText('color'); ?>
                                 </li>
                                 <li>
-                                   Size: <?php echo $_product->getAttributeText('size'); ?>
+                                   Size:<?php 
+                                  $sizeval= $_product->getAttributeText('size');
+                                   if($sizeval==''){
+                                       echo 'Not Applicable';
+                                   }else{
+                                      echo $_product->getAttributeText('size'); 
+                                   }  ?>
                                 </li>
                                 <li>
                                    Status: <?php echo $_product->getAttributeText('product_status') . '  ' . $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); ?>

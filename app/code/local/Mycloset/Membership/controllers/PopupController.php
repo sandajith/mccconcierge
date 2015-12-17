@@ -62,7 +62,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+if(data['size']== null){
+    data['size']="Not Applicable";
+    }
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
@@ -188,7 +190,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+if(data['size']== null){
+    data['size']="Not Applicable";
+    }
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
@@ -313,7 +317,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+if(data['size']== null){
+    data['size']="Not Applicable";
+    }
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
@@ -438,7 +444,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+if(data['size']== null){
+    data['size']="Not Applicable";
+    }
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
@@ -563,6 +571,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
+                        if(data['size']== null){
+    data['size']="Not Applicable";
+    }
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);

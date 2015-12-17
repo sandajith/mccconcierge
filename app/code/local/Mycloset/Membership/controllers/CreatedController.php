@@ -7,7 +7,7 @@ class Mycloset_Membership_CreatedController extends Mage_Core_Controller_Front_A
     public function indexAction() {
         
         $this->loadLayout();
-        $this->getLayout()->getBlock("head")->setTitle($this->__("Choose your Payment"));
+        $this->getLayout()->getBlock("head")->setTitle($this->__("Payment | My Closet Concierge"));
         $breadcrumbs = $this->getLayout()->getBlock("breadcrumbs");
         $breadcrumbs->addCrumb("home", array(
             "label" => $this->__("Mycloset"),
