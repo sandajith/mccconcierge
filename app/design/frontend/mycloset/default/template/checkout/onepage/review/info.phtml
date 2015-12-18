@@ -217,19 +217,75 @@ foreach ($this->getItems() as $_item) {
         <p class="f-left pull-left"><?php echo $this->__('Forgot something?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><u><?php echo $this->__('Edit your order') ?></u></a></p>
         <p class="f-right pull-right"> <b>Delivery/Pick Up Date: </b><?php
             $shipmthd = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getShippingMethod();
-           
-            if ($shipmthd == 'ups_1DA') {
-                $add = 1;
-                $current_date = date();
-                $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
-                echo $delivery_date;
-            } else if ($shipmthd == 'ups_2DA') {
-                $add = 2;
-                $current_date = date();
-                $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
-                echo $delivery_date;
-            } else if ($shipmthd == 'flatrate_flatrate') {
-                $collection = Mage::getModel('sales/quote')->getCollection()
+      
+            
+            
+            
+            
+            
+            
+        date_default_timezone_set('America/New_York');
+                        $current_date11 = date('Y-m-d');
+                        $current_time = date("H");
+        if ($shipmthd == 'ups_1DA') {                     
+               
+                          $add = 1;
+                            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11 . ' +' . $add . 'day'));
+                            if ($current_time >= 15) {
+                                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                            }
+                            $cnt = 0;
+                            while (1 == 1) {
+                                $cnt++;
+                                if ($cnt > 31) {
+                                    break;
+                                }
+                                if (in_array($delivery_date_db1, $alldates)) {
+                                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                                    continue;
+                                }
+                                $dayOfWeek = date('w', strtotime($delivery_date_db1));
+                                if ($dayOfWeek == 0 || $dayOfWeek == 6) {
+                                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                                    continue;
+                                }
+                                $delivery_date_db1;
+                                break;
+                            }
+                               echo $delivery_date  = date('F d, Y', strtotime($delivery_date_db1));
+             
+            } else if ($shipmthd == 'ups_2DA') {            
+             
+                $add1 = 2;
+                            $dayOfWeek = date('w', strtotime($current_date11));
+                            if ($dayOfWeek == 5) {
+                                $add1 = 4;
+                            }
+                            $delivery_date_db3 = date('Y-m-d', strtotime($current_date11 . ' +' . $add1 . 'day'));
+
+                            $cnt = 0;
+                            while (1 == 1) {
+                                $cnt++;
+                                if ($cnt > 31) {
+                                    break;
+                                }
+                                $dayOfWeek = date('w', strtotime($current_date11));
+                                if (in_array($delivery_date_db3, $alldates) || $dayOfWeek == 0 || $dayOfWeek == 6) {
+                                  $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                                    continue;
+                                }
+                                if ($current_time >= 15) {
+                                    $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                                }
+
+                                break;
+                            }
+                               echo $delivery_date  = date('F d, Y', strtotime($delivery_date_db3));
+             
+             
+           } else if ($shipmthd == 'flatrate_flatrate') {
+               
+        $collection = Mage::getModel('sales/quote')->getCollection()
                         ->addFieldToSelect('*')
                         ->addFieldToFilter('customer_id', $userid)
                         ->setOrder('updated_at', 'DESC');
@@ -243,14 +299,39 @@ foreach ($this->getItems() as $_item) {
 //                   }
                     }
                 }
-                } else {
-                    $add = 3;
-                    $current_date = date();
-                    $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
-                    echo $delivery_date;
+        
+         } else {
+     $add1 = 5;
+
+                $current_date11;
+                $dayOfWeek = date('w', strtotime($current_date11));
+                if ($dayOfWeek == 5) {
+                    $add1 = 7;
                 }
-                ?> 
-            
+                $delivery_date_db3 = date('Y-m-d', strtotime($current_date11 . '+' . $add1 . 'day'));
+                $i = 0;
+                $cnt = 0;
+                while (1 == 1) {
+                    $cnt++;
+                    if ($cnt >= 31) {
+                        break;
+                    }
+
+
+                    $dayOfWeek = date('w', strtotime($delivery_date_db3));
+                    if (in_array($delivery_date_db3, $alldates) || $dayOfWeek == 0 || $dayOfWeek == 6) {
+                        $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                        continue;
+                    }          
+
+                    if ($current_time >= 15) {
+                        $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                    }
+                    break;
+                }
+                          echo  $delivery_date  = date('F d, Y', strtotime($delivery_date_db3));
+        }
+        ?>
                 <a onclick="checkout.changeSection('opc-shipping_method');
                         SaveAction();
 

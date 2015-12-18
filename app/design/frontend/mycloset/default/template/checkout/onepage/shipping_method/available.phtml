@@ -25,6 +25,28 @@
  */
 ?>
 <?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
+
+<?php
+$prefix = Mage::getConfig()->getTablePrefix();
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
+$query = 'SELECT * FROM ' . $prefix . 'mycloset_holiday';
+$results = $readConnection->fetchAll($query);
+$current_year = date("Y");
+$year_upto = $current_year + 1;
+//  $imploded_data = array();
+for ($i = $current_year; $i <= $year_upto; $i++) {
+
+    foreach ($results as $holiday) {
+
+
+        $alldates[] = date('Y-m-d', strtotime($holiday['holiday_string'] . ' ' . $i));
+    }
+}
+$imploded_data = implode(',', $alldates);
+?>
+<input type="hidden" value="<?php echo $imploded_data; ?>" name="holiday_date" id="holiday_date"/>
+
 <?php $_shippingRateGroups = $this->getShippingRates(); ?>
 <?php if (!$_shippingRateGroups): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
@@ -44,7 +66,7 @@
         $_sole = count($_shippingRateGroups) == 1;
         foreach ($_shippingRateGroups as $code => $_rates):
 
-            
+
             if (($freeshipping == 1 ) && ($code != 'freeshipping')) {
                 continue;
             }
@@ -55,7 +77,7 @@
                 $_sole = true;
             }
             ?>
-        <dt style="padding-bottom: 8px;"><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+            <dt style="padding-bottom: 8px;"><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
             <dd>
                 <ul>
                     <?php $_rates = array_reverse($_rates); ?>
@@ -63,7 +85,6 @@
                     $_sole = $_sole && count($_rates) == 1;
 
                     foreach ($_rates as $_rate):
-                        
                         ?>
                         <?php $shippingCodePrice[] = "'" . $_rate->getCode() . "':" . (float) $_rate->getPrice(); ?>
                         <li>
@@ -112,62 +133,127 @@
 
 
                         </li>
-                        
-                          <?php
+
+                        <?php
 //                         echo $_rate->getCode();
 //                         echo strpos($_rate->getCode(), '1DA');
-            if ($_rate->getCode()== 'ups_1DA') {
-                $add = 1;
-                $current_date = date();
-                $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
-                $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
-                ?> <input type="hidden" name="inputDatetatorval2" value="<?php echo $delivery_date_db; ?>"> <?php
-            } else if ($_rate->getCode()== 'ups_2DA') {
-                $add = 2;
-                $current_date = date();
-                $delivery_date = date(' d, Y', strtotime($current_date . ' +' . $add . 'day'));
-                $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
-                ?> <input type="hidden"  name="inputDatetatorval3" value="<?php echo $delivery_date_db; ?>"> <?php
-            } else if ($_rate->getCode()== 'flatrate_flatrate') {
+                        date_default_timezone_set('America/New_York');
+                        $current_date11 = date('Y-m-d');
+                        $current_time = date("H");
+                        if ($_rate->getCode() == 'ups_1DA') {
+                            $add = 1;
+                            $delivery_date_db1 = date('Y-m-d', strtotime($current_date11 . ' +' . $add . 'day'));
+                            if ($current_time >= 15) {
+                                $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                            }
+                            $cnt = 0;
+                            while (1 == 1) {
+                                $cnt++;
+                                if ($cnt > 31) {
+                                    break;
+                                }
+                                if (in_array($delivery_date_db1, $alldates)) {
+                                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                                    continue;
+                                }
+                                $dayOfWeek = date('w', strtotime($delivery_date_db1));
+                                if ($dayOfWeek == 0 || $dayOfWeek == 6) {
+                                    $delivery_date_db1 = date('Y-m-d', strtotime($delivery_date_db1 . ' +1 day'));
+                                    continue;
+                                }
+                                $delivery_date_db1;
+                                break;
+                            }
+                            ?><input type="hidden" name="inputDatetatorval2" value="<?php echo $delivery_date_db1; ?>"> <?php
+                        } else if ($_rate->getCode() == 'ups_2DA') {
+                            $add1 = 2;
+                            $dayOfWeek = date('w', strtotime($current_date11));
+                            if ($dayOfWeek == 5) {
+                                $add1 = 4;
+                            }
+                            $delivery_date_db2 = date('Y-m-d', strtotime($current_date11 . ' +' . $add1 . 'day'));
+
+                            $cnt = 0;
+                            while (1 == 1) {
+                                $cnt++;
+                                if ($cnt > 31) {
+                                    break;
+                                }
+                                $dayOfWeek = date('w', strtotime($current_date11));
+                                if (in_array($delivery_date_db3, $alldates) || $dayOfWeek == 0 || $dayOfWeek == 6) {
+                                  $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                                    continue;
+                                }
+                                if ($current_time >= 15) {
+                                    $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                                }
+
+                                break;
+                            }
+                            ?> <input type="hidden"  name="inputDatetatorval3" value="<?php echo $delivery_date_db2; ?>"> <?php
+                        } else if ($_rate->getCode() == 'flatrate_flatrate') {
+                            ?>
+                            <div class="methoddatepicker" style="display: none;margin-left: 20px">
+                                <label for="inputDatetator1">
+                                    <b>Set delivery/pick up date:</b>
+                                </label>
+                                <input type="text" id="inputDatetator1" name="inputDatetator1" value=""> 
+                                <p class="note cutoff">Cutoff for next day delivery/pick up 3.00 PM EST</p>					
+                            </div> 
+                <?php
+            } else {
+                $add1 = 5;
+
+                $current_date11;
+                $dayOfWeek = date('w', strtotime($current_date11));
+                if ($dayOfWeek == 5) {
+                    $add1 = 7;
+                }
+                $delivery_date_db3 = date('Y-m-d', strtotime($current_date11 . '+' . $add1 . 'day'));
+                $i = 0;
+                $cnt = 0;
+                while (1 == 1) {
+                    $cnt++;
+                    if ($cnt >= 31) {
+                        break;
+                    }
+
+
+                    $dayOfWeek = date('w', strtotime($delivery_date_db3));
+                    if (in_array($delivery_date_db3, $alldates) || $dayOfWeek == 0 || $dayOfWeek == 6) {
+                        $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                        continue;
+                    }          
+
+                    if ($current_time >= 15) {
+                        $delivery_date_db3 = date('Y-m-d', strtotime($delivery_date_db3 . ' +1 day'));
+                    }
+                    break;
+                }
                 ?>
-                <div class="methoddatepicker" style="display: none;margin-left: 20px">
-                    <label for="inputDatetator1">
-                        <b>Set delivery/pick up date:</b>
-                    </label>
-                    <input type="hidden" id="inputDatetator1" name="inputDatetator1" value=""> 
-<p class="note cutoff">Cutoff for next day delivery/pick up 3.00 PM EST</p>					
-                </div> 
-            <?php
-        } else {
-            $add = 3;
-            $current_date = date();
-            $delivery_date = date('F d, Y', strtotime($current_date . ' +' . $add . 'day'));
-            $delivery_date_db = date('Y-m-d', strtotime($current_date . ' +' . $add . 'day'));
-            ?> <input type="hidden"  name="inputDatetatorval4" value="<?php echo $delivery_date_db; ?>">
-            <?php }
-            ?>
-                        
-                        
+                            <input type="hidden"  name="inputDatetatorval4" value="<?php echo $delivery_date_db3; ?>">
+                        <?php }
+                        ?>
                     <?php endforeach; ?>
 
                 </ul>
             </dd>
-          
-        <?php endforeach; ?>
+
+                <?php endforeach; ?>
 
 
 
-        <?php if ($freeshipping == 0) { ?>
+    <?php if ($freeshipping == 0) { ?>
             <dd>
-			<p class="note"> <em>*</em><?php
+                <p class="note"> <em>*</em><?php
         echo $this->__('Any appointment request submitted after 3PM EST will be processed the next business day.');
-            ?></p>
-			<p class="note"> <em>*</em><?php
-        echo $this->__('Any orders which include more than 20 items will require 3 days for delivery/pick up.');
+        ?></p>
+                <p class="note"> <em>*</em><?php
+            echo $this->__('Any orders which include more than 20 items will require 3 days for delivery/pick up.');
             ?></p>
                 <p class="note"> <em>*</em><?php
-        echo $this->__('Final cost of shipping is contingent upon weight of items. My Closet Concierge will contact you to confirm.');
-            ?></p>
+                    echo $this->__('Final cost of shipping is contingent upon weight of items. My Closet Concierge will contact you to confirm.');
+                    ?></p>
             </dd>
                 <?php } ?>
     </dl>
@@ -175,7 +261,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-    <?php if (!empty($shippingCodePrice)): ?>
+        <?php if (!empty($shippingCodePrice)): ?>
             var shippingCodePrice = {<?php echo implode(',', $shippingCodePrice); ?>};
     <?php endif; ?>
 
@@ -204,13 +290,13 @@
 <?php endif; ?>
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
-   var check= jqCustom(".localdeliveryshow");
+    var check = jqCustom(".localdeliveryshow");
     jqCustom(".localdeliveryshow").click(function () {
         jqCustom("div.methoddatepicker").show();
     });
-    if(check.is(":checked"))
+    if (check.is(":checked"))
     {
-         jqCustom("div.methoddatepicker").show();
+        jqCustom("div.methoddatepicker").show();
     }
     jqCustom(".localdeliveryhide").click(function () {
         jqCustom("div.methoddatepicker").hide();
@@ -224,3 +310,4 @@
         }
     });
 </script>
+
