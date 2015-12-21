@@ -1,571 +1,557 @@
 /*==========  Mobile First Method  ==========*/
 
-    /* Custom, iPhone Retina */ 
-    @media only screen and (min-width : 320px) {
-        
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+    header h1 {
+        font-size: 38px;
+        letter-spacing: 16px;
     }
 
-    /* Extra Small Devices, Phones */ 
-    @media only screen and (min-width : 480px) {
-
+    header h2 {
+        font-size: 24px;
+        letter-spacing:4px;
     }
 
-    /* Small Devices, Tablets */
-    @media only screen and (min-width : 768px) {
-
+    header img {
+        height: 120px;
     }
 
-    /* Medium Devices, Desktops */
-    @media only screen and (min-width : 992px) {
-
+    header .logo{
+        width:861px;
     }
 
-    /* Large Devices, Wide Screens */
-    @media only screen and (min-width : 1200px) {
-
+    .mainMenu .nav li a{
+        padding:15px 30px;
     }
 
+    footer .mainMenu .nav li a { padding: 15px 20px;}
 
-
-    /*==========  Non-Mobile First Method  ==========*/
-
-    /* Large Devices, Wide Screens */
-    @media only screen and (max-width : 1200px) {
-
-        header h1 {
-            font-size: 38px;
-            letter-spacing: 16px;
-        }
-
-        header h2 {
-            font-size: 24px;
-            letter-spacing:4px;
-        }
-
-        header img {
-            height: 120px;
-        }
-
-        header .logo{
-           width:861px;
-        }
-
-        .mainMenu .nav li a{
-            padding:15px 30px;
-        }
-        
-        footer .mainMenu .nav li a { padding: 15px 20px;}
-
-        .homeGrid h4 {
-            font-size: 35px;
-        }
-
-        .homeGrid p{
-            min-height: 208px;
-        }
-
+    .homeGrid h4 {
+        font-size: 35px;
     }
 
-    @media only screen and (min-width: 1260px){
-        .customer-account-create .main-container > .main > .container,
-        .customer-account-login .main-container > .main > .container {
-            width: 1230px;
-        }
+    .homeGrid p{
+        min-height: 208px;
     }
 
-    /* Medium Devices, Desktops */
-    @media only screen and (max-width : 992px) {
-        
-        header .logo {
-            width: 668px;
-        }
+}
 
-         header h1 {
-            display: block;
-            font-size: 36px;
-            letter-spacing: 7px;
-            margin: 10px 0 9px;
-        }
-        
-        header h2 {
-            display: inline-block;
-            font-size: 22px;
-            letter-spacing: 1px;
-            margin: 0;
-        }
+@media only screen and (min-width: 1260px){
+    .customer-account-create .main-container > .main > .container,
+    .customer-account-login .main-container > .main > .container {
+        width: 1230px;
+    }
+}
 
-        header img {
-            float: left;
-            height: 100px;
-            margin-left: 10px;
-            margin-right: 10px;
-            margin-top: 0;
-        }
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
 
-
-        .mainMenu .nav li a{
-            padding:15px 13px;
-            text-align: left
-        }
-        .mainMenu .nav li a.logo { padding:10px 0px;}
-        .mainMenu .nav li.search-mobile a { text-align: center}
-
-        .brdr-sm-r_0 { border-right: 0 !important}
-
-        .itemsWrapper .itemList a { margin: 0;}
-
-        .itemsWrapper .itemList a.button{
-            font-size: 14px;
-            min-width: 140px;
-        }
-
-        .customDropDown { margin-left: 15px !important; margin-right: 15px !important}
-        
-.itemList a.button, .itemList button.button, .itemList input.button{margin:10px 0px;}
-
- footer .mainMenu .nav li a { padding: 15px 7px;} 
- .popupBox {
-    width:768px;
-    margin-left: -384px;
- }
- .homeGrid p {  min-height: 138px;}
-
-        .checkout-onepage-index .opc .step.a-item {
-            padding:10px;
-        }
-
-        .checkout-onepage-index .opc .step.a-item .order-review {
-            padding:0 15px;
-        }
-
-
+    header .logo {
+        width: 668px;
     }
 
-    /* Small Devices, Tablets */
-    @media only screen and (max-width : 768px) {
+    header h1 {
+        display: block;
+        font-size: 36px;
+        letter-spacing: 7px;
+        margin: 10px 0 9px;
+    }
 
-        header { padding: 10px 0 1px;}
+    header h2 {
+        display: inline-block;
+        font-size: 22px;
+        letter-spacing: 1px;
+        margin: 0;
+    }
 
-        header h1 {
-            display: block;
-            letter-spacing: 1px;
-        }
-
-        header h2 {
-            display: block;
-            font-size: 15px;
-            padding: 0;
-        }
-
-        header img {
-           float: left;
-           margin: 0;
-           height:65px;
-        }
-
-        header .logo {
-            display: block;
-            width: 100%;
-            float: left;
-        }
-
-        header .loginDetails { 
-            text-align: left; 
-            border-bottom: 1px solid #333; 
-            margin-bottom: 10px; 
-            padding-bottom: 5px;
-        }
-        header .loginDetails .search { 
-            width: auto; 
-            float: right;
-        }
-        header .loginDetails .search input { 
-            margin:0
-        }
-
-        header .loginDetails .links { float: left; margin-top: 0}
-        .mainMenu {
-            margin-top: 5px;
-        }
-
-        .homeGrid p {
-            min-height: auto;
-        }
-
-        .checkout-onepage-index .opc .dataTable > .row.th {
-            margin: 15px -25px 0;
-        }
-        .checkout-onepage-index .opc .dataTable > .row.th > div {
-            text-align: left;
-        }
-
-        .checkout-onepage-index .opc .dataTable > .row .thumb {
-            width:100%;
-        }
-        .dataTable > .row .product-name {
-            font-size: 14px;
-            line-height: 19px;
-            padding: 10px 0;
-            text-align: left;
-        }
-
-        .checkout-onepage-index .checkoutTotal {
-            margin:20px -25px;
-        }
-
-        .mainMenu .nav li ul.sub-nav {
-            background: none;
-            padding:0;
-        }
-
+    header img {
+        float: left;
+        height: 100px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0;
     }
 
 
-
-
-    /**** Custom size ******/
-
-
-    
-
-   @media only screen and (max-width : 769px) {
-       .showMenu { overflow: hidden}
-       .allWrapper {transition: all 0.5s ease;}
-       .showMenu .allWrapper {left: 280px;}
-       .itemsWrapper,
-       .filterBy{ float: none}
-          header .loginDetails a { float: left }
-       .std .intro a.button{margin:5px 10px;}
-       header .navbar-collapse  { transition: all 0.5s ease; background:#000; position: fixed; left: -280px; top: 0; height: 100% !important; width:280px; z-index:100; margin: 0 !important; display:block !important;}
-       header .navbar-collapse.in,
-       header .navbar-collapse.collapsing { left: 0%;}
-       .mainMenu .nav li {
-            width: 100%;
-            float:left;
-        }
-        
-        .mainMenu .nav li b.glyphicon { position: absolute; right: 10px; top:16px}
-        .mainMenu .nav li ul.sub-nav { position: relative}
-        .mainMenu .nav li ul.sub-nav li a {
-            border-bottom:0;
-            color: #ffffff !important;
-            display: block;
-            padding: 5px 30px;
-            text-decoration: none;
-        }
-        .mainMenu .nav li a{
-            padding:10px 20px;
-            text-align: left;
-            color:#fff !important;
-        }
-        .mainMenu .nav li.active a { color: red !important;}
-        .nav > li > a:focus, 
-        .nav > li > a:hover { background: none; color:#fff}
-        .footerText { padding: 5px 0;}
-        footer .social { width: 100%; margin: 0; text-align: center;}
-        footer .social img { width: 20px;}
-        .homeGrid h4 { text-align: left; font-size: 25px}
-        .homeGrid h4 font { display: unset;}
-
-        .subhead h2 { padding: 0}
-        .block-title { display: none;}
-        .filterBy {
-                
-                border: 0 none;
-                border-radius: 5px;
-                margin: 0;
-                overflow: hidden;
-                padding: 10px;
-            }
-            .filterBy .small-accordion{ margin: 0}
-
-        .filterBy h3 {
-            border-bottom: 1px solid #ccc;
-            margin: 10px 10px 0;
-            padding-bottom: 10px;
-        }
-        
-        .itemList { margin: 15px 0 0 0}
-        .filterBy .small-accordion {
-            border-bottom: 1px solid #ccc;
-            margin:15px 0;
-        }
-        .filterBy .small-accordion h4 {
-            border-top: 1px solid #ccc;
-            font-size: 15px;
-            font-weight: bold;
-            margin: 0;
-            padding: 13px 0;
-        }
-        .filterBy .small-accordion h4 b { display: block; float:right; color:#666666}
-        
-        .filterBy .small-accordion > div {
-            padding: 0 0 10px 0;
-        }
-        
-       .filterBy .small-accordion a {
-            border-radius: 20px;
-            display: block;
-            font-size: 16px;
-            padding: 0 14px;
-        }
-
-        .filterBy .small-accordion .colorBox { 
-            float: left;
-        }
-        .topToolbar { border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding-top:15px}
-
-        .filterBy .small-accordion .colorBox a {
-            border-radius: 3px;
-            cursor: pointer;
-            float: left;
-            height: 30px;
-            margin: 5px 5px 0 0;
-            position: relative;
-            width: 30px;
-            padding: 0;
-            border: 0
-        }
-
-        .filterBy .small-accordion h4 { float: left; width: 100%; cursor: pointer;}
-        .filterBy .small-accordion > div { display: none; float: left;}
-
-        .homeGrid > div { min-height: auto; border:0 !important; margin: 20px 0}
-        .mainMenu .nav li.search-mobile  { display: block}
-        header .loginDetails .search { display: none}
-        .mainMenu { border: 0px;}
-        header h2 { display: none}
-        header img { float: none}
-        footer .mainMenu { display: none}
-        .mobileFooter { display: block; border-top: 1px solid #fff} 
-        .popupBox { width:100%; margin: 0; left:0}
-        .popupContent .details {
-            border-bottom: 1px solid #ccc;
-            font-size: 16px;
-            margin: 0 15px;
-            padding: 0;
-        }
-        .popupContent .details a.button, 
-        .popupContent .details button.button, 
-        .popupContent .details input.button {
-            float: none;
-            left: 50%;
-            margin: 10px auto 10px -100px;
-            position: relative;
-            width: 200px;
-        }
-        .popupContent .carousel { border: 0}
-        .productdata {  margin-left: -15px; margin-right: -15px;}
-        .popupContent .image {
-            padding:20px 0;
-            border-top:1px solid #ccc;
-            border-bottom:1px solid #ccc;
-            margin: 20px 0;
-        }
-        
-        .signature.visible-xs { color: #666666}
-        .productdata { margin-bottom: 20px;}
-
-
-        .checkout-onepage-index .customer-name-middlename .field {
-            float:left;
-            width:100%;
-            padding:0;
-        }
-
-        .checkout-onepage-index .customer-name-middlename .field:nth-child(2n){
-            padding:0;
-        }
-
-        .checkout-onepage-index li.fields .field {
-            float:left;
-            width:100%;
-            padding:0;
-        }
-
-        .checkout-onepage-index li.fields .field:nth-child(2n) {
-            padding:0;
-        }
-
-       .checkout-onepage-index .opc .step.a-item {
-            padding:10px;
-        }
-
-        
-
-        .checkout-onepage-index .itemsWrapper {
-            width:100%;
-        }
-
+    .mainMenu .nav li a{
+        padding:15px 13px;
+        text-align: left
     }
-     @media only screen and (min-width : 1200px) {
-        .dataTable > .row > div {
-            padding-top:40px;
-        }
+    .mainMenu .nav li a.logo { padding:10px 0px;}
+    .mainMenu .nav li.search-mobile a { text-align: center}
 
-        .dataTable > .row > div:first-child{
-            padding-top:10px;
-        }
+    .brdr-sm-r_0 { border-right: 0 !important}
+
+    .itemsWrapper .itemList a { margin: 0;}
+
+    .itemsWrapper .itemList a.button{
+        font-size: 14px;
+        min-width: 140px;
     }
 
-    @media only screen and (min-width : 616px) {
-       
-        header .loginDetails .links { display: block !important;}
+    .customDropDown { margin-left: 15px !important; margin-right: 15px !important}
+
+    .itemList a.button, .itemList button.button, .itemList input.button{margin:10px 0px;}
+
+    footer .mainMenu .nav li a { padding: 15px 7px;} 
+    .popupBox {
+        width:768px;
+        margin-left: -384px;
+    }
+    .homeGrid p {  min-height: 138px;}
+
+    .checkout-onepage-index .opc .step.a-item {
+        padding:10px;
     }
 
-    @media only screen and (max-width : 615px) {
-        
-
-        header .logo {
-            display: block;
-        }
-        header h1 {
-            font-size:19px;
-        }
-
-        header h2 {
-            font-size: 11px;
-        }
-
-        header img {
-           
-        }
-
-        header .loginDetails{
-            text-align: left;
-            padding-bottom: 0;
-            padding-left: 6px;
-        }
-
-        header .loginDetails a {
-            color: #ffffff;
-            display: inline-block;
-            font-size: 13px !important;
-            margin: 1px 6px 0;
-            padding-bottom: 4px;
-            float: left
-        }
-
-        .checkout-onepage-index .opc .qtyBox .qtyCol {
-            float:left;
-            width:100%;
-        }
-        .qtyHead {
-            display:none;
-        }
-
+    .checkout-onepage-index .opc .step.a-item .order-review {
+        padding:0 15px;
     }
 
 
-    /* Extra Small Devices, Phones */ 
-    @media only screen and (max-width : 480px) {
-        .itemsWrapper .itemList ul{margin: 0px;}
-        .itemList a.button, .itemList button.button, .itemList input.button{margin: 0px;}
-        .std .intro a.button{margin:5px 0px; width:206px;}
-		header .loginDetails a { margin: 1px 4px 0; font-size: 13px !important}
-    }
-    @media only screen and (max-width : 455px){
-        .cutoff{
-                    margin-left: 0;
-                }
-    }
+}
 
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
 
-    @media only screen and (max-width : 355px) {
+    header { padding: 10px 0 1px;}
 
-        header .logo{
-            
-        }
-      header .loginDetails a { margin: 1px 5px 0; font-size: 11px !important}
-      .opc .step-title a{
-          font-size: 13px;
-      }
-      .checkout-onepage-index .opc label {
-          font-size: 13px;
-      }
+    header h1 {
+        display: block;
+        letter-spacing: 1px;
     }
 
+    header h2 {
+        display: block;
+        font-size: 15px;
+        padding: 0;
+    }
 
-    /* Custom, iPhone Retina */ 
-    @media only screen and (max-width : 320px) {
-        
-        
+    header img {
+        float: left;
+        margin: 0;
+        height:65px;
+    }
+
+    header .logo {
+        display: block;
+        width: 100%;
+        float: left;
+    }
+
+    header .loginDetails { 
+        text-align: left; 
+        border-bottom: 1px solid #333; 
+        margin-bottom: 10px; 
+        padding-bottom: 5px;
+    }
+    header .loginDetails .search { 
+        width: auto; 
+        float: right;
+    }
+    header .loginDetails .search input { 
+        margin:0
+    }
+
+    header .loginDetails .links { float: left; margin-top: 0}
+    .mainMenu {
+        margin-top: 5px;
+    }
+
+    .homeGrid p {
+        min-height: auto;
+    }
+
+    .checkout-onepage-index .opc .dataTable > .row.th {
+        margin: 15px -25px 0;
+    }
+    .checkout-onepage-index .opc .dataTable > .row.th > div {
+        text-align: left;
+    }
+
+    .checkout-onepage-index .opc .dataTable > .row .thumb {
+        width:100%;
+    }
+    .dataTable > .row .product-name {
+        font-size: 14px;
+        line-height: 19px;
+        padding: 10px 0;
+        text-align: left;
+    }
+
+    .checkout-onepage-index .checkoutTotal {
+        margin:20px -25px;
+    }
+
+    .mainMenu .nav li ul.sub-nav {
+        background: none;
+        padding:0;
+    }
+
+}
+
+
+
+
+/**** Custom size ******/
+
+
+
+
+@media only screen and (max-width : 769px) {
+    .showMenu { overflow: hidden}
+    .allWrapper {transition: all 0.5s ease;}
+    .showMenu .allWrapper {left: 280px;}
+    .itemsWrapper,
+    .filterBy{ float: none}
+    header .loginDetails a { float: left }
+    .std .intro a.button{margin:5px 10px;}
+    header .navbar-collapse  { transition: all 0.5s ease; background:#000; position: fixed; left: -280px; top: 0; height: 100% !important; width:280px; z-index:100; margin: 0 !important; display:block !important;}
+    header .navbar-collapse.in,
+    header .navbar-collapse.collapsing { left: 0%;}
+    .mainMenu .nav li {
+        width: 100%;
+        float:left;
+    }
+
+    .mainMenu .nav li b.glyphicon { position: absolute; right: 10px; top:16px}
+    .mainMenu .nav li ul.sub-nav { position: relative}
+    .mainMenu .nav li ul.sub-nav li a {
+        border-bottom:0;
+        color: #ffffff !important;
+        display: block;
+        padding: 5px 30px;
+        text-decoration: none;
+    }
+    .mainMenu .nav li a{
+        padding:10px 20px;
+        text-align: left;
+        color:#fff !important;
+    }
+    .mainMenu .nav li.active a { color: red !important;}
+    .nav > li > a:focus, 
+    .nav > li > a:hover { background: none; color:#fff}
+    .footerText { padding: 5px 0;}
+    footer .social { width: 100%; margin: 0; text-align: center;}
+    footer .social img { width: 20px;}
+    .homeGrid h4 { text-align: left; font-size: 25px}
+    .homeGrid h4 font { display: unset;}
+
+    .subhead h2 { padding: 0}
+    .block-title { display: none;}
+    .filterBy {
+
+        border: 0 none;
+        border-radius: 5px;
+        margin: 0;
+        overflow: hidden;
+        padding: 10px;
+    }
+    .filterBy .small-accordion{ margin: 0}
+
+    .filterBy h3 {
+        border-bottom: 1px solid #ccc;
+        margin: 10px 10px 0;
+        padding-bottom: 10px;
+    }
+
+    .itemList { margin: 15px 0 0 0}
+    .filterBy .small-accordion {
+        border-bottom: 1px solid #ccc;
+        margin:15px 0;
+    }
+    .filterBy .small-accordion h4 {
+        border-top: 1px solid #ccc;
+        font-size: 15px;
+        font-weight: bold;
+        margin: 0;
+        padding: 13px 0;
+    }
+    .filterBy .small-accordion h4 b { display: block; float:right; color:#666666}
+
+    .filterBy .small-accordion > div {
+        padding: 0 0 10px 0;
+    }
+
+    .filterBy .small-accordion a {
+        border-radius: 20px;
+        display: block;
+        font-size: 16px;
+        padding: 0 14px;
+    }
+
+    .filterBy .small-accordion .colorBox { 
+        float: left;
+    }
+    .topToolbar { border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding-top:15px}
+
+    .filterBy .small-accordion .colorBox a {
+        border-radius: 3px;
+        cursor: pointer;
+        float: left;
+        height: 30px;
+        margin: 5px 5px 0 0;
+        position: relative;
+        width: 30px;
+        padding: 0;
+        border: 0
+    }
+
+    .filterBy .small-accordion h4 { float: left; width: 100%; cursor: pointer;}
+    .filterBy .small-accordion > div { display: none; float: left;}
+
+    .homeGrid > div { min-height: auto; border:0 !important; margin: 20px 0}
+    .mainMenu .nav li.search-mobile  { display: block}
+    header .loginDetails .search { display: none}
+    .mainMenu { border: 0px;}
+    header h2 { display: none}
+    header img { float: none}
+    footer .mainMenu { display: none}
+    .mobileFooter { display: block; border-top: 1px solid #fff} 
+    .popupBox { width:100%; margin: 0; left:0}
+    .popupContent .details {
+        border-bottom: 1px solid #ccc;
+        font-size: 16px;
+        margin: 0 15px;
+        padding: 0;
+    }
+    .popupContent .details a.button, 
+    .popupContent .details button.button, 
+    .popupContent .details input.button {
+        float: none;
+        left: 50%;
+        margin: 10px auto 10px -100px;
+        position: relative;
+        width: 200px;
+    }
+    .popupContent .carousel { border: 0}
+    .productdata {  margin-left: -15px; margin-right: -15px;}
+    .popupContent .image {
+        padding:20px 0;
+        border-top:1px solid #ccc;
+        border-bottom:1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .signature.visible-xs { color: #666666}
+    .productdata { margin-bottom: 20px;}
+
+
+    .checkout-onepage-index .customer-name-middlename .field {
+        float:left;
+        width:100%;
+        padding:0;
+    }
+
+    .checkout-onepage-index .customer-name-middlename .field:nth-child(2n){
+        padding:0;
+    }
+
+    .checkout-onepage-index li.fields .field {
+        float:left;
+        width:100%;
+        padding:0;
+    }
+
+    .checkout-onepage-index li.fields .field:nth-child(2n) {
+        padding:0;
+    }
+
+    .checkout-onepage-index .opc .step.a-item {
+        padding:10px;
     }
 
 
 
-//saneesh (12/21)
-
-@media screen and (max-width: 360px){
-
-
-/*Home page*/
-header {
-    padding: 2px 0 1px;
-}
-
-.navbar-toggle{
-	padding:4px 0; 
-}
-header .loginDetails a{
-	margin: 1px 3px 0;
-}
-header h1{
-	font-size: 23px;
-	margin: 9px 0;
-}
-.intro h1{
-	margin-top: 5px;
-	font-size: 23px;
-}
-.intro p {
-    font-size: 19px;
-    line-height: 23px;
-}
-.std .intro a.button{
-	width:160px;
-	padding: 7px 10px;
-}
-.homeGrid h4{
-	text-align: center;
-}
-
-/*About page*/
-
-.about p {
-    font-family: "Lato";
-    font-size: 15px;
-    text-align: justify;
-    word-spacing: -1px;
-}
-
-/*Mycloset page*/
-
-.page-title.category-title.subhead {
-    border-bottom: 1px solid #ddd;
-}
-
-/*MyDresse page*/
-.customDropDown{
-	margin-right: 0 !important;
-}
-.customDropDown span{
-	border:3px solid #c3c3c3;
-	padding: 5px 17px;
-}
-.customDropDown ul{
-	top:-3px;
-}
-.customDropDown ul li{
-	padding: 5px 17px;
-}
-.itemsWrapper .sortingwrapper{
-	margin: 0 15px 15px 0;
-}
-
-.itemsWrapper .itemList .button{
-	padding: 7px 10px;
-	width: 126px;
-}
+    .checkout-onepage-index .itemsWrapper {
+        width:100%;
+    }
 
 }
+@media only screen and (min-width : 1200px) {
+    .dataTable > .row > div {
+        padding-top:40px;
+    }
+
+    .dataTable > .row > div:first-child{
+        padding-top:10px;
+    }
+}
+
+@media only screen and (min-width : 616px) {
+
+    header .loginDetails .links { display: block !important;}
+}
+
+@media only screen and (max-width : 615px) {
+
+
+    header .logo {
+        display: block;
+    }
+    header h1 {
+        font-size:19px;
+    }
+
+    header h2 {
+        font-size: 11px;
+    }
+
+    header img {
+
+    }
+
+    header .loginDetails{
+        text-align: left;
+        padding-bottom: 0;
+        padding-left: 6px;
+    }
+
+    header .loginDetails a {
+        color: #ffffff;
+        display: inline-block;
+        font-size: 13px !important;
+        margin: 1px 6px 0;
+        padding-bottom: 4px;
+        float: left
+    }
+
+    .checkout-onepage-index .opc .qtyBox .qtyCol {
+        float:left;
+        width:100%;
+    }
+    .qtyHead {
+        display:none;
+    }
+
+}
+
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+    .itemsWrapper .itemList ul{margin: 0px;}
+    .itemList a.button, .itemList button.button, .itemList input.button{margin: 0px;}
+    .std .intro a.button{margin:5px 0px; width:206px;}
+    header .loginDetails a { margin: 1px 4px 0; font-size: 13px !important}
+}
+@media only screen and (max-width : 455px){
+    .cutoff{
+        margin-left: 0;
+    }
+}
+
+
+@media only screen and (max-width : 355px) {
+
+    header .logo{
+
+    }
+    header .loginDetails a { margin: 1px 5px 0; font-size: 11px !important}
+    .opc .step-title a{
+        font-size: 13px;
+    }
+    .checkout-onepage-index .opc label {
+        font-size: 13px;
+    }
+}
+
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+    header {
+        padding: 2px 0 1px;
+    }
+    .navbar-toggle{
+        padding:4px 0; 
+    }
+    header .loginDetails{
+        padding-right: 6px;
+    }
+    header .loginDetails a{
+        margin: 1px 2px 0;
+    }
+    header h1{
+        font-size: 23px;
+        margin: 9px 0;
+    }
+    .intro h1{
+        margin-top: 5px;
+        font-size: 23px;
+    }
+    .intro p {
+        font-size: 19px;
+        line-height: 23px;
+    }
+    .std .intro a.button{
+        width:160px;
+        padding: 7px 10px;
+    }
+    .homeGrid h4{
+        text-align: center;
+    }
+    .about p {
+        font-family: "Lato";
+        font-size: 15px;
+        text-align: justify;
+        word-spacing: -1px;
+    }
+    .page-title.category-title.subhead {
+        border-bottom: 1px solid #ddd;
+    }
+    .customDropDown{
+        margin-right: 0 !important;
+    }
+    .customDropDown span{
+        border:3px solid #c3c3c3;
+        padding: 5px 17px;
+    }
+    .customDropDown ul{
+        top:-3px;
+    }
+    .customDropDown ul li{
+        padding: 5px 17px;
+    }
+    .itemsWrapper .sortingwrapper{
+        margin: 0 15px 15px 0;
+    }
+
+    .itemsWrapper .itemList .button{
+        padding: 7px 10px;
+        width: 126px;
+    }
+
+
+}
+
+
+
