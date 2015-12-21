@@ -115,7 +115,7 @@ header .loginDetails a:hover{
     text-decoration: underline;
 }
 header .loginDetails a.top-link-phone{
-     text-decoration: none;
+    text-decoration: none;
 }
 header .loginDetails a:first-child {
     /* comment by neenu
@@ -131,7 +131,7 @@ header .loginDetails .search{
 }
 header .search input{
 
-   border: 0 none;
+    border: 0 none;
     border-radius: 30px;
     color: #333333;
     padding: 2px 30px 2px 9px;
@@ -198,7 +198,23 @@ header .search:after {
     z-index: 10;
 
 }
-.mainMenu .nav li ul.sub-nav { display: none; position: absolute; min-width: 100%; top: 100%; left: 0; background:rgba(256,256,256,0.92); margin: 0; padding:5px 0; box-shadow: 0 1px 5px -1px #888; -moz-box-shadow:0 1px 5px -1px #888; -webkit-box-shadow:0 1px 5px -1px #888; -o-box-shadow:0 1px 5px -1px #888;}
+.mainMenu .nav li ul.sub-nav { 
+    display: none; 
+    position: absolute; 
+    min-width: 100%; 
+    top: 100%; 
+    left: 0; 
+    background:rgba(256,256,256,0.92); 
+    margin: 0; 
+    padding:12px 0; 
+    border: 3px solid #d3d3d1;
+    border-top: 1px solid #d3d3d1;
+    /*box-shadow: 0 1px 5px -1px #888; 
+    -moz-box-shadow:0 1px 5px -1px #888; 
+    -webkit-box-shadow:0 1px 5px -1px #888; 
+    -o-box-shadow:0 1px 5px -1px #888;*/
+}
+
 .mainMenu .nav li ul.sub-nav li { display: block; float: 100%}
 /*edited by neenu
 for sub menu width changes
@@ -207,19 +223,22 @@ for sub menu width changes
     border-bottom: 0 none;
     color: #000;
     display: block;
-    padding: 5px 20px;
+    padding: 5px 25px;
     text-align: left;
     text-decoration: none;
     width: 100%;
+}
+.mainMenu .nav li ul.sub-nav li a:hover{
+    background:rgba(0,0,0,0.1);
 }
 .mainMenu .nav li a{
     padding:12px 44px;
 }
 .mainMenu .nav li a:hover { background: none;}
 .mainMenu .nav li.search-mobile {  border-bottom: 1px solid #fff;
-    color: #000;
-    display: none;
-    padding: 5px 5px 15px; }
+                                   color: #000;
+                                   display: none;
+                                   padding: 5px 5px 15px; }
 .mainMenu .nav li.search-mobile a { background: none !important; color:#fff}
 .mainMenu .nav li.search-mobile .search { float: left; width: 100%; position: relative}
 .mainMenu .nav li.search-mobile  input { width: 100%; }
@@ -448,7 +467,7 @@ a.button, button.button, input.button {
     margin: 0 0 15px 45px
 }
 .itemsWrapper .popupBox .customDropDown.pull-left {
-     margin: 15px 0 -15px 20px;
+    margin: 15px 0 -15px 20px;
 }
 .itemsWrapper .popupBox .customDropDown .dropContentBox > ul {
     top:auto;
@@ -608,14 +627,14 @@ a.button, button.button, input.button {
     cursor: pointer;
     position: relative;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fceabb+0,43b7db+20,e2469f+54,97d300+74,fbdf93+100 */
-background: #fceabb; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #fceabb 0%, #43b7db 20%, #e2469f 54%, #97d300 74%, #fbdf93 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#fceabb), color-stop(20%,#43b7db), color-stop(54%,#e2469f), color-stop(74%,#97d300), color-stop(100%,#fbdf93)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* IE10+ */
-background: linear-gradient(135deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #fceabb; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  #fceabb 0%, #43b7db 20%, #e2469f 54%, #97d300 74%, #fbdf93 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#fceabb), color-stop(20%,#43b7db), color-stop(54%,#e2469f), color-stop(74%,#97d300), color-stop(100%,#fbdf93)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #fceabb 0%,#43b7db 20%,#e2469f 54%,#97d300 74%,#fbdf93 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#fbdf93',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 }
 .colorBox a:after {
@@ -736,7 +755,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .loginRegister .bordered h4 { font-weight: bold; margin: 17px 0 20px}
 .customer-account-create .loginRegister .bordered h4 { margin:29px 0 0;}
 .loginRegister .bordered h4.m-t-0 { margin-top: 20px; margin-bottom: 0px;}
-.loginRegister .bordered .content { min-height: 310px; margin-bottom: 15px;}
+/*.loginRegister .bordered .content { min-height: 310px; margin-bottom: 15px;}*/
 
 .loginRegister .bordered .content label { display: block; margin:0}
 .loginRegister .loginBox .bordered .content label { margin: 20px 0 0 0}
@@ -744,7 +763,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .loginRegister .bordered  .select,
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
 .loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px; }
-.loginRegister .bordered .content label { display: block; padding:5px 0; margin:7px 0 -3px; font-weight:normal}
+.loginRegister .bordered .content label {
+     display: block;
+    font-weight: normal;
+    margin: 5px 0 0;
+    padding: 3px 0 1px;}
 .loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:8px 0 3px}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
 .loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;max-width:100%}
@@ -765,8 +788,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
     float: left; margin:7px 10px 0 0;
 }
 .loginRegister u.show { cursor: pointer;
-    display: inline-block !important;
-    margin: 0 0 0 5px;}
+                        display: inline-block !important;
+                        margin: 0 0 0 5px;}
 .loginRegister .bordered  select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -780,8 +803,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
 .customer-account-create .buttons-set .button { min-width: 100px; border-radius: 8px;}
 .customer-account-create .buttons-set p { margin: 0 0 -7px}
 .customer-account-create .loginRegister .bordered .input-box {
-    margin: 7px 0 -3px;
-    padding: 5px 0;
+    /*    margin: 7px 0 -3px;
+        padding: 5px 0;*/
+    margin: 0;
+    padding: 3px 0;
 }
 
 .custom-select { position:relative; float:left;}
@@ -829,31 +854,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', end
     line-height: 19px;
     text-align: left;
 }
- .dataTable > .row .product-name p {
+.dataTable > .row .product-name p {
     margin: 0;
 }
 .dataTable > .row > div h4 {margin: 0 ;
-text-align: left;}
+                            text-align: left;}
 .dataTable > .row > div img { max-width: 100%}
 .dataTable > .row.th.foot .cartButton { background: #b3b3b3; border: 1px solid #9d9d9d; padding: 5px 10px; color: #fff}
 .dataTable > .row.th.foot .cartButton:hover { background: #666666}
 .dataTable > .row.th.foot .cartButton.pull-right { margin-left: 10px;}
 .dataTable a.btn-remove {background: #ccc none repeat scroll 0 0;
-    border-radius: 100%;
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    margin: 0 auto;
-    text-align: center;
-    width: 30px;}
+                         border-radius: 100%;
+                         display: block;
+                         height: 30px;
+                         line-height: 30px;
+                         margin: 0 auto;
+                         text-align: center;
+                         width: 30px;}
 .dataTable .a.button,
 .dataTable button.button,
 .dataTable input.button { margin:10px 0;}
 .dataTable .input-text { background: #eee none repeat scroll 0 0;
-    max-width: 100%;
-    padding: 5px;
-    text-align: center;
-    width: 50px;}
+                         max-width: 100%;
+                         padding: 5px;
+                         text-align: center;
+                         width: 50px;}
 .myBag h4 { margin-top: 23px;}
 .totalBox  { background: #ebebeb; padding: 15px; margin: 15px 0;  border: 1px solid #c3c3c3; text-align: right;}
 .totalBox .button { margin:20px 0 0 0; width: 100%; text-align: center;}
@@ -913,16 +938,16 @@ footer .social a { margin-left: 5px;}
 .popClose
 { position:absolute; width: 100%; height: 100%; z-index: 10;}
 .popupBox { background: #fff none repeat scroll 0 0;
-    border: 3px solid #c7c7c7;
-    left: 50%;
-    margin: 60px 0 0 -478px;
-    padding: 20px;
-    position: absolute;
-    width: 948px;
-    z-index: 109;
-     -webkit-box-shadow:0 0 25px -14px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0 0 25px -14px rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 25px -14px rgba(0, 0, 0, 0.75);
+            border: 3px solid #c7c7c7;
+            left: 50%;
+            margin: 60px 0 0 -478px;
+            padding: 20px;
+            position: absolute;
+            width: 948px;
+            z-index: 109;
+            -webkit-box-shadow:0 0 25px -14px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 0 0 25px -14px rgba(0, 0, 0, 0.75);
+            box-shadow: 0 0 25px -14px rgba(0, 0, 0, 0.75);
 }
 .popupHead { position: absolute; right:26px; top: 12px; line-height:19px}
 .popupHead a { margin-left: 20px; font-size: 17px; color: #000000; opacity: 1}
@@ -982,8 +1007,8 @@ footer .social a { margin-left: 5px;}
 .account-create.register ul.form-list li .customer-name .field .input-box,
 .account-create.register ul.form-list li label,
 .account-create.register ul.form-list li .input-box{
-     width: 145px;
-     display: inline-block;
+    width: 145px;
+    display: inline-block;
 }
 
 .account-create.register .fieldset{
@@ -1114,58 +1139,58 @@ p.required { font-size:11px; text-align:right; color:#EB340A; }
 .align_center .dataTable .input-text{height: 30px; max-width: 100%; text-align: center;width: 30px;}
 .align_center .dataTable > .row{height:70px; vertical-align: middle; }
 .align_center .dataTable > .row+.foot{height:100%;}
- header .loginDetails .links { display: block !important; margin-top: 5px; position: relative;z-index: 100;}
- .align_center .dataTable .input-text{padding: 3px;font-size: 13px;}
- .about{margin-bottom: 30px;}
- .about h2{margin-top: 6px; font-size: 20px; font-family:"Lato"; font-weight: bold}
- .about h3{font-family: lato;
-    font-size: 20px;
-    margin-top: 0;}
- .about p{font-family:"Lato"; font-size: 1em;}
- .about p img{margin-top:1px;}
+header .loginDetails .links { display: block !important; margin-top: 5px; position: relative;z-index: 100;}
+.align_center .dataTable .input-text{padding: 3px;font-size: 13px;}
+.about{margin-bottom: 30px;}
+.about h2{margin-top: 6px; font-size: 20px; font-family:"Lato"; font-weight: bold}
+.about h3{font-family: lato;
+          font-size: 20px;
+          margin-top: 0;}
+.about p{font-family:"Lato"; font-size: 1em;}
+.about p img{margin-top:1px;}
 
 
- /*service page*/
- .service-subtitle{font-family: 'Lato'; font-size: 20px;}
- .itemList img {max-width: 100%; border: 0px solid #c3c3c3;}
+/*service page*/
+.service-subtitle{font-family: 'Lato'; font-size: 20px;}
+.itemList img {max-width: 100%; border: 0px solid #c3c3c3;}
 
- .popupBox-1{ background: #fff; border: 3px solid #c7c7c7; margin: 6% auto; padding: 20px; width: 770px; z-index: 109; -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.75);}
- .popupBox-1 .popupHead-1 h3{font: 20px/24px 'Lato'; float: left; width:93%; margin-top: 0px;}
- .popupBox-1 .popupHead-1 p{font-size: 15px;}
- .popupContent-1{border:1px solid #c7c7c7; height: 460px; padding: 0 12px; overflow-y: auto;}
- 
- 
-  .terms-popupclose-1 {float: right; margin: -20px -10px 0 0;}
+.popupBox-1{ background: #fff; border: 3px solid #c7c7c7; margin: 6% auto; padding: 20px; width: 770px; z-index: 109; -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+             -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+             box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.75);}
+.popupBox-1 .popupHead-1 h3{font: 20px/24px 'Lato'; float: left; width:93%; margin-top: 0px;}
+.popupBox-1 .popupHead-1 p{font-size: 15px;}
+.popupContent-1{border:1px solid #c7c7c7; height: 460px; padding: 0 12px; overflow-y: auto;}
 
 
-
-
-
- @media only screen and (max-width : 768px) {
-        .align_center .dataTable > .row{font-size:12px; line-height: 30px; }
-        .align_center{text-align: center; margin: 0 auto; width: 100%; padding: 0 10px;}
-        .align_center .dataTable .input-text{padding: 3px; font-size: 12px;}
-        .popupBox-1{ background: #fff; border: 3px solid #c7c7c7; margin:40% auto; padding: 2%; width:80%; z-index: 109;}
-        .popupContent-1{height: 300px; padding: 0 6px;}
-        .terms-popupclose-1 {float: right; margin: -5px 0px 0 0;}
-        .popupBox-1 .popupHead-1 p{font: 13px/20px 'Lato';  text-align: left;}
-        .popupContent-1 .subhead h2{font: 16px/20px 'Lato'; margin-top: 10px;}
-        .popupContent-1{font: 14px/20px 'Lato'; }
-        header .search input{margin-left: 0px;}
+.terms-popupclose-1 {float: right; margin: -20px -10px 0 0;}
 
 
 
 
-    }
+
+@media only screen and (max-width : 768px) {
+    .align_center .dataTable > .row{font-size:12px; line-height: 30px; }
+    .align_center{text-align: center; margin: 0 auto; width: 100%; padding: 0 10px;}
+    .align_center .dataTable .input-text{padding: 3px; font-size: 12px;}
+    .popupBox-1{ background: #fff; border: 3px solid #c7c7c7; margin:40% auto; padding: 2%; width:80%; z-index: 109;}
+    .popupContent-1{height: 300px; padding: 0 6px;}
+    .terms-popupclose-1 {float: right; margin: -5px 0px 0 0;}
+    .popupBox-1 .popupHead-1 p{font: 13px/20px 'Lato';  text-align: left;}
+    .popupContent-1 .subhead h2{font: 16px/20px 'Lato'; margin-top: 10px;}
+    .popupContent-1{font: 14px/20px 'Lato'; }
+    header .search input{margin-left: 0px;}
+
+
+
+
+}
 @media only screen and (max-width : 360px) {
-        .popupContent-1{height: 150px; padding: 0 6px;}
-        .popupContent-1 .subhead h2{font: 13px/18px 'Lato'; letter-spacing: 0px;}
+    .popupContent-1{height: 150px; padding: 0 6px;}
+    .popupContent-1 .subhead h2{font: 13px/18px 'Lato'; letter-spacing: 0px;}
 
 }
 @media only screen and (max-width : 320px) {
-        .popupBox-1{margin:35% auto;}
+    .popupBox-1{margin:35% auto;}
 
 
 }
@@ -1183,7 +1208,7 @@ ul.messages li{
 ul.messages li.error-msg > ul > li{text-align:center; padding:5px;background:#FAEBE7;}
 ul.messages li.error-msg > ul > li span{padding-left:25px;background:url("../images/errorico.png") no-repeat left center;width:20px; height:20px;}
 .dropContentBox ul li ul{
-margin-left:10px;
+    margin-left:10px;
 }
 .step-title{
     background-color: #ccc;
@@ -1201,12 +1226,12 @@ margin-left:10px;
 .verify{
     margin: 20px 0 6px;
 }
-.login-info{
+/*.login-info{
     min-height:165px!important;
-}
+}*/
 
 .checkout-onepage-index{
-font-weight: 100;
+    font-weight: 100;
 }
 .checkout-onepage-index .page-title {
 
@@ -1270,7 +1295,7 @@ font-weight: 100;
 }
 
 .checkout-onepage-index .opc p.back-link {
-     background: #fff none repeat scroll 0 0;
+    background: #fff none repeat scroll 0 0;
     border: 1px solid #d8d8d8;
     float: left;
     margin: -5px 0 0;
@@ -1470,15 +1495,15 @@ font-weight: 100;
 
 }
 .checkout-onepage-index .opc .qtyBox input[type="text"]{
-  float: left;
-  width: 30px;
-  margin-right: 10px;
-  
+    float: left;
+    width: 30px;
+    margin-right: 10px;
+
 }
 
 .checkout-onepage-index .opc .qtyBox .qty-Head {
     padding-bottom:10px;
-    
+
 }
 .checkout-onepage-index .buttons-set p {
     margin-bottom: 0px;
@@ -1489,14 +1514,14 @@ font-weight: 100;
     display: none;
 }*/
 .opc .step-title a {
-   text-decoration: none; outline: none !important;color: #000; cursor: default;
-       
+    text-decoration: none; outline: none !important;color: #000; cursor: default;
+
 }
 #inputDatetator1,
 #inputDatetator2 {
-        width: 300px;
-        padding: 8px 16px;
-        box-sizing: border-box;
+    width: 300px;
+    padding: 8px 16px;
+    box-sizing: border-box;
 }
 .methoddatepicker label{
     margin-right: 5px;
@@ -1526,3 +1551,13 @@ font-weight: 100;
     font-size: 12px;
     margin: 0;
 }
+/*All.css*/
+.loginRegister .bordered .content {
+    margin-bottom: 30px;
+    /* min-height: 265px;*/
+}
+.login-info{
+    /*min-height: 191px!important*/
+}
+
+

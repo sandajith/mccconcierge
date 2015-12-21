@@ -571,11 +571,16 @@
     .itemsWrapper .customDropDown.pull-right span{
         padding: 5px 13px;
     }
+    .checkout-onepage-index .buttons-set p{
+        margin-bottom: 5px;
+    }
+    .dataTable > .row .product-name{
+        font-size: 13px;
+        line-height: 16px;
+    }
 
     
 
 
 }
-
-
-
+.Growler{width: auto!important;}
