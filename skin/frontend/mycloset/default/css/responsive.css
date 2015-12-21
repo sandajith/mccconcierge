@@ -495,7 +495,8 @@
         padding:4px 0; 
     }
     header .loginDetails{
-        padding-right: 6px;
+        padding-right: 5px;
+        padding-left: 5px;
     }
     header .loginDetails a{
         margin: 1px 2px 0;
@@ -513,12 +514,25 @@
         line-height: 23px;
     }
     .std .intro a.button{
-        width:160px;
+        width:180px;
         padding: 7px 10px;
+    }
+    .homeGrid > div{
+        padding: 0 62px;
     }
     .homeGrid h4{
         text-align: center;
     }
+
+    .subhead h2 {
+        margin-bottom: 28px;
+        margin-top: 32px;
+        padding: 0;
+    }
+    .itemList b{
+        margin-bottom: 25px;
+    }
+
     .about p {
         font-family: "Lato";
         font-size: 15px;
@@ -534,12 +548,14 @@
     .customDropDown span{
         border:3px solid #c3c3c3;
         padding: 5px 17px;
+        margin: 0 5px;
     }
     .customDropDown ul{
         top:-3px;
+        right: 5px;
     }
     .customDropDown ul li{
-        padding: 5px 17px;
+        padding: 5px 13px;
     }
     .itemsWrapper .sortingwrapper{
         margin: 0 15px 15px 0;
@@ -547,8 +563,16 @@
 
     .itemsWrapper .itemList .button{
         padding: 7px 10px;
-        width: 126px;
+        min-width: 126px;
     }
+    .itemsWrapper .customDropDown.pull-right{
+        margin: 0!important;
+    }
+    .itemsWrapper .customDropDown.pull-right span{
+        padding: 5px 13px;
+    }
+
+    
 
 
 }

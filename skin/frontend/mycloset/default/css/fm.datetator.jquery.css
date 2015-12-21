@@ -144,6 +144,7 @@
 	font-weight: normal;
 	font-size: 13px;
 	line-height: 1.5rem;
+        display: none;
 }
 .datetator_day_header {
 	text-align: center;
@@ -163,6 +164,7 @@
 	font-weight: normal;
 	font-size: 13px;
 	line-height: 1.5rem;
+         display: none;
 }
 .datetator_day {
 	text-align: center;
