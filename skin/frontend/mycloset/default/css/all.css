@@ -755,8 +755,7 @@ a.button, button.button, input.button {
 .loginRegister .bordered h4 { font-weight: bold; margin: 17px 0 20px}
 .customer-account-create .loginRegister .bordered h4 { margin:29px 0 0;}
 .loginRegister .bordered h4.m-t-0 { margin-top: 20px; margin-bottom: 0px;}
-/*.loginRegister .bordered .content { min-height: 310px; margin-bottom: 15px;}*/
-
+.loginRegister .bordered .content { margin-bottom: 30px;}
 .loginRegister .bordered .content label { display: block; margin:0}
 .loginRegister .loginBox .bordered .content label { margin: 20px 0 0 0}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 250px;}
@@ -1551,13 +1550,8 @@ ul.messages li.error-msg > ul > li span{padding-left:25px;background:url("../ima
     font-size: 12px;
     margin: 0;
 }
-/*All.css*/
-.loginRegister .bordered .content {
-    margin-bottom: 30px;
-    /* min-height: 265px;*/
-}
-.login-info{
-    /*min-height: 191px!important*/
-}
+
+
+
 
 
