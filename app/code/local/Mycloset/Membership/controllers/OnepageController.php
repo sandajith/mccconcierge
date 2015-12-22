@@ -45,7 +45,7 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
                     if ($dateArray > 0) {
 //                        date_default_timezone_set('UTC');
                         date_default_timezone_set('America/New_York');
-                      echo 'flatrate_flatrate' .$shipping_date = date('Y-m-d', strtotime(trim($dateArray[0])));
+                      $shipping_date = date('Y-m-d', strtotime(trim($dateArray[0])));
                     }
                     break;
                 case 'ups_1DA':
