@@ -116,6 +116,7 @@ header .loginDetails a:hover{
 }
 header .loginDetails a.top-link-phone{
     text-decoration: none;
+    cursor: default;
 }
 header .loginDetails a:first-child {
     /* comment by neenu
@@ -204,7 +205,7 @@ header .search:after {
     min-width: 100%; 
     top: 100%; 
     left: 0; 
-    background:rgba(256,256,256,0.92); 
+    background:rgba(256,256,256,1); 
     margin: 0; 
     padding:12px 0; 
     border: 3px solid #d3d3d1;
@@ -774,7 +775,7 @@ a.button, button.button, input.button {
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
 .loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;max-width:100%}
 .loginRegister .bordered  select,
-.loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:1px 5px; margin-bottom:0px; height: 26px;}
+.loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:0px 5px 3px; margin-bottom:0px; height: 26px;}
 
 .loginRegister .bordered p.required{ bottom: -2px; color: #000; font-size: 15px; margin: 0; position: absolute; right: -3px;}
 .loginRegister .bordered .content{position:relative;}
@@ -1040,6 +1041,12 @@ footer .social a { margin-left: 5px;}
     border-radius: 3px;
     padding: 10px;
     width: 100%;
+}
+.input-text-forget {
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 0 10px;
+    width: 310px;
 }
 
 .buttons-set .button { margin:10px 0}
@@ -1557,8 +1564,36 @@ ul.messages li.error-msg > ul > li span{padding-left:25px;background:url("../ima
 
 h2.infotitles {
     margin-top: 30px;
-    margin-bottom: 37px;
+    margin-bottom: 20px;
     text-align: left;
+}
+.forgot-form .buttons-set p.required{
+    margin: 0px;
+    line-height: 18px;
+}
+p.back-link{
+    margin: 11px 0;
+}
+.forgot-form .buttons-set,
+.reset_pswd .buttons-set{
+    width:310px;
+}
+.forgot-form .input-text,
+.reset_pswd .input-text{
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 0 10px;
+    width: 310px;
+}
+.forgot-form .buttons-set .button {
+    margin: 0 0 10px;
+}
+
+.reset_pswd .field {
+    margin-top: 5px;
+}
+.reset_pswd .form-list li label{
+    margin-bottom: 2px;
 }
 
 

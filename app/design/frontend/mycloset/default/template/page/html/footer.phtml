@@ -114,3 +114,15 @@
         </div>
     </div>
 </footer>
+<script>
+var viewport = document.viewport.getDimensions(); // Gets the viewport as an object literal
+var width = viewport.width; // Usable window width
+if(width >320)
+{
+$$('a.top-link-phone')[0].href = '#';
+}
+else
+{
+$$('a.top-link-phone')[0].href = 'tel:917.684.0609';
+}
+    </script>
