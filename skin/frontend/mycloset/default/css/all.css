@@ -1585,10 +1585,14 @@ p.back-link{
     padding: 0 10px;
     width: 310px;
 }
-.forgot-form .buttons-set .button {
+.forgot-form .buttons-set .button,
+.reset_pswd .buttons-set .button  {
     margin: 0 0 10px;
+    padding: 10px 30px;
 }
-
+.returned_MC .button{
+    margin-top: 28px;
+}
 .reset_pswd .field {
     margin-top: 5px;
 }
