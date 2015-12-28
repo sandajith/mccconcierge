@@ -237,7 +237,7 @@ for sub menu width changes
 }
 .mainMenu .nav li a:active,
 .mainMenu .nav li a:focus,
-.mainMenu .nav li a:hover { background: #d9d9d9;}
+.mainMenu .nav li a:hover { background: #d9d9d9; color:#000;}
 
 .mainMenu .nav li.search-mobile {  border-bottom: 1px solid #fff;
                                    color: #000;
@@ -774,8 +774,8 @@ a.button, button.button, input.button {
 .loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:8px 0 3px}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
 .loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;max-width:100%}
-.loginRegister .bordered  select,
 .loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:0px 5px 3px; margin-bottom:0px; height: 26px;}
+.loginRegister .bordered  select{ border: 1px solid #dcdcdc; width: 250px; border-radius: 0; line-height: 20px; height: 26px; float: left; padding-bottom: 1px;}
 
 .loginRegister .bordered p.required{ bottom: -2px; color: #000; font-size: 15px; margin: 0; position: absolute; right: -3px;}
 .loginRegister .bordered .content{position:relative;}
