@@ -223,6 +223,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         } else {
             $session->setBeforeAuthUrl($this->_getRefererUrl());
         }
+        
         $this->_redirect('*/*/logoutSuccess');
     }
 
@@ -231,6 +232,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
      */
     public function logoutSuccessAction() {
         $this->loadLayout();
+         $this->getLayout()->getBlock('head')->setTitle($this->__('Logout'));
         $this->renderLayout();
     }
 
