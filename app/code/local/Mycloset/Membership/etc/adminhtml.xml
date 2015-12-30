@@ -23,10 +23,10 @@
     <menu>
         <customer>
             <children>
-                <membership translate="title">
-                    <title>Additional services</title>
-                    <sort_order>200</sort_order>
-                    <action>membership/adminhtml_membership/index</action>
+                <membership translate="title">                  
+                    <title>Membership Plans</title>
+                    <sort_order>200</sort_order>                 
+                    <action>adminhtml/membership/</action>
                 </membership>
             </children>   
         </customer>
