@@ -4,7 +4,7 @@ class Mycloset_Membership_Block_Adminhtml_Membership_Edit extends Mage_Adminhtml
 
     public function __construct() {
         parent::__construct();
-        $this->_objectId = 'membership_id';
+        $this->_objectId = 'id';
         $this->_blockGroup = 'membership';
         $this->_controller = 'adminhtml_membership';
         $this->_mode = 'edit';

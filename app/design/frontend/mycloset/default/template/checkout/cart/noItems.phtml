@@ -24,13 +24,15 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="page-title">
-     <h1><?php echo $this->__('MyBag is Empty') ?></h1>
+<div class="subhead">
+    <h2 class="infotitles"><?php echo $this->__('YOUR BAG IS EMPTY') ?></h2>
 </div>
 <div class="cart-empty">
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php echo $this->getChildHtml('checkout_cart_empty_widget'); ?>
-  <p><?php echo $this->__('You have no items in your MyBag.') ?></p>
-    <p><?php echo $this->__('Click <a href="%s">here</a> to continue shopping.', $this->getContinueShoppingUrl()) ?></p>
-    <?php echo $this->getChildHtml('shopping.cart.table.after'); ?>
+    <p><?php echo $this->__('You have no items in your MyBag.</br> Please click below to return to your closet') ?></p>
+     <button type="button" class="button" title="<?php echo $this->__('RETURN TO MY CLOSET') ?>" onclick="window.location='<?php echo $this->getContinueShoppingUrl() ?>'"><span><span><?php echo $this->__('RETURN TO MY CLOSET') ?></span></span></button>
+        <?php // echo $this->__('Click <a href="%s">here</a> to continue shopping.', $this->getContinueShoppingUrl()) ?>
+    <?php // echo $this->getChildHtml('shopping.cart.table.after'); ?>
+
 </div>
