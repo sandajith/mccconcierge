@@ -74,7 +74,7 @@ class Mycloset_Membership_Adminhtml_MembershipController extends Mage_Adminhtml_
      * Delete membership 
      */
     public function deleteAction() {
-        $membershipId = $this->getRequest()->getParam('id');
+        $membershipId = $this->getRequest()->getParam('membership_id');
         if ($membershipId) {
             try {
                 $membership = Mage::getModel('membership/membership');
@@ -123,6 +123,8 @@ class Mycloset_Membership_Adminhtml_MembershipController extends Mage_Adminhtml_
             $params = $this->getRequest()->getPost();
             $get = $this->getRequest()->getParams();
             $id = $params['membership_id'];
+           
+
             $edit = false;
             if ($id) {
                 $membership = Mage::getModel('membership/membership')
@@ -136,17 +138,18 @@ class Mycloset_Membership_Adminhtml_MembershipController extends Mage_Adminhtml_
 
 
 
-            $membership
-                    ->setMembershipType($params['membership_type'])
-                    ->setMembershipPrice($params['membership_price'])
-                    ->save();
+            $membership->setMembershipType($params['membership_type'])
+                    ->setMembershipPrice($params['membership_price']);
+               $lastinsert_id=   $membership ->save()->getId();
+            
             $this->_getSession()->addSuccess($this->__('The Membership has been successfully ' . $action));
         } catch (Exception $e) {
             Mage::logException($e);
             $this->_getSession()->addError($e->getMessage());
         }
         if ($get['back']) {
-            $this->_redirect('*/*/' . $get['back'], array('_current' => true, 'id' => $id));
+            $this->_redirect('*/*/' . $get['back'], array('_current' => true, 'membership_id' => $lastinsert_id));
+         
         } else {
             $this->_redirect('*/*/index');
         }

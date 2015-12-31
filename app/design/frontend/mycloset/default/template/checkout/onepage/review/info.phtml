@@ -25,6 +25,15 @@
  */
 ?>
 <?php
+//$model2 = Mage::getModel('membership/holiday');
+// $collection = Mage::getModel('membership/holiday')
+//           ->getCollection();
+//$keys = array_keys($collection->getFirstItem()->getData());
+//foreach ($keys as $key){ // loop through all the keys (fname, lname, email... 
+//    foreach ($collection as $obj){//loop throught each object 
+//        print_r($obj->getData($key));//get the value for a speficic key. 
+//    } 
+//}
 $prefix = Mage::getConfig()->getTablePrefix();
 $resource = Mage::getSingleton('core/resource');
 $readConnection = $resource->getConnection('core_read');
@@ -37,8 +46,8 @@ for ($i = $current_year; $i <= $year_upto; $i++) {
 
     foreach ($results as $holiday) {
 
-
-        $alldates[] = date('Y-m-d', strtotime($holiday['holiday_string'] . ' ' . $i));
+       
+     $alldates[] = date('Y-m-d', strtotime($holiday['holiday_string'] . ' ' . $i));
     }
 }
 $imploded_data = implode(',', $alldates);
