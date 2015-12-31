@@ -763,8 +763,8 @@ a.button, button.button, input.button {
 .loginRegister .bordered .content label { display: block; margin:0}
 .loginRegister .loginBox .bordered .content label { margin: 20px 0 0 0}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 250px;}
-.loginRegister .bordered  .select,
-.loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
+.loginRegister .bordered .select,
+.loginRegister .bordered .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
 .loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px; }
 .loginRegister .bordered .content label {
      display: block;
@@ -773,13 +773,13 @@ a.button, button.button, input.button {
     padding: 3px 0 1px;}
 .loginRegister .loginBox .bordered .content label { margin:-4px 0 0; padding:8px 0 3px}
 .loginRegister .bordered .content .txt { border: 1px solid #dcdcdc; width: 265px;}
-.loginRegister .loginBox .bordered .content .txt { height: 25px; margin-bottom: 11px;max-width:100%}
-.loginRegister .bordered  .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:0px 5px 3px; margin-bottom:0px; height: 26px;}
+.loginRegister .loginBox .bordered .content .txt { height: 26px; margin-bottom: 11px;max-width:100%; padding:0 5px;}
+.loginRegister .bordered .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:0px 5px; margin-bottom:0px; height: 26px;}
 .loginRegister .bordered  select{ border: 1px solid #dcdcdc; width: 250px; border-radius: 0; line-height: 20px; height: 26px; float: left; padding-bottom: 1px;}
 
 .loginRegister .bordered p.required{ bottom: -2px; color: #000; font-size: 15px; margin: 0; position: absolute; right: -3px;}
 .loginRegister .bordered .content{position:relative;}
-.loginRegister .bordered  .wide .input-text {margin-bottom: 5px;}
+.loginRegister .bordered .wide .input-text {margin-bottom: 5px;}
 
 
 .loginRegister .form-list label.required em { float: none; color: #000000;}
@@ -790,9 +790,11 @@ a.button, button.button, input.button {
 .loginRegister label input[type="checkbox"]{
     float: left; margin:7px 10px 0 0;
 }
-.loginRegister u.show { cursor: pointer;
-                        display: inline-block !important;
-                        margin: 0 0 0 5px;}
+.loginRegister u.show {
+     cursor: pointer;
+     display: inline-block !important;
+     margin: 0 0 0 5px;
+ }
 .loginRegister .bordered  select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -964,10 +966,10 @@ footer .social a { margin-left: 5px;}
 .popupContent .details .signature { font-size:17px;}
 .popupContent .details .tags { margin:10px 0 20px 0; display: block; width: 100%; float: left;}
 .popupContent .details .tags b { display: block; margin-bottom: 5px}
-.popupContent .details .tags span { background:#ada4a5; height: 25px; color: #ffffff; font-size: 15px; border-radius: 30px; padding:1px 15px; cursor: pointer; float: left; margin: 0 10px 10px 0; box-shadow:0 0 5px 0 #9d9495; line-height:20px;}
+.popupContent .details .tags span { background:#ada4a5; height: 23px; color: #ffffff; font-size: 15px; border-radius: 30px; padding:1px 15px; cursor: pointer; float: left; margin: 0 10px 10px 0; box-shadow:0 0 5px 0 #9d9495; line-height:20px;}
 .popupContent .details .tags span input {float:left; border: 0 none; border-radius: 20px; color: #333; height: 21px; margin:0 -13px; padding: 0 10px; width: 89px;}
 .popupContent .details .tags span i { float: right; font-size: 12px; font-style: normal; margin: 0px 0 0 15px; font-weight: bold;}
-.popupContent .details .tags span a { color: #ffffff;  line-height: 10px;font-style: normal;}
+.popupContent .details .tags span a { color: #ffffff; line-height: 10px;font-style: normal;}
 .popupContent .details .tags span.add i { margin: 0; padding:1px; font-size: 14px;}
 .popupContent .details .tags span.add-text{display: none}
 .popupContent .details .tags span.tagpluse i{margin:0;}
