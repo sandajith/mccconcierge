@@ -968,8 +968,22 @@ footer .social a { margin-left: 5px;}
 .popupContent .details .tags b { display: block; margin-bottom: 5px}
 .popupContent .details .tags span { background:#ada4a5; height: 23px; color: #ffffff; font-size: 15px; border-radius: 30px; padding:1px 15px; cursor: pointer; float: left; margin: 0 10px 10px 0; box-shadow:0 0 5px 0 #9d9495; line-height:20px;}
 .popupContent .details .tags span input {float:left; border: 0 none; border-radius: 20px; color: #333; height: 21px; margin:0 -13px; padding: 0 10px; width: 89px;}
-.popupContent .details .tags span i { float: right; font-size: 12px; font-style: normal; margin: 0px 0 0 15px; font-weight: bold;}
-.popupContent .details .tags span a { color: #ffffff; line-height: 10px;font-style: normal;}
+.popupContent .details .tags span i {
+    float: right;
+    font-size: 12px;
+    font-style: normal;
+    margin: 0px 0 0 15px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.popupContent .details .tags span a {
+    color: #ffffff;
+    line-height: 20px;
+    font-style: normal;
+    float: left;
+    font-size: 13px;
+}
 .popupContent .details .tags span.add i { margin: 0; padding:1px; font-size: 14px;}
 .popupContent .details .tags span.add-text{display: none}
 .popupContent .details .tags span.tagpluse i{margin:0;}
