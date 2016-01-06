@@ -25,18 +25,19 @@ class Mycloset_Membership_Block_Membership_Popup extends Mage_Catalog_Block_Prod
         $product['ThumbnailUrl'] = $model->getThumbnailUrl(); //product's thumbnail image url
         $product['color'] = $model->getAttributeText('color'); //product's thumbnail image url
         $product['sku'] = $model->getSku();
-         
-                                 
-                            
         $product['size'] = $model->getAttributeText('size'); //product's thumbnail image url      
-                 if($product['size']==''){
-                                         $product['size']=' Not Applicable';
-                                   }else{
-                                      $product['size']; 
-                                   }  
+        if ($product['size'] == '') {
+            $product['size'] = ' Not Applicable';
+        } else {
+            $product['size'];
+        }
         $product['designer'] = $model->getAttributeText('designer'); //product's thumbnail image url
         $product['product_status'] = $model->getAttributeText('product_status'); //product's thumbnail image url
-        $product['season'] = $model->getAttributeText('season'); //product's thumbnail image url
+        $product['season_select'] = $model->getAttributeText('season'); //product's thumbnail image url
+        $attribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'season');
+        if ($attribute->usesSource()) {
+             $product['season'] = $attribute->getSource()->getAllOptions(false);
+        }
         $product['shipped_to'] = $model['shipped_to']; //product's thumbnail image url      
 //       echo $cats = $model->load($product_id)->getCategoryIds();
 //        foreach ($cats as $categoryId) {
