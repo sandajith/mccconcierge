@@ -963,9 +963,9 @@ footer .social a { margin-left: 5px;}
 .popupContent  h2 { font: normal 27px 'Lato'; margin:0px 0 10px 0}/*20px*/
 .popupContent .details .button { width: 227px; max-width: 100%; margin:20px 0; padding: 8px 15px}
 .popupContent .details .colorBox { margin-bottom: 10px;}
-.popupContent .details .signature { font-size:17px;}
+.popupContent .details .signature { font-size:17px; font-style: normal;}
 .popupContent .details .tags { margin:10px 0 20px 0; display: block; width: 100%; float: left;}
-.popupContent .details .tags b { display: block; margin-bottom: 5px}
+.popupContent .details .tags b { display: block; margin-bottom: 5px; font-style: normal;}
 .popupContent .details .tags span { background:#ada4a5; height: 23px; color: #ffffff; font-size: 15px; border-radius: 30px; padding:1px 15px; cursor: pointer; float: left; margin: 0 10px 10px 0; box-shadow:0 0 5px 0 #9d9495; line-height:20px;}
 .popupContent .details .tags span input {float:left; border: 0 none; border-radius: 20px; color: #333; height: 21px; margin:0 -13px; padding: 0 10px; width: 89px;}
 .popupContent .details .tags span i { float: right; font-size: 12px; font-style: normal; margin: 0px 0 0 15px; font-weight: bold;}
@@ -1601,7 +1601,10 @@ p.back-link{
 .reset_pswd .form-list li label{
     margin-bottom: 2px;
 }
-
+/*edited by neenu*/
+.size > b {
+    font-style: normal;
+}
 
 
 
