@@ -295,7 +295,9 @@ foreach ($cats as $category_id) {
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
     jqCustom(document).ready(function () {
-
+        jqCustom('.getcatid').click(function () {
+            var catid = jqCustom(this).attr('rel');
+        });
         //slider change images of product
         jqCustom('.getcatid').click(function () {
             var catid = jqCustom(this).attr('rel');
@@ -308,7 +310,14 @@ foreach ($cats as $category_id) {
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
-
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
                 }
             });
         });
@@ -325,7 +334,14 @@ foreach ($cats as $category_id) {
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
-
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
                 }
             });
         });
@@ -341,7 +357,14 @@ foreach ($cats as $category_id) {
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
-
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
                 }
             });
         });
@@ -357,7 +380,14 @@ foreach ($cats as $category_id) {
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
-
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
                 }
             });
         });
@@ -373,7 +403,14 @@ foreach ($cats as $category_id) {
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
-
+                    setTimeout(function () {
+                        jqCustom('.flexsliderPopup').flexslider({
+                            animation: "slide",
+                            animationLoop: false,
+                            itemWidth: 150,
+                            itemMargin: 5
+                        });
+                    }, 100);
                 }
             });
         });
@@ -485,7 +522,7 @@ foreach ($cats as $category_id) {
             jqCustom(".popupWrapper").fadeOut();
             jqCustom(".popupBox").empty();
         });
-       jqCustom("select").blur(function () {
+        jqCustom("select").blur(function () {
             var seasonnames = new Array();
             var i = 0;
             var productid = jqCustom(this).attr('attrproduct');
@@ -509,7 +546,16 @@ foreach ($cats as $category_id) {
             });
         });
     });
-
+    jqCustom(window).resize(function () {
+        var footHeight = jqCustom("footer").outerHeight();
+        jqCustom(".footFix").css({"paddingBottom": footHeight + "px"})
+        jqCustom('.flexsliderPopup').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            itemWidth: 150,
+            itemMargin: 5
+        });
+    });
     jqCustom(window).load(function () {
         jqCustom('.flexslider').flexslider({
             animation: "slide",
@@ -518,12 +564,4 @@ foreach ($cats as $category_id) {
             itemMargin: 5
         });
     });
-                     /*   setTimeout(function () {
-                        jqCustom('.flexsliderPopup').flexslider({
-                            animation: "slide",
-                            animationLoop: false,
-                            itemWidth: 150,
-                            itemMargin: 5
-                        });
-                    }, 100);*/
 </script>
