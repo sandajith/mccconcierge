@@ -25,7 +25,7 @@ foreach ($cats as $category_id) {
     <div class="row productdata" id="productdata">
         <div class="col-sm-12 visible-xs center-align">
             <h2><?php echo $catname; ?></h2>
-            <p class="signature visible-xs"><?php echo $p['designer']; ?></p>
+            <p class="signature visible-xs" style="font-style: normal;"><?php echo $p['designer']; ?></p>
         </div>
         <div class="col-sm-7 image " style="min-height: 200px;">
             <img alt="" src="<?php echo $p['ImageUrl']; ?>"/>                                                                                
@@ -38,12 +38,12 @@ foreach ($cats as $category_id) {
             <div class="colorBox">
                 <a style=" background:<?php echo $p['color']; ?>"></a>
             </div>
-            <div class="size"><i>Size <?php echo $p['size']; ?></i></div>
+            <div class="size"><b>Size:</b> <i> <?php echo $p['size']; ?></i></div>
 
 
             <!--season details-->
-            <div class="season"> <b>Seasons</b>
-                <select  attrproduct="<?php echo $rel_product; ?>" style=" width: 200px; height: auto;" id="season" class="season123"  multiple="multiple" size="10" name="product[season][]">
+            <div class="season" style="display:inline-block; vertical-align:top; overflow:hidden;font-style: normal; "> <b>Seasons</b></br>
+                <div style="border: 2px solid #e4e4e4;width: 95px; overflow: hidden;"> <select  attrproduct="<?php echo $rel_product; ?>" style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
                     <?php
                     foreach ($p['season'] as $key => $value) {
                         ?> 
@@ -54,13 +54,13 @@ foreach ($cats as $category_id) {
                            value="<?php echo $value['value'] ?>"><?php echo $value['label'] ?>
                         </option>
                     <?php } ?>
-                </select>
+                </select></div>
             </div>
 
 
             <!--  tag details   -->
             <div class="tags">
-                <b>Tags</b>
+                <b>Tags:</b>
                 <div>
                     <?php
                     $resource = Mage::getSingleton('core/resource');
