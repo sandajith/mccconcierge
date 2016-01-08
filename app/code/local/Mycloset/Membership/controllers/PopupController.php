@@ -76,19 +76,43 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         }
                         var seasons = '';
                         jqCustom('#season').html(seasons);
-                        for (var i = 0; i <= 4; i++) {
+                        for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
                                 var selected = 'selected="selected"';
                             } else {
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season123').html(seasons);
+                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
+                        jqCustom("select").blur(function () {
+                            var seasonnames = new Array();
+                            var i = 0;
+                            var productid = jqCustom(this).attr('attrproduct');
+                            jqCustom("select option:selected").each(function () {
+                                seasonnames[i] = jqCustom(this).val();
+
+                                i++;
+
+                            });
+                            jqCustom.ajax({
+                                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/seasoninsert",
+                                type: 'post',
+                                data: {
+                                    seasonnames: seasonnames,
+                                    productid: productid
+                                },
+                                success: function () {
+                                }
+                            });
+                        });
+                        var tag3 = '';
+                        for (var i = 0; i < data['tag_select'].length; i++) {
+                            tag3 = tag3 + '<span class="tagitem" id="tagitem"><a>' + data['tag_select'][i] + '</a><i class="tagclose" pro="' + data['id'] + '" tagval="' + data['tag_select'][i] + '">x</i> </span>';
+                        }
+                        jqCustom('.tagappend').html(tag3 + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span>');
                         jqCustom('.inputz').blur(function (e) {
                             var tag = jqCustom('.inputz').val();
-
                             if (tag != null) {
                                 var productid = jqCustom(this).attr('pro');
                                 jqCustom.ajax({
@@ -99,18 +123,21 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                         productid: productid
                                     },
                                     success: function (data1) {
-                                        var data = parseInt(data1);
+        //                                        alert(data1);
+        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
-                                            jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                                            jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
                                             jqCustom("input.inputz").val('');
                                             jqCustom(".tagclose").on("click", function () {
                                                 var tag1233 = jqCustom(this).attr("tagval");
+                                                var productid = jqCustom(this).attr('pro');
                                                 jqCustom.ajax({
                                                     url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
                                                     type: 'post',
                                                     data: {
-                                                        tag: tag1233
+                                                        tag: tag1233,
+                                                        productid: productid
                                                     },
                                                     success: function () {
                                                     }
@@ -214,19 +241,43 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                        var seasons = '';
+                      var seasons = '';
                         jqCustom('#season').html(seasons);
-                        for (var i = 0; i <= 4; i++) {
+                        for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
                                 var selected = 'selected="selected"';
                             } else {
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season123').html(seasons);
+                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
+                        jqCustom("select").blur(function () {
+                            var seasonnames = new Array();
+                            var i = 0;
+                            var productid = jqCustom(this).attr('attrproduct');
+                            jqCustom("select option:selected").each(function () {
+                                seasonnames[i] = jqCustom(this).val();
 
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
+                                i++;
+
+                            });
+                            jqCustom.ajax({
+                                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/seasoninsert",
+                                type: 'post',
+                                data: {
+                                    seasonnames: seasonnames,
+                                    productid: productid
+                                },
+                                success: function () {
+                                }
+                            });
+                        });
+                        var tag3 = '';
+                        for (var i = 0; i < data['tag_select'].length; i++) {
+                            tag3 = tag3 + '<span class="tagitem" id="tagitem"><a>' + data['tag_select'][i] + '</a><i class="tagclose" tagval="' + data['tag_select'][i] + '">x</i> </span>';
+                        }
+                        jqCustom('.tagappend').html(tag3 + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span>');
                         jqCustom('.inputz').blur(function (e) {
                             var tag = jqCustom('.inputz').val();
                             if (tag != null) {
@@ -239,10 +290,10 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                         productid: productid
                                     },
                                     success: function (data1) {
+        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
-                                            var data = parseInt(data1);
-                                            jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                                            jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
                                             jqCustom("input.inputz").val('');
                                             jqCustom(".tagclose").on("click", function () {
                                                 var tag1233 = jqCustom(this).attr("tagval");
@@ -354,19 +405,43 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                        var seasons = '';
+                    var seasons = '';
                         jqCustom('#season').html(seasons);
-                        for (var i = 0; i <= 4; i++) {
+                        for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
                                 var selected = 'selected="selected"';
                             } else {
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season123').html(seasons);
+                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
+                        jqCustom("select").blur(function () {
+                            var seasonnames = new Array();
+                            var i = 0;
+                            var productid = jqCustom(this).attr('attrproduct');
+                            jqCustom("select option:selected").each(function () {
+                                seasonnames[i] = jqCustom(this).val();
 
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
+                                i++;
+
+                            });
+                            jqCustom.ajax({
+                                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/seasoninsert",
+                                type: 'post',
+                                data: {
+                                    seasonnames: seasonnames,
+                                    productid: productid
+                                },
+                                success: function () {
+                                }
+                            });
+                        });
+                        var tag3 = '';
+                        for (var i = 0; i < data['tag_select'].length; i++) {
+                            tag3 = tag3 + '<span class="tagitem" id="tagitem"><a>' + data['tag_select'][i] + '</a><i class="tagclose" tagval="' + data['tag_select'][i] + '">x</i> </span>';
+                        }
+                        jqCustom('.tagappend').html(tag3 + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span>');
                         jqCustom('.inputz').blur(function (e) {
                             var tag = jqCustom('.inputz').val();
                             if (tag != null) {
@@ -379,10 +454,10 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                         productid: productid
                                     },
                                     success: function (data1) {
+        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
-                                            var data = parseInt(data1);
-                                            jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                                            jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
                                             jqCustom("input.inputz").val('');
                                             jqCustom(".tagclose").on("click", function () {
                                                 var tag1233 = jqCustom(this).attr("tagval");
@@ -494,19 +569,43 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                        var seasons = '';
+                      var seasons = '';
                         jqCustom('#season').html(seasons);
-                        for (var i = 0; i <= 4; i++) {
+                        for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
                                 var selected = 'selected="selected"';
                             } else {
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season123').html(seasons);
+                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
+                        jqCustom("select").blur(function () {
+                            var seasonnames = new Array();
+                            var i = 0;
+                            var productid = jqCustom(this).attr('attrproduct');
+                            jqCustom("select option:selected").each(function () {
+                                seasonnames[i] = jqCustom(this).val();
 
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
+                                i++;
+
+                            });
+                            jqCustom.ajax({
+                                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/seasoninsert",
+                                type: 'post',
+                                data: {
+                                    seasonnames: seasonnames,
+                                    productid: productid
+                                },
+                                success: function () {
+                                }
+                            });
+                        });
+                        var tag3 = '';
+                        for (var i = 0; i < data['tag_select'].length; i++) {
+                            tag3 = tag3 + '<span class="tagitem" id="tagitem"><a>' + data['tag_select'][i] + '</a><i class="tagclose" tagval="' + data['tag_select'][i] + '">x</i> </span>';
+                        }
+                        jqCustom('.tagappend').html(tag3 + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span>');
                         jqCustom('.inputz').blur(function (e) {
                             var tag = jqCustom('.inputz').val();
                             if (tag != null) {
@@ -519,10 +618,10 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                         productid: productid
                                     },
                                     success: function (data1) {
+        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
-                                            var data = parseInt(data1);
-                                            jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                                            jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
                                             jqCustom("input.inputz").val('');
                                             jqCustom(".tagclose").on("click", function () {
                                                 var tag1233 = jqCustom(this).attr("tagval");
@@ -654,19 +753,43 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                        var seasons = '';
+                     var seasons = '';
                         jqCustom('#season').html(seasons);
-                        for (var i = 0; i <= 4; i++) {
+                        for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
                                 var selected = 'selected="selected"';
                             } else {
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season123').html(seasons);
+                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
+                        jqCustom("select").blur(function () {
+                            var seasonnames = new Array();
+                            var i = 0;
+                            var productid = jqCustom(this).attr('attrproduct');
+                            jqCustom("select option:selected").each(function () {
+                                seasonnames[i] = jqCustom(this).val();
 
-                        jqCustom('.tags').html('<div>' + data['tag_details'] + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span></div></div>');
+                                i++;
+
+                            });
+                            jqCustom.ajax({
+                                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/seasoninsert",
+                                type: 'post',
+                                data: {
+                                    seasonnames: seasonnames,
+                                    productid: productid
+                                },
+                                success: function () {
+                                }
+                            });
+                        });
+                        var tag3 = '';
+                        for (var i = 0; i < data['tag_select'].length; i++) {
+                            tag3 = tag3 + '<span class="tagitem" id="tagitem"><a>' + data['tag_select'][i] + '</a><i class="tagclose" tagval="' + data['tag_select'][i] + '">x</i> </span>';
+                        }
+                        jqCustom('.tagappend').html(tag3 + '<span id="remove" class="add add-text"><input type="text" class="inputz" pro="' + data['id'] + '" name="tagss" value=""></span><span id="remove pluse" class="tagpluse"><i class="tagadd">+</i></span>');
                         jqCustom('.inputz').blur(function (e) {
                             var tag = jqCustom('.inputz').val();
                             if (tag != null) {
@@ -679,10 +802,10 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                         productid: productid
                                     },
                                     success: function (data1) {
+        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
-                                            var data = parseInt(data1);
-                                            jqCustom('.tags').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>");
+                                            jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
                                             jqCustom("input.inputz").val('');
                                             jqCustom(".tagclose").on("click", function () {
                                                 var tag1233 = jqCustom(this).attr("tagval");
@@ -754,25 +877,23 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
         $product['designer'] = $model->getAttributeText('designer'); //product's thumbnail image url
         $product['product_status'] = $model->getAttributeText('product_status'); //product's thumbnail image url
         $product['season_select'] = $model->getAttributeText('season'); //product's thumbnail image url
-//   print_r( $product['season_select']);
-
         $attribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'season');
         if ($attribute->usesSource()) {
             $product['season'] = $attribute->getSource()->getAllOptions(false);
-//          print_r( $product['season']);
         }
-
+        $product['tag_select'] = $model->getAttributeText('tag_custom'); //product's tags
+        $attribute_tag = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'tag_custom');
+        if ($attribute_tag->usesSource()) {
+            $product['tag_custom'] = $attribute_tag->getSource()->getAllOptions(false);
+        }
         $product['shipped_to'] = $model['shipped_to']; //product's thumbnail image url  
         $prefix = Mage::getConfig()->getTablePrefix();
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
-
         $query = 'SELECT * FROM ' . $prefix . 'tag_relation WHERE product_id=' . $product_id;
-
         $results = $readConnection->fetchAll($query);
         $tag_details = '';
         foreach ($results as $tagname) {
-
             $tagId = $tagname['tag_id'];
             $gg = Mage::getModel('tag/tag')->getCollection()
                     ->addFieldToFilter('tag_id', $tagId);
@@ -780,12 +901,10 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
             foreach ($gg as $tagivalue) {
                 $tag_name = $tagivalue['name'];
                 $tag_id .= $tagivalue['tag_id'];
-                $tag_details.= "<span class='tagitem'><a>" . $tag_name . "</a><i class='tagclose' tagval='" . $tag_id . "'>X</i></span>  ";
+                $tag_details.= "<span class='tagitem'><a>" . $tag_name . "</a><i class='tagclose' tagval='" . $tag_id . "'>x</i></span>  ";
                 $i++;
             }
         }
-
-
         $product['tag_details'] = $tag_details;
         $product['tag_id'] = $tag_id;
         echo json_encode($product);
@@ -794,41 +913,53 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
     public function inserttagAction() {
         $tagvalue = Mage::app()->getRequest()->getParam('tag');
         $productid = Mage::app()->getRequest()->getParam('productid');
-        if (!empty($tagvalue)) {
-            $user_id = Mage::getSingleton('customer/session')->getId();
-            $userid = ($user_id ? $user_id : 0);
-            $collection = Mage::getModel('tag/tag')
-                    ->setName($tagvalue)
-                    ->setStatus(1)
-                    ->setFirstCustomerId($userid)
-                    ->setFirstStoreId(1);
-            echo $insertId = $collection->save()->getId();
-            $tag_id11111 = $insertId;
+        $option['attribute_id'] = 171;
+        $option['value']['tagvalue'][0] = $tagvalue;
+        $setup = new Mage_Eav_Model_Entity_Setup('core_setup');
+        $setup->addAttributeOption($option);
+        $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection')
+                ->setAttributeFilter(171);
+        $newInsertedOption = $optionCollection->getLastItem();
+        $_option = $newInsertedOption->getData();
+        $lastId = $_option['option_id'];
+        $tag_id[] = 0;
+        $tag_id[] = $lastId;
+        $product = Mage::getModel('catalog/product')->load($productid);
+        $tags = $product->getTagCustom();
+        $tag_values = implode(',', $tag_id);
+        if ($tag_values) {
+            $glue = ",";
+        }
+        $tag_values = $tag_values . $glue . $tags;
+        $product->addData(array(
+            'tag_custom' => $tag_values  // just putting together a comma-separated list of values
+        ));
+        $product->save();
+        $insert_data['tag_id'] = $tag_id;
+        $product_id[] = 0;
+        $product_id[] = $productid;
+        $insert_data['product_id'] = $productid;
 
-            $collection2 = Mage::getModel('tag/tag_relation')
-                    ->setTagId($tag_id11111)
-                    ->setCustomerId($userid)
-                    ->setProductId($productid)
-                    ->setStoreId(1)
-                    ->setActive(1)
-                    ->save();
-            return $insertId;
-        } return false;
+        return $insert_data;
     }
 
     public function deletetagAction() {
         $user_id = Mage::getSingleton('customer/session')->getId();
         $userid = ($user_id ? $user_id : 0);
-        $tagvalue = Mage::app()->getRequest()->getParam('tag');
-//         $tag = Mage::getModel('tag/tag')->load($tagvalue);
-//            $tag->delete();
-        $model = Mage::getModel('tag/tag_relation');
-        $model->loadByTagCustomer(null, $tagvalue, $userid)->delete();
-        $prefix = Mage::getConfig()->getTablePrefix();
-        $resource = Mage::getSingleton('core/resource');
-        $write = $resource->getConnection('core_write');
-//        $write->query("delete from `'.$prefix.'tag_relation` where tag_id = ".$tagvalue);
-        $write->query("delete from `" . $prefix . "tag` where tag_id = " . $tagvalue);
+        $tagname = Mage::app()->getRequest()->getParam('tag');
+        $product_id = Mage::app()->getRequest()->getParam('productid');
+        $model = Mage::getModel('catalog/product')->load($product_id);
+        $attr = $model->getResource()->getAttribute("tag_custom");
+        if ($attr->usesSource()) {
+            $tagvalue = $attr->getSource()->getOptionId($tagname);
+        }
+        $attribute_code = 'tag_custom';
+        $attribute = Mage::getModel('eav/config')->getAttribute('catalog_product', $attribute_code);
+        $options = $attribute->getSource()->getAllOptions();
+        $options['delete'][$tagvalue] = true;
+        $options['value'][$tagvalue] = true;
+        $setup = new Mage_Eav_Model_Entity_Setup('core_setup');
+        $setup->addAttributeOption($options);
         return true;
     }
 
@@ -837,42 +968,16 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
         $userid = ($user_id ? $user_id : 0);
         $seasonIds = Mage::app()->getRequest()->getParam('seasonnames');
         $seasonIds[] = 0;
-       $productid = Mage::app()->getRequest()->getParam('productid');
-       
-       $season_values = implode(',', $seasonIds);
-     //  echo $season_values;
-         $product = Mage::getModel('catalog/product')->load($productid);
-      $product->addData( array(
-	'season' => $season_values  // just putting together a comma-separated list of values
+        $productid = Mage::app()->getRequest()->getParam('productid');
 
-) );
-       
-       $product->save();
-       
-       
-       
-//        $seasonId = explode(',', $seasonIds);
-//       print_r($seasonId);
-    /*    foreach ($seasonIds as $seasonvalues) {
-//echo $seasonvalues;
-            $collection = Mage::getModel('catalog/product')
-                    ->getCollection()
-                    ->addAttributeToSelect('*')
-                    ->addAttributeToFilter('customer_id', $userid)
-                    ->addAttributeToFilter('status', 1)
-                    ->addAttributeToFilter('visibility', 4);
+        $season_values = implode(',', $seasonIds);
+        //  echo $season_values;
+        $product = Mage::getModel('catalog/product')->load($productid);
+        $product->addData(array(
+            'season' => $season_values  // just putting together a comma-separated list of values
+        ));
 
-            if ($collection->count() > 0) {
-                foreach ($collection as $collectdvalues) {
-
-                    $product = Mage::getModel('catalog/product')->load($productid);
-                    $updater = Mage::getSingleton('catalog/product_action');
-
-                    $updater->updateAttributes(array($collectdvalues->getId()), array('season' => $seasonvalues), 0);
-                    return true;
-                }
-            }
-        }*/
+        $product->save();
     }
 
 }
