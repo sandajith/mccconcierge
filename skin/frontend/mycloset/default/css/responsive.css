@@ -406,6 +406,13 @@
     .dataTable > .row > div:first-child{
         padding-top:10px;
     }
+    .mypickup .dataTable > .row > div {
+        padding-top:10px;
+    }
+
+    .mypickup .dataTable > .row > div:first-child{
+        padding-top:10px;
+    }
 }
 
 @media only screen and (min-width : 616px) {

@@ -1,7 +1,8 @@
 <?php
 $p = $this->getProductdetails();
-
 $rel_product = $p['rel_id'];
+$model = Mage::getModel('catalog/product')->load($rel_product);
+
 
 $prefix = Mage::getConfig()->getTablePrefix();
 $user_id = Mage::getSingleton('customer/session')->getId(); // login user id
@@ -43,53 +44,43 @@ foreach ($cats as $category_id) {
 
             <!--season details-->
             <div class="season" style="display:inline-block; vertical-align:top; overflow:hidden;font-style: normal; "> <b>Seasons</b></br>
-                <div style="border: 2px solid #e4e4e4;width: 95px; overflow: hidden;"> <select  attrproduct="<?php echo $rel_product; ?>" style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
-                    <?php
-                    foreach ($p['season'] as $key => $value) {
-                        ?> 
-                        <option 
-                        <?php if (in_array($value['label'], $p['season_select'])) { ?>
-                                selected="selected"  
-                            <?php } ?>
-                           value="<?php echo $value['value'] ?>"><?php echo $value['label'] ?>
-                        </option>
-                    <?php } ?>
-                </select></div>
+                <div style="border: 2px solid #e4e4e4;width: 95px; overflow: hidden;"> <select  attrproduct="<?php echo $rel_product; ?>"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
+                        <?php
+                        foreach ($p['season'] as $key => $value) {
+                            ?> 
+                            <option 
+                            <?php if (in_array($value['label'], $p['season_select'])) { ?>
+                                    selected="selected"  
+                                <?php } ?>
+                                value="<?php echo $value['value'] ?>"><?php echo $value['label'] ?>
+                            </option>
+                        <?php } ?>
+                    </select></div>
             </div>
-
 
             <!--  tag details   -->
             <div class="tags">
-                <b>Tags:</b>
-                <div>
+                <b >Tags:</b>
+                <div class="tagappend">
                     <?php
-                    $resource = Mage::getSingleton('core/resource');
-                    $readConnection = $resource->getConnection('core_read');
-
-                    $query = 'SELECT * FROM ' . $prefix . 'tag_relation WHERE product_id=' . $rel_product;
-
-                    $results = $readConnection->fetchAll($query);
-                    foreach ($results as $tagname) {
-                        $tagId = $tagname['tag_id'];
-                        $gg = Mage::getModel('tag/tag')->getCollection()
-                                ->addFieldToFilter('tag_id', $tagId);
-
-                        foreach ($gg as $tagivalue) {
-                            $tag_name = $tagivalue['name'];
-                            $tag_id = $tagivalue['tag_id'];
+                    foreach ($p['tag_select'] as $option_label) {
+                        foreach ($option_label as $labelid) {
                             ?>
-                            <span class="tagitem">
-                                <a><?php echo $tag_name; ?></a>
-                                <i class="tagclose" tagval="<?php echo $tag_id; ?>">X</i>                             
-                            </span>                          
+                            <span class="tagitem" id="tagitem">
+                                <a><?php echo $labelid; ?></a>
+                                <i class="tagclose" pro="<?php echo $rel_product; ?>" tagval="<?php echo $labelid; ?>">x</i>                             
+                            </span> 
                             <?php
                         }
                     }
                     ?>
                     <span id="remove" class="add add-text"><input type="text" class="inputz" pro="<?php echo $rel_product; ?>" name="tagss" value=""></span>       
-                    <span id="remove pluse" class="tagpluse"><i class='tagadd'>+</i></span>       
+                    <span id="remove pluse" class="tagpluse"><i class='tagadd'>+</i></span> 
                 </div>
             </div>
+
+
+
             <!--ShortDescription-->
             <p class="description">
                 <?php echo $p['ShortDescription']; ?>
@@ -247,7 +238,7 @@ foreach ($cats as $category_id) {
 //                                $_product['season'];
 //                                
                             ?>
-                                <!--<li> <a class="getseasonid" relseason="//<?php // echo $_product['season'];  ?>"><?php // echo $_product->getAttributeText('season');  ?></a>  </li>--> 
+                                <!--<li> <a class="getseasonid" relseason="//<?php // echo $_product['season'];       ?>"><?php // echo $_product->getAttributeText('season');       ?></a>  </li>--> 
                             <?php
 //                            }
                             ?>
@@ -312,8 +303,8 @@ foreach ($cats as $category_id) {
                 }
             });
         });
-//        showby started here        
-//        designer showby
+        //        showby started here        
+        //        designer showby
         jqCustom('.getdesignerid').click(function () {
             var productid = jqCustom(this).attr('relpro');
             jqCustom.ajax({
@@ -329,7 +320,7 @@ foreach ($cats as $category_id) {
                 }
             });
         });
-//        color
+        //        color
         jqCustom('.getcolorid').click(function () {
             var productid = jqCustom(this).attr('relcolor');
             jqCustom.ajax({
@@ -444,15 +435,17 @@ foreach ($cats as $category_id) {
                         var data = parseInt(data1);
                         var tagname = jqCustom('.inputz').val();
                         if (tagname != null) {
-                            jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >X</i></span>").prependTo(".tags > div");
+                            jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >x</i></span>").prependTo(".tags > div");
                             jqCustom("input.inputz").val('');
                             jqCustom(".tagclose").on("click", function () {
+                                var productid = jqCustom(this).attr("pro");
                                 var tag1233 = jqCustom(this).attr("tagval");
                                 jqCustom.ajax({
                                     url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
                                     type: 'post',
                                     data: {
-                                        tag: tag1233
+                                        tag: tag1233,
+                                        productid: productid
                                     },
                                     success: function () {
                                     }
@@ -466,11 +459,13 @@ foreach ($cats as $category_id) {
         });
         jqCustom(".tagclose").on("click", function () {
             var tag123 = jqCustom(this).attr("tagval");
+            var productid = jqCustom(this).attr("pro");
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/deletetag",
                 type: 'post',
                 data: {
-                    tag: tag123
+                    tag: tag123,
+                    productid: productid
                 },
                 success: function () {
                 }
@@ -485,24 +480,22 @@ foreach ($cats as $category_id) {
             jqCustom(".popupWrapper").fadeOut();
             jqCustom(".popupBox").empty();
         });
-       jqCustom("select").blur(function () {
+        jqCustom("select").blur(function () {
             var seasonnames = new Array();
             var i = 0;
             var productid = jqCustom(this).attr('attrproduct');
             jqCustom("select option:selected").each(function () {
+                seasonnames[i] = jqCustom(this).val();
 
+                i++;
 
-                 seasonnames[i] = jqCustom(this).val();
-             
-           i++;
-         
             });
-             jqCustom.ajax({
+            jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/seasoninsert",
                 type: 'post',
                 data: {
                     seasonnames: seasonnames,
-            productid: productid
+                    productid: productid
                 },
                 success: function () {
                 }
@@ -518,12 +511,13 @@ foreach ($cats as $category_id) {
             itemMargin: 5
         });
     });
-                     /*   setTimeout(function () {
-                        jqCustom('.flexsliderPopup').flexslider({
-                            animation: "slide",
-                            animationLoop: false,
-                            itemWidth: 150,
-                            itemMargin: 5
-                        });
-                    }, 100);*/
+    setTimeout(function () {
+        jqCustom('.flexsliderPopup').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            itemWidth: 150,
+            itemMargin: 5
+        });
+    }, 100);
+   jqCustom( ".season select option:not(:checked)" ).css( "color", "black" );
 </script>

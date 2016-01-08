@@ -1163,6 +1163,7 @@ p.required { font-size:11px; text-align:right; color:#EB340A; }
 .pickup_success{text-align: center;}
 .align_center{text-align: center; margin: 0 auto; width: 50%; padding: 0 10px;}
 .align_center .dataTable .input-text{height: 30px; max-width: 100%; text-align: center;width: 30px;}
+.mypickup .align_center .dataTable > .row{height:54px; vertical-align: middle; }
 .align_center .dataTable > .row{height:70px; vertical-align: middle; }
 .align_center .dataTable > .row+.foot{height:100%;}
 header .loginDetails .links { display: block !important; margin-top: 5px; position: relative;z-index: 100;}
@@ -1619,7 +1620,15 @@ p.back-link{
 .size > b {
     font-style: normal;
 }
-
+/*saneesh*/
+.season select option:hover,
+.season select option:focus,
+.season select option:active,
+.season select option:checked {
+  background: linear-gradient(#ada4a5, #ada4a5);
+  }
+  
+  
 
 
 
