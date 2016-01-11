@@ -913,12 +913,12 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
     public function inserttagAction() {
         $tagvalue = Mage::app()->getRequest()->getParam('tag');
         $productid = Mage::app()->getRequest()->getParam('productid');
-        $option['attribute_id'] = 168;
+        $option['attribute_id'] = 171;
         $option['value']['tagvalue'][0] = $tagvalue;
         $setup = new Mage_Eav_Model_Entity_Setup('core_setup');
         $setup->addAttributeOption($option);
         $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection')
-                ->setAttributeFilter(168);
+                ->setAttributeFilter(171);
         $newInsertedOption = $optionCollection->getLastItem();
         $_option = $newInsertedOption->getData();
         $lastId = $_option['option_id'];
