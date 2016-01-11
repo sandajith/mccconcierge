@@ -69,12 +69,12 @@ $attribute->save();
  * */
 $this->addAttribute('customer', 'mem_type', array(
     'type' => 'text',
-    'label' => 'Membership type',
-    'input' => 'select',
+    'label' => 'Membership type123',
+    'input' => 'hidden',
     'position' => 120,
-    'required' => true, //or true
+    'required' => false, //or true
     'is_system' => 0,
-    'visible_on_front' => 1,
+    'visible_on_front' => 0,
     'source' => 'membership/entity_memberships'
 ));
 $attribute = Mage::getSingleton('eav/config')->getAttribute('customer', 'mem_type');

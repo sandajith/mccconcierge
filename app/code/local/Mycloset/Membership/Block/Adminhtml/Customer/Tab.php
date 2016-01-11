@@ -13,25 +13,27 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab extends Mage_Adminhtml_Bl
 
     public function getCustomerpayment() {
         $customer = Mage::registry('current_customer');
+
         $model = Mage::getModel('membership/payment')->load($customer['entity_id'], 'customer_id');
+
         $cusid = $model->getCustomerId();
         $customermembership = Mage::getModel('membership/customermembership')->load($cusid, 'customer_id');
         $customermembership->getMembershipId();
-        $membership_id = $customermembership->getMembershipId();
-        $model2 = Mage::getModel('membership/membership')->load($membership_id, 'membership_id');
-       
-      
+        $membership_id = $customermembership->getCustomerId();
+        $model2 = Mage::getModel('membership/membership')->load($customermembership->getMembershipId(), 'membership_id');
+  
+
         $info = array();
         $info['customer_pro_id'] = $model->getCustomerProfileId();
         $info['customer_payment_id'] = $model->getPaymentProfileId();
         $info['customer_address_id'] = $model->getShippingAddressId();
         $info['getamount'] = $model2->getMembershipPrice();
-        $info['membership_id'] = $customermembership->getMembershipId();
+     $info['membership_id'] = $customermembership->getMembershipId();
         $info['getmembership_type'] = $model2->getMembershipType();
         $info['storage_amt'] = $model2->getStorageAmt();
         $info['min_storage'] = $model2->getMinStorage();
 //        order details
-        
+
         return $info;
     }
 

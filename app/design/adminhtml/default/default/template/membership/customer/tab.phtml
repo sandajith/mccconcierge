@@ -114,7 +114,7 @@ if ($myclosetcount > $info['min_storage']) {
                             foreach ($collection as $services) {
                                 $service = Mage::getModel('membership/additionalservices')->load($services->getId());
                                 ?>
-                                <input type="checkbox" id="add<?php echo $i ?>" name="<?php echo $service->getServiceName(); ?>" value="<?php echo $service->getAmount(); ?>" onclick="UpdateCost()" ><label ><?php echo $service->getServiceName(); ?></label></br>
+                            <input type="checkbox" id="add<?php echo $i ?>" name="<?php echo $service->getServiceName(); ?>" value="<?php echo $service->getAmount(); ?>" onclick="UpdateCost()" >&nbsp;<label ><?php echo $service->getServiceName(); ?></label></br>
                                 <?php
                                 $i++;
                             }
@@ -213,14 +213,14 @@ if ($myclosetcount > $info['min_storage']) {
                 </tr>
             </tbody>
         </table>
-        <h5>Total amount for services used :<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() ?> <span id="ordersum"><?php echo $sum1 ?></span></h5>
+        <h5>  Total amount for services used:&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() ?> <span id="ordersum"><?php echo $sum1 ?></span></h5>
         <input id="servicesum" type="hidden" value="<?php echo $sum1; ?>" name="servicesum"/>
         <input type="hidden" id="storeamt" value="<?php echo $storageAmount; ?>" name="storeamt"/>
         <input type="hidden" id="myclosetcount" value="<?php echo $myclosetcount; ?>" name="myclosetcount"/>
     </div>
 </div>
 <div class="sss" style="float: left ; width: 100%;">
-    <h2 id="final">Total amount to be paid : 
+    <h2 id="final">Total amount to be paid: 
         <span id="currency" style="color: #ff0033;">
             <?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol(); ?>
         </span><span id="finalpricedisplay" style="color: #ff0033;">

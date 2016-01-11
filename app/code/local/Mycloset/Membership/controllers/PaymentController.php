@@ -222,7 +222,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $transId = $directResponseFields[6];
 
 //Variables to send e-mail
-            $z_firstname = Mage::getSingleton('customer/session')->getMemFname();
+            $z_firstname = $fname;
             $z_lastname = $lname;
             $z_email = $emailid;
             $z_memtype = $this->getRequest()->getPost('mem_type');
@@ -235,11 +235,12 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $vars = array('first_name' => $z_firstname, 'last_name' => $z_lastname, 'email' => $z_email, 'mem_type' => $z_memtype, 'mem_amt' => $z_amount);
                 $emailTemplate->getProcessedTemplate($vars);
                 $admin_email = Mage::getStoreConfig('trans_email/ident_general/email');
+                $admin_name = Mage::getStoreConfig('trans_email/ident_general/name');
 // $email = array($admin_email,$z_email);
                 $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
                 $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
-                $emailTemplate->send($z_email, 'Mycloset mail', $vars);
-                $emailTemplate->send($admin_email, 'Mycloset mail', $vars);
+                $emailTemplate->send($z_email,$z_firstname.' '.$z_lastname , $vars);
+                $emailTemplate->send($admin_email,$admin_name, $vars);
                 $paymentdetails = serialize($vars);
                 $date = date("Y-m-d H:i:s ", time());
                 $data = array(
@@ -283,13 +284,26 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'customer_id' => $customerid,
                     'membership_id' => $z_memtype1
                 );
-                $jyuy = Mage::getModel('membership/customermembership')->load($customerid)->addData($update_customer_membership);
+//                print_r($update_customer_membership);
+//                exit;
+                $jyuy = Mage::getModel('membership/customermembership')
+                        ->load($customerid);
+                
+                        
+                
+                
                 $membershiphistory = Mage::getModel('membership/membershiphistory');
                 $membershiphistory->setCustomerId($customerid)
                         ->setMembershipId($z_memtype1);
                 try {
                     $model->setId($customerid)->save();
-                    $jyuy->setId($customerid)->save();
+                    if($jyuy->getId()){
+                    $jyuy->setMembershipId($z_memtype1)->save();
+                    }
+                    else
+                    {
+                       Mage::getModel('membership/customermembership')->setCustomerId($customerid)->setMembershipId($z_memtype1)->save(); 
+                    }
                     $membershiphistory->save();
                 } catch (Exception $e) {
                     echo $e->getMessage();
