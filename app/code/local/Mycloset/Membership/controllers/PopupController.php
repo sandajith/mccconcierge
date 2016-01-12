@@ -67,7 +67,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-                        jqCustom('.description').html(data['Description']);
+//                        jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
@@ -234,7 +234,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-                        jqCustom('.description').html(data['Description']);
+//                        jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
@@ -398,7 +398,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-                        jqCustom('.description').html(data['Description']);
+//                        jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
@@ -562,7 +562,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-                        jqCustom('.description').html(data['Description']);
+//                        jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
@@ -746,7 +746,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-                        jqCustom('.description').html(data['Description']);
+//                        jqCustom('.description').html(data['Description']);
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
@@ -859,8 +859,8 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
         $product = array();
         $model = Mage::getModel('catalog/product')->load($product_id); //getting product model
         $product['id'] = $product_id; //getting product object for particular product id               
-        $product['ShortDescription'] = $model->getShortDescription(); //product's short description
-        $product['Description'] = $model->getDescription(); // product's long description
+//        $product['ShortDescription'] = $model->getShortDescription(); //product's short description
+//        $product['Description'] = $model->getDescription(); // product's long description
         $product['Name'] = $model->getName(); //product name
         $product['Price'] = $model->getPrice(); //product's regular Price
         $product['SpecialPrice'] = $model->getSpecialPrice(); //product's special Price
