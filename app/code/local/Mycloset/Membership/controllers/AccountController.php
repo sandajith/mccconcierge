@@ -127,7 +127,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $message = 'Your membership is not activated or it has been closed';
             $session->addError($message);
               
-            $this->_loginPostRedirect();
+           $this->_redirect('*/*');
         } else {
             //user is granted login to website after the group verification
             $session = $this->_getSession();

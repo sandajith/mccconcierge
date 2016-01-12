@@ -179,7 +179,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<shipping>" .
                 "<amount>0.00</amount>" .
                 "<name>Free Shipping</name>" .
-                "<description>Mycloset membership</description>" .
+                "<description> My Closet Concierge </description>" .
                 "</shipping>" .
                 "<lineItems>" .
                 "<itemId>" . time() . "</itemId>" .
@@ -359,7 +359,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<shipping>" .
                 "<amount>0.00</amount>" .
                 "<name>Free Shipping</name>" .
-                "<description>Mycloset membership</description>" .
+                "<description>My Closet Concierge</description>" .
                 "</shipping>" .
                 "<lineItems>" .
                 "<itemId>" . time() . "</itemId>" .
