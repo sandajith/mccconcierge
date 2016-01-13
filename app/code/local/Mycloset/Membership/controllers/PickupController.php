@@ -62,6 +62,7 @@ class Mycloset_Membership_PickupController extends Mage_Core_Controller_Front_Ac
                     $user_name = $customer->getName();
                     $user_email = $customer->getEmail();
                     $admin_email = Mage::getStoreConfig('trans_email/ident_general/email');
+                     $admin_name = Mage::getStoreConfig('trans_email/ident_general/name');
                     $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
                     $varables = array(
                         'user_name' => $user_name,
@@ -73,8 +74,8 @@ class Mycloset_Membership_PickupController extends Mage_Core_Controller_Front_Ac
                     $emailTemplate->getProcessedTemplate($vars);
                     $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
                     $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));                   
-                    $emailTemplate->send($email, 'Testing mail', $varables);
-                    $emailTemplate->send($admin_email, 'Testing mail', $varables);
+                    $emailTemplate->send($email,$user_name, $varables);
+                    $emailTemplate->send($admin_email, $admin_name, $varables);
                     $this->_redirect('mycloset/pickup/success');
                 } else {
                     $this->_redirect('/membership/account/login/');

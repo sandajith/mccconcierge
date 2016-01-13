@@ -24,7 +24,7 @@ foreach ($cats as $category_id) {
 </div>
 <div class="popupContent">
     <div class="row productdata" id="productdata">
-        <div class="col-sm-12 visible-xs center-align">
+        <div class="catname col-sm-12 visible-xs center-align">
             <h2><?php echo $catname; ?></h2>
             <p class="signature visible-xs" style="font-style: normal;"><?php echo $p['designer']; ?></p>
         </div>
@@ -33,7 +33,7 @@ foreach ($cats as $category_id) {
         </div>
         <div class="col-sm-5 details">
             <!--category name-->
-            <h2 class="hidden-xs"><?php echo $catname; ?></h2>
+            <h2 class="catname hidden-xs"><?php echo $catname; ?></h2>
             <p class="visible-xs productId"> <b>Product ID</b> : <?php echo $p['sku']; ?></p>
             <p class="signature hidden-xs"><?php echo $p['designer']; ?></p>
             <div class="colorBox">
@@ -43,8 +43,8 @@ foreach ($cats as $category_id) {
 
 
             <!--season details-->
-            <div class="season" style="display:inline-block; vertical-align:top; overflow:hidden;font-style: normal; "> <b>Seasons</b></br>
-                <div style="border: 2px solid #e4e4e4;width: 95px; overflow: hidden;"> <select  attrproduct="<?php echo $rel_product; ?>"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
+            <div class="season_multiselect" style="display:inline-block; vertical-align:top; overflow:hidden;font-style: normal; "> <b>Seasons</b></br>
+                <div class="preselect" style="border: 2px solid #e4e4e4;width: 95px; overflow: hidden;"> <select  attrproduct="<?php echo $rel_product; ?>"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
                         <?php
                         foreach ($p['season'] as $key => $value) {
                             ?> 
