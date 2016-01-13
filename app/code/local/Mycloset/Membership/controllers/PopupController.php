@@ -62,13 +62,19 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+                      
+                        jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-//                        jqCustom('.description').html(data['Description']);
-                        jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
+        //                        jqCustom('.description').html(data['Description']);
+     if (data['shipped_to'] === null) {
+                            data['shipped_to']= '';
+                        } else {
+                          data['shipped_to'];
+                        }                 
+    jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
                         } else {
@@ -83,7 +89,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
+                            jqCustom('.preselect').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
                         jqCustom("select").blur(function () {
                             var seasonnames = new Array();
@@ -229,19 +235,24 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+                        jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-//                        jqCustom('.description').html(data['Description']);
+        //                        jqCustom('.description').html(data['Description']);
+         if (data['shipped_to'] === null) {
+                            data['shipped_to']= '';
+                        } else {
+                          data['shipped_to'];
+                        }
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                      var seasons = '';
+                        var seasons = '';
                         jqCustom('#season').html(seasons);
                         for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
@@ -250,7 +261,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
+                            jqCustom('.preselect').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
                         jqCustom("select").blur(function () {
                             var seasonnames = new Array();
@@ -393,19 +404,24 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+                        jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-//                        jqCustom('.description').html(data['Description']);
-                        jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
+        //                        jqCustom('.description').html(data['Description']);
+     if (data['shipped_to'] === null) {
+                            data['shipped_to']= '';
+                        } else {
+                          data['shipped_to'];
+                        }                  
+    jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                    var seasons = '';
+                        var seasons = '';
                         jqCustom('#season').html(seasons);
                         for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
@@ -414,7 +430,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
+                            jqCustom('.preselect').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
                         jqCustom("select").blur(function () {
                             var seasonnames = new Array();
@@ -557,19 +573,24 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+                        jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-//                        jqCustom('.description').html(data['Description']);
-                        jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
+        //                        jqCustom('.description').html(data['Description']);
+     if (data['shipped_to'] === null) {
+                            data['shipped_to']= '';
+                        } else {
+                          data['shipped_to'];
+                        }                   
+    jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                      var seasons = '';
+                        var seasons = '';
                         jqCustom('#season').html(seasons);
                         for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
@@ -578,7 +599,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
+                            jqCustom('.preselect').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
                         jqCustom("select").blur(function () {
                             var seasonnames = new Array();
@@ -741,19 +762,24 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
+                        jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-//                        jqCustom('.description').html(data['Description']);
+        //                        jqCustom('.description').html(data['Description']);
+        if (data['shipped_to'] === null) {
+                            data['shipped_to']= '';
+                        } else {
+                          data['shipped_to'];
+                        }
                         jqCustom('.status').html('<b>Status</b> : ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
                             jqCustom('.size').html('<i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<i>Size' + data['size'] + '</i>');
                         }
-                     var seasons = '';
+                        var seasons = '';
                         jqCustom('#season').html(seasons);
                         for (var i = 0; i < data['season'].length; i++) {
                             if (inArray(data['season'][i]['label'], data['season_select'])) {
@@ -762,7 +788,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                                 var selected = '';
                             }
                             seasons = seasons + '<option ' + selected + ' value="' + data['season'][i]['value'] + '">' + data['season'][i]['label'] + '</option>';
-                            jqCustom('.season').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
+                            jqCustom('.preselect').html('<select  attrproduct="' + data['id'] + '"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">' + seasons + '');
                         }
                         jqCustom("select").blur(function () {
                             var seasonnames = new Array();
@@ -861,6 +887,14 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
         $product['id'] = $product_id; //getting product object for particular product id               
 //        $product['ShortDescription'] = $model->getShortDescription(); //product's short description
 //        $product['Description'] = $model->getDescription(); // product's long description
+       
+        $catname = '';
+        $cats = $model->getCategoryIds();
+        foreach ($cats as $category_id) {
+            $_cat = Mage::getModel('catalog/category')->load($category_id);
+            $catname = $_cat->getName();
+        }
+        $product['catname'] = $catname;
         $product['Name'] = $model->getName(); //product name
         $product['Price'] = $model->getPrice(); //product's regular Price
         $product['SpecialPrice'] = $model->getSpecialPrice(); //product's special Price
@@ -913,12 +947,17 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
     public function inserttagAction() {
         $tagvalue = Mage::app()->getRequest()->getParam('tag');
         $productid = Mage::app()->getRequest()->getParam('productid');
-        $option['attribute_id'] = 171;
+        $eavAttribute = new Mage_Eav_Model_Mysql4_Entity_Attribute();
+        $code = $eavAttribute->getIdByCode('catalog_product', 'tag_custom');
+
+
+        $option['attribute_id'] = $code;//local
         $option['value']['tagvalue'][0] = $tagvalue;
         $setup = new Mage_Eav_Model_Entity_Setup('core_setup');
         $setup->addAttributeOption($option);
         $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection')
-                ->setAttributeFilter(171);
+//               
+                ->setAttributeFilter($code);//live
         $newInsertedOption = $optionCollection->getLastItem();
         $_option = $newInsertedOption->getData();
         $lastId = $_option['option_id'];

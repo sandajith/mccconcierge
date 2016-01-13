@@ -1620,6 +1620,18 @@ p.back-link{
 .size > b {
     font-style: normal;
 }
+.season_multiselect{
+    display:inline-block;
+    vertical-align:top;
+    overflow:hidden;
+    font-style: normal; 
+}
+.preselect{
+    border: 2px solid #e4e4e4;
+    width: 95px;
+    overflow: hidden;
+}
+
 /*saneesh*/
 .season select option:hover,
 .season select option:focus,
