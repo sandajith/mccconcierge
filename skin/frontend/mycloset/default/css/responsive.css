@@ -218,6 +218,125 @@
         padding:0;
     }
 
+
+   .dataTable > .row > div {
+        padding-top:40px;
+    }
+    .myBag .dataTable > .row > div {
+        padding-top:10px;
+        border:0;
+    }
+
+    .myBag .dataTable a.btn-remove {
+        background: #ccc none repeat scroll 0 0;
+        border-radius: 100%;
+        display: block;
+        height: 20px;
+        line-height: 19px;
+        margin: 0 auto;
+        position: absolute;
+        right: 5px;
+        text-align: center;
+        top: 5px;
+        width: 20px;
+    }
+    .myBag .dataTable > .row.th.foot .cartButton{
+        padding: 0 5px;
+    }
+    .myBag .dataTable {
+        border: 0 solid #c3c3c3;
+        border-bottom: 1px solid #c3c3c3;
+        padding-bottom: 15px;
+    }
+    .myBag .dataTable > .row.border_row{
+        border:2px solid #c3c3c3;
+        border-bottom:0px solid #c3c3c3;
+        position: relative;
+    } 
+   .myBag .dataTable > .row.th.foot{
+        border:0px;
+        border-top:2px solid #c3c3c3;
+        background: #fff;
+        padding: 10px 0 0;
+   }
+   .myBag .dataTable > .row.th.foot > div{
+        padding: 0px;
+   } 
+   .myBag .dataTable > .row.th{
+       border-bottom:0px;
+       border-left:0px;
+   }
+
+   .myBag .dataTable > .row > div.float_right{
+        float: right;
+        
+   }
+   .dataTable > .row.th.foot .pdt_btns{
+        text-align: center;
+   }
+   .dataTable > .row.th.foot .pdt_btns .cartButton.pull-right,
+   .dataTable > .row.th.foot .pdt_btns .cartButton.pull-left{
+        float: none!important;
+        margin-left: 0px;
+   }
+   .myBag .dataTable > .row.th.foot .pdt_btns .cartButton{
+        width:200px;
+        line-height: 18px;
+        font-size: 13px;
+   }
+
+   .myBag .dataTable > .row .product-name p {
+        color: #7e7b7b;
+        font-family: lato;
+        font-size: 13px;
+        line-height: 20px;
+    }
+    .myBag .dataTable > .row .product-name p span {
+        font-style: italic;
+    }
+
+
+   .myBag .dataTable .input-text { 
+        background: none;
+        padding: 0px;
+        text-align: center;
+        width: auto;
+        border:0px;
+    }
+
+   .cart .checkout_info{
+        width:100%;
+        margin: 0 auto;
+        float: right;
+   }
+   .cart .checkout_info .check_outdetails{
+        width:75%;
+   }
+   
+   .cart .checkout_info .totalBox .button{
+        width:auto;
+        margin: 20px auto 0;
+   }
+
+   .cart .checkout_info .totalBox .checkout-types li{
+        text-align: center;
+   }
+   .cart .checkout_info .totalBox{
+        float: right;
+        text-align: left;
+        padding:10px 15px 15px;
+    }
+
+    .myBag h4.deliveryme{
+        border-top: 1px solid #c3c3c3;
+        margin-top: 0;
+        padding-top: 5px;
+    }
+
+
+
+
+
 }
 
 
@@ -399,9 +518,9 @@
 
 }
 @media only screen and (min-width : 1200px) {
-    .dataTable > .row > div {
+    /*.dataTable > .row > div {
         padding-top:40px;
-    }
+    }*/
 
     .dataTable > .row > div:first-child{
         padding-top:10px;
@@ -414,6 +533,7 @@
         padding-top:10px;
     }
 }
+
 
 @media only screen and (min-width : 616px) {
 
@@ -470,6 +590,7 @@
     .itemList a.button, .itemList button.button, .itemList input.button{margin: 0px;}
     .std .intro a.button{margin:5px 0px; width:206px;}
     header .loginDetails a { margin: 1px 4px 0; font-size: 13px !important}
+
 }
 @media only screen and (max-width : 455px){
     .cutoff{

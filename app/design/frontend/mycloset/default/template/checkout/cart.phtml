@@ -54,15 +54,15 @@ foreach ($expression as $_item) {
         <?php echo $this->getBlockHtml('formkey'); ?>
          <?php //if ($delivery_cnt) { ?>
         <div class="row myBag">
-            <h4><?php echo $this->__('Deliver Me') ?></h4>
+            <h4 class="deliveryme"><?php echo $this->__('Deliver Me') ?></h4>
             <div class="col-md-12 dataTable">
                 <div class="row th">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-4">CATEGORY</div>
-                    <div class="col-sm-4">DESIGNER</div>
-                    <div class="col-sm-1">COLOR</div>
-                    <div class="col-sm-1">SIZE</div>
-                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1 hidden-xs"></div>
+                    <div class="col-sm-4 hidden-xs">CATEGORY</div>
+                    <div class="col-sm-4 hidden-xs">DESIGNER</div>
+                    <div class="col-sm-1 hidden-xs">COLOR</div>
+                    <div class="col-sm-1 hidden-xs">SIZE</div>
+                    <div class="col-sm-1 hidden-xs"></div>
                 </div>
                 <?php
                 foreach ($this->getItems() as $_item):
@@ -70,13 +70,13 @@ foreach ($expression as $_item) {
                     $product_status = $custom->getAttributeText('product_status');
                     if ($product_status == 'We Have It') {
                         ?>
-                        <div class="row">
-                            <div class="col-sm-1">
+                        <div class="row border_row">
+                            <div class="col-sm-1 hidden-xs">
                                 <div class="thumb">
                                     <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="75"  />
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 hidden-xs">
                                 <?php
                                 //Get category name by product id
                                 $cats = $custom->getCategoryIds();
@@ -86,11 +86,36 @@ foreach ($expression as $_item) {
                                 }
                                 ?>
                             </div>
-                            <div class="col-sm-4"><?php echo $custom->getAttributeText('designer'); ?></div>
-                            <div class="col-sm-1"><?php echo $custom->getAttributeText('color'); ?></div>
-                            <div class="col-sm-1"><?php echo $custom['size']; ?></div>
-                            <div class="col-sm-1"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo$_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+                            <div class="col-sm-4 hidden-xs"><?php echo $custom->getAttributeText('designer'); ?></div>
+                            <div class="col-sm-1 hidden-xs"><?php echo $custom->getAttributeText('color'); ?></div>
+                            <div class="col-sm-1 hidden-xs"><?php echo $custom['size']; ?></div>
+                            <div class="col-sm-1 hidden-xs"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo$_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+
+                            <div class="col-sm-3 visible-xs">
+                                <div class="thumb">
+                                    <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="75"  />
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-8 product-name">
+                                 <p><b>Category:</b> <span> <?php
+                                //Get category name by product id
+                                $cats = $custom->getCategoryIds();
+                                foreach ($cats as $categoryId) {
+                                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                                    echo $category->getName();
+                                }
+                                ?></span></p>
+
+                                <p><b>Designer:</b> <span><?php echo $custom->getAttributeText('designer'); ?></span></p>
+                                <p><b>Color:</b> <span><?php echo $custom->getAttributeText('color'); ?></span></p>
+                                <p><b>Size:</b> <span><?php echo $custom['size']; ?></span></p>
+                            </div>
+                            <div class="pull-right"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo$_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+
+
                         </div>
+
+
                         <?php
                     }
                 endforeach;
@@ -112,12 +137,12 @@ foreach ($expression as $_item) {
             <h4><?php echo $this->__('PickUp Me') ?></h4>
             <div class="col-md-12 dataTable">
                 <div class="row th">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-4">CATEGORY</div>
-                    <div class="col-sm-4">DESIGNER</div>
-                    <div class="col-sm-1">COLOR</div>
-                    <div class="col-sm-1">SIZE</div>
-                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1 hidden-xs"></div>
+                    <div class="col-sm-4 hidden-xs">CATEGORY</div>
+                    <div class="col-sm-4 hidden-xs">DESIGNER</div>
+                    <div class="col-sm-1 hidden-xs">COLOR</div>
+                    <div class="col-sm-1 hidden-xs">SIZE</div>
+                    <div class="col-sm-1 hidden-xs"></div>
                 </div>
                 <?php                          
                 foreach ($this->getItems() as $_item):              
@@ -125,13 +150,13 @@ foreach ($expression as $_item) {
                     $product_status = $custom->getAttributeText('product_status');
                     if ($product_status == 'You Have It' || $product_status == 'Shipped To' ) {                          
                         ?>
-                        <div class="row">
-                            <div class="col-sm-1">
+                        <div class="row border_row">
+                            <div class="col-sm-1 hidden-xs">
                                 <div class="thumb">
                                     <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="75"  />                              
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 hidden-xs">
                                 <?php
                                 //Get category name by product id
                                 $cats = $custom->getCategoryIds();
@@ -141,10 +166,33 @@ foreach ($expression as $_item) {
                                 }
                                 ?>
                             </div>
-                            <div class="col-sm-4"><?php echo $custom->getAttributeText('designer'); ?></div>
-                            <div class="col-sm-1"><?php echo $custom->getAttributeText('color'); ?></div>
-                            <div class="col-sm-1"><?php echo $custom['size']; ?></div>
-                            <div class="col-sm-1"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+                            <div class="col-sm-4 hidden-xs"><?php echo $custom->getAttributeText('designer'); ?></div>
+                            <div class="col-sm-1 hidden-xs"><?php echo $custom->getAttributeText('color'); ?></div>
+                            <div class="col-sm-1 hidden-xs"><?php echo $custom['size']; ?></div>
+                            <div class="col-sm-1 hidden-xs"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+
+                            
+                                <div class="col-sm-3 visible-xs">
+                                    <div class="thumb"><img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="75"  /> </div>
+                                </div>
+                              
+                                <div class="col-sm-4 col-xs-8 product-name">
+                                    <p><b>Category:</b> <span><?php
+                                //Get category name by product id
+                                $cats = $custom->getCategoryIds();
+                                foreach ($cats as $categoryId) {
+                                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                                    echo $category->getName();
+                                }
+                                ?></span></p>
+
+                                <p><b>Designer:</b> <span><?php echo $custom->getAttributeText('designer'); ?></span></p>
+                                <p><b>Color:</b> <span><?php echo $custom->getAttributeText('color'); ?></span></p>
+                                <p><b>Size:</b> <span><?php echo $custom['size']; ?></span></p>
+                                </div>
+                                <div class="pull-right"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+                                
+                            
                         </div>
                         <?php
                     }
@@ -167,13 +215,15 @@ foreach ($expression as $_item) {
             <h4><?php echo $this->__('Products') ?></h4>
             <div class="col-md-12 dataTable">
                 <div class="row th">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-7"><?php echo $this->__('PRODUCT NAME') ?></div>
-                    <div class="col-sm-1"><?php echo $this->__('UNIT PRICE') ?></div>
-                    <div class="col-sm-1"><?php echo $this->__('QTY') ?></div>
-                    <div class="col-sm-1"><?php echo $this->__('SUBTOTAL') ?></div>
-                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1 hidden-xs"></div>
+                    <div class="col-sm-6 hidden-xs"><?php echo $this->__('PRODUCT NAME') ?></div>
+                    <div class="col-sm-2 hidden-xs"><?php echo $this->__('UNIT PRICE') ?></div>
+                    <div class="col-sm-1 hidden-xs"><?php echo $this->__('QTY') ?></div>
+                    <div class="col-sm-1 hidden-xs"><?php echo $this->__('SUBTOTAL') ?></div>
+                    <div class="col-sm-1 hidden-xs"></div>
                 </div>
+
+               
 
 
                 <?php
@@ -187,7 +237,7 @@ foreach ($expression as $_item) {
                 ?>  
 
                 <div class="row th foot">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 pdt_btns">
                         <?php if ($this->getContinueShoppingUrl()): ?>
                             <a href="<?php echo $this->getUrl('') ?>shop.html" title="<?php echo $this->__('Continue Shopping') ?>" class=" btn-continue pull-left cartButton" ><span><span><?php echo $this->__('Continue Shopping') ?></span></span></a>
                         <?php endif;
@@ -197,7 +247,7 @@ foreach ($expression as $_item) {
 <!--                        <button type="submit" name="update_cart_action" value="empty_cart" title="<?php// echo $this->__('Clear Shopping Cart'); ?>" class=" btn-empty pull-right cartButton" id="empty_cart_button">
                             <span><span><?php //echo $this->__('Clear Shopping Cart'); ?></span></span>
                         </button>-->
- <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=30" class=" btn-empty pull-right cartButton" >clear Shopping Cart</a>
+                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=30" class=" btn-empty pull-right cartButton" >clear Shopping Cart</a>
                         <!--[if lt IE 8]>
                         <input type="hidden" id="update_cart_action_container" />
                         <script type="text/javascript">
@@ -230,8 +280,8 @@ foreach ($expression as $_item) {
 <!--            <script type="text/javascript">decorateTable('shopping-cart-table')</script>-->
         <?php // endif;      ?>
     </form>
-    <div class="row">
-        <div class="col-sm-5 col-md-4 col-lg-3 totalBox pull-right">
+    <div class="checkout_info">
+        <div class="col-sm-5 col-md-4 col-lg-3 totalBox">
 
             <?php echo $this->getChildHtml('totals'); ?>
             <?php if (!$this->hasError()): ?>
