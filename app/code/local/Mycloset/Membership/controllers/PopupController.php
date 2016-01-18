@@ -76,9 +76,9 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         }                 
     jqCustom('.status').html('<b>Status</b>: ' + data['product_status'] + ' ' + data['shipped_to']);
                         if (data['size'] === false) {
-                            jqCustom('.size').html('<b>Size:</b><i>Size Not Applicable</i>');
+                            jqCustom('.size').html('<b>Size: </b><i>Size Not Applicable</i>');
                         } else {
-                            jqCustom('.size').html('<b>Size:</b><i>' + data['size'] + '</i>');
+                            jqCustom('.size').html('<b>Size: </b><i>' + data['size'] + '</i>');
                         }
                         var seasons = '';
                         jqCustom('#season').html(seasons);
