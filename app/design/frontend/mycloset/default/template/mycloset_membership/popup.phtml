@@ -31,9 +31,7 @@ if ($topParent != 16) {
 
     $_product = Mage::getModel('catalog/product')->load($rel_product);
     ?>
-    <script type="text/javascript">
-        var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
-    </script>                 
+
     <div class="popupHead">
         <div class="sku dress-code hidden-xs"> <?php echo $p['sku']; ?></div>
         <a class="close" style="float: right;">X</a>
@@ -63,12 +61,7 @@ if ($topParent != 16) {
                     </div>
                     <div class="product-shop">
                         
-                        <?php // echo $this->getChildHtml('alert_urls') ?>
-                        <?php // echo $this->getChildHtml('product_type_data') ?>
-                        <?php // echo $this->getTierPriceHtml() ?>
-                        <?php //echo $this->getChildHtml('extrahint') ?>
-                   
-                        <?php // if (!$this->hasOptions()): ?>
+                       
                             <div class="add-to-box">
                                 <?php //if ($_product->isSaleable()): ?>
                                     <?php $_product = $this->getProduct(); ?>
@@ -110,57 +103,7 @@ if ($topParent != 16) {
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        //<![CDATA[
-        var productAddToCartForm = new VarienForm('product_addtocart_form');
-        productAddToCartForm.submit = function (button, url) {
-            if (this.validator.validate()) {
-                var form = this.form;
-                var oldUrl = form.action;
-
-                if (url) {
-                    form.action = url;
-                }
-                var e = null;
-                try {
-                    this.form.submit();
-                } catch (e) {
-                }
-                this.form.action = oldUrl;
-                if (e) {
-                    throw e;
-                }
-
-                if (button && button != 'undefined') {
-                    button.disabled = true;
-                }
-            }
-        }.bind(productAddToCartForm);
-
-        productAddToCartForm.submitLight = function (button, url) {
-            if (this.validator) {
-                var nv = Validation.methods;
-                delete Validation.methods['required-entry'];
-                delete Validation.methods['validate-one-required'];
-                delete Validation.methods['validate-one-required-by-name'];
-                // Remove custom datetime validators
-                for (var methodName in Validation.methods) {
-                    if (methodName.match(/^validate-datetime-.*/i)) {
-                        delete Validation.methods[methodName];
-                    }
-                }
-
-                if (this.validator.validate()) {
-                    if (url) {
-                        this.form.action = url;
-                    }
-                    this.form.submit();
-                }
-                Object.extend(Validation.methods, nv);
-            }
-        }.bind(productAddToCartForm);
-        //]]>
-    </script>
+   
 
 <?php }else { ?>
 
@@ -668,3 +611,4 @@ if ($topParent != 16) {
     }, 100);
     jqCustom(".season select option:not(:checked)").css("color", "black");
 </script>
+ 
