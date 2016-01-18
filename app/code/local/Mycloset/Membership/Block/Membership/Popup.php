@@ -7,6 +7,8 @@ class Mycloset_Membership_Block_Membership_Popup extends Mage_Catalog_Block_Prod
         $product_id = Mage::app()->getRequest()->getParam('product_id');
         $product['rel_id'] = $product_id;
         $model = Mage::getModel('catalog/product')->load($product_id); //getting product model
+//        var_dump($model);
+//        exit;
         $product['id'] = $model->load($product_id); //getting product object for particular product id               
         $product['ShortDescription'] = $model->getShortDescription(); //product's short description
         $product['Description'] = $model->getDescription(); // product's long description
@@ -14,6 +16,8 @@ class Mycloset_Membership_Block_Membership_Popup extends Mage_Catalog_Block_Prod
         $product['Price'] = $model->load($product_id)->getPrice(); //product's regular Price
         $product['SpecialPrice'] = $model->getSpecialPrice(); //product's special Price
         $product['ProductUrl'] = $model->getProductUrl(); //product url
+       
+     
         $product['ImageUrl'] = $model->getImageUrl(); //product's image url
         $product['SmallImageUrl'] = $model->getSmallImageUrl(); //product's small image url
         $product['ThumbnailUrl'] = $model->getThumbnailUrl(); //product's thumbnail image url

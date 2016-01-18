@@ -73,72 +73,41 @@ if ($this->canShowBlock()):
                     <?php if ($_filter->getItemsCount()): ?>
 
                         <?php
-                        $category_array[] = 'Category';
+                     
                      
                         if ($topParent != 16) {
  
-                            if ($this->__($_filter->getName()) === 'Category') {
-                                
+                                if ($this->__($_filter->getName()) === 'Category') {
                                 ?>
-               
                                 <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
-                   
-                                <div>
-                                    <?php $cat = Mage::getModel('catalog/category')->load(9); 
-                                   $cat ->getProductCollection()
-                                                ->addAttributeToSelect('entity_id')
-                                                ->addAttributeToFilter('status', 1)
-                                                ->addAttributeToFilter('visibility', 4);
-                                    ?>
+                                <?php
+                                $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+                                $path = $current_cat->getId();
 
+
+                                $children = Mage::getModel('catalog/category')->getCategories($path);
+                                foreach ($children as $category) {
+//                                    var_dump($category);
+                                    ?>
                                     <li >
-                                        <a class="" href="<?php echo $cat->getUrl() ?>"><?php echo $cat->name; ?> </a>
+                                        <a class="" href="<?php echo $category->getRequestPath();?>"><?php echo $category->getName(); ?> </a>
                                     </li>
                                     <?php
-                                    $subcats = $cat->getChildren();
-                                    $all_sub_cat = explode(',', $subcats);
-                                    foreach ($all_sub_cat as $cat_id) {
-                                        
-                                        $category = Mage::getModel('catalog/category')->load($cat_id);
-                                        $categories = Mage::getModel('catalog/category')->load($category->getId())
-                                                ->getProductCollection()
-                                                ->addAttributeToSelect('entity_id')
-                                                ->addAttributeToFilter('status', 1)
-                                                ->addAttributeToFilter('visibility', 4);
-
-//                                        $products = Mage::getModel('catalog/product')
-//                                                ->getCollection()
-//                                                ->addCategoryFilter($categories)
-//                                                ->load();
-//                                        if (($products->count() > 0)) {
-                                        ?>
-                                        <li >
-                                            <a class="" href="<?php echo $category->getUrl() ?>"><?php echo $category->name; ?> </a>
-                                        </li>
-                                        <?php
-//                                        }
-                                    }
-                                    ?> 
-                                </div>
-
-                                <?php
-//                                   
-//                                $i++;
-                                    
+                                }
                             }
-                          
-
-                           
                             if ($this->__($_filter->getName()) === 'Price') {
                                 ?>
                                 <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
                                 <div>
                                     <?php echo $_filter->getHtml() ?>
                                 </div>
-                            <?php } ?>
+                            <?php } 
 
+                                    
+                         
+                          
 
-                        <?php } elseif ($this->__($_filter->getName()) != 'Price') { ?>
+                        } elseif ($this->__($_filter->getName()) != 'Price') { ?>
 
                             <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
                             <?php if ($this->__($_filter->getName()) === 'Color'): ?>
