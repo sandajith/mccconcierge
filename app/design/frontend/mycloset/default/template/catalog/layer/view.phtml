@@ -48,10 +48,8 @@ if ($this->canShowBlock()):
             ?>
             <?php if ($this->canShowOptions()): ?>
                 <?php $_filters = $this->getFilters();
-
                 ?>
-                <?php foreach ($_filters as $_filter): 
-
+                <?php foreach ($_filters as $_filter):
                     ?>
                     <?php
                     $userid = Mage::getSingleton('customer/session')->getId(); // login user id
@@ -62,22 +60,100 @@ if ($this->canShowBlock()):
 //    echo 'customerid'. $customerid=  Mage::getSingleton('core/session')->getProductOwner();
 //  // echo 'myDeviceId'. $myDeviceId = $session->getData("productowner");
                     ?>
-                    <?php //   $customerid = Mage::getSingleton('core/session')->getProductOwner(); ?>
-                    
-                    
-                        <?php if ($_filter->getItemsCount()): ?>
-                        <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
-                        <?php if ($this->__($_filter->getName()) === 'Color'): ?>
-                            <div class="colorBox">                                
-                            <?php echo $_filter->getHtml() ?>
+                    <?php
+                    $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+                    $path = $current_cat->getPath();
+                    $ids = explode('/', $path);
+                    if (isset($ids[2])) {
+                        $topParent = $ids[2];
+                    }
+                    ?>
 
-                            </div>     
-                        <?php else : ?>
-                            <div>
-                                <?php echo $_filter->getHtml() ?>
-                            </div>
-                        <?php endif; ?>
-                    <?php endif;
+
+                    <?php if ($_filter->getItemsCount()): ?>
+
+                        <?php
+                        $category_array[] = 'Category';
+                     
+                        if ($topParent != 16) {
+ 
+                            if ($this->__($_filter->getName()) === 'Category') {
+                                
+                                ?>
+               
+                                <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
+                   
+                                <div>
+                                    <?php $cat = Mage::getModel('catalog/category')->load(9); 
+                                   $cat ->getProductCollection()
+                                                ->addAttributeToSelect('entity_id')
+                                                ->addAttributeToFilter('status', 1)
+                                                ->addAttributeToFilter('visibility', 4);
+                                    ?>
+
+                                    <li >
+                                        <a class="" href="<?php echo $cat->getUrl() ?>"><?php echo $cat->name; ?> </a>
+                                    </li>
+                                    <?php
+                                    $subcats = $cat->getChildren();
+                                    $all_sub_cat = explode(',', $subcats);
+                                    foreach ($all_sub_cat as $cat_id) {
+                                        
+                                        $category = Mage::getModel('catalog/category')->load($cat_id);
+                                        $categories = Mage::getModel('catalog/category')->load($category->getId())
+                                                ->getProductCollection()
+                                                ->addAttributeToSelect('entity_id')
+                                                ->addAttributeToFilter('status', 1)
+                                                ->addAttributeToFilter('visibility', 4);
+
+//                                        $products = Mage::getModel('catalog/product')
+//                                                ->getCollection()
+//                                                ->addCategoryFilter($categories)
+//                                                ->load();
+//                                        if (($products->count() > 0)) {
+                                        ?>
+                                        <li >
+                                            <a class="" href="<?php echo $category->getUrl() ?>"><?php echo $category->name; ?> </a>
+                                        </li>
+                                        <?php
+//                                        }
+                                    }
+                                    ?> 
+                                </div>
+
+                                <?php
+//                                   
+//                                $i++;
+                                    
+                            }
+                          
+
+                           
+                            if ($this->__($_filter->getName()) === 'Price') {
+                                ?>
+                                <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
+                                <div>
+                                    <?php echo $_filter->getHtml() ?>
+                                </div>
+                            <?php } ?>
+
+
+                        <?php } elseif ($this->__($_filter->getName()) != 'Price') { ?>
+
+                            <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
+                            <?php if ($this->__($_filter->getName()) === 'Color'): ?>
+                                <div class="colorBox">                                
+                                    <?php echo $_filter->getHtml() ?>
+
+                                </div>     
+                            <?php else : ?>
+                                <div>
+                                    <?php echo $_filter->getHtml() ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php } ?>
+                        <?php
+                    endif;
                     // } 
                     ?>
                 <?php endforeach; ?>
@@ -85,4 +161,4 @@ if ($this->canShowBlock()):
             <?php endif; ?>
         </div>
     </div>
-        <?php endif; ?>
+<?php endif; ?>

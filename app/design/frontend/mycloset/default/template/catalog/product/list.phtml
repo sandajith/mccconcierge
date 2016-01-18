@@ -95,7 +95,7 @@ $_product1 = $this->getProduct();
                 <div class="col-sm-4 itemList">
                     <div class="row">
                         <div class="col-sm-12 col-xs-6">
-                            <a class="show"  onclick="SubmitRequest(<?php echo $_product->getId(); ?>);"  title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+                            <a  class="show" onclick="SubmitRequest(<?php echo $_product->getId(); ?>);"  title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
                         </div>
                         <div class="col-sm-12 col-xs-6">
                             <ul>
@@ -103,7 +103,7 @@ $_product1 = $this->getProduct();
                                 <li>Price:$<?php echo $_helper->productAttribute($_product, $_product->getPrice(), 'price') ?></li>
                                 <li><a href="#">View Details</a></li>
                             </ul>
-                            <div class="actionsWrapper">
+                                    <div class="actionsWrapper">
 
                                 <a type="button" title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
                                     <?php echo $this->__('ADD TO BAG') ?></a>
