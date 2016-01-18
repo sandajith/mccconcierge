@@ -17,7 +17,45 @@ foreach ($cats as $category_id) {
     $_cat = Mage::getModel('catalog/category')->load($category_id);
     $catname = $_cat->getName();
 }
-?>
+
+// for shop menu
+//shop categories
+  $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+                    $path = $current_cat->getPath();
+                    $ids = explode('/', $path);
+                    if (isset($ids[2])) {
+                        $topParent = $ids[2];
+                    }
+                     if ($topParent != 16) { ?>
+                         
+<div class="popupHead">
+    <div class="sku dress-code hidden-xs"> <?php echo $p['sku']; ?></div>
+    <a class="close" style="float: right;">X</a>
+</div>
+<div class="popupContent">
+    <div class="row productdata" id="productdata">
+        <div class="catname col-sm-12 visible-xs center-align">
+            <h2><?php echo $catname; ?></h2>
+          
+        </div>
+        <div class="col-sm-7 image " style="min-height: 200px;">
+            <img alt="" src="<?php echo $p['ImageUrl']; ?>"/>                                                                                
+        </div>
+        <div class="col-sm-5 details">
+            <!--category name-->
+            <h2 class="catname hidden-xs"><?php echo $catname; ?></h2>
+
+            <!--ShortDescription-->
+            <p class="description">
+                <?php echo $p['ShortDescription']; ?>
+            </p>
+            <button title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')" ><?php echo $this->__('ADD TO BAG') ?></button>
+        </div>
+    </div>
+</div>
+
+                  <?php   }else {?>
+
 <div class="popupHead">
     <div class="sku dress-code hidden-xs"> <?php echo $p['sku']; ?></div>
     <a class="close" style="float: right;">X</a>
@@ -283,6 +321,7 @@ foreach ($cats as $category_id) {
     </div>
 
 </div>
+                  <?php }?>
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
     jqCustom(document).ready(function () {

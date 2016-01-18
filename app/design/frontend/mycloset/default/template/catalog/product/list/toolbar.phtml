@@ -31,7 +31,17 @@
  * @see Mage_Catalog_Block_Product_List_Toolbar
  */
 ?>
-<?php if ($this->getCollection()->getSize()): ?>
+<?php 
+
+$current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+                    $path = $current_cat->getPath();
+                    $ids = explode('/', $path);
+                    if (isset($ids[2])) {
+                        $topParent = $ids[2];
+                    }
+
+
+if ($this->getCollection()->getSize()): ?>
     <div class="row">
         <div class="customDropDown pull-left">
 
@@ -69,11 +79,21 @@
                     <b> <?php echo $this->__('SORT BY') ?></b>
                     <span></span>
                     <ul >
-                        <?php foreach ($this->getAvailableOrders() as $_key => $_order): ?>
+                        <?php foreach ($this->getAvailableOrders() as $_key => $_order): 
+  
+//                            ($_key != 'category_name') && ($_key != 'color') && ($_key != 'size') && ($_key != 'designer')
+                            
+                            ?>
                             <?php if ($_order != 'Position') : // Remove "Position" from the sort option list ?>
-                                <li onchange="setLocation(this.value)" <?php if ($this->isOrderCurrent($_key)): ?>  class="selected" <?php endif ?>>
+                        <?php if (($topParent != 16)&&($_order === 'Price') ) {  ?>
+ <li onchange="setLocation(this.value)" <?php if ($this->isOrderCurrent($_key)): ?>  class="selected" <?php endif ?>>
                                     <a href="<?php echo $this->getOrderUrl($_key) ?>"><?php echo $_order ?></a>
                                 </li>
+                        <?php }else if(($_order != 'Price')&& ($_key != 'category_name')&& ($_order === 'Color')&&($_order === 'Size')) { ?>
+                                 <li onchange="setLocation(this.value)" <?php if ($this->isOrderCurrent($_key)): ?>  class="selected" <?php endif ?>>
+                                    <a href="<?php echo $this->getOrderUrl($_key) ?>"><?php echo $_order ?></a>
+                                </li>
+                        <?php } ?>
                             <?php endif; // End for removing "Position" sort option ?>
                         <?php endforeach; ?>
                     </ul>
