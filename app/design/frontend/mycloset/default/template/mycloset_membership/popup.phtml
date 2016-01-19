@@ -20,15 +20,14 @@ foreach ($cats as $category_id) {
     $catid = $_cat->getId();
     $category = Mage::getModel('catalog/category')->load($catid);
 
-$caid = array();
-foreach ($category->getParentCategories() as $parent) {
-  $caid[] = $parent->getId();
-}
+    $caid = array();
+    foreach ($category->getParentCategories() as $parent) {
+        $caid[] = $parent->getId();
+    }
 }
 
 
-if(in_array('9', $caid))
-                {
+if (in_array('9', $caid)) {
 
     $_product = Mage::getModel('catalog/product')->load($rel_product);
     ?>
@@ -61,31 +60,31 @@ if(in_array('9', $caid))
                         <input type="hidden" name="related_product" id="related-products-field" value="" />
                     </div>
                     <div class="product-shop">
-                        
-                       
-                            <div class="add-to-box">
-                                <?php //if ($_product->isSaleable()): ?>
-                                    <?php $_product = $this->getProduct(); ?>
-                                    <?php $buttonTitle = $this->__('Add to Cart'); ?>
-                                    <?php // if ($_product->isSaleable()): ?>
-                                        <div class="add-to-cart">
-                                            <?php // if (!$_product->isGrouped()): ?>
-                                                <label for="qty"><?php echo $this->__('Qty:') ?></label>
-                                                <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
-                                            <?php //endif; ?>
-                                            <button type="button" title="<?php echo $buttonTitle ?>" id="product-addtocart-button" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
-                                            <?php echo $this->getChildHtml('', true, true) ?>
-                                        </div>
-                                    <?php //endif; ?>
-                                <?php // endif; ?>
-                                <?php echo $this->getChildHtml('addto') ?>
+
+
+                        <div class="add-to-box">
+                            <?php //if ($_product->isSaleable()):  ?>
+                            <?php $_product = $this->getProduct(); ?>
+                            <?php $buttonTitle = $this->__('Add to Cart'); ?>
+                            <?php // if ($_product->isSaleable()): ?>
+                            <div class="add-to-cart">
+                                <?php // if (!$_product->isGrouped()):  ?>
+                                <label for="qty"><?php echo $this->__('Qty:') ?></label>
+                                <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+                                <?php //endif;  ?>
+                                <button type="button" title="<?php echo $buttonTitle ?>" id="product-addtocart-button" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+                                <?php echo $this->getChildHtml('', true, true) ?>
                             </div>
-                            <?php echo $this->getChildHtml('extra_buttons') ?>
+                            <?php //endif;  ?>
+                            <?php // endif; ?>
+                            <?php echo $this->getChildHtml('addto') ?>
+                        </div>
+                        <?php echo $this->getChildHtml('extra_buttons') ?>
                         <?php // elseif (!$_product->isSaleable()): ?>
-<!--                            <div class="add-to-box">
-                                <?php// echo $this->getChildHtml('addto') ?>
-                            </div>-->
-                        <?php //endif; ?>
+                        <!--                            <div class="add-to-box">
+                        <?php // echo $this->getChildHtml('addto')  ?>
+                                                    </div>-->
+                        <?php //endif;  ?>
 
                     </div>
 
@@ -94,17 +93,17 @@ if(in_array('9', $caid))
                     </div>
 
                     <div class="clearer"></div>
-                    <?php //if ($_product->isSaleable() && $this->hasOptions()): ?>
-                        <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                    <?php //if ($_product->isSaleable() && $this->hasOptions()):  ?>
+                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
                     <?php //endif; ?>
                 </form>
 
 
-                <!--<button title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')" ><?php echo $this->__('ADD TO BAG') ?></button>-->
+                    <!--<button title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')" ><?php echo $this->__('ADD TO BAG') ?></button>-->
             </div>
         </div>
     </div>
-   
+
 
 <?php } else { ?>
 
@@ -173,7 +172,7 @@ if(in_array('9', $caid))
 
                 <!--ShortDescription-->
     <!--            <p class="description">
-                <?php //echo $p['ShortDescription']; ?>
+                <?php //echo $p['ShortDescription'];  ?>
                 </p>-->
                 <p class="status">
                     <b>Status</b>: <?php echo $p['product_status'] . ' ' . $p['shipped_to']; ?>
@@ -204,11 +203,11 @@ if(in_array('9', $caid))
         <div>
             <div class="customDropDown pull-left">
                 <div class="dropContentBox">
-                    <b>SHOW</b>
+                    <b>SHOW</b><li> All Categories</li>
                     <ul>
                         <li> <b>Category</b>
                             <ul>  
-                                <!--<li> All Categories</li>-->
+                                <li class="selected" > <a class="getcatid" rel="16" >All Categories</a></li>
                                 <?php
                                 foreach ($all_sub_cat as $cat_id) {
                                     $category = Mage::getModel('catalog/category')->load($cat_id);
@@ -612,4 +611,3 @@ if(in_array('9', $caid))
     }, 100);
     jqCustom(".season select option:not(:checked)").css("color", "black");
 </script>
- 

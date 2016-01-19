@@ -1172,7 +1172,7 @@ header .loginDetails .links { display: block !important; margin-top: 5px; positi
              box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.75);}
 .popupBox-1 .popupHead-1 h3{font: 20px/24px 'Lato'; float: left; width:93%; margin-top: 0px;}
 .popupBox-1 .popupHead-1 p{font-size: 15px;}
-.popupContent-1{border:1px solid #c7c7c7; height: 460px; padding: 0 12px; overflow-y: auto;}
+.popupContent-1{border:1px solid #c7c7c7; height: 460px; padding: 0 12px; overflow: auto;}
 
 
 .terms-popupclose-1 {float: right; margin: -20px -10px 0 0;}

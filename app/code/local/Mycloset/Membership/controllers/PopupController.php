@@ -8,9 +8,41 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
     }
 
     public function sliderAction() {
-        $categoryIds = Mage::app()->getRequest()->getParam('categoryId');
+        $categoryIds = Mage::app()->getRequest()->getParam('categoryId'); 
         $user_id = Mage::getSingleton('customer/session')->getId();
         $userid = ($user_id ? $user_id : 0);
+        $cat = Mage::getModel('catalog/category')->load(16);
+$subcats = $cat->getChildren();
+$all_sub_cat = explode(',', $subcats);
+        if($categoryIds==16){          ?>
+  <div class="flexsliderPopup flexslider carousel">
+            <ul class="slides">
+                <?php
+                foreach ($all_sub_cat as $cat_id) {
+                    $category = Mage::getModel('catalog/category')->load($cat_id);
+                    $categories = Mage::getModel('catalog/category')->load($category->getId())
+                            ->getProductCollection()
+                            ->addAttributeToSelect('entity_id')
+                            ->addAttributeToFilter('status', 1)
+                            ->addAttributeToFilter('visibility', 4);
+                    $products = Mage::getModel('catalog/product')
+                            ->getCollection()
+                            ->addAttributeToFilter('customer_id', $userid)
+                            ->addCategoryFilter($category)
+                            ->load();
+                    if ($products->count() > 0) {
+                        ?>              
+                        <li >                       
+                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo $category->name; ?></p></a> 
+                        </li>    
+                        <?php
+                    }
+                }
+                ?>
+            </ul>
+        </div>  
+      <?php  }
+      
         //if($userid){
         $collection = Mage::getModel('catalog/product')
                 ->getCollection()
@@ -55,6 +87,21 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
         ?>
         <script>
             var jqCustom = jQuery.noConflict();
+             jqCustom('.getcatid').click(function () {
+            var catid = jqCustom(this).attr('rel');
+            jqCustom.ajax({
+                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/slider",
+                type: 'post',
+                data: {
+                    categoryId: catid
+                },
+                success: function (data) {
+                    jqCustom('.flexsliderPopup').remove();
+                    jqCustom(data).appendTo(".popupContent");
+
+                }
+            });
+        });
             jqCustom('.getproductid').click(function () {
                 var productid = jqCustom(this).attr('rel');
                 jqCustom.ajax({
