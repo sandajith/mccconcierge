@@ -44,7 +44,15 @@
     <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
         <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
     <?php endif; ?>
-    <h2><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h2>
+         <?php
+    $userid = Mage::getSingleton('customer/session')->getId(); // login user id
+  $category_name = $_helper->categoryAttribute($_category, $_category->getName(), 'name'); //category name
+   if(!$userid && $category_name==='MY CLOSET'){
+    ?>
+    <h2><?php echo 'SAMPLE CLOSET'; ?></h2>
+   <?php } else { ?>
+     <h2><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h2>
+   <?php } ?>
 </div>
 
 <?php echo $this->getMessagesBlock()->toHtml() ?>

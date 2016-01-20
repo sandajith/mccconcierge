@@ -8,41 +8,43 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
     }
 
     public function sliderAction() {
-        $categoryIds = Mage::app()->getRequest()->getParam('categoryId'); 
+        $categoryIds = Mage::app()->getRequest()->getParam('categoryId');
         $user_id = Mage::getSingleton('customer/session')->getId();
         $userid = ($user_id ? $user_id : 0);
         $cat = Mage::getModel('catalog/category')->load(16);
-$subcats = $cat->getChildren();
-$all_sub_cat = explode(',', $subcats);
-        if($categoryIds==16){          ?>
-  <div class="flexsliderPopup flexslider carousel">
-            <ul class="slides">
-                <?php
-                foreach ($all_sub_cat as $cat_id) {
-                    $category = Mage::getModel('catalog/category')->load($cat_id);
-                    $categories = Mage::getModel('catalog/category')->load($category->getId())
-                            ->getProductCollection()
-                            ->addAttributeToSelect('entity_id')
-                            ->addAttributeToFilter('status', 1)
-                            ->addAttributeToFilter('visibility', 4);
-                    $products = Mage::getModel('catalog/product')
-                            ->getCollection()
-                            ->addAttributeToFilter('customer_id', $userid)
-                            ->addCategoryFilter($category)
-                            ->load();
-                    if ($products->count() > 0) {
-                        ?>              
-                        <li >                       
-                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo $category->name; ?></p></a> 
-                        </li>    
-                        <?php
+        $subcats = $cat->getChildren();
+        $all_sub_cat = explode(',', $subcats);
+        if ($categoryIds == 16) {
+            ?>
+            <div class="flexsliderPopup flexslider carousel">
+                <ul class="slides">
+                    <?php
+                    foreach ($all_sub_cat as $cat_id) {
+                        $category = Mage::getModel('catalog/category')->load($cat_id);
+                        $categories = Mage::getModel('catalog/category')->load($category->getId())
+                                ->getProductCollection()
+                                ->addAttributeToSelect('entity_id')
+                                ->addAttributeToFilter('status', 1)
+                                ->addAttributeToFilter('visibility', 4);
+                        $products = Mage::getModel('catalog/product')
+                                ->getCollection()
+                                ->addAttributeToFilter('customer_id', $userid)
+                                ->addCategoryFilter($category)
+                                ->load();
+                        if ($products->count() > 0) {
+                            ?>              
+                            <li >                       
+                                <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo $category->name; ?></p></a> 
+                            </li>    
+                            <?php
+                        }
                     }
-                }
-                ?>
-            </ul>
-        </div>  
-      <?php  }
-      
+                    ?>
+                </ul>
+            </div>  
+        <?php
+        }
+
         //if($userid){
         $collection = Mage::getModel('catalog/product')
                 ->getCollection()
@@ -70,8 +72,8 @@ $all_sub_cat = explode(',', $subcats);
                                 <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $_product->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" alt=""/></a>
                             </li>  
-                        <?php } else {
-                            ?>
+                <?php } else {
+                    ?>
                             <li>
                                 <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $_product->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" alt=""/></a>
@@ -87,21 +89,21 @@ $all_sub_cat = explode(',', $subcats);
         ?>
         <script>
             var jqCustom = jQuery.noConflict();
-             jqCustom('.getcatid').click(function () {
-            var catid = jqCustom(this).attr('rel');
-            jqCustom.ajax({
-                url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/slider",
-                type: 'post',
-                data: {
-                    categoryId: catid
-                },
-                success: function (data) {
-                    jqCustom('.flexsliderPopup').remove();
-                    jqCustom(data).appendTo(".popupContent");
+            jqCustom('.getcatid').click(function () {
+                var catid = jqCustom(this).attr('rel');
+                jqCustom.ajax({
+                    url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/slider",
+                    type: 'post',
+                    data: {
+                        categoryId: catid
+                    },
+                    success: function (data) {
+                        jqCustom('.flexsliderPopup').remove();
+                        jqCustom(data).appendTo(".popupContent");
 
-                }
+                    }
+                });
             });
-        });
             jqCustom('.getproductid').click(function () {
                 var productid = jqCustom(this).attr('rel');
                 jqCustom.ajax({
@@ -109,20 +111,26 @@ $all_sub_cat = explode(',', $subcats);
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-                      
+
                         jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
-                        jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-        //                        jqCustom('.description').html(data['Description']);
-     if (data['shipped_to'] === null) {
-                            data['shipped_to']= '';
+                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
+                        //                        jqCustom('.description').html(data['Description']);
+var productstatus ='';
+                        if (data['product_status'] === 'Shipped To') {
+                            if (data['shipped_to'] === null) {
+                                data['shipped_to'] = '';
+                              productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            } else {
+                                productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            }
                         } else {
-                          data['shipped_to'];
-                        }                 
-    jqCustom('.status').html('<b>Status</b>: ' + data['product_status'] + ' ' + data['shipped_to']);
-                        if (data['size'] === false) {
+                             productstatus = data['product_status'];
+                        }
+                        jqCustom('.status').html('<b>Status:</b> ' + productstatus );
+                                if (data['size'] === false) {
                             jqCustom('.size').html('<b>Size: </b><i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<b>Size: </b><i>' + data['size'] + '</i>');
@@ -176,8 +184,8 @@ $all_sub_cat = explode(',', $subcats);
                                         productid: productid
                                     },
                                     success: function (data1) {
-        //                                        alert(data1);
-        //                                        var data = parseInt(data1);
+                                        //                                        alert(data1);
+                                        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
                                             jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
@@ -258,8 +266,8 @@ $all_sub_cat = explode(',', $subcats);
                                 <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
                             </li>  
-                        <?php } else {
-                            ?>
+                <?php } else {
+                    ?>
                             <li>
                                 <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
@@ -287,14 +295,20 @@ $all_sub_cat = explode(',', $subcats);
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-        //                        jqCustom('.description').html(data['Description']);
-         if (data['shipped_to'] === null) {
-                            data['shipped_to']= '';
+                        //                        jqCustom('.description').html(data['Description']);
+var productstatus ='';
+                        if (data['product_status'] === 'Shipped To') {
+                            if (data['shipped_to'] === null) {
+                                data['shipped_to'] = '';
+                              productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            } else {
+                                productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            }
                         } else {
-                          data['shipped_to'];
+                             productstatus = data['product_status'];
                         }
-                        jqCustom('.status').html('<b>Status</b>: ' + data['product_status'] + ' ' + data['shipped_to']);
-                        if (data['size'] === false) {
+                        jqCustom('.status').html('<b>Status:</b> ' + productstatus );
+                                if (data['size'] === false) {
                             jqCustom('.size').html('<b>Size: </b><i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<b>Size: </b><i>' + data['size'] + '</i>');
@@ -348,7 +362,7 @@ $all_sub_cat = explode(',', $subcats);
                                         productid: productid
                                     },
                                     success: function (data1) {
-        //                                        var data = parseInt(data1);
+                                        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
                                             jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
@@ -427,8 +441,8 @@ $all_sub_cat = explode(',', $subcats);
                                 <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
                             </li>  
-                        <?php } else {
-                            ?>
+                <?php } else {
+                    ?>
                             <li>
                                 <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
@@ -456,14 +470,20 @@ $all_sub_cat = explode(',', $subcats);
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-        //                        jqCustom('.description').html(data['Description']);
-     if (data['shipped_to'] === null) {
-                            data['shipped_to']= '';
+                        //                        jqCustom('.description').html(data['Description']);
+var productstatus ='';
+                        if (data['product_status'] === 'Shipped To') {
+                            if (data['shipped_to'] === null) {
+                                data['shipped_to'] = '';
+                              productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            } else {
+                                productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            }
                         } else {
-                          data['shipped_to'];
-                        }                  
-    jqCustom('.status').html('<b>Status</b>: ' + data['product_status'] + ' ' + data['shipped_to']);
-                        if (data['size'] === false) {
+                             productstatus = data['product_status'];
+                        }
+                        jqCustom('.status').html('<b>Status:</b> ' + productstatus );
+                                if (data['size'] === false) {
                             jqCustom('.size').html('<b>Size: </b><i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<b>Size: </b><i>' + data['size'] + '</i>');
@@ -517,7 +537,7 @@ $all_sub_cat = explode(',', $subcats);
                                         productid: productid
                                     },
                                     success: function (data1) {
-        //                                        var data = parseInt(data1);
+                                        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
                                             jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
@@ -596,8 +616,8 @@ $all_sub_cat = explode(',', $subcats);
                                 <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
                             </li>  
-                        <?php } else {
-                            ?>
+                <?php } else {
+                    ?>
                             <li>
                                 <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
@@ -624,15 +644,22 @@ $all_sub_cat = explode(',', $subcats);
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
+                       
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-        //                        jqCustom('.description').html(data['Description']);
-     if (data['shipped_to'] === null) {
-                            data['shipped_to']= '';
+                        //                        jqCustom('.description').html(data['Description']);
+var productstatus ='';
+                        if (data['product_status'] === 'Shipped To') {
+                            if (data['shipped_to'] === null) {
+                                data['shipped_to'] = '';
+                              productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            } else {
+                                productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            }
                         } else {
-                          data['shipped_to'];
-                        }                   
-    jqCustom('.status').html('<b>Status</b>: ' + data['product_status'] + ' ' + data['shipped_to']);
-                        if (data['size'] === false) {
+                             productstatus = data['product_status'];
+                        }
+                        jqCustom('.status').html('<b>Status:</b> ' + productstatus );
+                                if (data['size'] === false) {
                             jqCustom('.size').html('<b>Size: </b><i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<b>Size: </b><i>' + data['size'] + '</i>');
@@ -686,7 +713,7 @@ $all_sub_cat = explode(',', $subcats);
                                         productid: productid
                                     },
                                     success: function (data1) {
-        //                                        var data = parseInt(data1);
+                                        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
                                             jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
@@ -783,8 +810,8 @@ $all_sub_cat = explode(',', $subcats);
                                 <a userid="<?php echo $userid; ?>" attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
                             </li>  
-                        <?php } else {
-                            ?>
+                <?php } else {
+                    ?>
                             <li>
                                 <a attr="<?php echo $customerid; ?>"  class="getproductid" rel="<?php echo $dddd->getId(); ?>" >
                                     <img src="<?php echo Mage::helper('catalog/image')->init($dddd, 'small_image')->resize(135); ?>" alt=""/></a>
@@ -814,14 +841,20 @@ $all_sub_cat = explode(',', $subcats);
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                         jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-        //                        jqCustom('.description').html(data['Description']);
-        if (data['shipped_to'] === null) {
-                            data['shipped_to']= '';
+                        //                        jqCustom('.description').html(data['Description']);
+var productstatus ='';
+                        if (data['product_status'] === 'Shipped To') {
+                            if (data['shipped_to'] === null) {
+                                data['shipped_to'] = '';
+                              productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            } else {
+                                productstatus = data['product_status'] + ' ' + data['shipped_to'];
+                            }
                         } else {
-                          data['shipped_to'];
+                             productstatus = data['product_status'];
                         }
-                        jqCustom('.status').html('<b>Status</b>: ' + data['product_status'] + ' ' + data['shipped_to']);
-                        if (data['size'] === false) {
+                        jqCustom('.status').html('<b>Status:</b> ' + productstatus );
+                                if (data['size'] === false) {
                             jqCustom('.size').html('<b>Size: </b><i>Size Not Applicable</i>');
                         } else {
                             jqCustom('.size').html('<b>Size: </b><i>' + data['size'] + '</i>');
@@ -875,7 +908,7 @@ $all_sub_cat = explode(',', $subcats);
                                         productid: productid
                                     },
                                     success: function (data1) {
-        //                                        var data = parseInt(data1);
+                                        //                                        var data = parseInt(data1);
                                         var tagname = jqCustom('.inputz').val();
                                         if (tagname != null) {
                                             jqCustom('.tagappend').prepend("<span>" + jqCustom('.inputz').val() + "<i class='tagclose'  pro='" + data1['product_id'] + "'  tagval='" + data1['tag_id'] + "' >x</i></span>");
@@ -934,7 +967,7 @@ $all_sub_cat = explode(',', $subcats);
         $product['id'] = $product_id; //getting product object for particular product id               
 //        $product['ShortDescription'] = $model->getShortDescription(); //product's short description
 //        $product['Description'] = $model->getDescription(); // product's long description
-       
+
         $catname = '';
         $cats = $model->getCategoryIds();
         foreach ($cats as $category_id) {
@@ -998,13 +1031,13 @@ $all_sub_cat = explode(',', $subcats);
         $code = $eavAttribute->getIdByCode('catalog_product', 'tag_custom');
 
 
-        $option['attribute_id'] = $code;//local
+        $option['attribute_id'] = $code; //local
         $option['value']['tagvalue'][0] = $tagvalue;
         $setup = new Mage_Eav_Model_Entity_Setup('core_setup');
         $setup->addAttributeOption($option);
         $optionCollection = Mage::getResourceModel('eav/entity_attribute_option_collection')
 //               
-                ->setAttributeFilter($code);//live
+                ->setAttributeFilter($code); //live
         $newInsertedOption = $optionCollection->getLastItem();
         $_option = $newInsertedOption->getData();
         $lastId = $_option['option_id'];
