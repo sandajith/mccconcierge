@@ -49,7 +49,7 @@ $_product1 = $this->getProduct();
     function SubmitRequest(productid)
     {
 
-        new Ajax.Request('<?php echo Mage::getUrl('',array('_secure' => true)) . "mycloset/popup?product_id=" ?>' + productid,
+        new Ajax.Request('<?php echo Mage::getUrl('', array('_secure' => true)) . "mycloset/popup?product_id=" ?>' + productid,
                 {
                     method: "get",
                     onSuccess: function (transport) {
@@ -66,15 +66,15 @@ $_product1 = $this->getProduct();
                 });
 
     }
-    
 
 
-        var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
- 
-       
-    </script>
 
-<?php if (!$_productCollection->count()):?>
+
+
+
+</script>
+
+<?php if (!$_productCollection->count()): ?>
     <p class="note-msg align_center"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
     <div class="topToolbar">
@@ -107,23 +107,55 @@ $_product1 = $this->getProduct();
                         <div class="col-sm-12 col-xs-6">
                             <ul>
                                 <li>  <?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></br></li>
-                                <li>Price:$<?php echo $_helper->productAttribute($_product, $_product->getPrice(), 'price') ?></li>
-                                <li><a href="#">View Details</a></li>
+                                <li>Price: $<?php echo $_helper->productAttribute($_product, $_product->getPrice(), 'price') ?></li>
+                                <li><a class="show" onclick="SubmitRequest(<?php echo $_product->getId(); ?>);" >View Details</a></li>
                             </ul>
-                                    <div class="actionsWrapper">
+                            <div class="actionsWrapper">
 
-                                <a type="button" title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                <a type="button" title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart addtocartupdate" onclick="listLocation('<?php echo $this->getAddToCartUrl($_product) ?>', '<?php echo $_product->getId(); ?>')">
                                     <?php echo $this->__('ADD TO BAG') ?></a>
+                                <?php
+                                $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
+                                ?>
                                 <div class="customDropDown">
                                     <div class="dropContentBox">
-                                        <span>QTY</span>
+                                        <span id="<?php echo $_product->getId(); ?>">QTY</span>
                                         <ul>
                                             <?php
-                                            $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
-                                            for ($x = 1; $x <= $stock['qty']; $x++) {
-                                                ?>
-                                                <li class="selected"><?php echo $x; ?></li>
-                                            <?php } ?>
+                                            $cart_m = Mage::getModel('checkout/cart')->getQuote();
+                                            if (empty($cart_m->getAllItems())) {
+
+                                                 $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
+                                               if ($num == 0) {
+                                                        ?>
+                                                        <li class="selected"><?php echo $num; ?></li>
+                                                        <?php
+                                                    }
+                                                 for ($x = 1; $x <= $num; $x++) {
+                                                    ?>
+                                                    <li class="selected"><?php echo $x; ?></li>
+                                                    <?php
+                                                }
+                                            } else {
+
+                                                foreach ($cart_m->getAllItems() as $item) {
+
+                                                     $productQuantity = $item->getQty();
+                                                    $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
+                                                    $num1 = $num - $productQuantity;
+                                                    if ($num1 == 0) {
+                                                        ?>
+                                                        <li class="selected"><?php echo $num1; ?></li>
+                                                        <?php
+                                                    }
+                                                    for ($x = 1; $x <= $num1; $x++) {
+                                                        ?>
+                                                        <li class="selected"><?php echo $x; ?></li>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
                                         </ul>
                                         <b aria-hidden="true" class="glyphicon glyphicon-chevron-down"></b>
                                     </div>
@@ -132,12 +164,12 @@ $_product1 = $this->getProduct();
                         </div>
                     </div>
                 </div>
-            <?php } else {  //Product details  ?>
+            <?php } else {  //Product details     ?>
                 <div class="col-sm-4 itemList">
                     <div class="row">
                         <div class="col-sm-12 col-xs-6">
                             <a class="show"  onclick="SubmitRequest(<?php echo $_product->getId(); ?>);"  title="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="product-image">
-                                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(236,354); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" /></a>
+                                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(236, 354); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" /></a>
                         </div>
                         <div class="col-sm-12 col-xs-6">
                             <ul>
@@ -148,26 +180,27 @@ $_product1 = $this->getProduct();
                                     <?php echo $_product->getAttributeText('color'); ?>
                                 </li>
                                 <li>
-                                   Size: <?php 
-                                  $sizeval= $_product->getAttributeText('size');
-                                   if($sizeval==''){
-                                       echo 'Not Applicable';
-                                   }else{
-                                      echo $_product->getAttributeText('size'); 
-                                   }  ?>
+                                    Size: <?php
+                                    $sizeval = $_product->getAttributeText('size');
+                                    if ($sizeval == '') {
+                                        echo 'Not Applicable';
+                                    } else {
+                                        echo $_product->getAttributeText('size');
+                                    }
+                                    ?>
                                 </li>
                                 <li>
-                                   Status: <?php echo $_product->getAttributeText('product_status') . '  ' . $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); ?>
+                                    Status: <?php echo $_product->getAttributeText('product_status') . '  ' . $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); ?>
                                 </li>
                             </ul>
-                            <?php if (!$userid) { ////add to my bag  ?>
+                            <?php if (!$userid) { ////add to my bag     ?>
                                 <?php if ($_product->isSaleable() && $_product->getAttributeText('product_status') == 'We Have It') {
                                     ?>
                                     <button class="button" data-toggle="modal" data-target=".bs-example-modal-sm" title="<?php echo $this->__('Deliver Me') ?>" ><?php echo $this->__('Deliver Me') ?></button>
                                 <?php } else if ($_product->isSaleable()) { ?>
                                     <button class="button" data-toggle="modal" data-target=".bs-example-modal-sm"  title="<?php echo $this->__('Pick Me Up') ?>"  ><?php echo $this->__('Pick Me Up') ?></button>
                                 <?php } ?>
-                            <?php } else { //Popup to sign up  ?>
+                            <?php } else { //Popup to sign up      ?>
 
                                 <?php if ($_product->isSaleable() && $_product->getAttributeText('product_status') == 'We Have It') { ?>
                                     <button type="button" title="<?php echo $this->__('Deliver Me') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Deliver Me') ?></span></span></button>
@@ -182,7 +215,7 @@ $_product1 = $this->getProduct();
                 </div>
 
 
-            <?php
+                <?php
             }
         endforeach;
         ?>
@@ -207,7 +240,7 @@ $_product1 = $this->getProduct();
                 </div>
                 <div class="modal-body">
                     <p>Please login into the site for further process..</p>
-                    <p>click here for login <a href="<?php echo $this->getUrl('',array('_secure' => true)) ?>membership/account/login/">Sign In</a></p>
+                    <p>click here for login <a href="<?php echo $this->getUrl('', array('_secure' => true)) ?>membership/account/login/">Sign In</a></p>
                 </div>
             </div>
         </div>
@@ -215,66 +248,35 @@ $_product1 = $this->getProduct();
     <!--non logged user popup notification-->
 
 
-  
+
 
 <?php endif; ?>
 
-    <script type="text/javascript">
 
-    
-  
-    
-    //<![CDATA[
 
-        var productAddToCartForm = new VarienForm('product_addtocart_form');
-        
-        productAddToCartForm.submit = function (button, url) {
-            alert('dfdfd');
-          
-            if (this.validator.validate()) {
-                var form = this.form;
-                var oldUrl = form.action;
+<script type="text/javascript">
+    function updateLocation(url)
+    {
+        var url = url;
+        var urlnew = url.replace('/product/', '/qty/' + document.getElementById('qty').value + '/product/');
+        setLocation(urlnew);
+    }
+    function listLocation(url, productid)
+    {
+        var url = url;
+        var urlnew = url.replace('/product/', '/qty/' + document.getElementById(productid).innerHTML + '/product/');
+        setLocation(urlnew);
 
-                if (url) {
-                    form.action = url;
-                }
-                var e = null;
-                try {
-                    this.form.submit();
-                } catch (e) {
-                }
-                this.form.action = oldUrl;
-                if (e) {
-                    throw e;
-                }
+    }
 
-                if (button && button != 'undefined') {
-                    button.disabled = true;
-                }
-            }
-        }.bind(productAddToCartForm);
 
-        productAddToCartForm.submitLight = function (button, url) {
-            if (this.validator) {
-                var nv = Validation.methods;
-                delete Validation.methods['required-entry'];
-                delete Validation.methods['validate-one-required'];
-                delete Validation.methods['validate-one-required-by-name'];
-                // Remove custom datetime validators
-                for (var methodName in Validation.methods) {
-                    if (methodName.match(/^validate-datetime-.*/i)) {
-                        delete Validation.methods[methodName];
-                    }
-                }
 
-                if (this.validator.validate()) {
-                    if (url) {
-                        this.form.action = url;
-                    }
-                    this.form.submit();
-                }
-                Object.extend(Validation.methods, nv);
-            }
-        }.bind(productAddToCartForm);
-        //]]>
+</script>
+<script type="text/javascript">
+    var jqCustom = jQuery.noConflict();
+    jqCustom('.addtocartupdate').click(function () {
+        setTimeout(function () {
+            location.reload();
+        }, 3000);
+    });
 </script>

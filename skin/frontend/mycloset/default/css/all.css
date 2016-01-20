@@ -1653,6 +1653,7 @@ p.back-link{
     z-index:100001 !important;
  }
   
+
 .row.myBag {
     padding: 0 10px;
 }
@@ -1662,7 +1663,30 @@ p.back-link{
 .myBag .dataTable > .row.th > div{
     padding: 0 10px;
 }
-  
+
+.block-layered-nav .small-accordion.block-content a {
+    display: inline-flex !important;
+    width: 100%;
+}
+
+.block-layered-nav .small-accordion.block-content a input[type="radio"], 
+.block-layered-nav .small-accordion.block-content a input[type="checkbox"]{
+    margin: 7px 2px 0 0;
+}
+.qty_countbox{
+    width: 80%; 
+}
+.qty_lbl{
+    float: left;
+    line-height: 46px;
+    margin: 0 1% 0 0;
+}
+.add_tobag{
+    width: 100%;
+    text-align: center;
+}
+
+
 .myBag .dataTable > .row.th.foot{
     padding: 2px 0;
 }
