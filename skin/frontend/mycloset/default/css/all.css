@@ -1629,15 +1629,15 @@ p.back-link{
     z-index:100001 !important;
  }
   
-.block-layered-nav .small-accordion.block-content a {
+/*.block-layered-nav .small-accordion.block-content a {
     display: inline-flex !important;
     width: 100%;
-}
+}*/
 
-.block-layered-nav .small-accordion.block-content a input[type="radio"], 
+/*.block-layered-nav .small-accordion.block-content a input[type="radio"], 
 .block-layered-nav .small-accordion.block-content a input[type="checkbox"]{
     margin: 7px 2px 0 0;
-}
+}*/
 .qty_countbox{
     width: 80%; 
 }

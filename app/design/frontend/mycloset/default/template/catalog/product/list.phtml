@@ -32,6 +32,22 @@
  */
 ?>
 <?php
+$qty_cart = array();
+     $cart_m = Mage::getModel('checkout/cart')->getQuote();
+                                            $arraycheck = $cart_m->getAllItems();
+                                            
+                                           
+                                            foreach($arraycheck as $r)
+                                            {
+                                               
+                                       // $stock_qty = Mage::getModel('cataloginventory/stock_item')->loadByProduct($r->getProductId())->getQty();
+                                        $qty_cart[$r->getProductId()] = $r->getQty();
+                                            }
+                                          //  echo "<pre>";
+                                          //  print_r($qty_cart);
+                                           // exit;
+
+
 $_productCollection = $this->getLoadedProductCollection();
 $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
 
@@ -120,43 +136,80 @@ $_product1 = $this->getProduct();
                                 <div class="customDropDown">
                                     <div class="dropContentBox">
                                         <span id="<?php echo $_product->getId(); ?>">QTY</span>
-                                        <ul>
+<!--                                      <ul>
                                             <?php
-                                            $cart_m = Mage::getModel('checkout/cart')->getQuote();
-                                            if (empty($cart_m->getAllItems())) {
+                                         
+                                               //  for ($x = 1; $x <= $num; $x++) {
+                                                    ?>
+                                                    <li class="selected"><?php //echo $x; ?></li>
+                                                    <?php
+                                               // }
+                                          
+                                            ?>
+                                        </ul>-->
 
-                                                 $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
-                                               if ($num == 0) {
-                                                        ?>
-                                                        <li class="selected"><?php echo $num; ?></li>
-                                                        <?php
-                                                    }
+                                            <?php
+                                            
+                                           // $qty_cart
+                                             $qty_stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
+                                            
+                                            $num = $qty_stock - $qty_cart[$_product->getId()];
+                                            if($num>0)
+                                            {
+                                                echo "<ul id='ul_".$_product->getId()."'>";
                                                  for ($x = 1; $x <= $num; $x++) {
                                                     ?>
                                                     <li class="selected"><?php echo $x; ?></li>
                                                     <?php
                                                 }
-                                            } else {
-
-                                                foreach ($cart_m->getAllItems() as $item) {
-
-                                                     $productQuantity = $item->getQty();
-                                                    $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
-                                                    $num1 = $num - $productQuantity;
-                                                    if ($num1 == 0) {
-                                                        ?>
-                                                        <li class="selected"><?php echo $num1; ?></li>
-                                                        <?php
-                                                    }
-                                                    for ($x = 1; $x <= $num1; $x++) {
-                                                        ?>
-                                                        <li class="selected"><?php echo $x; ?></li>
-                                                        <?php
-                                                    }
-                                                }
+                                                 echo "</ul>";
+                                            
                                             }
+                                            
+                                            
+                                            
+//                                            
+//                                            $cart_m = Mage::getModel('checkout/cart')->getQuote();
+//                                            $arraycheck = $cart_m->getAllItems();
+//                                            
+//                                            
+//                                            
+//                                            
+//                                            if (empty($arraycheck)) {
+//
+//                                                 $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
+//                                               if ($num == 0) {
+//                                                        ?>
+                                                        <!--<li class="selected">1111//<?php //echo $num; ?></li>-->
+                                                        <?php
+//                                                    }
+//                                                 for ($x = 1; $x <= $num; $x++) {
+//                                                    ?>
+                                                    <!--<li class="selected">2222//<?php// echo $x; ?></li>-->
+                                                    <?php
+//                                                }
+//                                            } else {
+//
+//                                                foreach ($arraycheck as $item) {
+//
+//                                                     $productQuantity = $item->getQty();
+//                                                    
+//                                                    $num = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty();
+//                                                    $num1 = $num - $productQuantity;
+//                                                    if ($num1 == 0) {
+//                                                        ?>
+                                                        <!--<li class="selected">3333//<?php //echo $num1; ?></li>-->
+                                                        <?php
+//                                                    }
+//                                                    for ($x = 1; $x <= $num1; $x++) {
+//                                                        ?>
+                                                        <!--<li class="selected">4444//<?php// echo $x; ?></li>-->
+                                                        <?php
+//                                                    }
+//                                                }
+//                                            }
                                             ?>
-                                        </ul>
+                                       
                                         <b aria-hidden="true" class="glyphicon glyphicon-chevron-down"></b>
                                     </div>
                                 </div>
@@ -164,7 +217,7 @@ $_product1 = $this->getProduct();
                         </div>
                     </div>
                 </div>
-            <?php } else {  //Product details     ?>
+            <?php } else {  //Product details       ?>
                 <div class="col-sm-4 itemList">
                     <div class="row">
                         <div class="col-sm-12 col-xs-6">
@@ -193,14 +246,14 @@ $_product1 = $this->getProduct();
                                     Status: <?php echo $_product->getAttributeText('product_status') . '  ' . $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); ?>
                                 </li>
                             </ul>
-                            <?php if (!$userid) { ////add to my bag     ?>
+                            <?php if (!$userid) { ////add to my bag       ?>
                                 <?php if ($_product->isSaleable() && $_product->getAttributeText('product_status') == 'We Have It') {
                                     ?>
                                     <button class="button" data-toggle="modal" data-target=".bs-example-modal-sm" title="<?php echo $this->__('Deliver Me') ?>" ><?php echo $this->__('Deliver Me') ?></button>
                                 <?php } else if ($_product->isSaleable()) { ?>
                                     <button class="button" data-toggle="modal" data-target=".bs-example-modal-sm"  title="<?php echo $this->__('Pick Me Up') ?>"  ><?php echo $this->__('Pick Me Up') ?></button>
                                 <?php } ?>
-                            <?php } else { //Popup to sign up      ?>
+                            <?php } else { //Popup to sign up       ?>
 
                                 <?php if ($_product->isSaleable() && $_product->getAttributeText('product_status') == 'We Have It') { ?>
                                     <button type="button" title="<?php echo $this->__('Deliver Me') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Deliver Me') ?></span></span></button>
@@ -255,28 +308,68 @@ $_product1 = $this->getProduct();
 
 
 <script type="text/javascript">
-    function updateLocation(url)
+    function updateLocation(url, productid)
     {
+        var jqCustom = jQuery.noConflict();
+         if(document.getElementById('qty').value>0)
+        {
         var url = url;
         var urlnew = url.replace('/product/', '/qty/' + document.getElementById('qty').value + '/product/');
+        var numitems =  jqCustom("#ul_"+productid).children().length;
+        var num = numitems - parseInt(document.getElementById('qty').value);
+        var i = 1;
+   
+        jqCustom("#ul_"+productid).children().each(function() {
+            
+         if(i>num){   
+    jqCustom(this).remove();}
+    i++;
+    
+})
+if(num == 0)
+{
+    jqCustom("#ul_"+productid).remove();
+}
+jqCustom("#"+productid).html('QTY');
+        
+        
         setLocation(urlnew);
+    }
     }
     function listLocation(url, productid)
     {
+         var jqCustom = jQuery.noConflict();
         var url = url;
         var urlnew = url.replace('/product/', '/qty/' + document.getElementById(productid).innerHTML + '/product/');
-        setLocation(urlnew);
-
+        var numitems =  jqCustom("#ul_"+productid).children().length;
+       
+        var num = numitems - parseInt(document.getElementById(productid).innerHTML);
+        var i = 1;
+   
+        jqCustom("#ul_"+productid).children().each(function() {
+            
+         if(i>num){   
+    jqCustom(this).remove();}
+    i++;
+    
+})
+if(num == 0)
+{
+    jqCustom("#ul_"+productid).remove();
+}
+jqCustom("#"+productid).html('QTY');
+setLocation(urlnew);
+  
     }
 
 
 
 </script>
 <script type="text/javascript">
-    var jqCustom = jQuery.noConflict();
+    /*var jqCustom = jQuery.noConflict();
     jqCustom('.addtocartupdate').click(function () {
         setTimeout(function () {
             location.reload();
         }, 3000);
-    });
+    });*/
 </script>
