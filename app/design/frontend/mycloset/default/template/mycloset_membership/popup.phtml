@@ -62,7 +62,7 @@ if (in_array('9', $caid)) {
                             
                         </div>                                                  
                 <div class="add_tobag">
-                <button title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="updateLocation('<?php echo $this->getAddToCartUrl($product) ?>')" ><?php echo $this->__('ADD TO BAG') ?></button>
+                <button title="<?php echo $this->__('ADD TO BAG') ?>" class="button btn-cart" onclick="updateLocation('<?php echo $this->getAddToCartUrl($product) ?>','<?php echo $product->getId(); ?>')" ><?php echo $this->__('ADD TO BAG') ?></button>
                 </div>
             </div>
         </div>

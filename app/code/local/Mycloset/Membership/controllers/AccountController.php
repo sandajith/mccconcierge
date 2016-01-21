@@ -111,7 +111,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         }
 
         if ($this->_getSession()->isLoggedIn()) {
-              Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
+             // Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
             $this->_redirect('*/*');
             return;
         }
