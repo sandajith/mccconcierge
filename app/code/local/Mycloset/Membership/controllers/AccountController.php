@@ -102,73 +102,155 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
     /**
      * Login post action
      */
-    public function loginPostAction() {
-      
-     // Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
+//    public function loginPostAction_back() {
+//      
+//     // Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
+//        if (!$this->_validateFormKey()) {
+//            $this->_redirect('*/*');
+//            return;
+//        }
+//
+//        if ($this->_getSession()->isLoggedIn()) {
+//             // Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
+//            $this->_redirect('*/*');
+//            return;
+//        }
+//
+//        //restricting user to login based on group  
+//        $login = $this->getRequest()->getPost('login');
+//        $customer = Mage::getModel('customer/customer')
+//                ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
+//                ->loadByEmail($login['username']);
+//        $group = $customer->getGroupId();
+//        if (($group == '4') || ($group == '6')) {
+//            $session = $this->_getSession();
+//            $message = 'Your membership is not activated or it has been closed';
+//            $session->addError($message);
+//              
+//           $this->_redirect('*/*');
+//        } else {
+//            //user is granted login to website after the group verification
+//            $session = $this->_getSession();
+//            if ($this->getRequest()->isPost()) {
+//                $login = $this->getRequest()->getPost('login');
+//                if (!empty($login['username']) && !empty($login['password'])) {
+//                    try {
+//                        $session->login($login['username'], $login['password']);
+//                               $this->_redirect('*/*');      
+//      
+//                        if ($session->getCustomer()->getIsJustConfirmed()) {
+//                        
+//                            $this->_welcomeCustomer($session->getCustomer(), true);
+//                        }
+//                    } catch (Mage_Core_Exception $e) {
+//                        switch ($e->getCode()) {
+//                            case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
+//                                $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
+//                                $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
+//                                break;
+//                            case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
+//                                $message = $e->getMessage();
+//                                break;
+//                            default:
+//                                $message = $e->getMessage();
+//                        }
+//                        $session->addError($message);
+//                        $session->setUsername($login['username']);
+//                    } catch (Exception $e) {
+//                        // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
+//                    }
+//                } else {
+//                    $session->addError($this->__('Login and password are required.'));
+//                }
+//            }
+//
+//            $this->_loginPostRedirect();
+//        }
+//        
+//        
+//        
+//     
+//        
+//        
+//    }
+    public function loginPostAction()
+    {
         if (!$this->_validateFormKey()) {
-            $this->_redirect('*/*');
+            $this->_redirect('*/*/');
             return;
         }
 
         if ($this->_getSession()->isLoggedIn()) {
-             // Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
-            $this->_redirect('*/*');
+            $this->_redirect('*/*/');
             return;
         }
-   if( !Mage::getSingleton( 'customer/session' )->isLoggedIn() )
-{                  
-    $this->_redirect('*/*/membership/account/login/'); 
-}
-        //restricting user to login based on group  
-        $login = $this->getRequest()->getPost('login');
-        $customer = Mage::getModel('customer/customer')
+        
+        
+        $session = $this->_getSession();
+
+        if ($this->getRequest()->isPost()) {
+            $login = $this->getRequest()->getPost('login');
+            
+            
+            
+            
+             $customer = Mage::getModel('customer/customer')
                 ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
                 ->loadByEmail($login['username']);
+             
         $group = $customer->getGroupId();
         if (($group == '4') || ($group == '6')) {
             $session = $this->_getSession();
-            $message = 'Your membership is not activated or it has been closed';
+            $message =  Mage::helper('mycloset_membership')->__('Your membership is not activated or it has been closed');
             $session->addError($message);
               
-           $this->_redirect('*/*');
+          // $this->_redirect('*/*');
         } else {
-            //user is granted login to website after the group verification
-            $session = $this->_getSession();
-            if ($this->getRequest()->isPost()) {
-                $login = $this->getRequest()->getPost('login');
-                if (!empty($login['username']) && !empty($login['password'])) {
-                    try {
-                        $session->login($login['username'], $login['password']);
-                               $this->_redirect('*/*/my-closet.html');      
-      
-                        if ($session->getCustomer()->getIsJustConfirmed()) {
-                        
-                            $this->_welcomeCustomer($session->getCustomer(), true);
-                        }
-                    } catch (Mage_Core_Exception $e) {
-                        switch ($e->getCode()) {
-                            case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
-                                $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
-                                $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
-                                break;
-                            case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
-                                $message = $e->getMessage();
-                                break;
-                            default:
-                                $message = $e->getMessage();
-                        }
-                        $session->addError($message);
-                        $session->setUsername($login['username']);
-                    } catch (Exception $e) {
-                        // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
+            
+            
+               if (!empty($login['username']) && !empty($login['password'])) {
+                try {
+                    $session->login($login['username'], $login['password']);
+                    
+                    
+                     Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
+           
+                    
+                    if ($session->getCustomer()->getIsJustConfirmed()) {
+                        $this->_welcomeCustomer($session->getCustomer(), true);
                     }
-                } else {
-                    $session->addError($this->__('Login and password are required.'));
+                } catch (Mage_Core_Exception $e) {
+                    switch ($e->getCode()) {
+                        case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
+                            $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
+                            $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
+                            break;
+                        case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
+                            $message = $e->getMessage();
+                            break;
+                        default:
+                            $message = $e->getMessage();
+                    }
+                    $session->addError($message);
+                    $session->setUsername($login['username']);
+                } catch (Exception $e) {
+                    // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
                 }
+            } else {
+                $session->addError($this->__('Login and password are required.'));
             }
-
-            $this->_loginPostRedirect();
+        
         }
+            
+            
+            
+            
+            
+            
+         
+        }
+
+        $this->_loginPostRedirect();
     }
 
     /**
