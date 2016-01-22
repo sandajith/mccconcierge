@@ -48,13 +48,13 @@ foreach ($expression as $_item) {
 ?>  
 <div class="cart">   
     <div class="page-title title-buttons subhead">
-        <h2><?php echo $this->__('My Bag') ?></h2>
+        <h2><?php echo $this->__('MY BAG') ?></h2>
     </div>
     <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
          <?php //if ($delivery_cnt) { ?>
         <div class="row myBag">
-            <h4 class="deliveryme"><?php echo $this->__('Deliver Me') ?></h4>
+            <h4 class="deliveryme"><?php echo $this->__('Delivery ') ?></h4>
             <div class="col-md-12 dataTable">
                 <div class="row th">
                     <div class="col-sm-1 hidden-xs"></div>
@@ -82,7 +82,8 @@ foreach ($expression as $_item) {
                                 $cats = $custom->getCategoryIds();
                                 foreach ($cats as $categoryId) {
                                     $category = Mage::getModel('catalog/category')->load($categoryId);
-                                    echo $category->getName();
+                                   $category_name_delivey = $category->getName();
+                                    echo ucfirst(strtolower($category_name_delivey)); 
                                 }
                                 ?>
                             </div>
@@ -102,7 +103,8 @@ foreach ($expression as $_item) {
                                 $cats = $custom->getCategoryIds();
                                 foreach ($cats as $categoryId) {
                                     $category = Mage::getModel('catalog/category')->load($categoryId);
-                                    echo $category->getName();
+                                   $category_name_deliver = $category->getName();
+                                    echo ucfirst(strtolower($category_name_deliver));
                                 }
                                 ?></span></p>
 
@@ -123,9 +125,9 @@ foreach ($expression as $_item) {
                 <div class="row th foot">
                     <div class="col-xs-12">
                         <a href="<?php echo $this->getUrl('') ?>my-closet.html" class="pull-left cartButton">
-                            choose items to deliver
+                            Choose items to deliver
                         </a>
-                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=19" class=" btn-empty pull-right cartButton" >clear all items</a>                                  
+                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=19" class=" btn-empty pull-right cartButton" >Clear all items</a>                                  
                     </div>
                 </div>
             </div>
@@ -134,7 +136,7 @@ foreach ($expression as $_item) {
    // } if ($pickup_cnt) {
         ?>
         <div class="row myBag">
-            <h4><?php echo $this->__('PickUp Me') ?></h4>
+            <h4><?php echo $this->__('Pick Up') ?></h4>
             <div class="col-md-12 dataTable">
                 <div class="row th">
                     <div class="col-sm-1 hidden-xs"></div>
@@ -162,7 +164,8 @@ foreach ($expression as $_item) {
                                 $cats = $custom->getCategoryIds();
                                 foreach ($cats as $categoryId) {
                                     $category = Mage::getModel('catalog/category')->load($categoryId);
-                                    echo $category->getName();
+                                   $category_name_pickup = $category->getName();
+                                    echo ucfirst(strtolower($category_name_pickup));
                                 }
                                 ?>
                             </div>
@@ -182,7 +185,8 @@ foreach ($expression as $_item) {
                                 $cats = $custom->getCategoryIds();
                                 foreach ($cats as $categoryId) {
                                     $category = Mage::getModel('catalog/category')->load($categoryId);
-                                    echo $category->getName();
+                                    $category_name_pickupme = $category->getName();
+                                    echo ucfirst(strtolower($category_name_pickupme));
                                 }
                                 ?></span></p>
 
@@ -201,9 +205,9 @@ foreach ($expression as $_item) {
                 <div class="row th foot">                    
                     <div class="col-xs-12">
                         <a href="<?php echo $this->getUrl('') ?>my-closet.html" class="pull-left cartButton">
-                            choose items to pickup
+                            Choose items to pick up
                         </a>
-                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=20" class=" btn-empty pull-right cartButton" >clear all items</a>
+                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=20" class=" btn-empty pull-right cartButton" >Clear all items</a>
                     </div>
                 </div>
             </div>

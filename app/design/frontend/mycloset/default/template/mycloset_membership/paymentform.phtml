@@ -121,7 +121,7 @@
                             $data = $model->getCollection()->getData();
                             foreach ($data as $options) {
                                 ?>
-                                <input type="radio" checked="checked"name="mem_type" value="<?php echo $options['membership_id']; ?>" onclick="javascript:GetPrice(this.value);" />&nbsp;<?php echo $options['membership_type']; ?><br>
+                                <input type="radio" name="mem_type" value="<?php echo $options['membership_id']; ?>" onclick="javascript:GetPrice(this.value);" />&nbsp;<?php echo $options['membership_type']; ?><br>
                             <?php } ?>
                         </div>
                     </div>

@@ -70,11 +70,15 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
 
 <div class="col-sm-7 product-name hidden-xs">
     <h4 >
-        <?php if ($this->hasProductUrl()): ?>
-            <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+        <?php if ($this->hasProductUrl()): 
+            
+           $poductname = $this->escapeHtml($this->getProductName());
+        $poductname1= ucfirst(strtolower($poductname));
+            ?>
+            <a href="<?php echo $this->getProductUrl() ?>"><?php echo $poductname1;  ?></a>
             
         <?php else: ?>
-            <?php echo $this->escapeHtml($this->getProductName()) ?>
+            <?php  echo $poductname1; ?>
            
         <?php endif; ?>
     </h4>
