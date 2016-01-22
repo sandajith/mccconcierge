@@ -1678,3 +1678,42 @@ p.back-link{
 }
 
 
+.myBag .dataTable > .row.th.foot{
+    padding: 2px 0;
+}
+
+.myBag .dataTable > .row.th.foot .cartButton {
+    background: #b3b3b3 none repeat scroll 0 0;
+    border: 1px solid #9d9d9d;
+    color: #fff;
+    display: inline-block;
+    height: 20px;
+    line-height: 15px;
+    padding: 0 10px;
+}
+
+.myBag .dataTable > .row.border_row{
+    border:0px solid #c3c3c3;
+} 
+.cart .checkout_info{
+    width:100%;
+    margin: 0 auto;
+    float: right;
+}
+.cart .checkout_info .totalBox{
+    float: right;
+    text-align: left;
+}
+
+.cart .checkout_info .check_outdetails {
+    margin: 0 auto;
+    width: 90%;
+    font-size: 13px;
+}
+.cart .checkout_info .check_outdetails .price{
+    float: right;
+
+}
+
+
+
