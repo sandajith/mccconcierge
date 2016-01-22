@@ -253,6 +253,9 @@
         border-bottom:0px solid #c3c3c3;
         position: relative;
     } 
+    .myBag .dataTable > .row.border_row > div {
+        display: inline-block;
+    }
    .myBag .dataTable > .row.th.foot{
         border:0px;
         border-top:2px solid #c3c3c3;
@@ -294,7 +297,9 @@
     .myBag .dataTable > .row .product-name p span {
         font-style: italic;
     }
-
+    .myBag .dataTable > .row .product-name.visible-xs p{
+        width:87%;
+    }
 
    .myBag .dataTable .input-text { 
         background: none;
@@ -302,6 +307,9 @@
         text-align: center;
         width: auto;
         border:0px;
+    }
+    .myBag .dataTable > .row.th.foot .cartButton.btn-update{
+        margin-left: 0px;
     }
 
    .cart .checkout_info{
