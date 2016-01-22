@@ -115,7 +115,10 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $this->_redirect('*/*');
             return;
         }
-   
+   if( !Mage::getSingleton( 'customer/session' )->isLoggedIn() )
+{                  
+    $this->_redirect('*/*/membership/account/login/'); 
+}
         //restricting user to login based on group  
         $login = $this->getRequest()->getPost('login');
         $customer = Mage::getModel('customer/customer')
