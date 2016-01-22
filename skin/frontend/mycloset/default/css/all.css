@@ -409,7 +409,7 @@ a.button, button.button, input.button {
     padding:30px 0 0;
     font-size: 27px;
     letter-spacing: 5px;
-    margin-bottom: 0;
+    margin-bottom: 60px;
 }
 .myCloset {}
 .itemList {
@@ -582,7 +582,7 @@ a.button, button.button, input.button {
 .filterBy {
     border: 3px solid #c3c3c3;
     padding: 16px 10px 10px 30px;
-    margin: 35px 0 0;
+    margin: 182px 0 0;
     float: left;
 }
 .itemsWrapper .itemList ul li a {
@@ -669,7 +669,7 @@ a.button, button.button, input.button {
 .dropContentBox { position: relative; float: left;}
 .dropContentBox  b { font-weight: normal;}
 .customDropDown span { margin: 0 20px 0 20px; position: relative; font-style:italic}
-.customDropDown ul { position: absolute;  background:rgba(256,256,256,0.7); border: 3px solid #c3c3c3; list-style: none; padding: 0; top: -5px; right: 0; display: none; width: -moz-min-content; width: -webkit-min-content; width: min-content; z-index: 5;}
+.customDropDown ul { position: absolute;  background:rgba(256,256,256,0.7); border: 3px solid #c3c3c3; list-style: none; padding: 0; top: -5px; right: -9px; display: none; width: -moz-min-content; width: -webkit-min-content; width: min-content; z-index: 5;}
 .customDropDown ul li { padding: 5px 17px; font-style: italic;  white-space: nowrap;}
 .customDropDown > ul li:first-child { background: #ffffff}
 .customDropDown ul li b { font-weight: bold; margin-bottom: 5px; display: block}
@@ -879,7 +879,7 @@ a.button, button.button, input.button {
 .dataTable > .row.th.foot .cartButton { background: #b3b3b3; border: 1px solid #9d9d9d; padding: 5px 10px; color: #fff}
 .dataTable > .row.th.foot .cartButton:hover { background: #666666}
 .dataTable > .row.th.foot .cartButton.pull-right { margin-left: 10px;}
-.dataTable a.btn-remove {background: #ccc none repeat scroll 0 0;
+.dataTable a.btn-remove {background: #eae9e9 none repeat scroll 0 0;
                          border-radius: 100%;
                          display: block;
                          height: 30px;
@@ -1657,6 +1657,7 @@ p.back-link{
 
 .row.myBag {
     padding: 0 10px;
+    font-family: 'Lato';
 }
 .myBag .dataTable{
     border:2px solid #c3c3c3;
@@ -1690,11 +1691,32 @@ p.back-link{
     height: 20px;
     line-height: 15px;
     padding: 0 10px;
+    margin-left: 0px;
 }
 
 .myBag .dataTable > .row.border_row{
     border:0px solid #c3c3c3;
+    font-size: 13px;
 } 
+.myBag .dataTable > .row.border_row > div{
+    display: flex;
+}
+.myBag .dataTable > .row.border_row > div .v_middle{
+    margin:auto;
+}
+.myBag .dataTable > .row.border_row > div .v_middle_lt{
+    margin:auto 0;
+}
+.myBag .dataTable > .row .product-name {
+    font-size: 13px;
+    line-height: 19px;
+    text-align: left;
+    font-family: 'lato';
+}
+.myBag .dataTable > .row .product-name a{
+    font-size: 13px;
+    font-family: 'lato';
+}
 .cart .checkout_info{
     width:100%;
     margin: 0 auto;
@@ -1707,7 +1729,7 @@ p.back-link{
 
 .cart .checkout_info .check_outdetails {
     margin: 0 auto;
-    width: 90%;
+    width: 80%;
     font-size: 13px;
 }
 .cart .checkout_info .check_outdetails .price{
@@ -1715,5 +1737,34 @@ p.back-link{
 
 }
 
+.v_middle{margin:auto;}
+
+.myBag .dataTable .input-text{
+    padding: 0;
+    border-radius: 0;
+}
+.myBag .dataTable a.btn-remove{
+    width:27px;
+    height:27px;
+    line-height: 27px;
+}
+.mybag-checkout ul.checkout-types{
+    text-align: center;
+}
+.mybag-checkout .totalBox .button{
+    width:80%;
+    text-transform: capitalize;
+}
+
+.myBag .dataTable > .row.th.foot .cartButton.btn-update{
+    margin-left: 10px;
+}
 
 
+
+/*SHOP PAGE*/
+
+ .itemsWrapper .shopping.itemList ul{
+    min-height: auto;
+    margin: 10px 0;
+}
