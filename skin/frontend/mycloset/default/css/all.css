@@ -1638,17 +1638,39 @@ p.back-link{
 }
 .preselect{
     border: 2px solid #e4e4e4;
-    width: 95px;
+    width: 115px;
     overflow: hidden;
 }
 
 /*saneesh*/
-.season select option:hover,
-.season select option:focus,
-.season select option:active,
-.season select option:checked {
-  background: linear-gradient(#ada4a5, #ada4a5);
-  }
+.preselect select {
+    border: 0 none;
+    overflow: hidden;
+    width:130px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.preselect select::-ms-expand {
+    display: none; 
+}
+.preselect select option{
+    padding: 5px;
+}
+
+.preselect select option:hover,
+.preselect select option:focus,
+.preselect select option:active,
+.preselect select option:checked {
+   background: linear-gradient(#ededed, #ededed);
+   color:#010101;
+}
+.selected_season{
+   background: linear-gradient(#ededed, #ededed);
+   color:#010101;
+}
+.preselect select option:selected{
+    color:#010101; 
+}
  .Growler{
     z-index:100001 !important;
  }
@@ -1767,4 +1789,17 @@ p.back-link{
  .itemsWrapper .shopping.itemList ul{
     min-height: auto;
     margin: 10px 0;
+}
+.itemsWrapper .shopping.itemList .actionsWrapper a.button{
+    float: left;
+}
+.itemsWrapper .shopping.itemList .actionsWrapper .customDropDown{
+    float: right;
+}
+.itemsWrapper .shopping.itemList .actionsWrapper .customDropDown span{
+    height:46px; 
+    line-height:46px;
+}
+.itemsWrapper .shopping.itemList .actionsWrapper .customDropDown b{
+    margin: 15px 0 0 7px;
 }
