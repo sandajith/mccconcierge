@@ -1803,3 +1803,11 @@ p.back-link{
 .itemsWrapper .shopping.itemList .actionsWrapper .customDropDown b{
     margin: 15px 0 0 7px;
 }
+
+
+/*empty bag*/
+.cart-empty{margin-top: 30px;}
+
+.cart-empty button.button{
+    margin: 25px 0;
+}
