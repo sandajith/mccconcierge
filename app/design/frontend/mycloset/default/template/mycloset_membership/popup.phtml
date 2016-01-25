@@ -97,13 +97,13 @@ if (in_array('9', $caid)) {
 
                 <!--season details-->
                 <div class="season_multiselect" style="display:inline-block; vertical-align:top; overflow:hidden;font-style: normal; "> <b>Seasons</b></br>
-                    <div class="preselect" style="border: 2px solid #e4e4e4;width: 95px; overflow: hidden;"> <select  attrproduct="<?php echo $rel_product; ?>"  style="border: 0px solid #e4e4e4;width: 110px;" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
+                    <div class="preselect"> <select  attrproduct="<?php echo $rel_product; ?>" id="season" class="season123"  multiple="multiple" size="4" name="product[season][]">
                             <?php
                             foreach ($p['season'] as $key => $value) {
                                 ?> 
                                 <option 
                                 <?php if (in_array($value['label'], $p['season_select'])) { ?>
-                                        selected="selected"  
+                                        selected="selected" style="color:#010101; background:#ededed;"  
                                     <?php } ?>
                                     value="<?php echo $value['value'] ?>"><?php echo $value['label'] ?>
                                 </option>
