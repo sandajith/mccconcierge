@@ -242,10 +242,12 @@ $_product1 = $this->getProduct();
                                     }
                                     ?>
                                 </li>
-                                <li>
-                                    Status: <?php echo $_product->getAttributeText('product_status') . '  ' . $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); ?>
-                                </li>
-                            </ul>
+<!--                                <li>
+                                    Status: <?php //echo $_product->getAttributeText('product_status') . '  ' . $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); ?>
+                                </li>-->
+                                   <li> <?php  if ($_product->getAttributeText('product_status') == 'Shipped To') { $shipped_to = $_helper->productAttribute($_product, $_product->getShippedTo(), 'shipped_to'); }else { $shipped_to = '';} ?>
+                    Status: <?php echo $_product->getAttributeText('product_status') . ' ' . $shipped_to ?>
+                            </li> </ul>
                             <?php if (!$userid) { ////add to my bag       ?>
                                 <?php if ($_product->isSaleable() && $_product->getAttributeText('product_status') == 'We Have It') {
                                     ?>
