@@ -1803,6 +1803,12 @@ p.back-link{
 .itemsWrapper .shopping.itemList .actionsWrapper .customDropDown b{
     margin: 15px 0 0 7px;
 }
+.shopping-cont .filterBy .small-accordion.block-content input {
+    margin-right: 5px;
+}
+.shopping-cont .filterBy .small-accordion.block-content .separate {
+    float: left;
+}
 
 
 /*empty bag*/
