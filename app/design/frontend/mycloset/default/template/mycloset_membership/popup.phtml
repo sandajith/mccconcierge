@@ -171,7 +171,7 @@ if (in_array('9', $caid)) {
                     <b>SHOW</b>
                     <ul>
                         <li> <b>Category</b>
-                            <ul>  
+                            <ul id="showdrop" style="display:block;">  
                                 <li class="selected" > <a class="getcatid" rel="16" >All Categories</a></li>
                                 <?php
                                 foreach ($all_sub_cat as $cat_id) {
@@ -204,7 +204,7 @@ if (in_array('9', $caid)) {
                                 ?>
                             </ul>
                         </li>
-                        <li><b>Designer</b>
+<!--                        <li><b>Designer</b>
                             <ul>
                                 <?php
                                 $collection123 = Mage::getResourceModel('catalog/product_collection')
@@ -229,8 +229,8 @@ if (in_array('9', $caid)) {
                                 }
                                 ?>
                             </ul> 
-                        </li>
-                        <li>
+                        </li>-->
+<!--                        <li>
                             <b>Color</b>
                             <ul>
                                 <?php
@@ -251,8 +251,8 @@ if (in_array('9', $caid)) {
                                 <?php }
                                 ?>
                             </ul>
-                        </li>
-                        <li><b>Status</b>
+                        </li>-->
+<!--                        <li><b>Status</b>
                             <ul>
                                 <?php
                                 $collection666 = Mage::getResourceModel('catalog/product_collection')
@@ -274,9 +274,9 @@ if (in_array('9', $caid)) {
 
 
                             </ul> 
-                        </li>
+                        </li>-->
                         <!--<li><b>My Tag</b></li>-->
-                        <li><b>Season</b>
+<!--                        <li><b>Season</b>
                             <ul>
                                 <?php
 //                            $collection666 = Mage::getResourceModel('catalog/product_collection')
@@ -292,7 +292,7 @@ if (in_array('9', $caid)) {
 //                                $_product['season'];
 //                                
                                 ?>
-                                    <!--<li> <a class="getseasonid" relseason="//<?php // echo $_product['season'];            ?>"><?php // echo $_product->getAttributeText('season');            ?></a>  </li>--> 
+                                    <li> <a class="getseasonid" relseason="//<?php // echo $_product['season'];            ?>"><?php // echo $_product->getAttributeText('season');            ?></a>  </li> 
                                 <?php
 //                            }
                                 ?>
@@ -302,7 +302,7 @@ if (in_array('9', $caid)) {
                                 <?php }
                                 ?>
                             </ul>  
-                        </li>
+                        </li>-->
                     </ul>
                     <span></span>
                 </div>
@@ -442,35 +442,39 @@ if (in_array('9', $caid)) {
             }
         });
         jqCustom(document).click(function () {
-            jqCustom(".customDropDown ul").slideUp(100);
+                jqCustom(".customDropDown ul").slideUp(100);
+                
         });
 
         jqCustom(".customDropDown").click(function (event) {
-
+ jqCustom("#showdrop").css('display','block')
             if (jqCustom(this).children().children("ul").css('display') == 'none')
             {
                 var getPosition = jqCustom(this).children().children("b").width() + 20;
                 jqCustom(this).children().children("ul").css({"left": getPosition + "px"}).slideDown();
+               ;
             }
             event.stopPropagation();
         });
-        jqCustom(".customDropDown ul li > b").click(function () {
-            if (jqCustom(this).next("ul").is(":visible"))
-            {
-                jqCustom(this).next("ul").slideUp();
-            }
-            else
-            {
-                jqCustom(".customDropDown ul li > ul").slideUp();
-                jqCustom(this).siblings("ul").slideDown();
-            }
-        })
-        jqCustom(".customDropDown ul li ul li").click(function () {
+//        jqCustom(".customDropDown ul li > b").click(function () {
+//            alert('2222');
+//            if (jqCustom(this).next("ul").is(":visible"))
+//            {
+//                jqCustom(this).next("ul").slideUp();
+//            }
+//            else
+//            {
+//                jqCustom(".customDropDown ul li > ul").slideUp();
+//                jqCustom(this).siblings("ul").slideDown();
+//            }
+//        })
+        jqCustom(".customDropDown ul li ul li").click(function (event) {
             jqCustom(".customDropDown ul li ul li.selected").removeClass("selected");
             var thisHtml = jqCustom(this).html();
 
-            jqCustom(".customDropDown ul").fadeOut(100);
+         //   jqCustom(".customDropDown ul").fadeOut(100);
             jqCustom(this).addClass("selected").parents("ul").siblings("span").html(thisHtml);
+               event.stopPropagation();
         });
 
 
