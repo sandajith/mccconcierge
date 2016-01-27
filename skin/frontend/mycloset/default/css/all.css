@@ -675,7 +675,7 @@ a.button, button.button, input.button {
 .customDropDown ul li b { font-weight: bold; margin-bottom: 5px; display: block}
 .customDropDown ul li ul { position: relative; border:0; background: none;}
 .customDropDown ul li ul li { padding:4px 0 4px 5px}
-.customDropDown ul li:hover{ background: #dddddd}
+/*.customDropDown ul li:hover{ background: #dddddd}*/
 .customDropDown ul li.selected { background: #dddddd}
 
 
