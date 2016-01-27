@@ -1005,8 +1005,8 @@ footer .social a { margin-left: 5px;}
 .popupContent .flex-direction-nav a { margin:0;}
 
 .popupContent .carousel { border: 0; margin: 0; border-top:0px solid #ccc; margin:10px 0 0 0;}
-.popupContent .carousel .flex-direction-nav .flex-prev { background:url("../images/slide-prev-popup.png") no-repeat scroll 0 0; left: 10px; opacity: 1; top:20%!important;}
-.popupContent .carousel .flex-direction-nav .flex-next { background:url("../images/slide-next-popup.png") no-repeat scroll right 0; opacity: 1; right: 10px; top:20%!important;}
+.popupContent .carousel .flex-direction-nav .flex-prev { background:url("../images/slide-prev-popup.png") no-repeat scroll 0 0; left: 10px; opacity: 1; top:30%!important;}
+.popupContent .carousel .flex-direction-nav .flex-next { background:url("../images/slide-next-popup.png") no-repeat scroll right 0; opacity: 1; right: 10px; top:30%!important;}
 .productdata { margin: 0 20px}
 /*9/9/2015*/
 .dress-code{
@@ -1817,3 +1817,38 @@ p.back-link{
 .cart-empty button.button{
     margin: 25px 0;
 }
+
+
+/*Show Category popup dropdown*/
+.show_category.customDropDown ul{
+    right:0;
+    top:0;
+    background:none;
+}
+.show_category.customDropDown ul li{
+    padding: 5px 0;
+    background:none;
+}
+.show_category.customDropDown .dropContentBox ul li ul{
+    margin-left: 0;
+    width:100%;
+}
+.show_category.customDropDown ul li b{
+    font-weight:normal;
+    font-style: normal;
+    padding: 0 12px;
+}
+.show_category.dropContentBox ul li ul{
+    margin-left: 0px;
+}
+.show_category.customDropDown ul li ul li {
+    padding: 4px 22px;
+    background: #fff;
+}
+.show_category.customDropDown ul li ul li:hover{
+    background: #dddddd;
+}
+.show_category.customDropDown ul li ul li.selected{
+    background: #dddddd;
+}
+
