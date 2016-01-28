@@ -25,7 +25,7 @@ foreach ($this->getItems() as $_item):
                     <a style="background: <?php echo $_item->getLabel() ?>" title="<?php echo $_item->getLabel() ?>" href="<?php echo $this->urlEscape($_item->getUrl()) ?>"> </a>                                   
                 <?php endif; ?>
             <?php } else { ?>
-                <a style="background: <?php echo $_item->getLabel() ?>" ><?php echo $_item->getLabel() ?></a>   
+                    <a style="background: <?php echo $_item->getLabel() ?>" href="<?php echo $this->urlEscape($_item->getUrl()) ?>" ><?php echo $_item->getLabel() ?></a>   
                 <?php
             }
         }
