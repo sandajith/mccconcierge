@@ -29,88 +29,97 @@
 
 <footer>
     <div class="container">
-        <nav class="mainMenu">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <?php
-                    $_page = Mage::getModel('cms/page')->load('about-magento-demo-store', 'identifier');
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>about-magento-demo-store">About</a></li>  
-                    <?php } ?>
+        <div class="row">
+                <div class="col-md-12">
+                    <nav class="mainMenu">
+                        <div class="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <?php
+                                $_page = Mage::getModel('cms/page')->load('about-magento-demo-store', 'identifier');
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>about-magento-demo-store">About</a></li>  
+                                <?php } ?>
 
-                    <?php
-                    $_page = Mage::getModel('cms/page')->load('testimonials', 'identifier');
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>testimonials">Testimonials</a></li>  
-                    <?php
-                    }
-                    $_page = Mage::getModel('cms/page')->load('press', 'identifier');
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>press">Press</a></li>  
-                    <?php } ?>
-                    <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>                  
-                        <li><a href="<?php echo $this->getUrl('') ?>my-closet.html">Sample Closet</a></li> 
-                    <?php else: ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>my-closet.html">My Closet </a></li> 
-<?php endif; ?>
-
-
-
-                    <?php
-                    $_page = Mage::getModel('cms/page')->load('faq', 'identifier');
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>faq">FAQ</a></li>  
-                    <?php } ?>
-                    <?php
-                    $_page = Mage::getModel('cms/page')->load('careers', 'identifier');
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>careers">Careers</a></li>  
-<?php } ?>
-<?php// $emailid= Mage::getStoreConfig('trans_email/ident_support/email');
-
-?>
-                    <!--<li><a href="mailto:<?php // echo $emailid;?>?subject=Message from My Closet Concierge Visitor">Contact</a></li>-->  
-                    <li><a href="mailto:info@myclosetconcierge.com?subject=Message from My Closet Concierge Visitor">Contact</a></li>  
-                    <?php
-                    $_page = Mage::getModel('cms/page')->load('termservices', 'identifier');
-
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>termservices">Terms and Conditions </a></li>  
-                    <?php } ?>
-                    <?php
-                    $_page = Mage::getModel('cms/page')->load('privacy', 'identifier');
-                    if ($_page->getIsActive()) {
-                        ?>
-                        <li><a href="<?php echo $this->getUrl('') ?>privacy">Privacy</a></li>  
-<?php } ?>
-                <!--<li><a href="<?php echo $this->getUrl('') ?>contacts">Contact </a></li>--> 
+                                <?php
+                                $_page = Mage::getModel('cms/page')->load('testimonials', 'identifier');
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>testimonials">Testimonials</a></li>  
+                                <?php
+                                }
+                                $_page = Mage::getModel('cms/page')->load('press', 'identifier');
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>press">Press</a></li>  
+                                <?php } ?>
+                                <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>                  
+                                    <li><a href="<?php echo $this->getUrl('') ?>my-closet.html">Sample Closet</a></li> 
+                                <?php else: ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>my-closet.html">My Closet </a></li> 
+            <?php endif; ?>
 
 
-                </ul>
-            </div>
-        </nav>
-        <div class="footerText">
-            <address><?php echo $this->getCopyright() ?></address>
-            <div class="social">
-                <a href="https://facebook.com/myclosetconcierge">
-                    <img src="<?php echo $this->getSkinUrl('images/fb.png'); ?>" alt=""/>
-                </a>
-                <a href="https://www.linkedin.com/m/company/10274594/details/">
-                    <img src="<?php echo $this->getSkinUrl('images/in.png'); ?>" alt=""/>
-                </a>
-                <a href="https://www.pinterest.com/MyClosetCo/">
-                    <img src="<?php echo $this->getSkinUrl('images/pin.png'); ?>" alt=""/>
-                </a>
-                <a href="https://instagram.com/myclosetconcierge/">
-                    <img src="<?php echo $this->getSkinUrl('images/insta.png'); ?>" alt=""/>
-                </a>
-            </div>
+
+                                <?php
+                                $_page = Mage::getModel('cms/page')->load('faq', 'identifier');
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>faq">FAQ</a></li>  
+                                <?php } ?>
+                                <?php
+                                $_page = Mage::getModel('cms/page')->load('careers', 'identifier');
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>careers">Careers</a></li>  
+            <?php } ?>
+            <?php// $emailid= Mage::getStoreConfig('trans_email/ident_support/email');
+
+            ?>
+                                <!--<li><a href="mailto:<?php // echo $emailid;?>?subject=Message from My Closet Concierge Visitor">Contact</a></li>-->  
+                                <li><a href="mailto:info@myclosetconcierge.com?subject=Message from My Closet Concierge Visitor">Contact</a></li>  
+                                <?php
+                                $_page = Mage::getModel('cms/page')->load('termservices', 'identifier');
+
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>termservices">Terms and Conditions </a></li>  
+                                <?php } ?>
+                                <?php
+                                $_page = Mage::getModel('cms/page')->load('privacy', 'identifier');
+                                if ($_page->getIsActive()) {
+                                    ?>
+                                    <li><a href="<?php echo $this->getUrl('') ?>privacy">Privacy</a></li>  
+            <?php } ?>
+                            <!--<li><a href="<?php echo $this->getUrl('') ?>contacts">Contact </a></li>--> 
+
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+        <div class="col-md-6">
+                <div class="footerText">
+                    <address><?php echo $this->getCopyright() ?></address>
+                </div>
+        </div>
+        <div class="col-md-6">
+                <div class="social">
+                        <a href="https://facebook.com/myclosetconcierge">
+                            <img src="<?php echo $this->getSkinUrl('images/fb.png'); ?>" alt=""/>
+                        </a>
+                        <a href="https://www.linkedin.com/m/company/10274594/details/">
+                            <img src="<?php echo $this->getSkinUrl('images/in.png'); ?>" alt=""/>
+                        </a>
+                        <a href="https://www.pinterest.com/MyClosetCo/">
+                            <img src="<?php echo $this->getSkinUrl('images/pin.png'); ?>" alt=""/>
+                        </a>
+                        <a href="https://instagram.com/myclosetconcierge/">
+                            <img src="<?php echo $this->getSkinUrl('images/insta.png'); ?>" alt=""/>
+                        </a>
+                </div>
+                
+        </div>
         </div>
     </div>
 </footer>
