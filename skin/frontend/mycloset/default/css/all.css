@@ -667,7 +667,7 @@ a.button, button.button, input.button {
     font-family: "Glyphicons Halflings";
 }*/
 .dropContentBox { position: relative; float: left;}
-.dropContentBox  b { font-weight: normal;}
+.dropContentBox b { font-weight: normal; float: left;}
 .customDropDown span { margin: 0 20px 0 20px; position: relative; font-style:italic}
 .customDropDown ul { position: absolute;  background:rgba(256,256,256,0.7); border: 3px solid #c3c3c3; list-style: none; padding: 0; top: -5px; right: -9px; display: none; width: -moz-min-content; width: -webkit-min-content; width: min-content; z-index: 5;}
 .customDropDown ul li { padding: 5px 17px; font-style: italic;  white-space: nowrap;}
@@ -916,14 +916,22 @@ footer .mainMenu {
     margin:0;
 }
 footer .mainMenu .nav li {
-    width: auto !important
+    width: auto !important;
+    float: left;
+
 }
 footer .mainMenu .nav li a {
     color: #e0e0e0 !important;
     font-weight: 300;
-    padding: 15px 27px;
+    padding: 15px 34px;
     text-transform: none;
     background: none !important
+}
+footer .mainMenu .nav li:first-child a{
+    padding-left:0;
+}
+footer .mainMenu .nav li:last-child a{
+    padding-right:0;
 }
 footer .mainMenu .nav li a:hover { text-decoration: underline;}
 footer .footerText {
@@ -940,10 +948,11 @@ footer .footerText address {
     margin: 0;
     line-height: inherit;
     font-size: 12px;
+    text-align: right;
 }
 footer .social {
     float: right;
-    margin-top: -30px;
+    margin-right: 18px;
     padding: 10px 0;
 }
 footer .social a { margin-left: 5px;}
@@ -1682,7 +1691,10 @@ p.back-link{
     font-family: 'Lato';
 }
 .myBag .dataTable{
-    border:2px solid #c3c3c3;
+    border:3px solid #c3c3c3;
+}
+.myBag .dataTable > .row.th{
+    border-left:0px;
 }
 .myBag .dataTable > .row.th > div{
     padding: 0 10px;
@@ -1703,6 +1715,7 @@ p.back-link{
 
 .myBag .dataTable > .row.th.foot{
     padding: 2px 0;
+    border-bottom: 0px;
 }
 
 .myBag .dataTable > .row.th.foot .cartButton {
@@ -1714,8 +1727,12 @@ p.back-link{
     line-height: 15px;
     padding: 0 10px;
     margin-left: 0px;
+    font-weight: bold;
+    font-size: 13px;
 }
-
+.myBag .dataTable > .row > div:first-child{
+    border-left:0px;
+}
 .myBag .dataTable > .row.border_row{
     border:0px solid #c3c3c3;
     font-size: 13px;
