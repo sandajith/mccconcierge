@@ -255,8 +255,8 @@
         border:2px solid #c3c3c3;
         border-bottom:0px solid #c3c3c3;
         position: relative;
-        height: 120px;
-        padding: 10px 0;
+        height: 150px;
+        padding: 10px 0; 
     } 
     .myBag .dataTable > .row.border_row > div {
         display: inline-block;
