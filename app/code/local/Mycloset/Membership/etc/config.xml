@@ -122,7 +122,11 @@
             <membership> 
                 <class>Mycloset_Membership_Block</class> 
             </membership>
-            
+            <adminhtml>
+				<rewrite>
+					<customer_grid>Mycloset_Membership_Block_Adminhtml_Customer_Grid</customer_grid>
+				</rewrite>
+	   </adminhtml>
         </blocks> 
     
         <resources>

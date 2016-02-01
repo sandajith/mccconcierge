@@ -80,6 +80,15 @@ class Mycloset_Membership_Adminhtml_CustomerController extends Mage_Adminhtml_Co
 
         $this->renderLayout();
     }
+        public function memberloginAction() {
+
+        $this->_initCustomer();
+        $this->loadLayout();
+
+echo "ppp";
+
+        $this->renderLayout();
+    }
 
     public function gridAction() {
         $this->loadLayout();
