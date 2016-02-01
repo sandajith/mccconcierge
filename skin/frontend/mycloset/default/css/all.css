@@ -613,7 +613,7 @@ a.button, button.button, input.button {
     font-size: 15px;
     font-weight: 300
 }
-.filterBy .small-accordion label input { margin-right:5px;}
+
 .filterBy .currently p {
     margin:0;
 }
@@ -1695,9 +1695,13 @@ p.back-link{
 }
 .myBag .dataTable > .row.th{
     border-left:0px;
+    border-bottom: 0px;
 }
 .myBag .dataTable > .row.th > div{
     padding: 0 10px;
+}
+.myBag .dataTable > .row > div{
+    border-bottom:0px;
 }
 .qty_countbox{
     width: 80%; 
@@ -1714,7 +1718,7 @@ p.back-link{
 
 
 .myBag .dataTable > .row.th.foot{
-    padding: 2px 0;
+    padding: 4px 0;
     border-bottom: 0px;
 }
 
@@ -1735,8 +1739,10 @@ p.back-link{
 }
 .myBag .dataTable > .row.border_row{
     border:0px solid #c3c3c3;
+    border-top:1px solid #c3c3c3;
     font-size: 13px;
 } 
+
 .myBag .dataTable > .row.border_row > div{
     display: flex;
 }
@@ -1821,10 +1827,39 @@ p.back-link{
 .itemsWrapper .shopping.itemList .actionsWrapper .customDropDown b{
     margin: 15px 0 0 7px;
 }
-.shopping-cont .filterBy .small-accordion.block-content input {
-    margin-right: 5px;
-}
 .shopping-cont .filterBy .small-accordion.block-content .separate {
+    float: left;
+}
+
+a.cat_01, a.cat_02{
+    width: 100%;
+    float: left;
+}
+.checkbox_01{
+    position: relative; 
+    width: 100%;
+    float: left;
+}
+.cat_01 .cstmChk{
+    position: absolute; 
+    left:0px; 
+    top:5px; 
+    background: #dfdfdf; 
+    -webkit-border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    border-radius: 3px; 
+    width: 16px; 
+    height: 16px;
+}
+.cat_01 input[type="radio"], .cat_01 input[type="checkbox"]{
+    opacity:0;
+    float: left;
+    margin-right: 8px;
+}
+.cat_01 input[type="checkbox"]:checked + .cstmChk{
+    background:url(../images/checked_box.png) no-repeat;
+}
+.checkbox_values{
     float: left;
 }
 
