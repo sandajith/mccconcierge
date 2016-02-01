@@ -8,7 +8,7 @@ $all_sub_cat = explode(',', $subcats);
     $hide_pickup = false;
     foreach ($all_sub_cat as $cat_id) {
         $userid = Mage::getSingleton('customer/session')->getId();
-//        $user_id = ($userid?$userid:0);  
+        $user_id = ($userid?$userid:0);  
         $category = Mage::getModel('catalog/category')->load($cat_id);
         $categories = Mage::getModel('catalog/category')->load($category->getId())
                 ->getProductCollection()
