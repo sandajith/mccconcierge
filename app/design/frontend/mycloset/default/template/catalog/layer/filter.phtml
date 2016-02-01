@@ -12,7 +12,15 @@ foreach ($this->getItems() as $_item):
         if ($topParent != 16) {
             if (($this->getName() == "Price")) {
                 ?>
-                <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>" > <input type="checkbox"/><?php echo $_item->getLabel() ?></a>                  
+                <a class="cat_01" href="<?php echo $this->urlEscape($_item->getUrl()) ?>" > 
+                <label class="checkbox_01">
+                    <input type="checkbox"/>
+                    <div class="cstmChk"></div>
+                    <div class="checkbox_values"><?php echo $_item->getLabel() ?></div>
+                </label>
+                </a> 
+
+               
                 <?php
             }
         } else {
