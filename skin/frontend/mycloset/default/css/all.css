@@ -1182,7 +1182,7 @@ p.required { font-size:11px; text-align:right; color:#EB340A; }
 .pickup_success{text-align: center;}
 .align_center{text-align: center; margin: 0 auto; width: 50%; padding: 0 10px;}
 .align_center .dataTable .input-text{height: 30px; max-width: 100%; text-align: center;width: 30px;}
-.mypickup .align_center .dataTable > .row{height:54px; vertical-align: middle; }
+.mypickup .align_center .dataTable > .row{height:58px; vertical-align: middle; }
 .align_center .dataTable > .row{height:70px; vertical-align: middle; }
 .align_center .dataTable > .row+.foot{height:100%;}
 header .loginDetails .links { display: block !important; margin-top: 5px; position: relative;z-index: 100;}
@@ -1703,6 +1703,9 @@ p.back-link{
 .myBag .dataTable > .row > div{
     border-bottom:0px;
 }
+.myBag .dataTable > .row .thumb{
+    overflow: hidden;
+}
 .qty_countbox{
     width: 80%; 
 }
@@ -1741,6 +1744,8 @@ p.back-link{
     border:0px solid #c3c3c3;
     border-top:1px solid #c3c3c3;
     font-size: 13px;
+    height: 115px;
+    overflow: hidden;
 } 
 
 .myBag .dataTable > .row.border_row > div{
@@ -1876,10 +1881,10 @@ a.cat_01, a.cat_02{
 .show_category.customDropDown ul{
     right:0;
     top:0;
-    background:none;
+    background:#fff;
 }
 .show_category.customDropDown ul li{
-    padding: 5px 0;
+    padding: 0;
     background:none;
 }
 .show_category.customDropDown .dropContentBox ul li ul{
@@ -1890,6 +1895,7 @@ a.cat_01, a.cat_02{
     font-weight:normal;
     font-style: normal;
     padding: 0 12px;
+    margin-top: 5px;
 }
 .show_category.dropContentBox ul li ul{
     margin-left: 0px;
@@ -1904,4 +1910,5 @@ a.cat_01, a.cat_02{
 .show_category.customDropDown ul li ul li.selected{
     background: #dddddd;
 }
+.show_category.customDropDown .dropContentBox ul li b{float: none;}
 
