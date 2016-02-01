@@ -190,13 +190,13 @@ if (in_array('9', $caid)) {
                                     if (($products->count() > 0 ) && ($userid)) {
                                         ?>              
                                         <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
+                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name));  ?></a> 
                                         </li>    
 
                                     <?php } else if (($categories->count() > 0) && (!$userid)) {
                                         ?>
                                         <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
+                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name)); ?></a> 
                                         </li> 
                                         <?php
                                     }
