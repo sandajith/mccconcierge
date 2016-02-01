@@ -49,6 +49,9 @@ $qty_cart = array();
 
 
 $_productCollection = $this->getLoadedProductCollection();
+//echo '<pre>';
+//print_r($_productCollection);
+
 $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
 
 $path = $current_cat->getPath();

@@ -32,6 +32,14 @@
     <?php endif; ?>
     <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("Search results for '%s'", $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
 </div>
+<?php 
+//   $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+//$path = $current_cat->getPath();
+//$ids = explode('/', $path);
+//if (isset($ids[2])) {
+//   echo  $topParent = $ids[2];
+//}
+//    if($topParent == 16){ ?>
     <?php if ($messages = $this->getNoteMessages()):?>
     <p class="note-msg">
         <?php foreach ($messages as $message):?>
@@ -39,7 +47,11 @@
         <?php endforeach;?>
     </p>
     <?php endif; ?>
-    <?php echo $this->getProductListHtml() ?>
+    <?php 
+ 
+    echo $this->getProductListHtml();
+   //}
+?>
 <?php else: ?>
 <div class="page-title">
     <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("Search results for '%s'", $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>

@@ -189,13 +189,13 @@ if (in_array('9', $caid)) {
                                     if (($products->count() > 0 ) && ($userid)) {
                                         ?>              
                                         <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
+                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name));  ?></a> 
                                         </li>    
 
                                     <?php } else if (($categories->count() > 0) && (!$userid)) {
                                         ?>
                                         <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
+                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name)); ?></a> 
                                         </li> 
                                         <?php
                                     }
@@ -203,105 +203,6 @@ if (in_array('9', $caid)) {
                                 ?>
                             </ul>
                         </li>
-<!--                        <li><b>Designer</b>
-                            <ul>
-                                <?php
-                                $collection123 = Mage::getResourceModel('catalog/product_collection')
-                                        ->addAttributeToFilter('customer_id', $userid)
-                                        ->addAttributeToFilter('status', 1)
-                                        ->addAttributeToFilter('visibility', 4);
-                                foreach ($collection123 as $product) {
-                                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                                    $valdata = $_product->getCategoryIds();
-                                    if (in_array($_product['designer'], $property_types)) {
-                                        continue;
-                                    }
-                                    $property_types[] = $_product['designer'];
-                                    $_product['designer'];
-                                    ?>
-
-                                    <?php ?>              
-                                    <li >                     
-                                        <a class="getdesignerid" relpro="<?php echo $_product['designer']; ?>"><?php echo $_product->getAttributeText('designer'); ?></a> 
-                                    </li>    
-                                    <?php
-                                }
-                                ?>
-                            </ul> 
-                        </li>-->
-<!--                        <li>
-                            <b>Color</b>
-                            <ul>
-                                <?php
-                                $collection111 = Mage::getResourceModel('catalog/product_collection')
-                                        ->addAttributeToFilter('customer_id', $userid)
-                                        ->addAttributeToFilter('status', 1)
-                                        ->addAttributeToFilter('visibility', 4);
-                                foreach ($collection111 as $product) {
-                                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                                    if (in_array($_product['color'], $property_types)) {
-                                        continue;
-                                    }
-                                    $property_types[] = $_product['color'];
-                                    $_product['color'];
-                                    ?>
-
-                                    <li> <a class="getcolorid" relcolor="<?php echo $_product['color']; ?>"><?php echo $_product->getAttributeText('color'); ?></a>  </li> 
-                                <?php }
-                                ?>
-                            </ul>
-                        </li>-->
-<!--                        <li><b>Status</b>
-                            <ul>
-                                <?php
-                                $collection666 = Mage::getResourceModel('catalog/product_collection')
-                                        ->addAttributeToFilter('customer_id', $userid)
-                                        ->addAttributeToFilter('status', 1)
-                                        ->addAttributeToFilter('visibility', 4);
-                                foreach ($collection666 as $product) {
-                                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                                    if (in_array($_product['product_status'], $property_types)) {
-                                        continue;
-                                    }
-                                    $property_types[] = $_product['product_status'];
-                                    $_product['product_status'];
-                                    ?>
-                                    <li> <a class="getproduct_statusid" relproduct_status="<?php echo $_product['product_status']; ?>"><?php echo $_product->getAttributeText('product_status'); ?></a>  </li> 
-                                <?php }
-                                ?>
-
-
-
-                            </ul> 
-                        </li>-->
-                        <!--<li><b>My Tag</b></li>-->
-<!--                        <li><b>Season</b>
-                            <ul>
-                                <?php
-//                            $collection666 = Mage::getResourceModel('catalog/product_collection')
-//                                    ->addAttributeToFilter('customer_id', $userid)
-//                                    ->addAttributeToFilter('status', 1)
-//                                    ->addAttributeToFilter('visibility', 4);
-//                            foreach ($collection666 as $product) {
-//                                $_product = Mage::getModel('catalog/product')->load($product->getId());
-//                                if (in_array($_product['season'], $property_types)) {
-//                                    continue;
-//                                }
-//                                $property_types[] = $_product['season'];
-//                                $_product['season'];
-//                                
-                                ?>
-                                    <li> <a class="getseasonid" relseason="//<?php // echo $_product['season'];            ?>"><?php // echo $_product->getAttributeText('season');            ?></a>  </li> 
-                                <?php
-//                            }
-                                ?>
-
-                                <?php foreach ($p['season'] as $key => $value) { ?>
-                                    <li> <a class="getseasonid" relseason="<?php echo $value['value']; ?>"><?php echo $value['label']; ?></a>  </li> 
-                                <?php }
-                                ?>
-                            </ul>  
-                        </li>-->
                     </ul>
                     <span></span>
                 </div>
