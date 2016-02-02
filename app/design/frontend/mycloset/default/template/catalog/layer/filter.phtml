@@ -1,6 +1,7 @@
 
 <?php
 session_start();
+   $catalogsearch = Mage::app()->getRequest()->getModuleName();
 $current_cat = Mage::getSingleton('catalog/layer')->getCurrentCategory();
 $path = $current_cat->getPath();
 $ids = explode('/', $path);
@@ -9,7 +10,7 @@ if (isset($ids[2])) {
 }
 foreach ($this->getItems() as $_item):
     if ($_item->getCount() > 0) {
-        if ($topParent != 16) {
+        if ($topParent != 16 && $catalogsearch != 'catalogsearch') {
             if (($this->getName() == "Price")) {
                 ?>
                 <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>" > <input type="checkbox"/><?php echo $_item->getLabel() ?></a>                  

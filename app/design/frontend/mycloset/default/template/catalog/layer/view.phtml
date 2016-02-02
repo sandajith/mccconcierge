@@ -48,6 +48,7 @@ if ($this->canShowBlock()):
             ?>
             <?php if ($this->canShowOptions()): ?>
                 <?php $_filters = $this->getFilters();
+// var_dump($_filters);
                 ?>
                 <?php
                 $cat_checked = false;
@@ -64,10 +65,17 @@ if ($this->canShowBlock()):
                     if (isset($ids[2])) {
                         $topParent = $ids[2];
                     }
+//                     $searchcat = Mage::getModel('catalog/category')->load($product_cat);
+//            $path_search = $searchcat->getPath();
+//            $ids_search = explode('/', $path_search);
+//            if (isset($ids_search[2])) {
+//                $topParent_search = $ids_search[2];
+//            }
+                 $catalogsearch = Mage::app()->getRequest()->getModuleName();
                     if ($_filter->getItemsCount()):
                         ?>
                         <?php
-                        if ($topParent != 16) {
+                        if ($topParent != 16 && $catalogsearch != 'catalogsearch') {
                             if (($this->__($_filter->getName()) === 'Category') && !$cat_checked) {
                                 $cat_checked = true; //to prevent second attempt.
 
@@ -95,7 +103,7 @@ if ($this->canShowBlock()):
                                 </div>
                             <?php
                             }
-                        } elseif ($this->__($_filter->getName()) != 'Price') {
+                        } elseif ($this->__($_filter->getName()) != 'Price' ) {
                             ?>
 
                             <h4><?php echo $this->__($_filter->getName()) ?> <b class="glyphicon glyphicon-chevron-down" aria-hidden="true"></b></h4>
