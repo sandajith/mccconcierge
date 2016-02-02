@@ -116,6 +116,12 @@
                     <type_onepage>Mycloset_Membership_Model_Checkout_Type_Onepage</type_onepage>
                 </rewrite>
             </checkout>
+<!--             <catalogsearch>
+                <rewrite>
+                    <type_onepage>Mycloset_Membership_Model_Catalogsearch_Onepage</type_onepage>
+                    <layer>Mycloset_Membership_Model_Catalogsearch_Layer</layer>
+                </rewrite>
+            </catalogsearch>-->
         </models> 
         
         <blocks> 
