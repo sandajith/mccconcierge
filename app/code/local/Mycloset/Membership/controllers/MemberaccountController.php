@@ -16,7 +16,7 @@ public function memberloginAction()
             $session = Mage::getSingleton('customer/session');
             $session->loginById($customerId);
         
-            $this->_redirect('my-closet.html');
+            $this->_redirect("my-closet.html");
         }
     }else
     {
