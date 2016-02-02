@@ -12,15 +12,19 @@ public function memberloginAction()
         $customerId = $this->getRequest()->getParam('id');
    
         $customer = Mage::getModel('customer/customer')->load($customerId);
-        if ($customer->getWebsiteId()) {
+        if( ($customer->getGroupId()==1) || ($customer->getGroupId()==15) ){
+                if ($customer->getWebsiteId()) {
             $session = Mage::getSingleton('customer/session');
             $session->loginById($customerId);
             header('Location: '.Mage::getUrl().'my-closet.html');exit;
            // $this->_redirect("my-closet.html");
         }
-    }else
-    {
-        $this->_redirect('*/account/login');
+        }
+    
     }
+    
+    
+        $this->_redirect('*/account/login');
+  
 }
 }
