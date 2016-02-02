@@ -4,10 +4,11 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Login extends Mage_Adminhtml_
 
   public function render(Varien_Object $row)
 {
-//$customerId =  $row->getData($this->getColumn()->getIndex());
-
-$value = '<a href="http://localhost/neenu/index.php/admin/customer/memberlogin" target="_blank">Login</a>';
+if(!Mage::registry('adminauth')){
+	Mage::register('adminauth', 1);
+}
+$customerId =  $row->getId();
+$value = '<a href="'.Mage::getUrl().'membership/memberaccount/memberlogin/id/'.$customerId.'" target="_blank">Login</a>';
 return $value;
 }
-
 }
