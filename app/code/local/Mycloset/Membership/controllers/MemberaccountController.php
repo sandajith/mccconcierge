@@ -15,7 +15,7 @@ public function memberloginAction()
         if ($customer->getWebsiteId()) {
             $session = Mage::getSingleton('customer/session');
             $session->loginById($customerId);
-            header('Location: my-closet.html');exit;
+            header('Location: '.Mage::getUrl().'my-closet.html');exit;
            // $this->_redirect("my-closet.html");
         }
     }else
