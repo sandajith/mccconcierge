@@ -54,9 +54,9 @@
                                     <li><a href="<?php echo $this->getUrl('') ?>press">Press</a></li>  
                                 <?php } ?>
                                 <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>                  
-                                    <li><a href="<?php echo $this->getUrl('') ?>my-closet.html">Sample Closet</a></li> 
+                                    <li class="sample_closet"><a href="<?php echo $this->getUrl('') ?>my-closet.html">Sample Closet</a></li> 
                                 <?php else: ?>
-                                    <li><a href="<?php echo $this->getUrl('') ?>my-closet.html">My Closet </a></li> 
+                                    <li class="logged_closet"><a href="<?php echo $this->getUrl('') ?>my-closet.html">My Closet </a></li> 
             <?php endif; ?>
 
 
