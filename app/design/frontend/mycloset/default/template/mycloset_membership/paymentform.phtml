@@ -1,5 +1,7 @@
 
 <div class='fieldset'>
+    <div id="membership_error">
+    </div>
     <h2 class="legend"></h2>
     <?php
     $membership = $this->getMembershipdetails();
@@ -36,20 +38,21 @@
                 $taxClassId = 2;
                 $taxRate = $taxCalculation->getRate($request->setProductClassId($taxClassId));
                 $taxval = $taxRate / 100;
-               $taxable_amount111 = $amount * $taxval;
-             $taxable_amount = number_format($taxable_amount111, 2);
+                $taxable_amount111 = $amount * $taxval;
+                $taxable_amount = number_format($taxable_amount111, 2);
                 $mem_amount111 = $amount + $taxable_amount;
-                 $mem_amount= number_format($mem_amount111, 2)
+                $mem_amount = number_format($mem_amount111, 2)
                 ?>
 
                 <input type="hidden" value="<?php echo $taxRate; ?>" name="tax_rate" id="tax" />        
                 <input type="hidden" value="<?php echo $taxval; ?>" name="tax_rate_val" id="tax_rate_val" />        
-            <?php }else {
-                 $taxable_amount = 0;
+                <?php
+            } else {
+                $taxable_amount = 0;
                 $mem_amount111 = $amount + $taxable_amount;
-                 $mem_amount= number_format($mem_amount111, 2);
-            } 
-           
+                $mem_amount = number_format($mem_amount111, 2);
+            }
+
             if ((empty($mem_id)) && ($group_id === '15')) {
                 ?>
                 <div id="previous_membership">
@@ -74,7 +77,7 @@
                                 $id_m = $types->getId();
                                 $options = Mage::getModel('membership/types')->load($id_m);
                                 ?>
-                                <input type="radio" name="mem_type" value="<?php echo $options->getMembershipId(); ?>" onclick="javascript:GetPrice(this.value);" />&nbsp;<?php echo $options->getMembershipType(); ?><br>
+                                <input type="radio"  class=" validate-one-required required-entry radio_check"  name="mem_type" value="<?php echo $options->getMembershipId(); ?>" onclick="javascript:GetPrice(this.value);" />&nbsp;<?php echo $options->getMembershipType(); ?><br>
                             <?php } ?>
                         </div>
                     </div>
@@ -88,17 +91,17 @@
                                 <?php echo $this->__('0') ?> <!-- amount here -->
                             </div>    
                             <input type="hidden" name="amt" id="mem_amt" value=" <?php echo $this->__('0') ?>"/>
-  <input type="hidden" name="mem_type" id="mem_type" value="<?php echo $this->__('Guest') ?>" />
-   <input type="hidden" name="mem_table_id" value="<?php echo $mem_id; ?>" />
-    <input type="hidden" id="mem_table_id" name="mem_table_id" value="<?php echo $this->__('') ?>" />
+                            <input type="hidden" name="mem_type" id="mem_type" value="<?php echo $this->__('Guest') ?>" />
+                            <input type="hidden" name="mem_table_id" value="<?php echo $mem_id; ?>" />
+                            <input type="hidden" id="mem_table_id" name="mem_table_id" value="<?php echo $this->__('') ?>" />
                         </div>
                     </div>
                 </li>
                 <li>
-                    <?php if($taxRate !=''){ ?>
-                    <label>Tax</label>:<?php echo $currency_symbol ?><label id="amt123" for="mem_amt123" ><?php echo $this->__('0') ?></label><br>                   
-                    <label>Amount to be paid</label>:<?php echo $currency_symbol ?><label id="amountpaid" for="amountpaid" ><?php echo $this->__('0') ?></label><br>                   
-                    <?php }?>
+                    <?php if ($taxRate != '') { ?>
+                        <label>Tax</label>:<?php echo $currency_symbol ?><label id="amt123" for="mem_amt123" ><?php echo $this->__('0') ?></label><br>                   
+                        <label>Amount to be paid</label>:<?php echo $currency_symbol ?><label id="amountpaid" for="amountpaid" ><?php echo $this->__('0') ?></label><br>                   
+                    <?php } ?>
                 </li>
 
 
@@ -121,7 +124,7 @@
                             $data = $model->getCollection()->getData();
                             foreach ($data as $options) {
                                 ?>
-                                <input type="radio" name="mem_type" value="<?php echo $options['membership_id']; ?>" onclick="javascript:GetPrice(this.value);" />&nbsp;<?php echo $options['membership_type']; ?><br>
+                                <input type="radio" name="mem_type" class=" validate-one-required required-entry radio_check" value="<?php echo $options['membership_id']; ?>" onclick="javascript:GetPrice(this.value);" />&nbsp;<?php echo $options['membership_type']; ?><br>
                             <?php } ?>
                         </div>
                     </div>
@@ -136,17 +139,17 @@
                             </div>    
                             <input type="hidden" name="amt" id="mem_amt" value=" <?php echo $this->__('0') ?>"/>
                             <input type="hidden" id="mem_type" name="mem_type" value="<?php echo $this->__('Guest') ?>" />
-                         <input type="hidden" id="mem_table_id" name="mem_table_id" value="<?php echo $this->__('') ?>" />
+                            <input type="hidden" id="mem_table_id" name="mem_table_id" value="<?php echo $this->__('') ?>" />
                         </div>
                     </div>
 
 
                 </li>
                 <li>
-                      <?php if($taxRate !=''){ ?>
-                    <label>Tax</label>:<?php echo $currency_symbol ?><label id="amt123" for="mem_amt123" ><?php echo $this->__('0') ?></label><br>                   
-                    <label>Amount to be paid</label>:<?php echo $currency_symbol ?><label id="amountpaid" for="amountpaid" ><?php echo $this->__('0') ?></label><br>                   
-                      <?php }?>
+                    <?php if ($taxRate != '') { ?>
+                        <label>Tax</label>:<?php echo $currency_symbol ?><label id="amt123" for="mem_amt123" ><?php echo $this->__('0') ?></label><br>                   
+                        <label>Amount to be paid</label>:<?php echo $currency_symbol ?><label id="amountpaid" for="amountpaid" ><?php echo $this->__('0') ?></label><br>                   
+                    <?php } ?>
                 </li>
 
             <?php } else if (!empty($mem_id) && ($group_id !== '15')) { ?>
@@ -167,9 +170,10 @@
 
 
             <div>
+
                 <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
-                <div class="input-box">
-                    <input type="text" class="input-text"  name="x_card_num" value=""></input>
+                <div class="input-box validate-cc-number">
+                    <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
                 </div>
             </div>
 
@@ -177,7 +181,7 @@
                 <label for="exp">Card Expiry date</label><br>
 
 <!--                    <input type="text" class="input-text" size="4" name="x_exp_date" value=""></input>-->
-                <select name="card_exp_year" style="width: 10%">
+                <select name="card_exp_year" style="width: 10%" class="validate-cc-exp ">
                     <?php
                     for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
                         echo "<option value='$ye'>$ye</option>";
@@ -186,7 +190,7 @@
 
                 </select> 
 
-                <select name="card_exp_month" style="width:7%;">
+                <select name="card_exp_month" style="width:7%;" >
 
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -207,7 +211,7 @@
             <div>
                 <label for="CVV">CVV</label>
                 <div class="input-box">
-                    <input type="text" class="input-text" size="4" name="x_card_code" value=""></input>
+                    <input type="text" class="input-text validate-cc-cvn required" id="x_card_code" size="4" name="x_card_code" value=""></input>
                 </div>
             </div>
 
@@ -284,20 +288,44 @@
 
     function checkForm()
     {
-        jqCustom('#paymentform').submit(function (e) {
-            // DO STUFF
-            // return false to cancel form action
 
+        jqCustom('#paymentform').submit(function (e) {
+//            mem_type
+//            var value = jqCustom('.radio_check').val();
+            var Guest = jqCustom('#mem_type').val();
+
+            var ccnum = jqCustom('#x_card_num').val();
+            var cccvv = jqCustom('#x_card_code').val();
             var checkboxdata = jqCustom("#termstext").val();
             if (!checkboxdata) {
                 alert("Please read the Terms and Conditions");
                 e.preventDefault();
                 return false;
-            } else {
+            }
+            else if (Guest === 'Guest') {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please select any memebership type.</h5>');
+                return false;
+            }
+            else if (!ccnum) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid credit card number.</h5>');
+                return false;
+            }
+            else if (!cccvv) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid cvv.</h5>');
+                return false;
+            }
+            else {
                 return true;
             }
         });
     }
+
+
+
+
+
+
+
     jqCustom(".show").click(function () {
         jqCustom(".popupWrapper").fadeIn();
     });
@@ -306,7 +334,7 @@
     {
         //                            var passvrb= val;         // sent value '1' for link click check                 
         //  $('termstext').writeAttribute('value', passvrb);// change text box value 
-        new Ajax.Request('<?php echo Mage::getUrl("mycloset/termservices", array( '_secure' => true))   ?>',
+        new Ajax.Request('<?php echo Mage::getUrl("mycloset/termservices", array('_secure' => true)) ?>',
                 {
                     method: "get",
                     onSuccess: function (transport) {
@@ -324,22 +352,25 @@
     }
     function GetPrice(memid)
     {
+
+
+
         $('previous_membership').hide();
 
-        new Ajax.Request('<?php echo Mage::getUrl('',array('_secure' => true)) . "membership/payment/Getprice?memid=" ?>' + memid,
+        new Ajax.Request('<?php echo Mage::getUrl('', array('_secure' => true)) . "membership/payment/Getprice?memid=" ?>' + memid,
                 {
                     method: "get",
                     onSuccess: function (transport) {
                         var response = transport.responseText || "no response text";
                         node = $("price_change");
-                        var res = response.split("@");                    
+                        var res = response.split("@");
                         var details = res[0];
                         node.update(details);
 
                         var amt = res[1];
                         var mem_type = res[2];
                         var mem_table_id = res[3];
-                       
+
                         $('mem_amt').writeAttribute('value', amt);
                         $('mem_type').writeAttribute('value', mem_type);
                         $('mem_table_id').writeAttribute('value', mem_table_id);
@@ -356,10 +387,9 @@
 
                     },
                     onFailure: function () {
-                        alert("Something went wrong...")
+                        alert("Something went wrong...");
                     }
                 });
-
 
     }
 
