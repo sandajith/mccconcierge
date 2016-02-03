@@ -924,11 +924,11 @@ footer .mainMenu .nav li {
     padding: 15px 3.13%;
 }
 footer .mainMenu .nav li.sample_closet{
-    width:163px;
+    width:175px;
     padding: 15px 2.13%;
 }
 footer .mainMenu .nav li.logged_closet{
-    width:163px;
+    width:175px;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0){
     footer .mainMenu .nav li {
@@ -940,6 +940,14 @@ footer .mainMenu .nav li.logged_closet{
     footer .mainMenu .nav li:last-child{
         padding: 15px 0 15px 3.13%;
     }
+    footer .mainMenu .nav li.sample_closet{
+        width:162px;
+        padding: 15px 2.13%;
+    }
+    footer .mainMenu .nav li.logged_closet{
+        width:162px;
+    }
+
 }
 footer .mainMenu .nav li a {
     color: #e0e0e0 !important;
@@ -967,8 +975,8 @@ footer .footerText {
     width: 100%;
 }
 footer .footerText address {
-    margin: 0;
-    line-height: inherit;
+    margin: 15px 0 0 0;
+    line-height: 20px;
     font-size: 12px;
     text-align: right;
 }

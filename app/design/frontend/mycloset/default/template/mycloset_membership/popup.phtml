@@ -1,4 +1,3 @@
-
 <?php
 $p = $this->getProductdetails();
 //echo $p['qty'];exit;
@@ -171,7 +170,7 @@ if (in_array('9', $caid)) {
                     <b>SHOW</b>
                     <ul>
                         <li> <b>Category</b>
-                            <ul>  
+                            <ul id="showdrop" style="display:block;">  
                                 <li class="selected" > <a class="getcatid" rel="16" >All Categories</a></li>
                                 <?php
                                 foreach ($all_sub_cat as $cat_id) {
@@ -190,118 +189,19 @@ if (in_array('9', $caid)) {
                                     if (($products->count() > 0 ) && ($userid)) {
                                         ?>              
                                         <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
+                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name));  ?></a> 
                                         </li>    
 
                                     <?php } else if (($categories->count() > 0) && (!$userid)) {
                                         ?>
                                         <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><?php echo $category->name; ?></a> 
+                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name)); ?></a> 
                                         </li> 
                                         <?php
                                     }
                                 }
                                 ?>
                             </ul>
-                        </li>
-                        <li><b>Designer</b>
-                            <ul>
-                                <?php
-                                $collection123 = Mage::getResourceModel('catalog/product_collection')
-                                        ->addAttributeToFilter('customer_id', $userid)
-                                        ->addAttributeToFilter('status', 1)
-                                        ->addAttributeToFilter('visibility', 4);
-                                foreach ($collection123 as $product) {
-                                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                                    $valdata = $_product->getCategoryIds();
-                                    if (in_array($_product['designer'], $property_types)) {
-                                        continue;
-                                    }
-                                    $property_types[] = $_product['designer'];
-                                    $_product['designer'];
-                                    ?>
-
-                                    <?php ?>              
-                                    <li >                     
-                                        <a class="getdesignerid" relpro="<?php echo $_product['designer']; ?>"><?php echo $_product->getAttributeText('designer'); ?></a> 
-                                    </li>    
-                                    <?php
-                                }
-                                ?>
-                            </ul> 
-                        </li>
-                        <li>
-                            <b>Color</b>
-                            <ul>
-                                <?php
-                                $collection111 = Mage::getResourceModel('catalog/product_collection')
-                                        ->addAttributeToFilter('customer_id', $userid)
-                                        ->addAttributeToFilter('status', 1)
-                                        ->addAttributeToFilter('visibility', 4);
-                                foreach ($collection111 as $product) {
-                                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                                    if (in_array($_product['color'], $property_types)) {
-                                        continue;
-                                    }
-                                    $property_types[] = $_product['color'];
-                                    $_product['color'];
-                                    ?>
-
-                                    <li> <a class="getcolorid" relcolor="<?php echo $_product['color']; ?>"><?php echo $_product->getAttributeText('color'); ?></a>  </li> 
-                                <?php }
-                                ?>
-                            </ul>
-                        </li>
-                        <li><b>Status</b>
-                            <ul>
-                                <?php
-                                $collection666 = Mage::getResourceModel('catalog/product_collection')
-                                        ->addAttributeToFilter('customer_id', $userid)
-                                        ->addAttributeToFilter('status', 1)
-                                        ->addAttributeToFilter('visibility', 4);
-                                foreach ($collection666 as $product) {
-                                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                                    if (in_array($_product['product_status'], $property_types)) {
-                                        continue;
-                                    }
-                                    $property_types[] = $_product['product_status'];
-                                    $_product['product_status'];
-                                    ?>
-                                    <li> <a class="getproduct_statusid" relproduct_status="<?php echo $_product['product_status']; ?>"><?php echo $_product->getAttributeText('product_status'); ?></a>  </li> 
-                                <?php }
-                                ?>
-
-
-
-                            </ul> 
-                        </li>
-                        <!--<li><b>My Tag</b></li>-->
-                        <li><b>Season</b>
-                            <ul>
-                                <?php
-//                            $collection666 = Mage::getResourceModel('catalog/product_collection')
-//                                    ->addAttributeToFilter('customer_id', $userid)
-//                                    ->addAttributeToFilter('status', 1)
-//                                    ->addAttributeToFilter('visibility', 4);
-//                            foreach ($collection666 as $product) {
-//                                $_product = Mage::getModel('catalog/product')->load($product->getId());
-//                                if (in_array($_product['season'], $property_types)) {
-//                                    continue;
-//                                }
-//                                $property_types[] = $_product['season'];
-//                                $_product['season'];
-//                                
-                                ?>
-                                    <!--<li> <a class="getseasonid" relseason="//<?php // echo $_product['season'];            ?>"><?php // echo $_product->getAttributeText('season');            ?></a>  </li>--> 
-                                <?php
-//                            }
-                                ?>
-
-                                <?php foreach ($p['season'] as $key => $value) { ?>
-                                    <li> <a class="getseasonid" relseason="<?php echo $value['value']; ?>"><?php echo $value['label']; ?></a>  </li> 
-                                <?php }
-                                ?>
-                            </ul>  
                         </li>
                     </ul>
                     <span></span>
@@ -341,9 +241,11 @@ if (in_array('9', $caid)) {
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
     jqCustom(document).ready(function () {
-
+        var jqCustoms = jQuery.noConflict();
+        //var jqCustom = jQuery.noConflict();
         //slider change images of product
-        jqCustom('.getcatid').click(function () {
+        jqCustoms('.getcatid').click(function () {
+            var jqCustom = jQuery.noConflict();
             var catid = jqCustom(this).attr('rel');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/slider",
@@ -358,9 +260,13 @@ if (in_array('9', $caid)) {
                 }
             });
         });
+
+
         //        showby started here        
-        //        designer showby
-        jqCustom('.getdesignerid').click(function () {
+        //        designer 
+
+        jqCustoms('.getdesignerid').click(function () {
+            var jqCustom = jQuery.noConflict();
             var productid = jqCustom(this).attr('relpro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productdesigner",
@@ -376,7 +282,8 @@ if (in_array('9', $caid)) {
             });
         });
         //        color
-        jqCustom('.getcolorid').click(function () {
+        jqCustoms('.getcolorid').click(function () {
+            var jqCustom = jQuery.noConflict();
             var productid = jqCustom(this).attr('relcolor');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productcolor",
@@ -391,8 +298,10 @@ if (in_array('9', $caid)) {
                 }
             });
         });
-        //getproduct_statusid
-        jqCustom('.getproduct_statusid').click(function () {
+
+ //getproduct_statusid
+        jqCustoms('.getproduct_statusid').click(function () {
+            var jqCustom = jQuery.noConflict();
             var productid = jqCustom(this).attr('relproduct_status');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productstatus",
@@ -408,7 +317,8 @@ if (in_array('9', $caid)) {
             });
         });
         //getseasonid
-        jqCustom('.getseasonid').click(function () {
+        jqCustoms('.getseasonid').click(function () {
+            var jqCustom = jQuery.noConflict();
             var productid = jqCustom(this).attr('relseason');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/season",
@@ -423,14 +333,19 @@ if (in_array('9', $caid)) {
                 }
             });
         });
-        var footHeight = jqCustom("footer").outerHeight();
-        jqCustom(".footFix").css({"paddingBottom": footHeight + "px"});
-        jqCustom("header .loginDetails span").click(function () {
+
+        var footHeight = jqCustoms("footer").outerHeight();
+        jqCustoms(".footFix").css({"paddingBottom": footHeight + "px"});
+        jqCustoms("header .loginDetails span").click(function () {
             jqCustom("header .loginDetails .links").fadeToggle(function () {
                 jqCustom("header .loginDetails .search").fadeToggle();
             });
         });
-        jqCustom(".small-accordion h4").click(function () {
+
+//To check
+    /*  jqCustoms(".small-accordion h4").click(function () {
+        alert('lllllllllll');
+         var jqCustom = jQuery.noConflict();
             if (jqCustom(this).next("div").css('display') == 'none')
             {
                 jqCustom(".small-accordion > div").slideUp();
@@ -441,40 +356,54 @@ if (in_array('9', $caid)) {
                 jqCustom(this).next("div").slideUp();
             }
         });
-        jqCustom(document).click(function () {
-            jqCustom(".customDropDown ul").slideUp(100);
+
+*/
+  
+        jqCustoms(document).click(function () {
+            var jqCustom = jQuery.noConflict();
+                jqCustom(".customDropDown ul").slideUp(100);
+                
         });
 
-        jqCustom(".customDropDown").click(function (event) {
+        jqCustoms(".customDropDown").click(function (event) {
 
+              var jqCustom = jQuery.noConflict();
+            jqCustom("#showdrop").css('display','block')
             if (jqCustom(this).children().children("ul").css('display') == 'none')
             {
                 var getPosition = jqCustom(this).children().children("b").width() + 20;
+
                 jqCustom(this).children().children("ul").css({"left": getPosition + "px"}).slideDown();
+            
             }
             event.stopPropagation();
         });
-        jqCustom(".customDropDown ul li > b").click(function () {
-            if (jqCustom(this).next("ul").is(":visible"))
-            {
-                jqCustom(this).next("ul").slideUp();
-            }
-            else
-            {
-                jqCustom(".customDropDown ul li > ul").slideUp();
-                jqCustom(this).siblings("ul").slideDown();
-            }
-        })
-        jqCustom(".customDropDown ul li ul li").click(function () {
+//        jqCustom(".customDropDown ul li > b").click(function () {
+//            alert('2222');
+//            if (jqCustom(this).next("ul").is(":visible"))
+//            {
+//                jqCustom(this).next("ul").slideUp();
+//            }
+//            else
+//            {
+//                jqCustom(".customDropDown ul li > ul").slideUp();
+//                jqCustom(this).siblings("ul").slideDown();
+//            }
+//        })
+  jqCustoms(".customDropDown ul li ul li").click(function (event) {
+            var jqCustom = jQuery.noConflict();
             jqCustom(".customDropDown ul li ul li.selected").removeClass("selected");
             var thisHtml = jqCustom(this).html();
+            var jqCustom = jQuery.noConflict();
 
-            jqCustom(".customDropDown ul").fadeOut(100);
+         //   jqCustom(".customDropDown ul").fadeOut(100);
             jqCustom(this).addClass("selected").parents("ul").siblings("span").html(thisHtml);
+               event.stopPropagation();
         });
 
 
-        jqCustom('.inputz').blur(function (e) {
+        jqCustoms('.inputz').blur(function (e) {
+            var jqCustom = jQuery.noConflict();
             var tag = jqCustom('.inputz').val();
 
             if (tag != null && tag != '') {
@@ -512,7 +441,9 @@ if (in_array('9', $caid)) {
                 });
             }
         });
-        jqCustom(".tagclose").on("click", function () {
+
+      jqCustoms(".tagclose").on("click", function () {
+            var jqCustom = jQuery.noConflict();
             var tag123 = jqCustom(this).attr("tagval");
             var productid = jqCustom(this).attr("pro");
             jqCustom.ajax({
@@ -527,15 +458,19 @@ if (in_array('9', $caid)) {
             });
             jqCustom(this).parent('span').remove();
         });
-        jqCustom(".tagadd").on("click", function () {
+        jqCustoms(".tagadd").on("click", function () {
+             var jqCustom = jQuery.noConflict();
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
         });
-        jqCustom(".close,.popClose").click(function () {
+        jqCustoms(".close,.popClose").click(function () {
+             var jqCustom = jQuery.noConflict();
             jqCustom(".popupWrapper").fadeOut();
             jqCustom(".popupBox").empty();
         });
-        jqCustom("select").blur(function () {
+
+        jqCustoms("select").blur(function () {
+            var jqCustom = jQuery.noConflict();
             var seasonnames = new Array();
             var i = 0;
             var productid = jqCustom(this).attr('attrproduct');
@@ -556,9 +491,38 @@ if (in_array('9', $caid)) {
                 }
             });
         });
-    });
 
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var jqCustom = jQuery.noConflict();
     jqCustom(window).load(function () {
+        var jqCustom = jQuery.noConflict();
         jqCustom('.flexslider').flexslider({
             animation: "slide",
             animationLoop: false,
@@ -575,4 +539,5 @@ if (in_array('9', $caid)) {
         });
     }, 100);
     jqCustom(".season select option:not(:checked)").css("color", "black");
+    var jqCustom = jQuery.noConflict();
 </script>
