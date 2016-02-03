@@ -52,7 +52,7 @@ foreach ($expression as $_item) {
     </div>
     <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
         <?php echo $this->getBlockHtml('formkey'); ?>
-         <?php //if ($delivery_cnt) { ?>
+         <?php if ($delivery_cnt) { ?>
         <div class="row myBag">
             <h4 class="deliveryme"><?php echo $this->__('Delivery ') ?></h4>
             <div class="col-md-12 dataTable">
@@ -141,7 +141,7 @@ foreach ($expression as $_item) {
             </div>
         </div>
            <?php
-   // } if ($pickup_cnt) {
+    } if ($pickup_cnt) {
         ?>
         <div class="row myBag">
             <h4><?php echo $this->__('Pick Up') ?></h4>
@@ -231,7 +231,7 @@ foreach ($expression as $_item) {
             </div>
         </div>
            <?php
-   // } if ($product_cnt) {
+    } if ($product_cnt) {
         ?>
         <div class="row myBag">
             <h4><?php echo $this->__('Products') ?></h4>
@@ -297,7 +297,7 @@ foreach ($expression as $_item) {
             </div>
         </div>
             <?php
-//    }
+    }
     ?>
 <!--            <script type="text/javascript">decorateTable('shopping-cart-table')</script>-->
         <?php // endif;      ?>
