@@ -252,7 +252,6 @@ for sub menu width changes
 .intro p { font-size: 27px; line-height: 29px;}
 a.button, button.button, input.button {
     font-family: Lato;
-    font-style: normal;
     background: #b3a9a9;
     background: -moz-linear-gradient(top,  #b3a9a9 0%, #8c8788 52%, #676767 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b3a9a9), color-stop(52%,#8c8788), color-stop(100%,#676767));
@@ -266,7 +265,7 @@ a.button, button.button, input.button {
     margin:20px 50px;
     display: inline-block;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
     text-decoration: none;
     border-radius: 5px;
     box-shadow: 3px 4px 10px -6px #000;
@@ -275,6 +274,7 @@ a.button, button.button, input.button {
     -o-box-shadow:3px 4px 10px -6px #000;
     border: 0;
     text-transform: uppercase;
+    
 }
 
 .itemList ul label{font-weight: normal;}
@@ -410,6 +410,9 @@ a.button, button.button, input.button {
     font-size: 27px;
     letter-spacing: 5px;
     margin-bottom: 60px;
+}
+.subhead h2.title_searchresult{
+    text-transform: uppercase;
 }
 .myCloset {}
 .itemList {
@@ -989,9 +992,9 @@ footer .social a { margin-left: 5px;}
             position: absolute;
             width: 948px;
             z-index: 109;
-            -webkit-box-shadow:0 0 10px 2px rgba(0, 0, 0, 0.5);
-            -moz-box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow:0 0 25px 10px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.1);
 }
 .popupHead { position: absolute; right:26px; top: 12px; line-height:19px}
 .popupHead a { margin-left: 20px; font-size: 17px; color: #000000; opacity: 1}
@@ -1719,7 +1722,8 @@ p.back-link{
 .myBag .dataTable > .row.th > div{
     padding: 0 10px;
     font-size: 15px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    *font-weight: 600;
 }
 .myBag .dataTable > .row > div{
     border-bottom:0px;
@@ -1765,9 +1769,10 @@ p.back-link{
 .myBag .dataTable > .row.border_row{
     border:0px solid #c3c3c3;
     border-top:1px solid #c3c3c3;
-    font-size: 13px;
+    font-size: 15px;
     height: 115px;
     overflow: hidden;
+    font-weight: 600;
 } 
 
 .myBag .dataTable > .row.border_row > div{
@@ -1778,15 +1783,17 @@ p.back-link{
 }
 .myBag .dataTable > .row.border_row > div .v_middle_lt{
     margin:auto 0;
+    font-weight: 400;
+    font-size: 15px;
 }
 .myBag .dataTable > .row .product-name {
-    font-size: 13px;
+    font-size: 15px;
     line-height: 19px;
     text-align: left;
     font-family: 'lato';
 }
 .myBag .dataTable > .row .product-name a{
-    font-size: 14px;
+    font-size: 15px;
     font-family: 'lato';
     font-weight: bold;
 }
@@ -1842,6 +1849,9 @@ p.back-link{
 .mybag-checkout .totalBox .button{
     width:80%;
     text-transform: capitalize;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    font-size: 17px;
 }
 
 .myBag .dataTable > .row.th.foot .cartButton.btn-update{
