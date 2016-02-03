@@ -923,13 +923,7 @@ footer .mainMenu .nav li {
     float: left;
     padding: 15px 3.13%;
 }
-footer .mainMenu .nav li.sample_closet{
-    width:175px;
-    padding: 15px 2.13%;
-}
-footer .mainMenu .nav li.logged_closet{
-    width:175px;
-}
+
 @media screen and (-webkit-min-device-pixel-ratio:0){
     footer .mainMenu .nav li {
         padding: 15px 3.13%;
