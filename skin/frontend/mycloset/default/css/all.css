@@ -265,7 +265,8 @@ a.button, button.button, input.button {
     margin:20px 50px;
     display: inline-block;
     font-size: 14px;
-    font-weight: normal;
+    font-weight: bold;
+    font-style:normal;
     text-decoration: none;
     border-radius: 5px;
     box-shadow: 3px 4px 10px -6px #000;
@@ -1870,6 +1871,7 @@ p.back-link{
 }
 .itemsWrapper .shopping.itemList .actionsWrapper a.button{
     float: left;
+    font-weight: normal;
 }
 .itemsWrapper .shopping.itemList .actionsWrapper .customDropDown{
     float: right;
