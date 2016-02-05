@@ -5,8 +5,14 @@ class Mycloset_Membership_MemberaccountController extends Mage_Core_Controller_F
 public function memberloginAction()
 {
     $webips = Mage::getStoreConfig('membership/general/ipaddress');
-    $ips = explode(',',$webips);
+    $ip_s = explode(',',$webips);
+	$ips = array();
+	foreach($ip_s as $val)
+	{
+	$ips[] = trim($val);
+	}
     $current_ip = $_SERVER['REMOTE_ADDR'];
+//echo $current_ip;exit;
     if (in_array($current_ip, $ips)) 
     {
         $customerId = $this->getRequest()->getParam('id');
