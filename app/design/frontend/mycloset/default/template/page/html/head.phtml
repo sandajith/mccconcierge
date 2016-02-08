@@ -28,6 +28,11 @@
 <meta http-equiv="X-UA-Compatible" content="<?php echo $this->getContentType() ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php
+$currentUrl = Mage::helper('core/url')->getCurrentUrl();
+$url = Mage::getSingleton('core/url')->parseUrl($currentUrl);
+$path = $url->getPath();
+$getpath = explode('/', $path);
+
     if ($this->getTitle() == "My Account") {
         echo "My Account| My Closet Concierge";
     } else if ($this->getTitle() == "Shopping Cart") {
@@ -38,11 +43,12 @@
         echo "Login | My Closet Concierge";
     } else if ($this->getTitle() == "Checkout") {
         echo "Checkout | My Closet Concierge";
-    } else if ($this->getTitle() == "Logout") {
-        
+    } else if ($this->getTitle() == "Logout") {        
         echo "Logout | My Closet Concierge";
-    } else if ($this->getTitle() == "Order Success") {
+    }else if (in_array('success',$getpath)){
         echo "Order Success | My Closet Concierge";
+    }else if (in_array('catalogsearch',$getpath)){
+        echo "Search | My Closet Concierge";
     }
     else if($this->getTitle() == "Mycloset | My Closet Concierge"){
  if (!Mage::getSingleton('customer/session')->isLoggedIn()):
