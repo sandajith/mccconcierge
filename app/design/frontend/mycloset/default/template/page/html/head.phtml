@@ -32,6 +32,9 @@ $currentUrl = Mage::helper('core/url')->getCurrentUrl();
 $url = Mage::getSingleton('core/url')->parseUrl($currentUrl);
 $path = $url->getPath();
 $getpath = explode('/', $path);
+$order_success = in_array('success',$getpath);
+$title_string = $this->getTitle();
+$search_result = strchr($title_string,"Search results for");
 
     if ($this->getTitle() == "My Account") {
         echo "My Account| My Closet Concierge";
@@ -45,9 +48,9 @@ $getpath = explode('/', $path);
         echo "Checkout | My Closet Concierge";
     } else if ($this->getTitle() == "Logout") {        
         echo "Logout | My Closet Concierge";
-    }else if (in_array('success',$getpath)){
+    }else if ($order_success){
         echo "Order Success | My Closet Concierge";
-    }else if (in_array('catalogsearch',$getpath)){
+    }else if ($search_result){
         echo "Search | My Closet Concierge";
     }
     else if($this->getTitle() == "Mycloset | My Closet Concierge"){
