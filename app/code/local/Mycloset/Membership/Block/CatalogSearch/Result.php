@@ -32,7 +32,7 @@
  * @package    Mage_CatalogSearch
  * @module     Catalog
  */
-class Mycloset_Membership_Block_CatalogSearch_Result extends Mage_Core_Block_Template {
+class Mycloset_Membership_Block_CatalogSearch_Result extends Mage_CatalogSearch_Block_Result {
 
     /**
      * Catalog Product collection
@@ -78,24 +78,7 @@ class Mycloset_Membership_Block_CatalogSearch_Result extends Mage_Core_Block_Tem
         return parent::_prepareLayout();
     }
 
-    /**
-     * Retrieve additional blocks html
-     *
-     * @return string
-     */
-    public function getAdditionalHtml() {
-        return $this->getLayout()->getBlock('search_result_list')->getChildHtml('additional');
-    }
-
-    /**
-     * Retrieve search list toolbar block
-     *
-     * @return Mage_Catalog_Block_Product_List
-     */
-    public function getListBlock() {
-        return $this->getChild('search_result_list');
-    }
-
+    
     /**
      * Set search available list orders
      *
@@ -114,43 +97,9 @@ class Mycloset_Membership_Block_CatalogSearch_Result extends Mage_Core_Block_Tem
         $this->getListBlock()
                 ->setAvailableOrders($availableOrders)
                 ->setDefaultDirection('desc');
-               // ->setSortBy('');
+//                ->setSortBy('');
 
         return $this;
-    }
-
-    /**
-     * Set available view mode
-     *
-     * @return Mage_CatalogSearch_Block_Result
-     */
-    public function setListModes() {
-        $this->getListBlock()
-                ->setModes(array(
-                    'grid' => $this->__('Grid'),
-                    'list' => $this->__('List'))
-        );
-        return $this;
-    }
-
-    /**
-     * Set Search Result collection
-     *
-     * @return Mage_CatalogSearch_Block_Result
-     */
-    public function setListCollection() {
-//        $this->getListBlock()
-//           ->setCollection($this->_getProductCollection());
-        return $this;
-    }
-
-    /**
-     * Retrieve Search result list HTML output
-     *
-     * @return string
-     */
-    public function getProductListHtml() {
-        return $this->getChildHtml('search_result_list');
     }
 
     /**
@@ -169,20 +118,6 @@ class Mycloset_Membership_Block_CatalogSearch_Result extends Mage_Core_Block_Tem
         }
 
         return $this->_productCollection1;
-    }
-
-    /**
-     * Retrieve search result count
-     *
-     * @return string
-     */
-    public function getResultCount() {
-        if (!$this->getData('result_count')) {
-            $size = $this->_getProductCollection()->getSize();
-            $this->_getQuery()->setNumResults($size);
-            $this->setResultCount($size);
-        }
-        return $this->getData('result_count');
     }
 
     /**
