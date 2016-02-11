@@ -672,7 +672,7 @@ a.button, button.button, input.button {
 }*/
 .dropContentBox { position: relative; float: left;}
 .dropContentBox b { font-weight: normal; float: left;}
-.customDropDown span { margin: 0 20px 0 20px; position: relative; font-style:italic}
+.customDropDown span { margin: 0 20px 0 20px; position: relative; font-style:normal}
 .customDropDown ul { position: absolute;  background:rgba(256,256,256,0.7); border: 3px solid #c3c3c3; list-style: none; padding: 0; top: -5px; right: -9px; display: none; width: -moz-min-content; width: -webkit-min-content; width: min-content; z-index: 5;}
 .customDropDown ul li { padding: 5px 17px; font-style: italic;  white-space: nowrap;}
 .customDropDown > ul li:first-child { background: #ffffff}
@@ -1621,6 +1621,7 @@ ul.messages li.error-msg > ul > li span{padding-left:25px;background:url("../ima
 .flexsliderPopup.carousel ul li p{
     font-size: 12px;
     margin: 0;
+    font-weight:bold;
 }
 
 h2.infotitles {
