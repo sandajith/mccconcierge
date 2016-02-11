@@ -964,7 +964,7 @@ footer .footerText {
     display: table-row;
     float: left;
     font-weight: 300;
-    padding-top: 20px;
+    padding-top: 17px;
     text-align: center;
     vertical-align: bottom;
     width: 100%;
@@ -978,7 +978,7 @@ footer .footerText address {
 footer .social {
     float: right;
     margin-right:0;
-    padding: 10px 0;
+    padding: 10px 0 14px;
 }
 footer .social a { margin-left: 5px;}
 .center-align { text-align:center;}
@@ -1962,4 +1962,6 @@ a.cat_01, a.cat_02{
     background: #dddddd;
 }
 .show_category.customDropDown .dropContentBox ul li b{float: none;}
+
+.footer-menu{display: none;}
 

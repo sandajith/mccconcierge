@@ -145,22 +145,28 @@
 @media only screen and (max-width : 768px) {
 
     header { padding: 10px 0 1px;}
+    .container.quick-access {
+        border-bottom: 1px solid #fff;
+        padding-bottom: 15px;
+    }
 
     header h1 {
         display: block;
-        letter-spacing: 1px;
+        letter-spacing: 11px;
+        font-size: 32px;
     }
 
     header h2 {
         display: block;
         font-size: 15px;
         padding: 0;
+        letter-spacing: 5px;
     }
 
     header img {
         float: left;
         margin: 0;
-        height:65px;
+        height:85px;
     }
 
     header .logo {
@@ -352,6 +358,49 @@
 
 
 
+    /*footer tablet view*/
+    .footer-menu {
+        display: block;
+        float: left;
+        padding: 2% 5%;
+        width: 100%;
+    }
+    .footer-menu ul {
+        list-style: outside none none;
+        padding: 0;
+    }
+    .footer-menu ul li {
+        float: left;
+        width: 33%;
+    }
+    .footer-menu ul li ul li {
+        color: #fff;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 24px;
+        width: 100%;
+    }
+    .footer-menu ul li ul li a{
+        color:#fff;
+        font-size: 15px;
+        font-weight: 300;
+    }
+    .pull-right-mob{
+        float: none!important;
+    }
+    footer .social img {
+        width: 30px;
+    }
+    footer .footerText address {
+        margin: 2px 0 8px;
+        text-align: center;
+    }
+    footer .footerText {
+        padding-top: 0;
+    }
+
+
+
 
 
 }
@@ -399,7 +448,6 @@
     .nav > li > a:hover { background: none; color:#fff}
     .footerText { padding: 5px 0;}
     footer .social { width: 100%; margin: 0; text-align: center;}
-    footer .social img { width: 20px;}
     .homeGrid h4 { text-align: left; font-size: 25px}
     .homeGrid h4 font { display: unset;}
 
@@ -472,8 +520,8 @@
     .mainMenu .nav li.search-mobile  { display: block}
     header .loginDetails .search { display: none}
     .mainMenu { border: 0px;}
-    header h2 { display: none}
-    header img { float: none}
+    /*header h2 { display: none}
+    header img { float: none}*/
     footer .mainMenu { display: none}
     .mobileFooter { display: block; border-top: 1px solid #fff} 
     .popupBox { width:100%; margin: 0; left:0}
