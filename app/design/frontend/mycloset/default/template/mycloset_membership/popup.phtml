@@ -173,38 +173,38 @@ if (in_array('9', $caid)) {
                             <ul id="showdrop" style="display:block;">  
                                 <li class="selected" > <a class="getcatid" rel="16" >All Categories</a></li>
                                 <?php
-                                foreach ($all_sub_cat as $cat_id) {
-                                    $category = Mage::getModel('catalog/category')->load($cat_id);
-                                    $categories = Mage::getModel('catalog/category')->load($category->getId())
-                                            ->getProductCollection()
-                                            ->addAttributeToSelect('entity_id')
-                                            ->addAttributeToFilter('status', 1)
-                                            ->addAttributeToFilter('visibility', 4);
-                                    $products = Mage::getModel('catalog/product')
-                                            ->getCollection()
-                                            ->addAttributeToFilter('customer_id', $userid)
-                                            ->addCategoryFilter($category)
-                                            ->load();
+                                   foreach ($all_sub_cat as $cat_id) {
+                    $category = Mage::getModel('catalog/category')->load($cat_id);
+                    $categories = Mage::getModel('catalog/category')->load($category->getId())
+                            ->getProductCollection()
+                            ->addAttributeToSelect('entity_id')
+                            ->addAttributeToFilter('status', 1)
+                            ->addAttributeToFilter('visibility', 4);
+                    $products = Mage::getModel('catalog/product')
+                            ->getCollection()
+                            ->addAttributeToFilter('customer_id', $userid)
+                            ->addCategoryFilter($category)
+                            ->load();
 
-                                    if (($products->count() > 0 ) && ($userid)) {
+                                    if (($products->count() > 0 )) {
                                         ?>              
                                         <li >                       
                                             <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name));  ?></a> 
                                         </li>    
 
-                                    <?php } else if (($categories->count() > 0) && (!$userid)) {
+                                    <?php } //else if (($categories->count() > 0)) {
                                         ?>
-                                        <li >                       
-                                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" > <?php echo ucfirst(strtolower($category->name)); ?></a> 
-                                        </li> 
+<!--                                        <li >                       
+                                            <a class="getcatid" rel="<?php //echo $category->getId(); ?>" > <?php //echo ucfirst(strtolower($category->name)); ?></a> 
+                                        </li> -->
                                         <?php
-                                    }
+                                   // }
                                 }
                                 ?>
                             </ul>
                         </li>
                     </ul>
-                    <span>Category</span>
+                    <span class="pop-show">Category</span>
                 </div>
             </div>
         </div>
@@ -241,11 +241,10 @@ if (in_array('9', $caid)) {
 <script type="text/javascript">
     var jqCustom = jQuery.noConflict();
     jqCustom(document).ready(function () {
-        var jqCustoms = jQuery.noConflict();
-        //var jqCustom = jQuery.noConflict();
+       
         //slider change images of product
-        jqCustoms('.getcatid').click(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom('.getcatid').click(function () {
+          
             var catid = jqCustom(this).attr('rel');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/slider",
@@ -265,8 +264,8 @@ if (in_array('9', $caid)) {
         //        showby started here        
         //        designer 
 
-        jqCustoms('.getdesignerid').click(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom('.getdesignerid').click(function () {
+           
             var productid = jqCustom(this).attr('relpro');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productdesigner",
@@ -282,8 +281,8 @@ if (in_array('9', $caid)) {
             });
         });
         //        color
-        jqCustoms('.getcolorid').click(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom('.getcolorid').click(function () {
+          
             var productid = jqCustom(this).attr('relcolor');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productcolor",
@@ -300,8 +299,8 @@ if (in_array('9', $caid)) {
         });
 
  //getproduct_statusid
-        jqCustoms('.getproduct_statusid').click(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom('.getproduct_statusid').click(function () {
+           
             var productid = jqCustom(this).attr('relproduct_status');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/productstatus",
@@ -317,8 +316,8 @@ if (in_array('9', $caid)) {
             });
         });
         //getseasonid
-        jqCustoms('.getseasonid').click(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom('.getseasonid').click(function () {
+           
             var productid = jqCustom(this).attr('relseason');
             jqCustom.ajax({
                 url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/season",
@@ -334,16 +333,16 @@ if (in_array('9', $caid)) {
             });
         });
 
-        var footHeight = jqCustoms("footer").outerHeight();
-        jqCustoms(".footFix").css({"paddingBottom": footHeight + "px"});
-        jqCustoms("header .loginDetails span").click(function () {
+        var footHeight = jqCustom("footer").outerHeight();
+        jqCustom(".footFix").css({"paddingBottom": footHeight + "px"});
+        jqCustom("header .loginDetails span").click(function () {
             jqCustom("header .loginDetails .links").fadeToggle(function () {
                 jqCustom("header .loginDetails .search").fadeToggle();
             });
         });
 
 //To check
-    /*  jqCustoms(".small-accordion h4").click(function () {
+    /*  jqCustom(".small-accordion h4").click(function () {
         alert('lllllllllll');
          var jqCustom = jQuery.noConflict();
             if (jqCustom(this).next("div").css('display') == 'none')
@@ -359,15 +358,15 @@ if (in_array('9', $caid)) {
 
 */
   
-        jqCustoms(document).click(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom(document).click(function () {
+          
                 jqCustom(".customDropDown ul").slideUp(100);
                 
         });
 
-        jqCustoms(".customDropDown").click(function (event) {
+        jqCustom(".customDropDown").click(function (event) {
 
-              var jqCustom = jQuery.noConflict();
+             
             jqCustom("#showdrop").css('display','block')
             if (jqCustom(this).children().children("ul").css('display') == 'none')
             {
@@ -390,11 +389,11 @@ if (in_array('9', $caid)) {
 //                jqCustom(this).siblings("ul").slideDown();
 //            }
 //        })
-  jqCustoms(".customDropDown ul li ul li").click(function (event) {
-            var jqCustom = jQuery.noConflict();
+  jqCustom(".customDropDown ul li ul li").click(function (event) {
+           
             jqCustom(".customDropDown ul li ul li.selected").removeClass("selected");
             var thisHtml = jqCustom(this).html();
-            var jqCustom = jQuery.noConflict();
+            
 
          //   jqCustom(".customDropDown ul").fadeOut(100);
             jqCustom(this).addClass("selected").parents("ul").siblings("span").html(thisHtml);
@@ -402,8 +401,8 @@ if (in_array('9', $caid)) {
         });
 
 
-        jqCustoms('.inputz').blur(function (e) {
-            var jqCustom = jQuery.noConflict();
+        jqCustom('.inputz').blur(function (e) {
+          
             var tag = jqCustom('.inputz').val();
 
             if (tag != null && tag != '') {
@@ -442,8 +441,8 @@ if (in_array('9', $caid)) {
             }
         });
 
-      jqCustoms(".tagclose").on("click", function () {
-            var jqCustom = jQuery.noConflict();
+      jqCustom(".tagclose").on("click", function () {
+          
             var tag123 = jqCustom(this).attr("tagval");
             var productid = jqCustom(this).attr("pro");
             jqCustom.ajax({
@@ -458,19 +457,19 @@ if (in_array('9', $caid)) {
             });
             jqCustom(this).parent('span').remove();
         });
-        jqCustoms(".tagadd").on("click", function () {
-             var jqCustom = jQuery.noConflict();
+        jqCustom(".tagadd").on("click", function () {
+            
             jqCustom(".add-text").show();
             jqCustom(".tagpluse").hide();
         });
-        jqCustoms(".close,.popClose").click(function () {
-             var jqCustom = jQuery.noConflict();
+        jqCustom(".close,.popClose").click(function () {
+           
             jqCustom(".popupWrapper").fadeOut();
             jqCustom(".popupBox").empty();
         });
 
-        jqCustoms("select").blur(function () {
-            var jqCustom = jQuery.noConflict();
+        jqCustom("select").blur(function () {
+            
             var seasonnames = new Array();
             var i = 0;
             var productid = jqCustom(this).attr('attrproduct');
@@ -491,38 +490,10 @@ if (in_array('9', $caid)) {
                 }
             });
         });
-
-
-
-
-
-
-
-
-
-
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    var jqCustom = jQuery.noConflict();
+   
     jqCustom(window).load(function () {
-        var jqCustom = jQuery.noConflict();
+       
         jqCustom('.flexslider').flexslider({
             animation: "slide",
             animationLoop: false,
@@ -539,5 +510,5 @@ if (in_array('9', $caid)) {
         });
     }, 100);
     jqCustom(".season select option:not(:checked)").css("color", "black");
-    var jqCustom = jQuery.noConflict();
+    
 </script>
