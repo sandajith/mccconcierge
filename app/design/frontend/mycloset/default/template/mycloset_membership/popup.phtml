@@ -227,7 +227,7 @@ if (in_array('9', $caid)) {
                     if ($products->count() > 0) {
                         ?>              
                         <li >                       
-                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo $category->name; ?></p></a> 
+                            <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo ucfirst(strtolower($category->name));?></p></a> 
                         </li>    
                         <?php
                     }
@@ -367,8 +367,8 @@ if (in_array('9', $caid)) {
         jqCustom(".customDropDown").click(function (event) {
 
              
-            jqCustom("#showdrop").css('display','block')
-            if (jqCustom(this).children().children("ul").css('display') == 'none')
+            jqCustom("#showdrop").css('display','block');
+            if (jqCustom(this).children().children("ul").css('display') === 'none')
             {
                 var getPosition = jqCustom(this).children().children("b").width() + 20;
 
@@ -405,7 +405,7 @@ if (in_array('9', $caid)) {
           
             var tag = jqCustom('.inputz').val();
 
-            if (tag != null && tag != '') {
+            if (tag !== null && tag !== '') {
                 var productid = jqCustom(this).attr('pro');
                 jqCustom.ajax({
                     url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/inserttag",
@@ -417,7 +417,7 @@ if (in_array('9', $caid)) {
                     success: function (data1) {
                         var data = parseInt(data1);
                         var tagname = jqCustom('.inputz').val();
-                        if (tagname != null) {
+                        if (tagname !== null) {
                             jqCustom("<span>" + jqCustom('.inputz').val() + "<i class='tagclose' tagval='" + data + "' >x</i></span>").prependTo(".tags > div");
                             jqCustom("input.inputz").val('');
                             jqCustom(".tagclose").on("click", function () {
