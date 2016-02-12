@@ -685,6 +685,9 @@
         margin: 0 auto;
         width: 60%;
     }  
+        header .loginDetails a.top-link-phone{
+        cursor: pointer;
+    }
 
 }
 @media only screen and (max-width : 455px){
