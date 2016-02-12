@@ -92,8 +92,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
 
-        $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
-
+        $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
+$g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
@@ -169,7 +169,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
 
 //Making a payment for the customerprofileid
-
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
