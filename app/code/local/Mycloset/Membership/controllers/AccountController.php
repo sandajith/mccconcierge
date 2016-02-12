@@ -173,8 +173,9 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
 //        
 //        
 //    }
-    public function loginPostAction()
-    {
+    public function loginPostAction() {
+        $post_data = $this->getRequest()->getPost();
+
         if (!$this->_validateFormKey()) {
             $this->_redirect('*/*/');
             return;
@@ -184,70 +185,62 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $this->_redirect('*/*/');
             return;
         }
-        
-        
+
+
         $session = $this->_getSession();
 
         if ($this->getRequest()->isPost()) {
             $login = $this->getRequest()->getPost('login');
-            
-            
-            
-            
-             $customer = Mage::getModel('customer/customer')
-                ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
-                ->loadByEmail($login['username']);
-             
-        $group = $customer->getGroupId();
-        if (($group == '4') || ($group == '6')) {
-            $session = $this->_getSession();
-            $message =  Mage::helper('mycloset_membership')->__('Your membership is not activated or it has been closed');
-            $session->addError($message);
-              
-          // $this->_redirect('*/*');
-        } else {
-            
-            
-               if (!empty($login['username']) && !empty($login['password'])) {
-                try {
-                    $session->login($login['username'], $login['password']);
-                    
-                    
-                     Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('').'my-closet.html');
-           
-                    
-                    if ($session->getCustomer()->getIsJustConfirmed()) {
-                        $this->_welcomeCustomer($session->getCustomer(), true);
-                    }
-                } catch (Mage_Core_Exception $e) {
-                    switch ($e->getCode()) {
-                        case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
-                            $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
-                            $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
-                            break;
-                        case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
-                            $message = $e->getMessage();
-                            break;
-                        default:
-                            $message = $e->getMessage();
-                    }
-                    $session->addError($message);
-                    $session->setUsername($login['username']);
-                } catch (Exception $e) {
-                    // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
-                }
+
+
+
+
+            $customer = Mage::getModel('customer/customer')
+                    ->setWebsiteId(Mage::app()->getStore()->getWebsiteId())
+                    ->loadByEmail($login['username']);
+
+            $group = $customer->getGroupId();
+            if (($group == '4') || ($group == '6')) {
+                $session = $this->_getSession();
+                $message = Mage::helper('mycloset_membership')->__('Your membership is not activated or it has been closed');
+                $session->addError($message);
+
+                // $this->_redirect('*/*');
             } else {
-                $session->addError($this->__('Login and password are required.'));
+
+
+                if (!empty($login['username']) && !empty($login['password'])) {
+                    try {
+                        $session->login($login['username'], $login['password']);
+
+
+                        Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::getUrl('') . 'my-closet.html');
+
+
+                        if ($session->getCustomer()->getIsJustConfirmed()) {
+                            $this->_welcomeCustomer($session->getCustomer(), true);
+                        }
+                    } catch (Mage_Core_Exception $e) {
+                        switch ($e->getCode()) {
+                            case Mage_Customer_Model_Customer::EXCEPTION_EMAIL_NOT_CONFIRMED:
+                                $value = $this->_getHelper('customer')->getEmailConfirmationUrl($login['username']);
+                                $message = $this->_getHelper('customer')->__('This account is not confirmed. <a href="%s">Click here</a> to resend confirmation email.', $value);
+                                break;
+                            case Mage_Customer_Model_Customer::EXCEPTION_INVALID_EMAIL_OR_PASSWORD:
+                                $message = $e->getMessage();
+                                break;
+                            default:
+                                $message = $e->getMessage();
+                        }
+                        $session->addError($message);
+                        $session->setUsername($login['username']);
+                    } catch (Exception $e) {
+                        // Mage::logException($e); // PA DSS violation: this exception log can disclose customer password
+                    }
+                } else {
+                    $session->addError($this->__('Login and password are required.'));
+                }
             }
-        
-        }
-            
-            
-            
-            
-            
-            
-         
         }
 
         $this->_loginPostRedirect();
@@ -308,7 +301,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         } else {
             $session->setBeforeAuthUrl($this->_getRefererUrl());
         }
-        
+
         $this->_redirect('*/*/logoutSuccess');
     }
 
@@ -356,9 +349,9 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $this->_redirectError($errUrl);
             return;
         }
-        $this->getRequest()->setPost('telephone',  $this->getRequest()->getPost('cus_tele'));
+        $this->getRequest()->setPost('telephone', $this->getRequest()->getPost('cus_tele'));
         $postdata = $this->getRequest()->getPost();
-     
+
         $customer = $this->_getCustomer();
         //load customer session based on id               
         $customer->load(Mage::getSingleton('customer/session')->getMemID());
@@ -370,14 +363,17 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 $customer->cleanPasswordsValidationData();
                 if (Mage::getStoreConfig(self::PATH_GATE_THRESHOLD) == no) {
                     $customer->setGroupId('4');
-                } 
+                }
 //                
-
                 //Check if nonpaid customer
 
 
 
                 $customer->isConfirmationRequired(FALSE);
+                //$zendDate->getIso();
+               // Mage::getModel('core/date')->gmtDate() ;
+               $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
+               // $customer->setCreatedAt()
                 $customer->save();
                 $this->_dispatchRegisterSuccess($customer);
                 Mage::getSingleton('customer/session')->setMemID($customer->getId());
@@ -386,7 +382,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 Mage::getSingleton('customer/session')->setMemLname($customer->getLastname());
                 Mage::getSingleton('customer/session')->setMemEmail($customer->getEmail());
                 Mage::getSingleton('customer/session')->setMemCustele($customer->getCus_tele());
-                Mage::getSingleton('customer/session')->setMemCusReference($customer->getCusReference());//for reference code
+                Mage::getSingleton('customer/session')->setMemCusReference($customer->getCusReference()); //for reference code
 
                 $billingaddressId = $customer->getDefaultBilling();
                 if ($billingaddressId) {
@@ -433,9 +429,11 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         if (Mage::getStoreConfig(self::PATH_GATE_THRESHOLD) == yes) {
 
             //edited by neenu
-       $customerid=  Mage::getSingleton('customer/session')->getMemID();
+            $customerid = Mage::getSingleton('customer/session')->getMemID();
             $model = Mage::getModel('customer/customer')->load(Mage::getSingleton('customer/session')->getMemId());
+            $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
             $memtypeid = $model->getMemType();
+          
 //        $one = Mage::getModel('membership/types')->load($memtypeid);
 //        $price = $one->getMembershipPrice();
 //        $plan = $one->getMembershipType();
@@ -450,6 +448,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                     'group_id' => '15'
                 );
                 $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
+                 $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
                 try {
                     $model->setId($customerid)->save();
                 } catch (Exception $e) {
@@ -463,15 +462,14 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
 //                 $url = Mage::getUrl('home'); 
                 //Mage::getSingleton('customer/session')->unsetAll();
             } else {
-
                 $jyuy = Mage::getModel('membership/customermembership');
-                      $jyuy->setCustomerId($customerid)                        
+                $jyuy->setCustomerId($customerid)
                         ->setMembershipId($memtypeid)
                         ->save();
-                      $membershiphistory = Mage::getModel('membership/membershiphistory');
-                      $membershiphistory->setCustomerId($customerid)                        
-                                        ->setMembershipId($memtypeid)
-                                        ->save();
+                $membershiphistory = Mage::getModel('membership/membershiphistory');
+                $membershiphistory->setCustomerId($customerid)
+                        ->setMembershipId($memtypeid)
+                        ->save();
 //                  
 //            redirect to registration second page
                 //redirecting to payment page (second page of registration)       
@@ -498,6 +496,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         $customer = $this->_getFromRegistry('current_customer');
         if (!$customer) {
             $customer = $this->_getModel('customer/customer')->setId(null);
+             $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
         }
         if ($this->getRequest()->getParam('is_subscribed', false)) {
             $customer->setIsSubscribed(1);
@@ -623,7 +622,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 ->setIsDefaultBilling($this->getRequest()->getParam('default_billing', false))
                 ->setIsDefaultShipping($this->getRequest()->getParam('default_shipping', false))
                 ->setIsDefaultPickup($this->getRequest()->getParam('default_pickup', false))
-                ;
+        ;
         $addressForm->compactData($addressData);
         $customer->addAddress($address);
 
@@ -727,6 +726,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
 
                 // activate customer
                 try {
+                    $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
                     $customer->setConfirmation(null);
                     $customer->save();
                 } catch (Exception $e) {
@@ -929,6 +929,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         }
 
         try {
+            $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
             // Empty current reset password token i.e. invalidate it
             $customer->setRpToken(null);
             $customer->setRpTokenCreatedAt(null);

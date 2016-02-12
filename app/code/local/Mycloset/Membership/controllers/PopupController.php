@@ -34,7 +34,7 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
                         if ($products->count() > 0) {
                             ?>              
                             <li >                       
-                                <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo $category->name; ?></p></a> 
+                                <a class="getcatid" rel="<?php echo $category->getId(); ?>" ><img  src="<?php echo Mage::getBaseUrl('media') . 'catalog/category/' . $category->image; ?>" alt=""/><p><?php echo ucfirst(strtolower($category->name)); ?></p></a> 
                             </li>    
                             <?php
                         }

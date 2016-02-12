@@ -92,8 +92,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
 
-        $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
-
+        $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
+$g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
@@ -169,7 +169,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
 
 //Making a payment for the customerprofileid
-
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
@@ -273,6 +272,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 //logging-in the customer after successful payment
                 $session = $this->_getSession();
                 $customer = Mage::getModel('customer/customer')->load($customerid);
+                 $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
 //changing customer group
                 $customerid = $customerid;
                 $update = array(
@@ -280,6 +280,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'group_id' => '1'
                 );
                 $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
+                  $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
                 $update_customer_membership = array(
                     'customer_id' => $customerid,
                     'membership_id' => $z_memtype1
@@ -534,6 +535,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             'group_id' => $lock_grp_id
         );
         $lockmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($lock);
+         $lockmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $lockmodel->save();
         } catch (Exception $e) {
@@ -545,6 +547,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             'group_id' => $close_grp_id
         );
         $closemodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($close);
+       $closemodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $closemodel->save();
         } catch (Exception $e) {
@@ -556,6 +559,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             'group_id' => $unlock_grp_id
         );
         $unlockmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($unlock);
+      $unlockmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $unlockmodel->save();
         } catch (Exception $e) {
@@ -567,6 +571,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             'group_id' => $clc_grp_id
         );
         $clsmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($cls);
+       $clsmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $clsmodel->save();
         } catch (Exception $e) {
@@ -579,6 +584,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             'group_id' => $nonpaid_grp_id
         );
         $nonpaidmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($nonpaid);
+         $nonpaidmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $nonpaidmodel->save();
         } catch (Exception $e) {

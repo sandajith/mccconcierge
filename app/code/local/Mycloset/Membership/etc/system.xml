@@ -66,19 +66,20 @@
                         
                         <transkey translate="membership" >
                             <label>Transaction Key</label>
-                            <frontend_type>password</frontend_type>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                             <sort_order>50</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </transkey> 
-   <ipaddress translate="membership" >
+                        <ipaddress translate="membership" >
                             <label>Admin IP address</label>
                             <sort_order>60</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                             <comment>Comma separated ip addresses to view highly secure front end pages in front end</comment>
+                            <comment>Comma separated ip addresses to view highly secure front end pages in front end</comment>
                         </ipaddress>                                                                                                                                                                                    		    
                     </fields>
                 </general>
