@@ -1,5 +1,5 @@
 
-<div class='fieldset'>
+<div class="fieldset payment-fieldset">
     <div id="membership_error">
     </div>
     <h2 class="legend"></h2>
@@ -26,7 +26,7 @@
     $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
     $currency_symbol = Mage::app()->getLocale()->currency($currency_code)->getSymbol();
     ?>
-    <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/authorizepayment/" >
+    <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/authorizepayment/"  onsubmit="return checkForm();">
         <div class="form-list">
             <input type="hidden" value="<?php echo $customer_email; ?>" name="emailid" id="emailid" />  
             <input type="hidden" value="<?php echo $customer_custtele; ?>" name="custelephone" id="telephonenum" />  
@@ -262,16 +262,21 @@
 
         <div class="buttons-set">
 
-            <button type="submit" onclick="checkForm()" title="Submit" class="button"><span><span>Submit</span></span></button>
+            <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
         </div>
+         
     </form>
 
 
 
 
 
-
+<span class="please-wait" id="rplease-wait" style="display:none;">
+    <div class="overlay_preloader" style="background:#fff; opacity: 0.8;z-index: 1000; position: absolute; left: 0; right: 0; top:0; bottom:0; height: 100%; width:100%;"></div>                  
+    <img style="position: absolute; left: 45%; top:45%;"  src="<?php echo $this->getSkinUrl('images/loader.GIF') ?>" alt="<?php echo $this->__('Submitting Payment...') ?>" title="<?php echo $this->__('Submitting Payment......') ?>" class="v-middle" /> 
+</span>
 </div>
+
 
 <script>
     var jqCustom = jQuery.noConflict();
@@ -285,9 +290,12 @@
             jqCustom("#termstext").val(''); //insert '';
         }
     }
-
+   var submitted = false;
     function checkForm()
     {
+           if (submitted) {
+                    return false;
+                }
 
         jqCustom('#paymentform').submit(function (e) {
 //            mem_type
@@ -315,8 +323,19 @@
                 return false;
             }
             else {
-                return true;
+           submitted = true;
+//               
+
+             jqCustom('#pay_submit').css({"display":"none"});  
+                             Element.show('rplease-wait');
+                jqCustom('.payment-fieldset').setStyle({opacity:.5});
+                jqCustom('.payment-fieldset').descendants().each(function(s) {
+                      s.disabled = true;
+                });
+            return true;
             }
+               
+
         });
     }
 
