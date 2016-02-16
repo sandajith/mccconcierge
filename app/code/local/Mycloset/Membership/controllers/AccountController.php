@@ -333,10 +333,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
      * Create customer account action
      */
     public function createPostAction() {
-//        $postdata = $this->getRequest()->getPost();
-//         echo '<pre>';
-//         print_r($postdata);
-//        exit;
+
         /** @var $session Mage_Customer_Model_Session */
         $session = $this->_getSession();
         if ($session->isLoggedIn()) {
@@ -350,7 +347,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             return;
         }
         $this->getRequest()->setPost('telephone', $this->getRequest()->getPost('cus_tele'));
-        $postdata = $this->getRequest()->getPost();
+
 
         $customer = $this->_getCustomer();
         //load customer session based on id               
@@ -371,9 +368,9 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
 
                 $customer->isConfirmationRequired(FALSE);
                 //$zendDate->getIso();
-               // Mage::getModel('core/date')->gmtDate() ;
-               $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
-               // $customer->setCreatedAt()
+                // Mage::getModel('core/date')->gmtDate() ;
+                $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
+                // $customer->setCreatedAt()
                 $customer->save();
                 $this->_dispatchRegisterSuccess($customer);
                 Mage::getSingleton('customer/session')->setMemID($customer->getId());
@@ -382,8 +379,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 Mage::getSingleton('customer/session')->setMemLname($customer->getLastname());
                 Mage::getSingleton('customer/session')->setMemEmail($customer->getEmail());
                 Mage::getSingleton('customer/session')->setMemCustele($customer->getCus_tele());
-                Mage::getSingleton('customer/session')->setMemCusReference($customer->getCusReference()); //for reference code
-
+                Mage::getSingleton('customer/session')->setMemCusReference($customer->getCusReference()); //for reference code            
                 $billingaddressId = $customer->getDefaultBilling();
                 if ($billingaddressId) {
                     $billingaddress = Mage::getModel('customer/address')->load($billingaddressId);
@@ -394,6 +390,11 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 Mage::getSingleton('customer/session')->setMemStreet2($billingaddress->getStreet(2));
                 Mage::getSingleton('customer/session')->setMemCity($billingaddress->getCity());
                 Mage::getSingleton('customer/session')->setMemZip($billingaddress->getPostcode());
+                Mage::getSingleton('customer/session')->setMemRegion($billingaddress->getRegion());
+                $country_name = Mage::app()->getLocale()->getCountryTranslation($billingaddress->getCountryId());
+
+                Mage::getSingleton('customer/session')->setMemCountry($country_name);
+
                 $this->_successProcessRegistration($customer);
                 return;
             } else {
@@ -433,7 +434,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $model = Mage::getModel('customer/customer')->load(Mage::getSingleton('customer/session')->getMemId());
             $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
             $memtypeid = $model->getMemType();
-          
+
 //        $one = Mage::getModel('membership/types')->load($memtypeid);
 //        $price = $one->getMembershipPrice();
 //        $plan = $one->getMembershipType();
@@ -448,7 +449,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                     'group_id' => '15'
                 );
                 $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
-                 $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
+                $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
                 try {
                     $model->setId($customerid)->save();
                 } catch (Exception $e) {
@@ -496,7 +497,7 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         $customer = $this->_getFromRegistry('current_customer');
         if (!$customer) {
             $customer = $this->_getModel('customer/customer')->setId(null);
-             $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
+            $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
         }
         if ($this->getRequest()->getParam('is_subscribed', false)) {
             $customer->setIsSubscribed(1);
