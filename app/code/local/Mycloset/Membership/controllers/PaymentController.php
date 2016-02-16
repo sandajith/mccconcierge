@@ -49,7 +49,21 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     public function authorizepaymentAction() {
         $postdata = $this->getRequest()->getPost('x_card_num');
         $creditcard = substr($postdata, -4, 4);
-//        print_r($postdata);
+//       $post= $this->getRequest()->getPost();
+//       print_r($post);
+//       exit;
+        $Region_name = Mage::getSingleton('customer/session')->getMemRegion();
+        $MemCountry_name = Mage::getSingleton('customer/session')->getMemCountry();
+        $MemCompany = Mage::getSingleton('customer/session')->getMemCompany();
+        $street1 = Mage::getSingleton('customer/session')->getMemStreet1();
+        $street2 = Mage::getSingleton('customer/session')->getMemStreet2();
+        $memcity = Mage::getSingleton('customer/session')->getMemCity();
+        $postalcode = Mage::getSingleton('customer/session')->getMemZip();
+
+
+
+        //   $session_data =   Mage::getSingleton('customer/session')->getData();
+        //     print_r($session_data);
 
         $z_memtype1 = $this->getRequest()->getPost('mem_table_id');
         $taxrate = $this->getRequest()->getPost('tax_rate');
@@ -93,7 +107,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
 
         $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
-$g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
+        $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
@@ -128,7 +142,14 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
                 "<billTo>" .
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
+                "<company>" . Mage::getSingleton('customer/session')->getMemCompany() . "</company>" .
+                "<address>" . $street1 . ',' . $street2 . "</address>" .
+                "<city>" . $memcity . "</city>" .
+                "<state>" . $Region_name . "</state>" .
+                "<zip>" . $postalcode . "</zip>" .
+                "<country>" . $MemCountry_name . "</country>" .
                 "<phoneNumber>" . $telephone . "</phoneNumber>" .
+//      "<faxNumber>"..."</faxNumber>"
                 "</billTo>" .
                 "<payment>" .
                 "<creditCard>" .
@@ -156,6 +177,11 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
                 "<company>" . Mage::getSingleton('customer/session')->getMemCompany() . "</company>" .
+                 "<address>" . $street1 . ',' . $street2 . "</address>" .
+                 "<city>" . $memcity . "</city>" .
+                "<state>" . $Region_name . "</state>" .
+                "<zip>" . $postalcode . "</zip>" .
+                "<country>" . $MemCountry_name . "</country>" .
                 "<phoneNumber>" . $telephone . "</phoneNumber>" .
                 "</address>" .
                 "</createCustomerShippingAddressRequest>";
@@ -238,8 +264,8 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
 // $email = array($admin_email,$z_email);
                 $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
                 $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
-                $emailTemplate->send($z_email,$z_firstname.' '.$z_lastname , $vars);
-                $emailTemplate->send($admin_email,$admin_name, $vars);
+                $emailTemplate->send($z_email, $z_firstname . ' ' . $z_lastname, $vars);
+                $emailTemplate->send($admin_email, $admin_name, $vars);
                 $paymentdetails = serialize($vars);
                 $date = date("Y-m-d H:i:s ", time());
                 $data = array(
@@ -272,7 +298,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
 //logging-in the customer after successful payment
                 $session = $this->_getSession();
                 $customer = Mage::getModel('customer/customer')->load($customerid);
-                 $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
+                $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
 //changing customer group
                 $customerid = $customerid;
                 $update = array(
@@ -280,7 +306,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
                     'group_id' => '1'
                 );
                 $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
-                  $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
+                $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
                 $update_customer_membership = array(
                     'customer_id' => $customerid,
                     'membership_id' => $z_memtype1
@@ -289,21 +315,19 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
 //                exit;
                 $jyuy = Mage::getModel('membership/customermembership')
                         ->load($customerid);
-                
-                        
-                
-                
+
+
+
+
                 $membershiphistory = Mage::getModel('membership/membershiphistory');
                 $membershiphistory->setCustomerId($customerid)
                         ->setMembershipId($z_memtype1);
                 try {
                     $model->setId($customerid)->save();
-                    if($jyuy->getId()){
-                    $jyuy->setMembershipId($z_memtype1)->save();
-                    }
-                    else
-                    {
-                       Mage::getModel('membership/customermembership')->setCustomerId($customerid)->setMembershipId($z_memtype1)->save(); 
+                    if ($jyuy->getId()) {
+                        $jyuy->setMembershipId($z_memtype1)->save();
+                    } else {
+                        Mage::getModel('membership/customermembership')->setCustomerId($customerid)->setMembershipId($z_memtype1)->save();
                     }
                     $membershiphistory->save();
                 } catch (Exception $e) {
@@ -535,7 +559,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
             'group_id' => $lock_grp_id
         );
         $lockmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($lock);
-         $lockmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
+        $lockmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $lockmodel->save();
         } catch (Exception $e) {
@@ -547,7 +571,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
             'group_id' => $close_grp_id
         );
         $closemodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($close);
-       $closemodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
+        $closemodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $closemodel->save();
         } catch (Exception $e) {
@@ -559,7 +583,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
             'group_id' => $unlock_grp_id
         );
         $unlockmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($unlock);
-      $unlockmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
+        $unlockmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $unlockmodel->save();
         } catch (Exception $e) {
@@ -571,7 +595,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
             'group_id' => $clc_grp_id
         );
         $clsmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($cls);
-       $clsmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
+        $clsmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $clsmodel->save();
         } catch (Exception $e) {
@@ -584,7 +608,7 @@ $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
             'group_id' => $nonpaid_grp_id
         );
         $nonpaidmodel = Mage::getModel('customer/customer')->load($customer_id, 'customer_id')->addData($nonpaid);
-         $nonpaidmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
+        $nonpaidmodel->setData('created_at', Mage::getModel('core/date')->gmtDate());
         try {
             $nonpaidmodel->save();
         } catch (Exception $e) {
