@@ -66,10 +66,10 @@
                         </div>
                     </li>
                     <?php
-                    $_page = Mage::getModel('cms/page')->load('about-magento-demo-store', 'identifier');
+                    $_page = Mage::getModel('cms/page')->load('about', 'identifier');
                     if ($_page->getIsActive()) {
                         ?>
-                        <li><a href="<?php echo $this->getUrl('about-magento-demo-store'); ?>"><?php echo $this->__('ABOUT') ?></a></li>
+                        <li><a href="<?php echo $this->getUrl('about'); ?>"><?php echo $this->__('ABOUT') ?></a></li>
                     <?php } ?>
                     <?php
                     $_page = Mage::getModel('cms/page')->load('howitworks', 'identifier');
