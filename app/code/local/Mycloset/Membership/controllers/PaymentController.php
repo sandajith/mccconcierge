@@ -57,6 +57,15 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $MemCompany = Mage::getSingleton('customer/session')->getMemCompany();
         $street1 = Mage::getSingleton('customer/session')->getMemStreet1();
         $street2 = Mage::getSingleton('customer/session')->getMemStreet2();
+        if($street1 && $street2){
+            $street = $street1.', '. $street2;
+        }else if(!$street1) {
+            $street = $street2;
+        }else if(!$street2){
+            $street =$street1;
+        }
+            
+            
         $memcity = Mage::getSingleton('customer/session')->getMemCity();
         $postalcode = Mage::getSingleton('customer/session')->getMemZip();
 
@@ -143,7 +152,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
                 "<company>" . Mage::getSingleton('customer/session')->getMemCompany() . "</company>" .
-                "<address>" . $street1 . ',' . $street2 . "</address>" .
+                "<address>" . $street . "</address>" .
                 "<city>" . $memcity . "</city>" .
                 "<state>" . $Region_name . "</state>" .
                 "<zip>" . $postalcode . "</zip>" .
@@ -177,7 +186,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
                 "<company>" . Mage::getSingleton('customer/session')->getMemCompany() . "</company>" .
-                 "<address>" . $street1 . ',' . $street2 . "</address>" .
+                 "<address>" . $street . "</address>" .
                  "<city>" . $memcity . "</city>" .
                 "<state>" . $Region_name . "</state>" .
                 "<zip>" . $postalcode . "</zip>" .
