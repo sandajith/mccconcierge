@@ -34,12 +34,12 @@
 <?php $_items = $this->getItems()?>
 <?php if($_items): ?>
 <div class="block block-reorder">
-    <div class="block-title">
+<!--    <div class="block-title">
         <strong><span><?php echo $this->__('My Orders') ?></span></strong>
-    </div>
+    </div>-->
     <form method="post" action="<?php echo $this->getFormActionUrl() ?>" id="reorder-validate-detail">
         <?php echo $this->getBlockHtml('formkey'); ?>
-        <div class="block-content">
+<!--        <div class="block-content">
             <p class="block-subtitle"><?php echo $this->__('Last Ordered Items') ?></p>
             <ol id="cart-sidebar-reorder">
             <?php $_showAddButtonFlag = false ?>
@@ -66,7 +66,7 @@
                 <?php endif; ?>
                 <a href="<?php echo $this->getUrl('customer/account') ?>"><?php echo $this->__('View All'); ?></a>
             </div>
-        </div>
+        </div>-->
     </form>
 </div>
 <?php echo $this->getPagerHtml(); ?>

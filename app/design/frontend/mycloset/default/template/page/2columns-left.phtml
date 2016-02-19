@@ -68,11 +68,11 @@
                                         <?php echo $this->getChildHtml('content') ?>
                                     </div> 
                                     <?php if ($checkoutcls === ' customer-account-index') { ?>  
-                                        <div class="block-title">
-                                            <strong><span><?php echo $this->__('My Account'); ?></span></strong>
+                                        
+                                        <div class=" subhead-myaccount-filter">
+                                            <h2><?php echo $this->__('MY ACCOUNT') ?></h2>
                                         </div>
-
-                                        <div class="col-sm-3 col-md-2 filterBy filterby_mob">
+                                        <div class="col-sm-3 col-md-2 filterBy-myaccount filterby_mob">
                                             <?php echo $this->getChildHtml('left') ?>
                                         </div>
                                     <?php } else { ?>

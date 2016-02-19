@@ -25,16 +25,18 @@
  */
 ?>
 <div class="dashboard">   
-    <div class="page-title ">
+    <div class="page-title subhead-myaccount ">
         <h2><?php echo $this->__('MY DASHBOARD') ?></h2>
     </div>
+
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php echo $this->getChildHtml('hello') ?>
-    <?php echo $this->getChildHtml('top') ?>
+   
     <div class="box-account box-info">
-        <div class="box-head">
-            <h2><?php echo $this->__('Account Information') ?></h2>
+        <div class="box-head subhead-myaccount-acc-info">
+            <h2><?php echo $this->__('ACCOUNT INFORMATION') ?></h2>
         </div>
+
         <?php /* Extensions placeholder */ ?>
         <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
         <?php echo $this->getChildHtml('info') ?>
@@ -42,4 +44,5 @@
     </div>
     <?php echo $this->getChildHtml('info1') ?>
     <?php echo $this->getChildHtml('info2') ?>
+ <?php echo $this->getChildHtml('top') ?>
 </div>
