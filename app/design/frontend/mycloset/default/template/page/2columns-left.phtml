@@ -31,58 +31,67 @@
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
-<head>
-<?php echo $this->getChildHtml('head') ?>
-</head>
-<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
-    <div class="allWrapper">
+    <head>
+        <?php echo $this->getChildHtml('head') ?>
+    </head>
+    <body<?php echo $this->getBodyClass() ? ' class="' . $this->getBodyClass() . '"' : '' ?>>
+        <div class="allWrapper">
             <div class="footFix">
-<?php echo $this->getChildHtml('after_body_start') ?>
-    <?php echo $this->getChildHtml('global_notices') ?>
-        <?php echo $this->getChildHtml('header') ?>
-        <div class="main-container col2-left-layout">
-            <div class="main">
-                  <div class="container">
-                        <?php
-                        
- $checkoutcls=$this->getBodyClass();
-if($checkoutcls===' checkout-onepage-index'){ ?>
-<div class="page-title subhead">
-    <h2><?php echo $this->__('CHECKOUT | SET APPOINTMENT') ?></h2>
-</div>
-  <div class="row">
-                        <div class="col-xs-12 col-sm-8 itemsWrapper">
-                            <?php echo $this->getChildHtml('global_messages') ?>
-                            <?php echo $this->getChildHtml('content') ?>
+                <?php echo $this->getChildHtml('after_body_start') ?>
+                <?php echo $this->getChildHtml('global_notices') ?>
+                <?php echo $this->getChildHtml('header') ?>
+                <div class="main-container col2-left-layout">
+                    <div class="main">
+                        <div class="container">
+                            <?php
+                            $checkoutcls = $this->getBodyClass();
+                            if ($checkoutcls === ' checkout-onepage-index') {
+                                ?>
+                                <div class="page-title subhead">
+                                    <h2><?php echo $this->__('CHECKOUT | SET APPOINTMENT') ?></h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 itemsWrapper">
+                                        <?php echo $this->getChildHtml('global_messages') ?>
+                                        <?php echo $this->getChildHtml('content') ?>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 checkout-progress-wrapper hidden-xs">
+                                        <?php echo $this->getChildHtml('left') ?>
+                                    </div>
+
+
+                                </div>
+                            <?php } else { ?>
+                                <div class="row shopping-cont">
+                                    <div class="col-sm-9 col-md-10 itemsWrapper">
+                                        <?php echo $this->getChildHtml('global_messages') ?>
+                                        <?php echo $this->getChildHtml('content') ?>
+                                    </div> 
+                                    <?php if ($checkoutcls === ' customer-account-index') { ?>  
+                                        <div class="block-title">
+                                            <strong><span><?php echo $this->__('My Account'); ?></span></strong>
+                                        </div>
+
+                                        <div class="col-sm-3 col-md-2 filterBy filterby_mob">
+                                            <?php echo $this->getChildHtml('left') ?>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="col-sm-3 col-md-2 filterBy filterby_mob">
+                                            <?php echo $this->getChildHtml('left') ?>
+                                        </div>  
+                                    <?php }
+                                    ?>
+                                </div>
+                            <?php } ?>
                         </div>
-                        <div class="col-xs-12 col-sm-4 checkout-progress-wrapper hidden-xs">
-                            <?php echo $this->getChildHtml('left') ?>
-                        </div>
-                        
-                        
                     </div>
-<?php } else {?>
-                    <div class="row shopping-cont">
-                        <div class="col-sm-9 col-md-10 itemsWrapper">
-                            <?php echo $this->getChildHtml('global_messages') ?>
-                            <?php echo $this->getChildHtml('content') ?>
-                        </div>
-                        <div class="col-sm-3 col-md-2 filterBy filterby_mob">
-                            <?php echo $this->getChildHtml('left') ?>
-                        </div>
-                        
-                        
-                    </div>
-                    <?php } ?>
                 </div>
+                <?php echo $this->getChildHtml('footer') ?>
+                <?php echo $this->getChildHtml('global_cookie_notice') ?>
+                <?php echo $this->getChildHtml('before_body_end') ?>
+
+                <?php echo $this->getAbsoluteFooter() ?>
             </div>
         </div>
-        <?php echo $this->getChildHtml('footer') ?>
-        <?php echo $this->getChildHtml('global_cookie_notice') ?>
-        <?php echo $this->getChildHtml('before_body_end') ?>
- 
-<?php echo $this->getAbsoluteFooter() ?>
-                   </div>
-</div>
-</body>
+    </body>
 </html>

@@ -49,6 +49,8 @@ Default layout, loads most of the pages
         <action method="addItem"><type>skin_css</type><name>css/fm.datetator.jquery.css</name></action>
       
     </reference>
+     <remove name="catalog.compare.sidebar" />
+      <remove name="cart_sidebar" />
 </default>
 
 </layout>
