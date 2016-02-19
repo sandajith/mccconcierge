@@ -32,17 +32,17 @@
             <div style="border-bottom:1px solid #ddd"></div>
         <div class="box-content">
             <div class="col-1">
-                <h4><?php echo $this->__('Default Billing Address') ?></h4>
+                <h4><?php echo $this->__('DEFAULT BILLING ADDRESS') ?></h4>
                 <address>
                     <?php echo $this->getPrimaryBillingAddressHtml() ?><br />
-                    <a href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>"><?php echo $this->__('Edit Address') ?></a>
+                    <a href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>" style=" text-decoration:underline !important;"><?php echo $this->__('Edit Address') ?></a>
                 </address>
             </div>
             <div class="col-2">
-                <h4><?php echo $this->__('Default Shipping Address') ?></h4>
+                <h4><?php echo $this->__('DEFAULT SHIPPING ADDRESS') ?></h4>
                 <address>
                     <?php echo $this->getPrimaryShippingAddressHtml() ?><br />
-                    <a href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>"><?php echo $this->__('Edit Address') ?></a>
+                    <a href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>" style=" text-decoration:underline !important;"><?php echo $this->__('Edit Address') ?></a>
                 </address>
             </div>
 <!--              <div class="col-2">

@@ -275,7 +275,7 @@ a.button, button.button, input.button {
     -o-box-shadow:3px 4px 10px -6px #000;
     border: 0;
     text-transform: uppercase;
-    
+
 }
 
 .itemList ul label{font-weight: normal;}
@@ -414,7 +414,7 @@ a.button, button.button, input.button {
 }
 .subhead-myaccount h2 {
     font-family:Lato;
-/*    text-align: center;*/
+    /*    text-align: center;*/
     padding:30px 0 0;
     font-size: 27px;
     letter-spacing: 5px;
@@ -424,9 +424,9 @@ a.button, button.button, input.button {
     font-family:Lato;
     /*padding:30px 0 0;*/
     font-size: 22px;
-      margin-top: 13px;
-/*    letter-spacing: 0px;
-    margin-bottom: 30px;*/
+    margin-top: 13px;
+    /*    letter-spacing: 0px;
+        margin-bottom: 30px;*/
 }
 .subhead-myaccount-filter h2 {
     font-family: Lato;
@@ -437,6 +437,10 @@ a.button, button.button, input.button {
     text-align: justify;
 }
 .subhead h2.title_searchresult{
+    text-transform: uppercase;
+}
+.billing-address li{
+    font-family: Lato;
     text-transform: uppercase;
 }
 .myCloset {}
@@ -812,7 +816,7 @@ a.button, button.button, input.button {
 .loginRegister .bordered .input-text { border: 1px solid #dcdcdc; width: 250px; border-radius: 0; padding:5px;}
 .loginRegister .bordered .content .field { float:left; width: 100%; margin-bottom: -1px; }
 .loginRegister .bordered .content label {
-     display: block;
+    display: block;
     font-weight: normal;
     margin: 5px 0 0;
     padding: 3px 0 1px;}
@@ -836,10 +840,10 @@ a.button, button.button, input.button {
     float: left; margin:7px 10px 0 0;
 }
 .loginRegister u.show {
-     cursor: pointer;
-     display: inline-block !important;
-     margin: 0 0 0 5px;
- }
+    cursor: pointer;
+    display: inline-block !important;
+    margin: 0 0 0 5px;
+}
 .loginRegister .bordered  select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -888,6 +892,12 @@ a.button, button.button, input.button {
 .divFooter .lnk:hover { color:#666666;}
 .mtop30 { margin-top:30px;}
 .button.submit { margin:5px 0; min-width: 100px}
+table.my-account-order th{
+width: 19%;
+}  
+table.my-account-order td{
+width: 19%;
+} 
 .dataTable { border-top: 1px solid #ccc; border-right: 1px solid #ccc;}
 .dataTable > .row { overflow: hidden; height: 100px; }
 .dataTable > .rowcheckout { overflow: hidden; height: 200px; }
@@ -1727,20 +1737,20 @@ p.back-link{
 .preselect select option:focus,
 .preselect select option:active,
 .preselect select option:checked {
-   background: linear-gradient(#ededed, #ededed);
-   color:#010101;
+    background: linear-gradient(#ededed, #ededed);
+    color:#010101;
 }
 .selected_season{
-   background: linear-gradient(#ededed, #ededed);
-   color:#010101;
+    background: linear-gradient(#ededed, #ededed);
+    color:#010101;
 }
 .preselect select option:selected{
     color:#010101; 
 }
- .Growler{
+.Growler{
     z-index:100001 !important;
- }
-  
+}
+
 
 
 .row.myBag {
@@ -1897,7 +1907,7 @@ p.back-link{
 
 /*SHOP PAGE*/
 
- .itemsWrapper .shopping.itemList ul{
+.itemsWrapper .shopping.itemList ul{
     min-height: auto;
     margin: 10px 0;
 }
