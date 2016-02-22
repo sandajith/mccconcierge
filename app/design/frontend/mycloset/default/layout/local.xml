@@ -51,6 +51,8 @@ Default layout, loads most of the pages
     </reference>
      <remove name="catalog.compare.sidebar" />
       <remove name="cart_sidebar" />
+      <remove name="block.name" />
+      <remove name="left.newsletter"/>
 </default>
 
 </layout>

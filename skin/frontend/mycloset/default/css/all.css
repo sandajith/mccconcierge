@@ -395,6 +395,34 @@ a.button, button.button, input.button {
     width:79px;
 
 }
+.box-title{
+     font-family:Lato !important;
+}
+.box-title h2{
+     font-family:Lato !important;
+}
+.order-details h2 {
+     font-family:Lato !important;
+}
+.page-title h1{
+     font-family:Lato !important;
+}
+.page-title h2{
+     font-family:Lato !important;
+}
+.legend{
+      font-family:Lato !important; 
+}
+.addresses-primary h2{
+    
+font-family:Lato !important;
+} 
+.item h3{
+   font-family:Lato !important; 
+}
+.addresses-additional h2{
+  font-family:Lato !important;   
+}
 /*.subhead h2 {
     font-family:Lato;
     text-align: center;

@@ -25,8 +25,8 @@
  */
 ?>
 <?php $_item = $this->getItem() ?>
-<tr class="border" id="order-item-row-<?php echo $_item->getId() ?>">
-    <td><h3 class="product-name"><?php echo $this->escapeHtml($_item->getName()) ?></h3>
+<tr class="border" id="order-item-row-<?php echo $_item->getId() ?>" >
+    <td><div class="product-name order_pro"><?php echo $this->escapeHtml($_item->getName()) ?></div>
         <?php if($_options = $this->getItemOptions()): ?>
         <dl class="item-options">
         <?php foreach ($_options as $_option) : ?>

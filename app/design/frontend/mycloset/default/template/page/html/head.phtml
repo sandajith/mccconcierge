@@ -33,11 +33,13 @@ $url = Mage::getSingleton('core/url')->parseUrl($currentUrl);
 $path = $url->getPath();
 $getpath = explode('/', $path);
 $order_success = in_array('success',$getpath);
+
 $title_string = $this->getTitle();
 $search_result = strchr($title_string,"Search results for");
+$order_result = strchr($title_string,"Order #");
 
     if ($this->getTitle() == "My Account") {
-        echo "My Account| My Closet Concierge";
+        echo "My Account | My Closet Concierge";
     } else if ($this->getTitle() == "Shopping Cart") {
         echo "My Bag | My Closet Concierge";
     } else if ($this->getTitle() == "Create New Customer Account") {
@@ -52,6 +54,20 @@ $search_result = strchr($title_string,"Search results for");
         echo "Order Success | My Closet Concierge";
     }else if ($search_result){
         echo "Search | My Closet Concierge";
+    }else if ($this->getTitle() == "Account Information"){
+        echo "Account Information | My Closet Concierge";
+ 
+    }else if ($this->getTitle() == "Address Book"){
+        echo "Address Book | My Closet Concierge";
+    
+    }else if ($this->getTitle() == "My Orders"){
+        echo "My Orders | My Closet Concierge";
+    
+    }else if ($this->getTitle() == "Edit Address"){
+        echo "Edit Address | My Closet Concierge";
+    
+    }else if ($order_result){
+        echo "Order | My Closet Concierge";
     }
     else if($this->getTitle() == "Mycloset | My Closet Concierge"){
  if (!Mage::getSingleton('customer/session')->isLoggedIn()):
