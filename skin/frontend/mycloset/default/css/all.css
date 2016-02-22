@@ -453,8 +453,12 @@ font-family:Lato !important;
     /*padding:30px 0 0;*/
     font-size: 22px;
     margin-top: 13px;
+    float:left;
     /*    letter-spacing: 0px;
         margin-bottom: 30px;*/
+}
+.subhead-myaccount-acc-info a.edit_style {
+ float:right;margin-top:22px;text-decoration: underline;
 }
 .subhead-myaccount-filter h2 {
     font-family: Lato;
@@ -2034,4 +2038,7 @@ a.cat_01, a.cat_02{
 .show_category.customDropDown .dropContentBox ul li b{float: none;}
 
 .footer-menu{display: none;}
+.my-account{
+    padding-left: 45px;
+}
 
