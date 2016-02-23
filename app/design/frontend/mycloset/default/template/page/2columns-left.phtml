@@ -44,7 +44,7 @@
                     <div class="main">
                         <div class="container">
                             <?php
-                            $checkoutcls = $this->getBodyClass();
+                          $checkoutcls = $this->getBodyClass();                         
                             if ($checkoutcls === ' checkout-onepage-index') {
                                 ?>
                                 <div class="page-title subhead">
@@ -67,7 +67,10 @@
                                         <?php echo $this->getChildHtml('global_messages') ?>
                                         <?php echo $this->getChildHtml('content') ?>
                                     </div> 
-                                    <?php if ($checkoutcls === ' customer-account-index') { ?>  
+                                    <?php
+                                    $titles = array(' customer-account-index',' customer-account-edit',' customer-address-form',' sales-order-history',' sales-order-view',' customer-address-index');
+                                    $my_account_page = in_array($checkoutcls,$titles);
+                                    if ($my_account_page) { ?>  
                                         
                                         <div class=" subhead-myaccount-filter">
                                             <h2><?php echo $this->__('MY ACCOUNT') ?></h2>

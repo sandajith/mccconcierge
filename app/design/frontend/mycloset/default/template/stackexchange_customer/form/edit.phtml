@@ -25,14 +25,14 @@
  */
 ?>
 
-<div class="page-title">
-    <h1><?php echo $this->__('Edit Account Information') ?></h1>
+<div class="page-title subhead-myaccount">
+    <h2><?php echo $this->__('Edit Account Information') ?></h2>
 </div>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <form action="<?php echo $this->getUrl('customer/account/editPost') ?>" method="post" autocomplete="off" id="form-validate" class="scaffold-form" enctype="multipart/form-data">
     <div class="fieldset">
         <?php echo $this->getBlockHtml('formkey')?>
-        <h2 class="legend"><?php echo $this->__('Account Information') ?></h2>
+        <h2 class="legend subhead-myaccount-acc-info"><?php echo $this->__('Account Information') ?></h2>
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
         <ul class="form-list">
             <li>

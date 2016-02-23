@@ -24,8 +24,8 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="page-title">
-    <h1><?php echo $this->__('Send confirmation link') ?></h1>
+ <div class="page-title subhead-myaccount ">
+    <h2><?php echo $this->__('Send confirmation link') ?></h2>
 </div>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <form action="" method="post" id="form-validate">
@@ -43,7 +43,7 @@
     </div>
     <div class="buttons-set">
         <p class="required"><?php echo $this->__('* Required Fields') ?></p>
-        <p class="back-link"><a href="<?php echo $this->helper('customer')->getLoginUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Login') ?></a></p>
+        <p class="back-link"><a style="text-decoration: underline;" href="<?php echo $this->helper('customer')->getLoginUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back to Login') ?></a></p>
         <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button"><span><span><?php echo $this->__('Submit') ?></span></span></button>
     </div>
 </form>

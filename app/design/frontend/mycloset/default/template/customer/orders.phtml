@@ -28,8 +28,8 @@
  * @deprecated  after 1.4.0.0-alpha3
  */
 ?>
-<div class="page-title">
-    <h1><?php echo $this->__('My Orders') ?></h1>
+ <div class="page-title subhead-myaccount ">
+    <h2><?php echo $this->__('My Orders') ?></h2>
 </div>
 <?php if($orders->getSize()): ?>
 <table class="data-table my-account-order" id="my-orders-table" >
@@ -61,5 +61,5 @@
     <p><?php echo $this->__('You have placed no orders yet.') ?></p>
 <?php endif ?>
 <div class="buttons-set">
-    <p class="back-link"><a href="<?php echo $this->getUrl('customer/account') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <p class="back-link"><a style="text-decoration: underline;" href="<?php echo $this->getUrl('customer/account') ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
 </div>

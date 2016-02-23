@@ -27,8 +27,8 @@
 <?php /** @var $this Mage_Sales_Block_Order_Info */ ?>
 <?php $_order = $this->getOrder() ?>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
-<div class="page-title title-buttons">
-    <h1><?php echo $this->__('Order #%s - %s', $_order->getRealOrderId(), $_order->getStatusLabel()) ?></h1>
+<div class="page-title title-buttons subhead-myaccount">
+    <h2><?php echo $this->__('Order #%s - %s', $_order->getRealOrderId(), $_order->getStatusLabel()) ?></h2>
     <?php echo $this->getChildHtml('buttons') ?>
 </div>
 <?php echo $this->getStatusHistoryRssUrl($_order) ?>
@@ -53,7 +53,7 @@
 <div class="col2-set order-info-box">
     <div class="col-1">
         <div class="box">
-            <div class="box-title">
+            <div class="box-title ">
                 <h2><?php echo $this->__('Shipping Address') ?></h2>
             </div>
             <div class="box-content">
