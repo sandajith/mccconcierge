@@ -2069,3 +2069,9 @@ a.cat_01, a.cat_02{
 .addnew-addr {
     float: left;
 }
+.boarder-line-myaccount {
+    border-bottom:1px solid #ddd;
+}
+.a-tag-underline {
+    text-decoration: underline;
+}
