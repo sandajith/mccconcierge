@@ -61,9 +61,9 @@
                     <td><?php echo $_order->getStatusLabel() ?></td>
                     <td class="a-center">
                         <span class="nobr">
-                            <a class=".a-tag-underline" href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $this->__('View Order') ?></a>
+                            <a class="a-tag-underline" href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $this->__('View Order') ?></a>
                         <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
-                            <span class="separator">|</span> <a href="<?php echo $this->getReorderUrl($_order) ?>"class=".a-tag-underline" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
+                            <span class="separator">|</span> <a href="<?php echo $this->getReorderUrl($_order) ?>"class="a-tag-underline" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
                         <?php endif ?>
                         </span>
                     </td>
