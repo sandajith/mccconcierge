@@ -255,6 +255,7 @@ if (in_array('9', $caid)) {
                 success: function (data) {
                     jqCustom('.flexsliderPopup').remove();
                     jqCustom(data).appendTo(".popupContent");
+                    jqCustom(".popupBox").resize();
 
                 }
             });
