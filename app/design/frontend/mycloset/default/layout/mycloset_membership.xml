@@ -35,7 +35,14 @@
                 <template>page/1column.phtml</template>
             </action>   
         </reference>
-         
+          <reference name="customer_form_register">         
+            <action method="setTemplate">
+                <template>mycloset_membership/paymentform.phtml</template>
+            </action>
+        </reference>
+           <reference name="customer_account_create">
+            <block type="membership/membership_list" name="membership_list"  template="mycloset_membership/paymentform.phtml"/>      
+        </reference>
         <reference name="content">   
             <block type="membership/membership_list" name="membership_list" template="mycloset_membership/paymentform.phtml"/>       
         </reference>  

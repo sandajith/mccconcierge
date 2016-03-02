@@ -47,46 +47,61 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function authorizepaymentAction() {
-        $postdata = $this->getRequest()->getPost('x_card_num');
-        $creditcard = substr($postdata, -4, 4);
-//       $post= $this->getRequest()->getPost();
-//       print_r($post);
-//       exit;
-        $Region_name = Mage::getSingleton('customer/session')->getMemRegion();
-        $MemCountry_name = Mage::getSingleton('customer/session')->getMemCountry();
-        $MemCompany = Mage::getSingleton('customer/session')->getMemCompany();
-        $street1 = Mage::getSingleton('customer/session')->getMemStreet1();
-        $street2 = Mage::getSingleton('customer/session')->getMemStreet2();
-        if ($street2) {
-            $street = $street1 . ', ' . $street2;
+        $data = $this->getRequest()->getPost();
+//        Array ( [emailid] => aaaddddd@gmail.com [cust_id] => 228
+//         [mem_type] => Endless Closet [amt] => 180 [mem_table_id] => 3 
+//         [create_address] => 1 [firstname] => Adams [lastname] => philip 
+//         [company] => fgdgfd [street] => Array ( [0] => 228 Avenue E [1] => 228 Avenue 9 )
+//          [city] => New York [region_id] => 19 [region] => [postcode] => 680732 
+//          [country_id] => US [cus_tele] => 2312231231 [fax] => f5445 [default_billing] => 1
+//           [default_shipping] => 1 [x_card_name] => NEENU [x_card_num] => 4007000000027 
+//           [card_exp_year] => 2035 [card_exp_month] => 02 [x_card_code] => 123 [terms] => 1 )
+
+        $payment_emailid = $this->getRequest()->getPost('emailid');
+        $payment_custid = $this->getRequest()->getPost('cust_id');
+        $payment_memtype = $this->getRequest()->getPost('mem_type');
+//vinu
+        $payment_createaddr = $this->getRequest()->getPost('create_address');
+        $fname = $this->getRequest()->getPost('firstname');
+        $lname = $this->getRequest()->getPost('lastname');
+        $payment_company = $this->getRequest()->getPost('company');
+        $payment_street = $this->getRequest()->getPost('street');
+        $payment_street1 = $payment_street[0];
+        $payment_street2 = $payment_street[1];
+        $memcity = $this->getRequest()->getPost('city');
+        $payment_regionid = $this->getRequest()->getPost('region_id');
+        $region = Mage::getModel('directory/region')->load($payment_regionid);
+        $region_name = $region->getName(); //California
+        $postalcode = $this->getRequest()->getPost('postcode');
+        $country_code = $this->getRequest()->getPost('country_id');
+        $MemCountry_name = Mage::app()->getLocale()->getCountryTranslation($country_code);
+        $telephone = $this->getRequest()->getPost('cus_tele');
+        $payment_fax = $this->getRequest()->getPost('fax');
+        $payment_default_billing = $this->getRequest()->getPost('default_billing');
+        $payment_default_shipping = $this->getRequest()->getPost('default_shipping');
+        $name_card = $this->getRequest()->getPost('x_card_name');
+        $payment_card_exp_year = $this->getRequest()->getPost('card_exp_year');
+        $payment_card_exp_month = $this->getRequest()->getPost('card_exp_month');
+        $payment_card_code = $this->getRequest()->getPost('x_card_code');
+        $number_card = $this->getRequest()->getPost('x_card_num');
+        $creditcard = substr($number_card, -4, 4);
+
+
+        if ($payment_street2) {
+            $street = $payment_street1 . ', ' . $payment_street2;
         } else {
-            $street = $street1;
+            $street = $payment_street1;
         }
 
-
-        $memcity = Mage::getSingleton('customer/session')->getMemCity();
-        $postalcode = Mage::getSingleton('customer/session')->getMemZip();
-
-
-
-        //   $session_data =   Mage::getSingleton('customer/session')->getData();
-        //     print_r($session_data);
 
         $z_memtype1 = $this->getRequest()->getPost('mem_table_id');
         $taxrate = $this->getRequest()->getPost('tax_rate');
-        if (Mage::getSingleton('customer/session')->getMemID() === '') {// if session data is available
-            $fname = Mage::getSingleton('customer/session')->getMemFname();
-            $lname = Mage::getSingleton('customer/session')->getMemLname();
-            $telephone = Mage::getSingleton('customer/session')->getMemCustele();
-            $emailid = Mage::getSingleton('customer/session')->getMemEmail();
-            $customerid = Mage::getSingleton('customer/session')->getMemID();
-        } else { // session data is not availabe then using post data
-            $fname = $this->getRequest()->getPost('x_first_name');
-            $lname = $this->getRequest()->getPost('x_last_name');
-            $telephone = $this->getRequest()->getPost('custelephone');
-            $emailid = $this->getRequest()->getPost('emailid');
-            $customerid = $this->getRequest()->getPost('cust_id');
-        }
+
+
+
+        $emailid = $this->getRequest()->getPost('emailid');
+        $customerid = $this->getRequest()->getPost('cust_id');
+
 
         if ($taxrate === '') {
             $mem_amount = $this->getRequest()->getPost('amt');
@@ -149,19 +164,19 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<billTo>" .
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
-                "<company>" . Mage::getSingleton('customer/session')->getMemCompany() . "</company>" .
+                "<company>" . $payment_company . "</company>" .
                 "<address>" . $street . "</address>" .
                 "<city>" . $memcity . "</city>" .
-                "<state>" . $Region_name . "</state>" .
+                "<state>" . $region_name . "</state>" .
                 "<zip>" . $postalcode . "</zip>" .
                 "<country>" . $MemCountry_name . "</country>" .
                 "<phoneNumber>" . $telephone . "</phoneNumber>" .
-//      "<faxNumber>"..."</faxNumber>"
+                "<faxNumber>" . $payment_fax . "</faxNumber>" .
                 "</billTo>" .
                 "<payment>" .
                 "<creditCard>" .
                 "<cardNumber>" . $this->getRequest()->getPost('x_card_num') . "</cardNumber>" .
-                "<expirationDate>" . $this->getRequest()->getPost('card_exp_year') . '-' . $this->getRequest()->getPost('card_exp_month') . "</expirationDate>" . // required format for API is YYYY-MM
+                "<expirationDate>" . $payment_card_exp_year . '-' . $payment_card_exp_month . "</expirationDate>" . // required format for API is YYYY-MM
                 "</creditCard>" .
                 "</payment>" .
                 "</paymentProfile>" .
@@ -183,10 +198,10 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<address>" .
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
-                "<company>" . Mage::getSingleton('customer/session')->getMemCompany() . "</company>" .
+                "<company>" . $payment_company . "</company>" .
                 "<address>" . $street . "</address>" .
                 "<city>" . $memcity . "</city>" .
-                "<state>" . $Region_name . "</state>" .
+                "<state>" . $region_name . "</state>" .
                 "<zip>" . $postalcode . "</zip>" .
                 "<country>" . $MemCountry_name . "</country>" .
                 "<phoneNumber>" . $telephone . "</phoneNumber>" .
@@ -280,7 +295,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                     'customer_profile_id' => $parsed_customer_id,
                     'payment_profile_id' => $parsed_paymentprofile_id,
                     'shipping_address_id' => $parsed_address_id,
-                    'creditcard_num' => $creditcard
+                    'creditcard_num' => $creditcard,
+                    'name_creditcard' => $name_card
                 );
                 $model = Mage::getModel('membership/payment')->setData($data);
                 $insertId = $model->save()->getId();
@@ -301,7 +317,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                         ->save();
 
 
-
 //logging-in the customer after successful payment
                 $session = $this->_getSession();
                 $customer = Mage::getModel('customer/customer')->load($customerid);
@@ -310,16 +325,44 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $customerid = $customerid;
                 $update = array(
                     'entity_id' => $customerid,
-                    'group_id' => '1'
+                    'group_id' => '1',
+                    'firstname' => $fname,
+                    'lastname' => $lname,
+                    'country' => $MemCountry_name,
+                    'postcode' => $postalcode,
+                    'telephone' => $telephone,
+                    'fax' => $payment_fax
                 );
-                $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
-                $model->setData('created_at', Mage::getModel('core/date')->gmtDate());
-                $update_customer_membership = array(
-                    'customer_id' => $customerid,
-                    'membership_id' => $z_memtype1
-                );
-//                print_r($update_customer_membership);
-//                exit;
+                $customer->addData($update);
+                $customer->setId($customerid)->save();
+                //neenuwilson
+                
+                
+                
+        $address123 = Mage::getModel("customer/address")->load($payment_default_shipping);
+        $address123->setCustomerId($customerid)               
+                ->setFirstname($fname)                
+                ->setLastname($lname)
+                ->setCountryId($country_code)
+                ->setRegionId($region)
+                ->setPostcode($postalcode)
+                ->setCompany($payment_company)
+                ->setCity($memcity)
+                ->setTelephone($telephone)
+                ->setFax($payment_fax)
+                //vinu
+                ->setStreet(array($payment_street1,$payment_street2))
+                ->setIsDefaultBilling('1')
+                ->setIsDefaultShipping('1')
+                ->setSaveInAddressBook('1');
+        try {
+            $address123->save();
+            $address123->setConfirmation(null);
+            $address123->save();
+        } catch (Exception $e) {
+
+        }
+           
                 $jyuy = Mage::getModel('membership/customermembership')
                         ->load($customerid);
 

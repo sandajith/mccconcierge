@@ -346,16 +346,18 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
             $this->_redirectError($errUrl);
             return;
         }
-        $this->getRequest()->setPost('telephone', $this->getRequest()->getPost('cus_tele'));
+      
 
-
-        $customer = $this->_getCustomer();
+        $customer = Mage::getModel('customer/customer');
         //load customer session based on id               
         $customer->load(Mage::getSingleton('customer/session')->getMemID());
-
+$customer->setFirstname('temp');
+$customer->setLastname('temp');
 
         try {
             $errors = $this->_getCustomerErrors($customer);
+            
+           
             if (empty($errors)) {
                 $customer->cleanPasswordsValidationData();
                 if (Mage::getStoreConfig(self::PATH_GATE_THRESHOLD) == no) {
@@ -372,30 +374,16 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
                 $customer->setData('created_at', Mage::getModel('core/date')->gmtDate());
                 // $customer->setCreatedAt()
                 $customer->save();
+                
                 $this->_dispatchRegisterSuccess($customer);
-                Mage::getSingleton('customer/session')->setMemID($customer->getId());
-                Mage::getSingleton('customer/session')->setMemFname($customer->getFirstname());
-                Mage::getSingleton('customer/session')->setMemMname($customer->getMiddlename());
-                Mage::getSingleton('customer/session')->setMemLname($customer->getLastname());
-                Mage::getSingleton('customer/session')->setMemEmail($customer->getEmail());
-                Mage::getSingleton('customer/session')->setMemCustele($customer->getCus_tele());
+                Mage::getSingleton('customer/session')->setMemID($customer->getId());               
+                Mage::getSingleton('customer/session')->setMemEmail($customer->getEmail());              
                 Mage::getSingleton('customer/session')->setMemCusReference($customer->getCusReference()); //for reference code            
                 $billingaddressId = $customer->getDefaultBilling();
                 if ($billingaddressId) {
                     $billingaddress = Mage::getModel('customer/address')->load($billingaddressId);
                 }
-                Mage::getSingleton('customer/session')->setMemCompany($billingaddress->getCompany());
-                Mage::getSingleton('customer/session')->setMemTele($billingaddress->getTelephone());
-                Mage::getSingleton('customer/session')->setMemStreet1($billingaddress->getStreet(1));
-                Mage::getSingleton('customer/session')->setMemStreet2($billingaddress->getStreet(2));
-                Mage::getSingleton('customer/session')->setMemCity($billingaddress->getCity());
-                Mage::getSingleton('customer/session')->setMemZip($billingaddress->getPostcode());
-                Mage::getSingleton('customer/session')->setMemRegion($billingaddress->getRegion());
-                $country_name = Mage::app()->getLocale()->getCountryTranslation($billingaddress->getCountryId());
-
-                Mage::getSingleton('customer/session')->setMemCountry($country_name);
-
-                $this->_successProcessRegistration($customer);
+           $this->_successProcessRegistration($customer);
                 return;
             } else {
                 $this->_addSessionError($errors);
