@@ -452,7 +452,7 @@
     .homeGrid h4 { text-align: left; font-size: 25px}
     .homeGrid h4 font { display: unset;}
 
-    .subhead h2 { padding: 0}
+    .subhead h2 { padding: 200px 0 0 0}
     .block-title { display: none;}
     .filterBy {
 
@@ -893,7 +893,7 @@
         padding: 10px 10px 10px 10px;
     }
     .subhead-myaccount h2{
-        padding: 30px 0 0;
+        padding: 50px 0 0;
         font-size: 27px;
         letter-spacing: 5px;
         margin-bottom: 30px;
@@ -903,8 +903,12 @@
     .my-account {
         padding-left: 0px;
     }
-}
 
+
+    .mainMenu-footer  a {
+        display: none;
+    }
+}
 @media only screen and (max-width : 375px) {
     body { background: #ffffff; color: #000; font-family: Lato; font-size: 14px; margin: 0}
 }
