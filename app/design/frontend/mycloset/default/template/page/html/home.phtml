@@ -9,8 +9,16 @@
         <p class="alrdyMember">Already a member? <a href="<?php echo $this->getUrl('') ?>membership/account/login/">Click here</a></p>
 
     <?php else: ?> 
+        <?php  
+       $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $customerData = Mage::getModel('customer/customer')->load($customer->getId())->getData();
+   
+        if($customerData['group_id'] == '15'){ ?>
+        
+        <h1>Welcome Back <?php echo Mage::getSingleton('customer/session')->getCustomer()->getEmail(); ?> !</h1>
+        <?php }else {?>
         <h1>Welcome Back <?php echo Mage::getSingleton('customer/session')->getCustomer()->getName(); ?> !</h1>
-
+ <?php }?>
         <p><i>"Customer service shouldn't just be a department, it should be the entire company."</i></p>
         <p>-&nbsp; <i>Elizabeth Fitzpatrick, Founder and CEO</i></p>
 
