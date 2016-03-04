@@ -257,9 +257,9 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         </div>
     <?php endif; ?>
 <?php endif; ?>
-   <div class="col-sm-1 hidden-xs">
+    <div class="col-sm-1 hidden-xs  " >
     <div class="v_middle">
-        <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" />
+        <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty " maxlength="12" />
     </div>
    </div>
 
@@ -506,7 +506,7 @@ echo $custom->getShortDescription();
     <?php endif; ?>
 <?php endif; ?> </span></p>
 
-            <p><b>Qty:</b>  <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" /></span></p>
+            <p><b>Qty:</b>  <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty mob_qty" maxlength="12" /></span></p>
             <p><b>Subtoal:</b> 
 <!--Sub total starts here -->
 <?php if (($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
