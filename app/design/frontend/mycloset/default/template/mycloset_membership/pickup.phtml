@@ -5,7 +5,7 @@
 <meta http-equiv="refresh" content="0; url=<?php echo $this->getUrl(''); ?>membership/account/login/" />
           
      <?php   } else { ?>
-<div class="row mypickup">
+<div class="row mypickup" style="margin-bottom: 50px;">
     <div class="subhead">
         <h2 style="text-align: center;"><?php echo $this->__('PICK UP INFORMATION') ?></h2>
     </div>
@@ -26,20 +26,20 @@
                 $category = Mage::getModel('catalog/category')->load($cat_id);
                 $image = Mage::getBaseUrl('media') . 'catalog/category/' . $category->image;
                 ?> 
-                <div class="row">
-                    <div class="col-md-1 col-xs-2">
-                        <input type="checkbox" name="categoryname[<?php echo $category->getId(); ?>]" id="categoryid" value="<?php echo $category->getId(); ?>">
+                <div class="row" style="height: 98px">
+                    <div class="col-md-1 col-xs-2" style="height: 98px">
+                        <input type="checkbox" name="categoryname[<?php echo $category->getId(); ?>]" id="categoryid" value="<?php echo $category->getId(); ?>" style="margin: 33px 0 0">
                     </div>                            
-                    <div class="col-md-3 col-xs-3">
+                    <div class="col-md-3 col-xs-3" style="height: 98px">
                         <div class="thumb">
-                            <img src="<?php echo $image; ?>" width="35" height="35" alt="<?php echo $category->name; ?>"/>
+                            <img src="<?php echo $image; ?>" width="75" height="75" alt="<?php echo $category->name; ?>"/>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-5">
-                        <?php echo $category->name; ?>           
+                    <div class="col-md-6 col-xs-5" style="height: 98px">
+                        <div style="margin: 27px 0 0"><?php echo $category->name; ?></div>          
                     </div>                                
-                    <div class="col-md-2 col-xs-2">
-                        <input type="text" id="quantity" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value="" class="input-text qty">
+                    <div class="col-md-2 col-xs-2" style="height: 98px">
+                        <input type="text" id="quantity" title="quantity" name="quantity[<?php echo $category->getId(); ?>]" value="" class="input-text qty" style="margin: 25px 0 0">
                     </div>
 
                 </div><?php } ?>

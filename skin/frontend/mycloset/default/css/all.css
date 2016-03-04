@@ -952,17 +952,17 @@ width: 19%;
 table.my-account-order td{
 width: 19%;
 } 
-.dataTable { border-top: 1px solid #ccc; border-right: 1px solid #ccc;}
+.dataTable { border: 1px solid #ccc; }
 .dataTable > .row { overflow: hidden; height: 100px; }
 .dataTable > .rowcheckout { overflow: hidden; height: 200px; }
 .dataTable > .row .thumb {
     border: 1px solid #ccc;
 }
-.dataTable > .row > div { float: left; height: 100%; display:inline-block; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; overflow: auto; padding: 10px;  text-align:center;}
-.dataTable > .row.th { background: #eee; border-bottom: 1px solid #ccc; border-left:1px solid #ccc; height: auto;}
+.dataTable > .row > div { float: left; height: 100%; display:inline-block; /*border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;*/ overflow: auto; padding: 10px;  text-align:center;}
+.dataTable > .row.th { background: #eee; /*border-bottom: 1px solid #ccc; border-left:1px solid #ccc;*/ height: auto;}
 .dataTable > .row.th > div { border: 1px solid #eee;}
 .dataTable > .row.th > div:first-child{
-    text-align: left;
+    text-align: center;
 }
 .dataTable > .row .product-name {
     font-size: 15px;
