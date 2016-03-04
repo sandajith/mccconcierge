@@ -166,6 +166,7 @@ class Hardik_Ajaxcart_Checkout_CartController extends Mage_Checkout_CartControll
         $id = (int) $this->getRequest()->getParam('id');
         $status = $this->getRequest()->getParam('status');
         // 19=>we have it; 20=> you have it; 21=> shiped to ; null case must be product
+        if($id ==''){
         $cart = Mage::getModel('checkout/cart')->getQuote();
         foreach ($cart->getAllItems() as $item) {
             $productid = $item->getProduct()->getId();
@@ -184,9 +185,10 @@ class Hardik_Ajaxcart_Checkout_CartController extends Mage_Checkout_CartControll
                 }
             }
         }
+        }
 
 
-        if ($id) {
+        else {
             try {
                 $this->_getCart()->removeItem($id)
                         ->save();
