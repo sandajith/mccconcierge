@@ -33,8 +33,9 @@ $url = Mage::getSingleton('core/url')->parseUrl($currentUrl);
 $path = $url->getPath();
 $getpath = explode('/', $path);
 $order_success = in_array('success',$getpath);
+$confirmpayment = in_array('confirmpayment',$getpath);
 
-$title_string = $this->getTitle();
+ $title_string = $this->getTitle();
 $search_result = strchr($title_string,"Search results for");
 $order_result = strchr($title_string,"Order #");
 
@@ -71,6 +72,9 @@ $order_result = strchr($title_string,"Order #");
     
     }else if ($order_result){
         echo "Order | My Closet Concierge";
+    
+    }else if ($confirmpayment){
+        echo "Success | My Closet Concierge";
     }
     else if($this->getTitle() == "Mycloset | My Closet Concierge"){
  if (!Mage::getSingleton('customer/session')->isLoggedIn()):
