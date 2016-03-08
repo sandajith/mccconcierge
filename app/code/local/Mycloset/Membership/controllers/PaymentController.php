@@ -70,6 +70,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $payment_street2 = $payment_street[1];
         $memcity = $this->getRequest()->getPost('city');
         $payment_regionid = $this->getRequest()->getPost('region_id');
+        
         $region = Mage::getModel('directory/region')->load($payment_regionid);
         $region_name = $region->getName(); //California
         $postalcode = $this->getRequest()->getPost('postcode');
@@ -300,7 +301,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 );
                 $model = Mage::getModel('membership/payment')->setData($data);
                 $insertId = $model->save()->getId();
-//                edited by neenu
+
 
 
                 $payment_id = $insertId;
@@ -335,7 +336,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 );
                 $customer->addData($update);
                 $customer->setId($customerid)->save();
-                //neenuwilson
                 
                 
                 
@@ -344,13 +344,12 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 ->setFirstname($fname)                
                 ->setLastname($lname)
                 ->setCountryId($country_code)
-                ->setRegionId($region)
+                ->setRegionId($payment_regionid)
                 ->setPostcode($postalcode)
                 ->setCompany($payment_company)
                 ->setCity($memcity)
                 ->setTelephone($telephone)
-                ->setFax($payment_fax)
-                //vinu
+                ->setFax($payment_fax)                
                 ->setStreet(array($payment_street1,$payment_street2))
                 ->setIsDefaultBilling('1')
                 ->setIsDefaultShipping('1')
