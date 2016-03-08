@@ -929,8 +929,9 @@ font-family:Lato !important;
     right: 9px;
     top: 8px;
     width: 0;
+    z-index:1;
 }
-.custom-select select { padding-right:25px !important; }
+.custom-select select { padding-right:25px !important; background: none; position: relative; z-index: 2 }
 
 .loginRegister .buttons-set { margin-bottom: 50px;}
 .terms-popupclose {
