@@ -351,8 +351,8 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
         $customer = Mage::getModel('customer/customer');
         //load customer session based on id               
         $customer->load(Mage::getSingleton('customer/session')->getMemID());
-$customer->setFirstname('temp');
-$customer->setLastname('temp');
+$customer->setFirstname('Anoymous ');
+$customer->setLastname('Member');
 
         try {
             $errors = $this->_getCustomerErrors($customer);
