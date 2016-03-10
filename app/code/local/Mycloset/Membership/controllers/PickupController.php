@@ -41,8 +41,8 @@ class Mycloset_Membership_PickupController extends Mage_Core_Controller_Front_Ac
                         $image = Mage::getBaseUrl('media') . 'catalog/category/' . $category->image;
                        $content.= '<tr>
                        <td v-align="middle"><img src="'. $image.'" alt="mycloset" width="80" height="80" border="0" /></td>
-                       <td> ' . $category->getName() . ' </td>
-                       <td style="text-align:center">' . $pickupinfo['quantity'] . '</td> 
+                       <td style="text-align:center; vertical-align:middle;"> ' . $category->getName() . ' </td>
+                       <td style="text-align:center; vertical-align:middle;">' . $pickupinfo['quantity'] . '</td> 
                     </tr>';
                 
                     }
