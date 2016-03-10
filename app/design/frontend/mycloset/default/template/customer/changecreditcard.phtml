@@ -1,0 +1,103 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="subhead">
+    <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card') ?></h2>
+    <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
+        <div class="col-md-12 bordered" style="height: auto;">
+            <div class="form-list">
+                <div class="fieldset ">
+                    <h4 class="legend"><?php echo $this->__('Payment Information') ?></h4>
+                    <div class="content">
+                        <ul class="form-list">
+                            <li class="fields">
+                                <div class="field">
+                                    <label for="card_number">Name On Card</label>  
+                                    <div class="input-box validate-cc-number">
+                                        <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_name" value=""></input>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fields">
+                                <div class="field">
+                                    <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
+                                    <div class="input-box validate-cc-number">
+                                        <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fields">
+                                <div class="field">     
+                                    <label for="exp">Card Expiry date</label><br>                                           
+                                    <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
+                                        <?php
+                                        for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
+                                            echo "<option value='$ye'>$ye</option>";
+                                        }
+                                        ?> 
+                                    </select>                                                                                       
+                                    <select name="card_exp_month" style="width: auto;">
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <?php
+                                        for ($mo = 10; $mo <= 12; $mo++)
+                                            echo "<option value='$mo'>$mo</option>";
+                                        ?>
+                                    </select>
+
+                                </div>
+                            </li>
+                            <li class="fields">
+                                <div class="field">
+                                    <label for="CVV">CVV</label>
+                                    <div class="input-box">
+                                        <input type="text" class="input-text validate-cc-cvn required" id="x_card_code" size="4" name="x_card_code" value=""></input>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="buttons-set">
+
+            <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
+        </div>
+
+    </form>
+</div>
+
+

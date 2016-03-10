@@ -46,40 +46,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $this->renderLayout();
     }
 
-    public function authorizepaymentAction() {
+    public function updategatewayAction() {
+        $customer_id = Mage::getSingleton('customer/session')->getId();
         $data = $this->getRequest()->getPost();
-//        Array ( [emailid] => aaaddddd@gmail.com [cust_id] => 228
-//         [mem_type] => Endless Closet [amt] => 180 [mem_table_id] => 3 
-//         [create_address] => 1 [firstname] => Adams [lastname] => philip 
-//         [company] => fgdgfd [street] => Array ( [0] => 228 Avenue E [1] => 228 Avenue 9 )
-//          [city] => New York [region_id] => 19 [region] => [postcode] => 680732 
-//          [country_id] => US [cus_tele] => 2312231231 [fax] => f5445 [default_billing] => 1
-//           [default_shipping] => 1 [x_card_name] => NEENU [x_card_num] => 4007000000027 
-//           [card_exp_year] => 2035 [card_exp_month] => 02 [x_card_code] => 123 [terms] => 1 )
-
-        $payment_emailid = $this->getRequest()->getPost('emailid');
-        $payment_custid = $this->getRequest()->getPost('cust_id');
-        $payment_memtype = $this->getRequest()->getPost('mem_type');
-//vinu
-        $payment_createaddr = $this->getRequest()->getPost('create_address');
-        $fname = $this->getRequest()->getPost('firstname');
-        $lname = $this->getRequest()->getPost('lastname');
-        $payment_company = $this->getRequest()->getPost('company');
-        $payment_street = $this->getRequest()->getPost('street');
-        $payment_street1 = $payment_street[0];
-        $payment_street2 = $payment_street[1];
-        $memcity = $this->getRequest()->getPost('city');
-        $payment_regionid = $this->getRequest()->getPost('region_id');
-        
-        $region = Mage::getModel('directory/region')->load($payment_regionid);
-        $region_name = $region->getName(); //California
-        $postalcode = $this->getRequest()->getPost('postcode');
-        $country_code = $this->getRequest()->getPost('country_id');
-        $MemCountry_name = Mage::app()->getLocale()->getCountryTranslation($country_code);
-        $telephone = $this->getRequest()->getPost('cus_tele');
-        $payment_fax = $this->getRequest()->getPost('fax');
-        $payment_default_billing = $this->getRequest()->getPost('default_billing');
-        $payment_default_shipping = $this->getRequest()->getPost('default_shipping');
         $name_card = $this->getRequest()->getPost('x_card_name');
         $payment_card_exp_year = $this->getRequest()->getPost('card_exp_year');
         $payment_card_exp_month = $this->getRequest()->getPost('card_exp_month');
@@ -87,53 +56,13 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $number_card = $this->getRequest()->getPost('x_card_num');
         $creditcard = substr($number_card, -4, 4);
 
-
-        if ($payment_street2) {
-            $street = $payment_street1 . ', ' . $payment_street2;
-        } else {
-            $street = $payment_street1;
-        }
-
-
-        $z_memtype1 = $this->getRequest()->getPost('mem_table_id');
-        $taxrate = $this->getRequest()->getPost('tax_rate');
-
-
-
-        $emailid = $this->getRequest()->getPost('emailid');
-        $customerid = $this->getRequest()->getPost('cust_id');
-
-
-        if ($taxrate === '') {
-            $mem_amount = $this->getRequest()->getPost('amt');
-        } else {
-            $taxrate;
-            $taxval = $taxrate / 100;
-            $taxable_amount = $this->getRequest()->getPost('amt') * $taxval;
-            $amt = $this->getRequest()->getPost('amt');
-            $mem_amount = $amt + $taxable_amount;
-
-//            You Chose Satndard closet
-//Membership amount : $150
-//Tax               : $y
-//Amount to be paid : $z
-//
-//150*8.75/100 = y
-//
-//150+y = z;
-        }
-
-
-
-
-
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
-
         $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
         $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
+
 
 
 // Create new customer profile
@@ -149,11 +78,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
 
         $response = send_xml_request($g_apihost, $g_apipath, $content);
-
-
         $parsedresponse = parse_api_response($response);
-        $parsed_customer_id = $parsedresponse->customerProfileId;
-
+       $parsed_customer_id = $parsedresponse->customerProfileId;
 
 // Add payment profile
 
@@ -183,14 +109,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</paymentProfile>" .
                 "<validationMode>none</validationMode>" . // or testMode
                 "</createCustomerPaymentProfileRequest>";
-
-
         $response = send_xml_request($g_apihost, $g_apipath, $content);
-
         $parsedresponse = parse_api_response($response);
         $parsed_paymentprofile_id = $parsedresponse->customerPaymentProfileId;
-
-
 //Add Shipping address profile
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerShippingAddressRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
@@ -208,15 +129,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<phoneNumber>" . $telephone . "</phoneNumber>" .
                 "</address>" .
                 "</createCustomerShippingAddressRequest>";
-
-
         $response = send_xml_request($g_apihost, $g_apipath, $content);
-
         $parsedresponse = parse_api_response($response);
         $parsed_address_id = $parsedresponse->customerAddressId;
-
-
-
 //Making a payment for the customerprofileid
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
@@ -246,36 +161,237 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "</profileTransAuthOnly>" .
                 "</transaction>" .
                 "</createCustomerProfileTransactionRequest>";
-
-//echo "Raw request: " . htmlspecialchars($content) . "<br><br>";
         $response = send_xml_request($g_apihost, $g_apipath, $content);
-//  echo "Raw response: " . htmlspecialchars($response) . "<br><br>";
         $parsedresponse = parse_api_response($response);
-//        if ("Ok" == $parsedresponse_payment->messages->resultCode) {
-//            echo "A transaction was successfully created for customerProfileId <b>"
-//            . htmlspecialchars($_POST["customerProfileId"])
-//            . "</b>.<br><br>";
-//        }
         if (isset($parsedresponse->directResponse)) {
-//            echo "direct response: <br>"
-//            . htmlspecialchars($parsedresponse_payment->directResponse)
-//            . "<br><br>";
-
             $directResponseFields = explode(",", $parsedresponse->directResponse);
-
             $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error
             $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
             $responseReasonText = $directResponseFields[3];
             $approvalCode = $directResponseFields[4]; // Authorization code
-            $transId = $directResponseFields[6];
-
+            $transId = $directResponseFields[6];  exit;
+//            echo 'customer_id' . $customer_id;
+//            echo 'customer_profile_id' . $parsed_customer_id;
+//            echo 'payment_profile_id' . $parsed_paymentprofile_id;
+//            echo 'shipping_address_id' . $parsed_address_id;
+//            echo 'creditcard_num' . $creditcard;
+//            echo 'name_creditcard' . $name_card;
+//          
 //Variables to send e-mail
             $z_firstname = $fname;
             $z_lastname = $lname;
             $z_email = $emailid;
             $z_memtype = $this->getRequest()->getPost('mem_type');
             $z_amount = $mem_amount;
+            if ("1" == $responseCode) {
+//Email sending to the customer upon successful payment
+                $templateId = 'Success Mycloset Registration';
+                $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
+                $vars = array('first_name' => $z_firstname, 'last_name' => $z_lastname, 'email' => $z_email, 'mem_type' => $z_memtype, 'mem_amt' => $z_amount);
+                $emailTemplate->getProcessedTemplate($vars);
+                $admin_email = Mage::getStoreConfig('trans_email/ident_general/email');
+                $admin_name = Mage::getStoreConfig('trans_email/ident_general/name');
+// $email = array($admin_email,$z_email);
+                $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
+                $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
+                $emailTemplate->send($z_email, $z_firstname . ' ' . $z_lastname, $vars);
+                $emailTemplate->send($admin_email, $admin_name, $vars);
+                $paymentdetails = serialize($vars);
+                $date = date("Y-m-d H:i:s ", time());
+                $data = array(
+                    'customer_id' => $customer_id,
+                    'customer_profile_id' => $parsed_customer_id,
+                    'payment_profile_id' => $parsed_paymentprofile_id,
+                    'shipping_address_id' => $parsed_address_id,
+                    'creditcard_num' => $creditcard,
+                    'name_creditcard' => $name_card
+                );
+                $model = Mage::getModel('membership/payment')->setData($data);
+                $insertId = $model->save()->getId();
+                $payment_id = $insertId;
+                $j = Mage::getModel('membership/paymenthistory');
+                $j->setCustomerId($customerid)
+                        ->setTransactionId($transId)
+                        ->setPaymentId($payment_id)
+                        ->setPaymentDetails($paymentdetails)
+                        ->setAmountPaid($mem_amount)
+                        ->setTaxRate($taxrate)
+                        ->setMembershipAmount($this->getRequest()->getPost('amt'))
+                        ->save();
+            }
+        }
+    }
 
+    public function authorizepaymentAction() {
+        $data = $this->getRequest()->getPost();
+        $payment_emailid = $this->getRequest()->getPost('emailid');
+        $payment_custid = $this->getRequest()->getPost('cust_id');
+        $payment_memtype = $this->getRequest()->getPost('mem_type');
+        $payment_createaddr = $this->getRequest()->getPost('create_address');
+        $fname = $this->getRequest()->getPost('firstname');
+        $lname = $this->getRequest()->getPost('lastname');
+        $payment_company = $this->getRequest()->getPost('company');
+        $payment_street = $this->getRequest()->getPost('street');
+        $payment_street1 = $payment_street[0];
+        $payment_street2 = $payment_street[1];
+        $memcity = $this->getRequest()->getPost('city');
+        $payment_regionid = $this->getRequest()->getPost('region_id');
+        $region = Mage::getModel('directory/region')->load($payment_regionid);
+        $region_name = $region->getName();
+        $postalcode = $this->getRequest()->getPost('postcode');
+        $country_code = $this->getRequest()->getPost('country_id');
+        $MemCountry_name = Mage::app()->getLocale()->getCountryTranslation($country_code);
+        $telephone = $this->getRequest()->getPost('cus_tele');
+        $payment_fax = $this->getRequest()->getPost('fax');
+        $payment_default_billing = $this->getRequest()->getPost('default_billing');
+        $payment_default_shipping = $this->getRequest()->getPost('default_shipping');
+        $name_card = $this->getRequest()->getPost('x_card_name');
+        $payment_card_exp_year = $this->getRequest()->getPost('card_exp_year');
+        $payment_card_exp_month = $this->getRequest()->getPost('card_exp_month');
+        $payment_card_code = $this->getRequest()->getPost('x_card_code');
+        $number_card = $this->getRequest()->getPost('x_card_num');
+        $creditcard = substr($number_card, -4, 4);
+
+
+        if ($payment_street2) {
+            $street = $payment_street1 . ', ' . $payment_street2;
+        } else {
+            $street = $payment_street1;
+        }
+
+        $z_memtype1 = $this->getRequest()->getPost('mem_table_id');
+        $taxrate = $this->getRequest()->getPost('tax_rate');
+        $emailid = $this->getRequest()->getPost('emailid');
+        $customerid = $this->getRequest()->getPost('cust_id');
+
+        if ($taxrate === '') {
+            $mem_amount = $this->getRequest()->getPost('amt');
+        } else {
+            $taxrate;
+            $taxval = $taxrate / 100;
+            $taxable_amount = $this->getRequest()->getPost('amt') * $taxval;
+            $amt = $this->getRequest()->getPost('amt');
+            $mem_amount = $amt + $taxable_amount;
+        }
+
+        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
+        $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
+        $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
+        $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
+        $g_apipath = "/xml/v1/request.api";
+        require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
+
+
+// Create new customer profile
+        $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+                "<createCustomerProfileRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
+                MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
+                "<profile>" .
+                "<merchantCustomerId>" . time() . rand(1, 100) . "</merchantCustomerId>" . // Your own identifier for the customer.
+                "<description>" . $this->getRequest()->getPost('mem_type') . " of " . $fname . "</description>" .
+                "<email>" . $emailid . "</email>" .
+                "</profile>" .
+                "</createCustomerProfileRequest>";
+
+
+        $response = send_xml_request($g_apihost, $g_apipath, $content);
+        $parsedresponse = parse_api_response($response);
+        $parsed_customer_id = $parsedresponse->customerProfileId;
+// Add payment profile
+
+        $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+                "<createCustomerPaymentProfileRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
+                MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
+                "<customerProfileId>" . $parsed_customer_id . "</customerProfileId>" .
+                "<paymentProfile>" .
+                "<billTo>" .
+                "<firstName>" . $fname . "</firstName>" .
+                "<lastName>" . $lname . "</lastName>" .
+                "<company>" . $payment_company . "</company>" .
+                "<address>" . $street . "</address>" .
+                "<city>" . $memcity . "</city>" .
+                "<state>" . $region_name . "</state>" .
+                "<zip>" . $postalcode . "</zip>" .
+                "<country>" . $MemCountry_name . "</country>" .
+                "<phoneNumber>" . $telephone . "</phoneNumber>" .
+                "<faxNumber>" . $payment_fax . "</faxNumber>" .
+                "</billTo>" .
+                "<payment>" .
+                "<creditCard>" .
+                "<cardNumber>" . $this->getRequest()->getPost('x_card_num') . "</cardNumber>" .
+                "<expirationDate>" . $payment_card_exp_year . '-' . $payment_card_exp_month . "</expirationDate>" . // required format for API is YYYY-MM
+                "</creditCard>" .
+                "</payment>" .
+                "</paymentProfile>" .
+                "<validationMode>none</validationMode>" . // or testMode
+                "</createCustomerPaymentProfileRequest>";
+        $response = send_xml_request($g_apihost, $g_apipath, $content);
+        $parsedresponse = parse_api_response($response);
+        $parsed_paymentprofile_id = $parsedresponse->customerPaymentProfileId;
+//Add Shipping address profile
+        $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+                "<createCustomerShippingAddressRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
+                MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
+                "<customerProfileId>" . $parsed_customer_id . "</customerProfileId>" .
+                "<address>" .
+                "<firstName>" . $fname . "</firstName>" .
+                "<lastName>" . $lname . "</lastName>" .
+                "<company>" . $payment_company . "</company>" .
+                "<address>" . $street . "</address>" .
+                "<city>" . $memcity . "</city>" .
+                "<state>" . $region_name . "</state>" .
+                "<zip>" . $postalcode . "</zip>" .
+                "<country>" . $MemCountry_name . "</country>" .
+                "<phoneNumber>" . $telephone . "</phoneNumber>" .
+                "</address>" .
+                "</createCustomerShippingAddressRequest>";
+        $response = send_xml_request($g_apihost, $g_apipath, $content);
+        $parsedresponse = parse_api_response($response);
+        $parsed_address_id = $parsedresponse->customerAddressId;
+//Making a payment for the customerprofileid
+        $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+                "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
+                MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
+                "<transaction>" .
+                "<profileTransAuthOnly>" .
+                "<amount>" . $mem_amount . "</amount>" . // should include tax, shipping, and everything.
+                "<shipping>" .
+                "<amount>0.00</amount>" .
+                "<name>Free Shipping</name>" .
+                "<description> My Closet Concierge </description>" .
+                "</shipping>" .
+                "<lineItems>" .
+                "<itemId>" . time() . "</itemId>" .
+                "<name>" . $this->getRequest()->getPost('mem_type') . "</name>" .
+                "<description>" . $this->getRequest()->getPost('mem_type') . " of " . $fname . "</description>" .
+                "<quantity>1</quantity>" .
+                "<unitPrice>" . $mem_amount . "</unitPrice>" .
+                "<taxable>false</taxable>" .
+                "</lineItems>" .
+                "<customerProfileId>" . $parsed_customer_id . "</customerProfileId>" .
+                "<customerPaymentProfileId>" . $parsed_paymentprofile_id . "</customerPaymentProfileId>" .
+                "<customerShippingAddressId>" . $parsed_address_id . "</customerShippingAddressId>" .
+                "<order>" .
+                "<invoiceNumber>" . "MCC" . $parsed_customer_id . "</invoiceNumber>" .
+                "</order>" .
+                "</profileTransAuthOnly>" .
+                "</transaction>" .
+                "</createCustomerProfileTransactionRequest>";
+        $response = send_xml_request($g_apihost, $g_apipath, $content);
+        $parsedresponse = parse_api_response($response);
+        if (isset($parsedresponse->directResponse)) {
+            $directResponseFields = explode(",", $parsedresponse->directResponse);
+            $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error
+            $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
+            $responseReasonText = $directResponseFields[3];
+            $approvalCode = $directResponseFields[4]; // Authorization code
+            $transId = $directResponseFields[6];
+//Variables to send e-mail
+            $z_firstname = $fname;
+            $z_lastname = $lname;
+            $z_email = $emailid;
+            $z_memtype = $this->getRequest()->getPost('mem_type');
+            $z_amount = $mem_amount;
             if ("1" == $responseCode) {
 //Email sending to the customer upon successful payment
                 $templateId = 'Success Mycloset Registration';
@@ -301,13 +417,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 );
                 $model = Mage::getModel('membership/payment')->setData($data);
                 $insertId = $model->save()->getId();
-
-
-
                 $payment_id = $insertId;
-
                 $j = Mage::getModel('membership/paymenthistory');
-
                 $j->setCustomerId($customerid)
                         ->setTransactionId($transId)
                         ->setPaymentId($payment_id)
@@ -316,8 +427,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                         ->setTaxRate($taxrate)
                         ->setMembershipAmount($this->getRequest()->getPost('amt'))
                         ->save();
-
-
 //logging-in the customer after successful payment
                 $session = $this->_getSession();
                 $customer = Mage::getModel('customer/customer')->load($customerid);
@@ -336,38 +445,30 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 );
                 $customer->addData($update);
                 $customer->setId($customerid)->save();
-                
-                
-                
-        $address123 = Mage::getModel("customer/address")->load($payment_default_shipping);
-        $address123->setCustomerId($customerid)               
-                ->setFirstname($fname)                
-                ->setLastname($lname)
-                ->setCountryId($country_code)
-                ->setRegionId($payment_regionid)
-                ->setPostcode($postalcode)
-                ->setCompany($payment_company)
-                ->setCity($memcity)
-                ->setTelephone($telephone)
-                ->setFax($payment_fax)                
-                ->setStreet(array($payment_street1,$payment_street2))
-                ->setIsDefaultBilling('1')
-                ->setIsDefaultShipping('1')
-                ->setSaveInAddressBook('1');
-        try {
-            $address123->save();
-            $address123->setConfirmation(null);
-            $address123->save();
-        } catch (Exception $e) {
-
-        }
-           
+                $address123 = Mage::getModel("customer/address")->load($payment_default_shipping);
+                $address123->setCustomerId($customerid)
+                        ->setFirstname($fname)
+                        ->setLastname($lname)
+                        ->setCountryId($country_code)
+                        ->setRegionId($payment_regionid)
+                        ->setPostcode($postalcode)
+                        ->setCompany($payment_company)
+                        ->setCity($memcity)
+                        ->setTelephone($telephone)
+                        ->setFax($payment_fax)
+                        ->setStreet(array($payment_street1, $payment_street2))
+                        ->setIsDefaultBilling('1')
+                        ->setIsDefaultShipping('1')
+                        ->setSaveInAddressBook('1');
+                try {
+                    $address123->save();
+                    $address123->setConfirmation(null);
+                    $address123->save();
+                } catch (Exception $e) {
+                    
+                }
                 $jyuy = Mage::getModel('membership/customermembership')
                         ->load($customerid);
-
-
-
-
                 $membershiphistory = Mage::getModel('membership/membershiphistory');
                 $membershiphistory->setCustomerId($customerid)
                         ->setMembershipId($z_memtype1);
@@ -399,11 +500,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $message = "Payment failed !" . htmlspecialchars($responseReasonText) . "<br>";
                 Mage::getSingleton('core/session')->addError($message);
                 $this->_redirect('mycloset/payment');
-//echo "The transaction resulted in an error.<br>";
-//echo "responseReasonCode = " . htmlspecialchars($responseReasonCode) . "<br>";
-//echo "responseReasonText = " . htmlspecialchars($responseReasonText) . "<br>";
-//echo "approvalCode = " . htmlspecialchars($approvalCode) . "<br>";
-//echo "transId = " . htmlspecialchars($transId) . "<br>";
             }
         }
 //                }
@@ -493,40 +589,13 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $ordernum = $this->getRequest()->getPost('order_id');
                 foreach ($ordernum as $order_id) {
                     $order = Mage::getModel('sales/order')->loadByIncrementId($order_id);
-                    //   $order->setData('state', "complete");
-                    //    $order->setStatus("complete");
-                    //  $history = $order->addStatusHistoryComment('Order was set to Complete by our automation tool.', false);
-                    //  $history->setIsCustomerNotified(false);
-                    // $order->save();
-//$invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
-//                    $invoice->setRequestedCaptureCase(
-//                            Mage_Sales_Model_Order_Invoice::CAPTURE_OFFLINE
-//                    );
-//                    $invoice->register();
-//                    $transactionSave = Mage::getModel('core/resource_transaction')
-//                            ->addObject($invoice)
-//                            ->addObject($invoice->getOrder());
-//
-//                    $transactionSave->save();
-//
-//                    try {
-//
-//                        if (!$order->canInvoice()) {
-//                            $order->addStatusHistoryComment(' Order cannot be invoiced.', false);
-//                            $order->save();
-//                        }
-//
 //////START Handle Invoice
                     if ($order->canInvoice()) {
                         $invoice = Mage::getModel('sales/service_order', $order)->prepareInvoice();
-
                         $invoice->setRequestedCaptureCase(Mage_Sales_Model_Order_Invoice::CAPTURE_ONLINE);
                         $invoice->register();
-
                         $invoice->getOrder()->setCustomerNoteNotify(false);
                         $invoice->getOrder()->setIsInProcess(true);
-
-
                         $transactionSave = Mage::getModel('core/resource_transaction')
                                 ->addObject($invoice)
                                 ->addObject($invoice->getOrder());
@@ -539,23 +608,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                         }
                     }
                 }
-////END Handle Invoice
-////START Handle Shipment
-////                    $shipment = $order->prepareShipment();
-////                    $shipment->register();
-////
-////                    $order->setIsInProcess(true);
-////                    $order->addStatusHistoryComment('Automatically SHIPPED by MyCloset_Invoicer.', false);
-////
-////                    $transactionSave = Mage::getModel('core/resource_transaction')
-////                            ->addObject($shipment)
-////                            ->addObject($shipment->getOrder())
-////                            ->save();
-////                   } catch (Exception $e) {
-////                       $order->addStatusHistoryComment('MyCloset_Invoicer: Exception occurred during automaticallyInvoiceShipCompleteOrder action. Exception message: ' . $e->getMessage(), false);
-////                       $order->save();
-////                   }
-                //}
             }
 //// END CODE Automatically changed  invoice/ship status to 'complete' after payment  
         } else if ("2" == $responseCode) {
@@ -663,78 +715,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-
-
-
-
-//        $customerid = $this->getRequest()->getPost('customer_entity_id');
-//        $customer_pay_id = Mage::getModel('membership/payment')->load($this->getRequest()->getPost('customer_entity_id'), 'customer_id');
-//        $payment_id = $customer_pay_id->getPaymentId();
-//
-//        if ($this->getRequest()->getPost('mem_plan') == 1000) {
-//
-//            $update = array(
-//                'entity_id' => $customerid,
-//                'group_id' => '6'
-//            );
-//            $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
-//            try {
-//                $model->setId($customerid)->save();
-//            } catch (Exception $e) {
-//                echo $e->getMessage();
-//            }
-//            $path = $this->getRequest()->getPost('return_url') . '?q=deact';
-//            $this->_redirectUrl($path);
-//        } elseif ($this->getRequest()->getPost('mem_plan') == 1111) {
-//
-//            $update = array(
-//                'entity_id' => $customerid,
-//                'group_id' => '1'
-//            );
-//            $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
-//            try {
-//                $model->setId($customerid)->save();
-//            } catch (Exception $e) {
-//                echo $e->getMessage();
-//            }
-//            $path = $this->getRequest()->getPost('return_url') . '?q=act';
-//            $this->_redirectUrl($path);
-//        } elseif (($this->getRequest()->getPost('mem_plan') == 1) || ($this->getRequest()->getPost('mem_plan') == 2) || ($this->getRequest()->getPost('mem_plan') == 3)) {
-//            $memtype = Mage::getModel('membership/membership')->load($this->getRequest()->getPost('mem_plan'), 'membership_id');
-//            $membershiptype = $memtype->getMembershipType();
-//            $membershipprice = $memtype->getMembershipPrice();
-//
-//
-//            $update = array(
-//                'membership_type' => $membershiptype,
-//                'amount' => $membershipprice
-//            );
-//            $model = Mage::getModel('membership/payment')->load($payment_id)->addData($update);
-//            try {
-//                $model->setId($payment_id)->save();
-//                //echo "Data updated successfully";
-//            } catch (Exception $e) {
-//                echo $e->getMessage();
-//            }
-//            $path = $this->getRequest()->getPost('return_url') . '?q=saved';
-//            $this->_redirectUrl($path);
-//        } elseif ($this->getRequest()->getPost('mem_plan') == 4) {
-//            $membership = 'Membership Closed';
-//            //changing customer group
-//            $update = array(
-//                'entity_id' => $customerid,
-//                'group_id' => '5'
-//            );
-//            $model = Mage::getModel('customer/customer')->load($customerid)->addData($update);
-//            try {
-//                $model->setId($customerid)->save();
-//            } catch (Exception $e) {
-//                echo $e->getMessage();
-//            }
-//            //changing customer group end
+//changing customer group end
         $path = $this->getRequest()->getPost('return_url') . '?q=closed';
         $this->_redirectUrl($path);
-//        }
     }
 
     public function testAction() {
@@ -748,17 +731,6 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
         $emailTemplate->send('neenurobin28@gmail.com', 'Mycloset mail', $vars);
         $emailTemplate->send('neenurobin28@gmail.com', 'Mycloset mail', $vars);
-    }
-
-    public function neeAction() {
-        echo Mage::getStoreConfig('trans_email/ident_general/email', $storeId);
-//        $templateId = 'Pickup mail to user';
-//        $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
-//        $vars = array('user_name' => 'sreedarsh');
-//        $emailTemplate->getProcessedTemplate($vars);
-//        $emailTemplate->setSenderEmail(Mage::getStoreConfig('trans_email/ident_general/email', $storeId));
-//        $emailTemplate->setSenderName(Mage::getStoreConfig('trans_email/ident_general/name', $storeId));
-//        $emailTemplate->send('sreedarsh88@gmail.com', 'Neenu', $vars);
     }
 
 }
