@@ -859,7 +859,7 @@ font-family:Lato !important;
 }
 
 
-.loginRegister .bordered h4 { font-weight: bold; margin: 17px 0 20px}
+.loginRegister .bordered h4 { font-weight: bold; margin: 23px 0 10px}
 .customer-account-create .loginRegister .bordered h4 { margin:29px 0 0;}
 .loginRegister .bordered h4.m-t-0 { margin-top: 20px; margin-bottom: 0px;}
 .customer-account-login .loginRegister .bordered .content { min-height: 310px; margin-bottom: 15px;}
@@ -1192,6 +1192,7 @@ footer .social a { margin-left: 5px;}
 .main-container { float: left; width: 100%}
 .registered-users { border-left: 1px solid #ccc; margin-bottom: 30px;}
 .form-list li label { padding: 10px 0 5px 0}
+.form-list li label.register2 { padding: 0px; font-weight: normal; margin-bottom:0px;}
 .input-text {
     border: 1px solid #ccc;
     border-radius: 3px;
