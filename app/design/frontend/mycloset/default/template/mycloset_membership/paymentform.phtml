@@ -1,3 +1,9 @@
+<div class="account-create">
+
+    <div class="page-title subhead ">
+        <h2><?php echo $this->__('CREATE AN ACCOUNT') ?></h2>  
+    </div>
+
 
 <div class="fieldset payment-fieldset">
     <div id="membership_error">
@@ -36,7 +42,7 @@
     <div class="row loginRegister">
         <div class="col-sm-6">
             <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/authorizepayment/"  onsubmit="return checkForm();">
-                <div class="col-md-12 bordered" style="height: auto;">
+                <div class="col-md-12 bordered" style="height: auto; margin-bottom:8px">
                     <div class="form-list">
                         <input type="hidden" value="<?php echo $customer_email; ?>" name="emailid" id="emailid" />                          
                         <input type="hidden" value="<?php echo $cust_id; ?>" name="cust_id" id="cust_id" />  
@@ -65,11 +71,11 @@
                         if ((empty($mem_id)) && ($group_id === '15')) {
                             ?>
                             <div id="previous_membership">
-                                <h3><?php echo $this->__('You Chose'); ?></h3><br>
-                                <label>Membership</label>:<?php echo "Guest"; ?><br>
-                                <label>Membership Amount</label>: <?php
+                                <h4 class="legend"><?php echo $this->__('You Chose'); ?></h4>
+                                <label class="register2">Membership</label>: <i><?php echo "Guest"; ?></i><br>
+                                <label class="register2">Membership Amount</label>: <i><?php
                         echo $currency_symbol . $this->__('0');
-                        ?>                                                      
+                        ?></i>                                                      
                             </div>
                             <li class="fields">
                                 <div class="field">
@@ -105,14 +111,14 @@
                             <li>
     <?php if ($taxRate != '') { ?>
                                    <label>Tax:<?php echo $currency_symbol ?> <span class="newtax">0</span></label><br>         
-                                    <label>Amount to be paid:<?php echo $currency_symbol; ?><span class="newamounttobepaid">0</span></label>
+                                    <label class="register2">Amount to be paid: <?php echo $currency_symbol; ?><span class="newamounttobepaid">0</span></label>
                                 <?php } ?>
                             </li>
                             <?php } else if (!empty($mem_id) && ($group_id === '15')) { ?>    
                             <div id="previous_membership">
-                                <h3><?php echo $this->__('You Chose'); ?></h3>
-                                <label>Membership</label>:<?php echo $membership['membership_type']; ?>                   
-                                <label>Membership Amount</label>: <?php echo $currency_symbol . $membership['membership_price']; ?>
+                                <h4 class="legend"><?php echo $this->__('You Chose'); ?></h4>
+                                <label class="register2">Membership</label>: <i><?php echo $membership['membership_type']; ?></i><br>                   
+                                <label class="register2">Membership Amount</label>: <i><?php echo $currency_symbol . $membership['membership_price']; ?></i>
                             </div>           
                             <li class="fields">
                                 <div class="field">
@@ -145,7 +151,7 @@
                             <li>
     <?php if ($taxRate != '') { ?>
                                 <label>Tax:<?php echo $currency_symbol ?> <span class="newtax">0</span></label><br>         
-                                    <label>Amount to be paid:<?php echo $currency_symbol; ?><span class="newamounttobepaid">0</span> </label>                
+                                    <label class="register2">Amount to be paid: <?php echo $currency_symbol; ?><span class="newamounttobepaid">0</span> </label>                
                                 <?php } ?>
                             </li>
                             <?php } else if (!empty($mem_id) && ($group_id !== '15')) { ?>
@@ -154,15 +160,15 @@
                             <input type="hidden" name="mem_table_id" value="<?php echo $mem_id; ?>" />
                             <div id="previous_membership">
                                 <li>
-                                    <h3><?php echo $this->__('You Chose'); ?></h3><br>
-                                    <label>Membership</label>:<?php echo $membership['membership_type']; ?><br>
-                                    <label>Membership Amount</label>:  <?php echo $currency_symbol . $membership['membership_price']; ?>
+                                    <h4 class="legend"><?php echo $this->__('You Chose'); ?></h4>
+                                    <label class="register2">Membership</label>: <i><?php echo $membership['membership_type']; ?></i><br>
+                                    <label class="register2">Membership Amount</label>: <i><?php echo $currency_symbol . $membership['membership_price']; ?></i><br>
 
                                     <!--//for paid user tax val robin-->
 
 
-                                    <label>Tax:<?php echo $currency_symbol ?><span class="newtax"></span></label><br>         
-                                    <label>Amount to be paid:<?php echo $currency_symbol; ?><span class="newamounttobepaid"></span></label>
+                                    <label class="register2">Tax: <i><?php echo $currency_symbol ?><span class="newtax"></span></i></label><br>         
+                                    <label class="register2">Amount to be paid: <i><?php echo $currency_symbol; ?><span class="newamounttobepaid"></span></i></label>
                                 </li>
                             </div>
 <?php } ?>
@@ -175,7 +181,7 @@
                                         <!--firstname-->
                                         <div class="customer-name">
                                             <div class="field name-firstname">
-                                                <label for="firstname" class="required">First Name<em>*</em></label>
+                                                <label for="firstname" class="required" style="margin:0px">First Name<em>*</em></label>
                                                 <div class="input-box">
                                                     <input type="text" id="firstname" name="firstname" value="" title="First Name" maxlength="255" class="input-text required-entry">
                                                 </div>
@@ -291,7 +297,7 @@
                                 <ul class="form-list">
                                     <li class="fields">
                                         <div class="field">
-                                            <label for="card_number">Name On Card</label>  
+                                            <label for="card_number" style="margin:0px">Name on Card<em>*</em></label>  
                                             <div class="input-box validate-cc-number">
                                                 <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_name" value=""></input>
                                             </div>
@@ -299,7 +305,7 @@
                                     </li>
                                     <li class="fields">
                                         <div class="field">
-                                            <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
+                                            <label for="card_number">Credit Card Number<em>*</em></label>
                                             <div class="input-box validate-cc-number">
                                                 <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
                                             </div>
@@ -307,7 +313,7 @@
                                     </li>
                                     <li class="fields">
                                         <div class="field">     
-                                            <label for="exp">Card Expiry date</label><br>
+                                            <label for="exp">Expiration Date<em>*</em></label>
                                             <div class="custom-select" style="width: 15%" > 
                                                 <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
 <?php
@@ -338,7 +344,7 @@ for ($mo = 10; $mo <= 12; $mo++)
                                     </li>
                                     <li class="fields">
                                         <div class="field">
-                                            <label for="CVV">CVV</label>
+                                            <label for="CVV">CVV<em>*</em></label>
                                             <div class="input-box">
                                                 <input type="text" class="input-text validate-cc-cvn required" id="x_card_code" size="4" name="x_card_code" value=""></input>
                                             </div>
@@ -352,7 +358,7 @@ for ($mo = 10; $mo <= 12; $mo++)
                                 <p class="verify"><i>*Please click the link below to verify you have read the Terms and Conditions</i></p>
                                 <label for="termservices" class="required pull-left">
                                     <u class="show terms-cont" onclick="SubmitRequest();">Terms and Conditions</u>   <input type="hidden" required  value="" name="terms" id="termstext" />                                          
-                                </label>
+                                </label><br>
                                 <!--neenu-->    
 
                             </div>                           
@@ -363,7 +369,9 @@ for ($mo = 10; $mo <= 12; $mo++)
                         </div>
                     </div>
                 </div>
-
+<div class="buttons-set"  style="margin-bottom:0px">
+    <p class="back-link" style="margin:0px"><a onclick="goBack()" class="back-link"><small>&laquo;Back</small></a></p>
+</div>
                 <div class="buttons-set">
 
                     <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
@@ -380,6 +388,8 @@ for ($mo = 10; $mo <= 12; $mo++)
         <div class="overlay_preloader" style="background:#fff; opacity: 0.8;z-index: 1000; position: absolute; left: 0; right: 0; top:0; bottom:0; height: 100%; width:100%;"></div>                  
         <img style="position: absolute; left: 45%; top:45%;"  src="<?php echo $this->getSkinUrl('images/loader.GIF') ?>" alt="<?php echo $this->__('Submitting Payment...') ?>" title="<?php echo $this->__('Submitting Payment......') ?>" class="v-middle" /> 
     </span>
+</div>
+
 </div>
 
 <script type="text/javascript">
@@ -554,9 +564,7 @@ for ($mo = 10; $mo <= 12; $mo++)
 
 
 
-<div class="buttons-set">
-    <p class="back-link"><a onclick="goBack()" class="back-link"><small>&laquo;Back</small></a></p>
-</div>
+
 <script>
     function goBack() {
         window.history.back();
