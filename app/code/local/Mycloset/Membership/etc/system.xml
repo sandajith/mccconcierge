@@ -80,7 +80,15 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <comment>Comma separated ip addresses to view highly secure front end pages in front end</comment>
-                        </ipaddress>                                                                                                                                                                                    		    
+                        </ipaddress> 
+                         <ccchange translate="membership" >
+                            <label>Credit card change amount</label>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            
+                        </ccchange>                                                                                                                                                                                     		    
                     </fields>
                 </general>
             </groups>

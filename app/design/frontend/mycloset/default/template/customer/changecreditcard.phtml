@@ -24,6 +24,19 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+
+    // Load the customer's data
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+
+    $customer->getPrefix();
+    $fname = $customer->getFirstname(); // First Name
+    $lname = $customer->getLastname(); // Last Name
+    $emailid = $customer->getEmail();
+}
+?>
+
 <div class="subhead">
     <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card') ?></h2>
     <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
@@ -53,11 +66,11 @@
                                 <div class="field">     
                                     <label for="exp">Card Expiry date</label><br>                                           
                                     <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
-                                        <?php
-                                        for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
-                                            echo "<option value='$ye'>$ye</option>";
-                                        }
-                                        ?> 
+<?php
+for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
+    echo "<option value='$ye'>$ye</option>";
+}
+?> 
                                     </select>                                                                                       
                                     <select name="card_exp_month" style="width: auto;">
                                         <option value="01">01</option>
@@ -69,10 +82,10 @@
                                         <option value="07">07</option>
                                         <option value="08">08</option>
                                         <option value="09">09</option>
-                                        <?php
-                                        for ($mo = 10; $mo <= 12; $mo++)
-                                            echo "<option value='$mo'>$mo</option>";
-                                        ?>
+<?php
+for ($mo = 10; $mo <= 12; $mo++)
+    echo "<option value='$mo'>$mo</option>";
+?>
                                     </select>
 
                                 </div>
@@ -91,6 +104,9 @@
 
             </div>
         </div>
+        <input type="hidden" name="firstname" value="<?php echo $fname; ?>"/>
+        <input type="hidden" name="lastname" value="<?php echo $lname; ?>"/>
+        <input type="hidden" name="emailid" value="<?php echo $emailid; ?>"/>
 
         <div class="buttons-set">
 

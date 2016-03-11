@@ -47,16 +47,19 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function updategatewayAction() {
-        $customer_id = Mage::getSingleton('customer/session')->getId();
+        $customer_id = Mage::getSingleton('customer/session')->getId();       
+        $mem_amount = Mage::getStoreConfig('membership/general/ccchange');
         $data = $this->getRequest()->getPost();
+        $emailid = $this->getRequest()->getPost('emailid');
+        $fname = $this->getRequest()->getPost('firstname');
+        $lname = $this->getRequest()->getPost('lastname');
         $name_card = $this->getRequest()->getPost('x_card_name');
         $payment_card_exp_year = $this->getRequest()->getPost('card_exp_year');
         $payment_card_exp_month = $this->getRequest()->getPost('card_exp_month');
         $payment_card_code = $this->getRequest()->getPost('x_card_code');
         $number_card = $this->getRequest()->getPost('x_card_num');
         $creditcard = substr($number_card, -4, 4);
-
-        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
+        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.      
         $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
         $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
@@ -71,18 +74,14 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
                 "<profile>" .
                 "<merchantCustomerId>" . time() . rand(1, 100) . "</merchantCustomerId>" . // Your own identifier for the customer.
-                "<description>" . $this->getRequest()->getPost('mem_type') . " of " . $fname . "</description>" .
+                "<description> </description>" .
                 "<email>" . $emailid . "</email>" .
                 "</profile>" .
                 "</createCustomerProfileRequest>";
-
-
-        $response = send_xml_request($g_apihost, $g_apipath, $content);
-        $parsedresponse = parse_api_response($response);
-       $parsed_customer_id = $parsedresponse->customerProfileId;
-
+        $response1 = send_xml_request($g_apihost, $g_apipath, $content);
+        $parsedresponse = parse_api_response($response1);
+        $parsed_customer_id = $parsedresponse->customerProfileId;
 // Add payment profile
-
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerPaymentProfileRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
@@ -91,14 +90,14 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<billTo>" .
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
-                "<company>" . $payment_company . "</company>" .
-                "<address>" . $street . "</address>" .
-                "<city>" . $memcity . "</city>" .
-                "<state>" . $region_name . "</state>" .
-                "<zip>" . $postalcode . "</zip>" .
-                "<country>" . $MemCountry_name . "</country>" .
-                "<phoneNumber>" . $telephone . "</phoneNumber>" .
-                "<faxNumber>" . $payment_fax . "</faxNumber>" .
+                "<company></company>" .
+                "<address></address>" .
+                "<city></city>" .
+                "<state></state>" .
+                "<zip></zip>" .
+                "<country></country>" .
+                "<phoneNumber></phoneNumber>" .
+                "<faxNumber></faxNumber>" .
                 "</billTo>" .
                 "<payment>" .
                 "<creditCard>" .
@@ -112,6 +111,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $response = send_xml_request($g_apihost, $g_apipath, $content);
         $parsedresponse = parse_api_response($response);
         $parsed_paymentprofile_id = $parsedresponse->customerPaymentProfileId;
+
 //Add Shipping address profile
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerShippingAddressRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
@@ -120,13 +120,13 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<address>" .
                 "<firstName>" . $fname . "</firstName>" .
                 "<lastName>" . $lname . "</lastName>" .
-                "<company>" . $payment_company . "</company>" .
-                "<address>" . $street . "</address>" .
-                "<city>" . $memcity . "</city>" .
-                "<state>" . $region_name . "</state>" .
-                "<zip>" . $postalcode . "</zip>" .
-                "<country>" . $MemCountry_name . "</country>" .
-                "<phoneNumber>" . $telephone . "</phoneNumber>" .
+                "<company></company>" .
+                "<address></address>" .
+                "<city></city>" .
+                "<state></state>" .
+                "<zip></zip>" .
+                "<country></country>" .
+                "<phoneNumber></phoneNumber>" .
                 "</address>" .
                 "</createCustomerShippingAddressRequest>";
         $response = send_xml_request($g_apihost, $g_apipath, $content);
@@ -140,14 +140,14 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<profileTransAuthOnly>" .
                 "<amount>" . $mem_amount . "</amount>" . // should include tax, shipping, and everything.
                 "<shipping>" .
-                "<amount>0.00</amount>" .
+                "<amount>" . $mem_amount . "</amount>" .
                 "<name>Free Shipping</name>" .
                 "<description> My Closet Concierge </description>" .
                 "</shipping>" .
                 "<lineItems>" .
                 "<itemId>" . time() . "</itemId>" .
-                "<name>" . $this->getRequest()->getPost('mem_type') . "</name>" .
-                "<description>" . $this->getRequest()->getPost('mem_type') . " of " . $fname . "</description>" .
+                "<name>Change credit card</name>" .
+                "<description> Changed credit card number</description>" .
                 "<quantity>1</quantity>" .
                 "<unitPrice>" . $mem_amount . "</unitPrice>" .
                 "<taxable>false</taxable>" .
@@ -169,14 +169,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
             $responseReasonText = $directResponseFields[3];
             $approvalCode = $directResponseFields[4]; // Authorization code
-            $transId = $directResponseFields[6];  exit;
-//            echo 'customer_id' . $customer_id;
-//            echo 'customer_profile_id' . $parsed_customer_id;
-//            echo 'payment_profile_id' . $parsed_paymentprofile_id;
-//            echo 'shipping_address_id' . $parsed_address_id;
-//            echo 'creditcard_num' . $creditcard;
-//            echo 'name_creditcard' . $name_card;
-//          
+            $transId = $directResponseFields[6];   
 //Variables to send e-mail
             $z_firstname = $fname;
             $z_lastname = $lname;
@@ -185,7 +178,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $z_amount = $mem_amount;
             if ("1" == $responseCode) {
 //Email sending to the customer upon successful payment
-                $templateId = 'Success Mycloset Registration';
+                $templateId = 'Change credit card';
                 $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
                 $vars = array('first_name' => $z_firstname, 'last_name' => $z_lastname, 'email' => $z_email, 'mem_type' => $z_memtype, 'mem_amt' => $z_amount);
                 $emailTemplate->getProcessedTemplate($vars);
@@ -198,27 +191,27 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $emailTemplate->send($admin_email, $admin_name, $vars);
                 $paymentdetails = serialize($vars);
                 $date = date("Y-m-d H:i:s ", time());
-                $data = array(
-                    'customer_id' => $customer_id,
-                    'customer_profile_id' => $parsed_customer_id,
-                    'payment_profile_id' => $parsed_paymentprofile_id,
-                    'shipping_address_id' => $parsed_address_id,
-                    'creditcard_num' => $creditcard,
-                    'name_creditcard' => $name_card
-                );
-                $model = Mage::getModel('membership/payment')->setData($data);
-                $insertId = $model->save()->getId();
+                $model = Mage::getModel('membership/payment')->load($customer_id, 'customer_id')
+                        ->setCustomerId($customer_id)
+                     ->setCustomerProfileId($parsed_customer_id)
+                     ->setPaymentProfileId($parsed_paymentprofile_id)
+                     ->setShippingAddressId($parsed_address_id)
+                     ->setCreditcardNum($creditcard)
+                     ->setNameCreditcard($name_card)
+                      ->save()->getId();
+               $insertId = $model;           
                 $payment_id = $insertId;
                 $j = Mage::getModel('membership/paymenthistory');
-                $j->setCustomerId($customerid)
+                $j->setCustomerId($customer_id)
                         ->setTransactionId($transId)
                         ->setPaymentId($payment_id)
                         ->setPaymentDetails($paymentdetails)
                         ->setAmountPaid($mem_amount)
-                        ->setTaxRate($taxrate)
-                        ->setMembershipAmount($this->getRequest()->getPost('amt'))
+                        ->setTaxRate(0)
+                        ->setMembershipAmount(1)
                         ->save();
             }
+             $this->_redirect('creditcard/');
         }
     }
 
