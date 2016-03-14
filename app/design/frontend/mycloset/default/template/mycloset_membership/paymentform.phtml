@@ -299,7 +299,7 @@
                                         <div class="field">
                                             <label for="card_number" style="margin:0px">Name on Card<em>*</em></label>  
                                             <div class="input-box validate-cc-number">
-                                                <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_name" value=""></input>
+                                                <input type="text" class="input-text validate-cc-number" id="x_card_name"  name="x_card_name" value=""></input>
                                             </div>
                                         </div>
                                     </li>
@@ -452,6 +452,7 @@ for ($mo = 10; $mo <= 12; $mo++)
             var Guest = jqCustom('#mem_type').val();
 
             var ccnum = jqCustom('#x_card_num').val();
+            var ccname = jqCustom('#x_card_name').val();
             var cccvv = jqCustom('#x_card_code').val();
             var checkboxdata = jqCustom("#termstext").val();
             if (!checkboxdata) {
@@ -465,6 +466,10 @@ for ($mo = 10; $mo <= 12; $mo++)
             }
             else if (!ccnum) {
                 jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid credit card number.</h5>');
+                return false;
+            }
+              else if (!ccname) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid credit card name.</h5>');
                 return false;
             }
             else if (!cccvv) {

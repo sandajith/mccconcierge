@@ -47,7 +47,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     }
 
     public function updategatewayAction() {
-        $customer_id = Mage::getSingleton('customer/session')->getId();       
+//        $data = $this->getRequest()->getPost();
+        $customer_id = Mage::getSingleton('customer/session')->getId();
         $mem_amount = Mage::getStoreConfig('membership/general/ccchange');
         $data = $this->getRequest()->getPost();
         $emailid = $this->getRequest()->getPost('emailid');
@@ -59,6 +60,24 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $payment_card_code = $this->getRequest()->getPost('x_card_code');
         $number_card = $this->getRequest()->getPost('x_card_num');
         $creditcard = substr($number_card, -4, 4);
+        // validate the data
+        $validated = true;
+        if (!Zend_Validate::is($data['x_card_name'], 'NotEmpty')) {
+            Mage::getSingleton('customer/session')->addError('Please fill out name on CreditCard');
+            $validated = false;
+        }
+        if (!Zend_Validate::is($data['x_card_code'], 'NotEmpty')) {
+            Mage::getSingleton('customer/session')->addError('Please fill out creditcard code');
+            $validated = false;
+        }
+        if (!Zend_Validate::is($data['x_card_num'], 'NotEmpty')) {
+            Mage::getSingleton('customer/session')->addError('Please fill out credit card number');
+            $validated = false;
+        }
+
+
+        ////
+
         $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.      
         $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
         $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
@@ -169,7 +188,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
             $responseReasonText = $directResponseFields[3];
             $approvalCode = $directResponseFields[4]; // Authorization code
-            $transId = $directResponseFields[6];   
+            $transId = $directResponseFields[6];
 //Variables to send e-mail
             $z_firstname = $fname;
             $z_lastname = $lname;
@@ -178,7 +197,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $z_amount = $mem_amount;
             if ("1" == $responseCode) {
 //Email sending to the customer upon successful payment
-                $templateId = 'Change credit card';
+                $templateId = 'Change credit card details';
                 $emailTemplate = Mage::getModel('core/email_template')->loadByCode($templateId);
                 $vars = array('first_name' => $z_firstname, 'last_name' => $z_lastname, 'email' => $z_email, 'mem_type' => $z_memtype, 'mem_amt' => $z_amount);
                 $emailTemplate->getProcessedTemplate($vars);
@@ -191,27 +210,47 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 $emailTemplate->send($admin_email, $admin_name, $vars);
                 $paymentdetails = serialize($vars);
                 $date = date("Y-m-d H:i:s ", time());
-                $model = Mage::getModel('membership/payment')->load($customer_id, 'customer_id')
-                        ->setCustomerId($customer_id)
-                     ->setCustomerProfileId($parsed_customer_id)
-                     ->setPaymentProfileId($parsed_paymentprofile_id)
-                     ->setShippingAddressId($parsed_address_id)
-                     ->setCreditcardNum($creditcard)
-                     ->setNameCreditcard($name_card)
-                      ->save()->getId();
-               $insertId = $model;           
-                $payment_id = $insertId;
-                $j = Mage::getModel('membership/paymenthistory');
-                $j->setCustomerId($customer_id)
-                        ->setTransactionId($transId)
-                        ->setPaymentId($payment_id)
-                        ->setPaymentDetails($paymentdetails)
-                        ->setAmountPaid($mem_amount)
-                        ->setTaxRate(0)
-                        ->setMembershipAmount(1)
-                        ->save();
+
+
+
+
+                // save the data
+                if (!$validated) {
+
+                    try {
+                        $model = Mage::getModel('membership/payment')->load($customer_id, 'customer_id')
+                                        ->setCustomerId($customer_id)
+                                        ->setCustomerProfileId($parsed_customer_id)
+                                        ->setPaymentProfileId($parsed_paymentprofile_id)
+                                        ->setShippingAddressId($parsed_address_id)
+                                        ->setCreditcardNum($creditcard)
+                                        ->setNameCreditcard($name_card)
+                                        ->save()->getId();
+                        $insertId = $model;
+                        $payment_id = $insertId;
+                        $j = Mage::getModel('membership/paymenthistory');
+                        $j->setCustomerId($customer_id)
+                                ->setTransactionId($transId)
+                                ->setPaymentId($payment_id)
+                                ->setPaymentDetails($paymentdetails)
+                                ->setAmountPaid($mem_amount)
+                                ->setTaxRate(0)
+                                ->setMembershipAmount(1)
+                                ->save();
+                    } catch (Exception $e) {
+                        Mage::getSingleton('customer/session')->addError("{$e}");
+                        $this->_redirect('creditcard/');
+                    }
+
+                    Mage::getSingleton('customer/session')->addSuccess('Succesfully saved');
+                }
+                if ($data['checkout'] == 'no') {
+ $this->_redirect('creditcard/');
+                   
+                } else {
+                    $this->_redirect('checkout/onepage/#payment');
+                }
             }
-             $this->_redirect('creditcard/');
         }
     }
 

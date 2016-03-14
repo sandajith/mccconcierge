@@ -36,84 +36,144 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     $emailid = $customer->getEmail();
 }
 ?>
+<div class="fieldset payment-fieldset">
+    <div id="membership_error">
+    </div>
+    <h2 class="legend"></h2>
+    <div class="subhead">
+        <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card Details') ?></h2>
+        <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
+            <div class="col-md-12 bordered" style="height: auto;">
+                <div class="form-list">
+                    <div class="fieldset ">
+                        <h4 class="legend"><?php echo $this->__('Payment Information') ?></h4>
+                        <p><?php echo $this->__('Change of Credit card details will change $ ') . Mage::getStoreConfig('membership/general/ccchange'); ?></p>
+                        <div class="content">
+                            <ul class="form-list">
+                                <li class="fields">
+                                    <div class="field">
+                                        <label for="card_number">Name On Card</label>  
+                                        <div class="input-box validate-cc-number">
+                                            <input type="text" class="input-text validate-cc-number" id="x_card_name"  name="x_card_name" value=""></input>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fields">
+                                    <div class="field">
+                                        <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
+                                        <div class="input-box validate-cc-number">
+                                            <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="fields">
+                                    <div class="field">     
+                                        <label for="exp">Card Expiry date</label><br>                                           
+                                        <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
+                                            <?php
+                                            for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
+                                                echo "<option value='$ye'>$ye</option>";
+                                            }
+                                            ?> 
+                                        </select>                                                                                       
+                                        <select name="card_exp_month" style="width: auto;">
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                            <?php
+                                            for ($mo = 10; $mo <= 12; $mo++)
+                                                echo "<option value='$mo'>$mo</option>";
+                                            ?>
+                                        </select>
 
-<div class="subhead">
-    <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card') ?></h2>
-    <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
-        <div class="col-md-12 bordered" style="height: auto;">
-            <div class="form-list">
-                <div class="fieldset ">
-                    <h4 class="legend"><?php echo $this->__('Payment Information') ?></h4>
-                    <div class="content">
-                        <ul class="form-list">
-                            <li class="fields">
-                                <div class="field">
-                                    <label for="card_number">Name On Card</label>  
-                                    <div class="input-box validate-cc-number">
-                                        <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_name" value=""></input>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="fields">
-                                <div class="field">
-                                    <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
-                                    <div class="input-box validate-cc-number">
-                                        <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
+                                </li>
+                                <li class="fields">
+                                    <div class="field">
+                                        <label for="CVV">CVV</label>
+                                        <div class="input-box">
+                                            <input type="text" class="input-text validate-cc-cvn required" id="x_card_code" size="4" name="x_card_code" value=""></input>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="fields">
-                                <div class="field">     
-                                    <label for="exp">Card Expiry date</label><br>                                           
-                                    <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
-<?php
-for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
-    echo "<option value='$ye'>$ye</option>";
-}
-?> 
-                                    </select>                                                                                       
-                                    <select name="card_exp_month" style="width: auto;">
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-<?php
-for ($mo = 10; $mo <= 12; $mo++)
-    echo "<option value='$mo'>$mo</option>";
-?>
-                                    </select>
-
-                                </div>
-                            </li>
-                            <li class="fields">
-                                <div class="field">
-                                    <label for="CVV">CVV</label>
-                                    <div class="input-box">
-                                        <input type="text" class="input-text validate-cc-cvn required" id="x_card_code" size="4" name="x_card_code" value=""></input>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
-
             </div>
-        </div>
-        <input type="hidden" name="firstname" value="<?php echo $fname; ?>"/>
-        <input type="hidden" name="lastname" value="<?php echo $lname; ?>"/>
-        <input type="hidden" name="emailid" value="<?php echo $emailid; ?>"/>
+            <input type="hidden" name="firstname" value="<?php echo $fname; ?>"/>
+            <input type="hidden" name="lastname" value="<?php echo $lname; ?>"/>
+            <input type="hidden" name="emailid" value="<?php echo $emailid; ?>"/>
+            <input type="hidden" name="checkout" value="<?php echo 'no'; ?>"/>
 
-        <div class="buttons-set">
 
-            <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
-        </div>
+            <div class="buttons-set">
 
-    </form>
+                <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
+            </div>
+
+        </form>
+    </div>
+    <span class="please-wait" id="rplease-wait" style="display:none;">
+        <div class="overlay_preloader" style="background:#fff; opacity: 0.8;z-index: 1000; position: absolute; left: 0; right: 0; top:0; bottom:0; height: 100%; width:100%;"></div>                  
+        <img style="position: absolute; left: 45%; top:45%;"  src="<?php echo $this->getSkinUrl('images/loader.GIF') ?>" alt="<?php echo $this->__('Submitting Payment...') ?>" title="<?php echo $this->__('Submitting Payment......') ?>" class="v-middle" /> 
+    </span>
 </div>
 
+<script type="text/javascript">
+    //<![CDATA[
+    var dataForm = new VarienForm('form-validate', true);
+<?php if ($this->getShowAddressFields()): ?>
+        new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+<?php endif; ?>
+    //]]>
+</script>
+<script type="text/javascript">
 
+    var jqCustom = jQuery.noConflict();
+
+    var submitted = false;
+    function checkForm()
+    {
+
+        if (submitted) {
+            return false;
+        }
+        jqCustom('#paymentform').submit(function (e) {
+
+            var ccnum = jqCustom('#x_card_num').val();
+            var ccname = jqCustom('#x_card_name').val();
+            var cccvv = jqCustom('#x_card_code').val();
+            if (!ccname) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter name on credit card .</h5>');
+                return false;
+            }
+            else if (!ccnum) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid credit card number.</h5>');
+                return false;
+            }
+            else if (!cccvv) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid cvv.</h5>');
+                return false;
+            }
+            else {
+                submitted = true;
+                jqCustom('#pay_submit').css({"display": "none"});
+                Element.show('rplease-wait');
+                jqCustom('.payment-fieldset').setStyle({opacity: .5});
+                jqCustom('.payment-fieldset').descendants().each(function (s) {
+                    s.disabled = true;
+                });
+                return true;
+            }
+        });
+    }
+
+</script>
