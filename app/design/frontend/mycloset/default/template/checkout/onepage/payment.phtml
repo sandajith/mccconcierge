@@ -35,15 +35,17 @@
 <form action="" id="co-payment-form">
     <fieldset>
         <strong><?php echo $this->__('Will be billed to card on file') ?></strong>
-        <p ><?php echo Mage::getSingleton('customer/session')->getCustomer()->getFirstname() . ' ' . Mage::getSingleton('customer/session')->getCustomer()->getLastname(); ?></p> 
+        <?php
+         $userid = Mage::getSingleton('customer/session')->getId();
+                $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
+                foreach ($collection as $creditcard) {?>
+        <p ><?php echo $creditcard->getNameCreditcard(); ?></p> 
         <p><i><?php echo $this->__('Card ending in ') ?> <?php
                 // credit card last number//       
-                $userid = Mage::getSingleton('customer/session')->getId();
-                $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
-                foreach ($collection as $creditcard) {
+                
                     echo $creditcard->getCreditcardNum();
-                }
-                ?></i></p>
+                
+                ?></i></p> <?php }?>
         <p><a onclick="changeCreditcard();" >Change credit card details </a>
         </p>
         <?php echo $this->getChildHtml('methods') ?>
