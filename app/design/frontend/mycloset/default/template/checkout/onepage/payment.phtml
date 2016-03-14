@@ -69,7 +69,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     <div id="membership_error">
     </div>
     <h2 class="legend"></h2>
-    <div class="subhead">
+    <div class="subhead"  id="payment_cc" style="border: #000;display:none;">
         <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card Details') ?></h2>
         <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
             <div class="col-md-12 bordered" style="height: auto;">
@@ -204,7 +204,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 
         jqCustom('#payment_cc').show();
     }
-    var jqCustom = jQuery.noConflict();
+   
 
     var submitted = false;
     function checkForm()
