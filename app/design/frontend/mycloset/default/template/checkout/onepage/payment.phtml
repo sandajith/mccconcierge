@@ -32,26 +32,6 @@
     var lastPrice;
 //]]>
 </script>
-<form action="" id="co-payment-form">
-    <fieldset>
-        <strong><?php echo $this->__('Will be billed to card on file') ?></strong>
-        <?php
-         $userid = Mage::getSingleton('customer/session')->getId();
-                $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
-                foreach ($collection as $creditcard) {?>
-        <p ><?php echo $creditcard->getNameCreditcard(); ?></p> 
-        <p><i><?php echo $this->__('Card ending in ') ?> <?php
-                // credit card last number//       
-                
-                    echo $creditcard->getCreditcardNum();
-                
-                ?></i></p> <?php }?>
-        <p><a onclick="changeCreditcard();" >Change credit card details </a>
-        </p>
-        <?php echo $this->getChildHtml('methods') ?>
-    </fieldset>
-</form>
-
 
 
 <?php
@@ -67,17 +47,36 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 }
 ?>
 
+
+
 <div class="fieldset payment-fieldset">
     <div id="membership_error">
     </div>
     <h2 class="legend"></h2>
-    <div class="subhead"  id="payment_cc" style="border: #000;display:none;">
-        <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card Details') ?></h2>
-        <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
+    <form action="" id="co-payment-form">
+        <strong><?php echo $this->__('Will be billed to card on file') ?></strong>
+    <?php
+   $userid = Mage::getSingleton('customer/session')->getId();
+            $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
+            foreach ($collection as $creditcard) {?>
+                <p><i><?php echo  $creditcard->getNameCreditcard(); ?></i></p>
+                <p><i><?php echo $this->__('Card ending in ') . $creditcard->getCreditcardNum();  ?></i></p>
+                <?php  
+            }?>
+       <input type="checkbox" name="cc_change" value="1" id="cc_change" onchange="changeCreditcard();"/>
+        <p>Change credit card details 
+        </p>
+        <fieldset>
+
+            <?php echo $this->getChildHtml('methods') ?>
+        </fieldset>
+        <div class="subhead"  id="payment_cc" style="border: #000;display:none;">
+            <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card Details') ?></h2>
+            <!--<form method="post"  id="paymentform" action="<?php // echo Mage::getBaseUrl();    ?>membership/payment/updategateway/"  onsubmit="return checkForm();">-->
             <div class="col-md-12 bordered" style="height: auto;">
                 <div class="form-list">
                     <div class="fieldset ">
-                       
+
                         <p><?php echo $this->__('Change of Credit card details will change $ ') . Mage::getStoreConfig('membership/general/ccchange'); ?></p>
                         <div class="content">
                             <ul class="form-list">
@@ -100,7 +99,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                                 <li class="fields">
                                     <div class="field">     
                                         <label for="exp">Card Expiry date</label><br>                                           
-                                        <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
+                                        <select name="card_exp_year"  style="width: auto;">
                                             <?php
                                             for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
                                                 echo "<option value='$ye'>$ye</option>";
@@ -143,20 +142,15 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             <input type="hidden" name="lastname" value="<?php echo $lname; ?>"/>
             <input type="hidden" name="emailid" value="<?php echo $emailid; ?>"/>
             <input type="hidden" name="checkout" value="<?php echo 'yes'; ?>"/>
-
-
-            <div class="buttons-set">
-
-                <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
-            </div>
-
-        </form>
-    </div>
-    <span class="please-wait" id="rplease-wait" style="display:none;">
-        <div class="overlay_preloader" style="background:#fff; opacity: 0.8;z-index: 1000; position: absolute; left: 0; right: 0; top:0; bottom:0; height: 100%; width:100%;"></div>                  
-        <img style="position: absolute; left: 45%; top:45%;"  src="<?php echo $this->getSkinUrl('images/loader.GIF') ?>" alt="<?php echo $this->__('Submitting Payment...') ?>" title="<?php echo $this->__('Submitting Payment......') ?>" class="v-middle" /> 
-    </span>
+        </div>
+    </form>
 </div>
+
+
+
+
+
+
 
 
 
@@ -168,10 +162,9 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
 </div>
 <div class="buttons-set" id="payment-buttons-container">
-    <!--<p  class="required control-display"><?php // echo $this->__('* Required Fields')  ?></p>-->
-    <p class="back-link control-display"><a href="#" onclick="checkout.back();
-            return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
-    <button type="button" class="button" onclick="payment.save()"><span><span><?php echo $this->__('Continue') ?></span></span></button>
+    <!--<p  class="required control-display"><?php // echo $this->__('* Required Fields')      ?></p>-->
+    <p class="back-link "><a href="#" onclick="checkout.back();return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <button type="button"  class="button" onclick="payment.save();"><span><span><?php echo $this->__('Continue') ?></span></span></button>
     <span class="please-wait" id="payment-please-wait" style="display:none;">
         <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading next step...') ?>" title="<?php echo $this->__('Loading next step...') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
     </span>
@@ -201,49 +194,59 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
 </script>
 
 <script type="text/javascript">
-  var jqCustom = jQuery.noConflict();
+    var jqCustom = jQuery.noConflict();
+//    setInterval(function(){
+//jqCustom(".carddetails").load();
+//}, 2000);
     function changeCreditcard() {
-
-        jqCustom('#payment_cc').show();
-    }
-   
-
-    var submitted = false;
-    function checkForm()
-    {
-
-        if (submitted) {
-            return false;
+        if (jqCustom('#cc_change').is(":checked")) {
+            jqCustom('#payment_cc').show();
+            
+        } else {
+            jqCustom('#payment_cc').hide();
+             
         }
-        jqCustom('#paymentform').submit(function (e) {
-
-            var ccnum = jqCustom('#x_card_num').val();
-            var ccname = jqCustom('#x_card_name').val();
-            var cccvv = jqCustom('#x_card_code').val();
-            if (!ccname) {
-                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter name on credit card .</h5>');
-                return false;
-            }
-            else if (!ccnum) {
-                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid credit card number.</h5>');
-                return false;
-            }
-            else if (!cccvv) {
-                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid cvv.</h5>');
-                return false;
-            }
-            else {
-                submitted = true;
-                jqCustom('#pay_submit').css({"display": "none"});
-                Element.show('rplease-wait');
-                jqCustom('.payment-fieldset').setStyle({opacity: .5});
-                jqCustom('.payment-fieldset').descendants().each(function (s) {
-                    s.disabled = true;
-                });
-                return true;
-            }
-        });
+      
     }
+
+
+//
+//    var submitted = false;
+//    function checkForm()
+//    {
+//
+//        if (submitted) {
+//            return false;
+//        }
+//        jqCustom('#co-payment-form').submit(function (e) {
+//
+//            var ccnum = jqCustom('#x_card_num').val();
+//            var ccname = jqCustom('#x_card_name').val();
+//            var cccvv = jqCustom('#x_card_code').val();
+//            if (!ccname) {
+//                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter name on credit card .</h5>');
+//                return false;
+//            }
+//            else if (!ccnum) {
+//                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid credit card number.</h5>');
+//                return false;
+//            }
+//            else if (!cccvv) {
+//                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid cvv.</h5>');
+//                return false;
+//            }
+//            else {
+//                submitted = true;
+//                jqCustom('#pay_submit').css({"display": "none"});
+//                Element.show('rplease-wait');
+//                jqCustom('.payment-fieldset').setStyle({opacity: .5});
+//                jqCustom('.payment-fieldset').descendants().each(function (s) {
+//                    s.disabled = true;
+//                });
+//                return true;
+//            }
+//        });
+//    }
 
 </script>
 

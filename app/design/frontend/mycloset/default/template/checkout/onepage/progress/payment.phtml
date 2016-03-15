@@ -32,16 +32,17 @@
 </dt>
 <dd class="complete">
     <?php //echo $this->getPaymentHtml();?>
-     <p >
-    <?php echo Mage::getSingleton('customer/session')->getCustomer()->getFirstname() . ' ' . Mage::getSingleton('customer/session')->getCustomer()->getLastname(); ?></p> 
-        <p><i><?php echo $this->__('Card ending in ') ?> <?php
+ 
+        <?php
             // credit card last number//       
             $userid = Mage::getSingleton('customer/session')->getId();
             $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
-            foreach ($collection as $creditcard) {
-                echo $creditcard->getCreditcardNum();
-            }
-            ?></i></p>
+            foreach ($collection as $creditcard) {?>
+                <p><i><?php echo  $creditcard->getNameCreditcard(); ?></i></p>
+                <p><i><?php echo $this->__('Card ending in ') . $creditcard->getCreditcardNum();  ?></i></p>
+                <?php  
+            }?>
+          
 </dd>
 <?php else: ?>
 <dt>
