@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <layout xmlversion="1.0">
     
-    
     <customer_account_edit> 
         <reference name="customer_edit">
             <action method="setTemplate">
@@ -9,6 +8,7 @@
             </action>
         </reference>
     </customer_account_edit>
+    
     <customer_account_create>
         <reference name="root">
             <action method="setTemplate">
@@ -23,11 +23,8 @@
         
         <reference name="customer_account_create">
             <block type="membership/membership_list" name="membership_list"  template="mycloset_membership/register.phtml"/>      
-        </reference>
-        
+        </reference>        
     </customer_account_create>
-    
-    
     
     <membership_payment_index>
         <reference name="root">   
@@ -35,19 +32,18 @@
                 <template>page/1column.phtml</template>
             </action>   
         </reference>
-          <reference name="customer_form_register">         
+        <reference name="customer_form_register">         
             <action method="setTemplate">
                 <template>mycloset_membership/paymentform.phtml</template>
             </action>
         </reference>
-           <reference name="customer_account_create">
+        <reference name="customer_account_create">
             <block type="membership/membership_list" name="membership_list"  template="mycloset_membership/paymentform.phtml"/>      
         </reference>
         <reference name="content">   
             <block type="membership/membership_list" name="membership_list" template="mycloset_membership/paymentform.phtml"/>       
         </reference>  
-    </membership_payment_index>
-    
+    </membership_payment_index>    
     
     <membership_payment_confirmpayment>
         <label>Payment</label>
@@ -62,7 +58,7 @@
         </reference>
     </membership_payment_confirmpayment>
     
-     <membership_account_exists>
+    <membership_account_exists>
         <reference name="root">   
             <action method="setTemplate">
                 <template>page/1column.phtml</template>
@@ -72,12 +68,10 @@
         <reference name="content">   
             <block type="membership/membership_form" name="membership_form" template="mycloset_membership/account_exists.phtml"/>             
         </reference>
-    </membership_account_exists>
-    
+    </membership_account_exists> 
 
-    
-      <!-- product popup -->
-  <membership_popup_index>
+    <!-- product popup -->
+    <membership_popup_index>
         <reference name="root">   
             <action method="setTemplate">
                 <template>page/empty.phtml</template>
@@ -87,8 +81,9 @@
             <block type="membership/membership_popup" name="membership_popup" template="mycloset_membership/popup.phtml"/>              
         </reference>                
     </membership_popup_index>
+    
     <!--for terms and condition popup-->
-     <membership_termservices_index>
+    <membership_termservices_index>
         <reference name="root">   
             <action method="setTemplate">
                 <template>page/empty.phtml</template>
@@ -101,7 +96,7 @@
     <!--product pop-->
     
     <!--listname in home page-->
-     <membership_home_index>
+    <membership_home_index>
         <reference name="root">   
             <action method="setTemplate">
                 <template>page/1column.phtml</template>
@@ -111,9 +106,9 @@
             <block type="membership/membership_home" name="membership_home" />              
         </reference>                
     </membership_home_index>
-    <!--listname in home page-->
+  
     <!--pickup information(edited by neenu)--> 
-     <membership_pickup_index>
+    <membership_pickup_index>
         <reference name="root">   
             <action method="setTemplate">
                 <template>page/1column.phtml</template>
@@ -124,9 +119,8 @@
         </reference>                
     </membership_pickup_index>
     
-    <!--pick information-->
     <!--success page-->
-         <membership_pickup_success>
+    <membership_pickup_success>
         <reference name="root">   
             <action method="setTemplate">
                 <template>page/1column.phtml</template>
@@ -136,64 +130,31 @@
             <block type="membership/membership_pickup" name="membership_pickup" template="mycloset_membership/success.phtml"/>              
         </reference>                
     </membership_pickup_success>
-    <!--success page-->
-    
-    
-<!--     <membership_address_index translate="label">
-        <label>Customer My Account Address Book</label>
-         Mage_Customer 
-        <update handle="customer_account"/>
-        <reference name="my.account.wrapper">
-            <block type="membership/membership/address_book" name="membership_address_book" template="mycloset_membership/address/book.phtml"/>
-        </reference>
-    </membership_address_index>-->
 
-<!--
-Customer account address edit page
--->
-
-<!--    <membership_address_form translate="label">
-        <label>Customer My Account Address Edit Form</label>
-         Mage_Customer 
-        <update handle="customer_account"/>
+    <sales_order_view> <!-- Code From Previous Module -->
         <reference name="my.account.wrapper">
-            <block type="membership/membership/address_edit" name="membership_address_edit" template="mycloset_membership/address/edit.phtml"/>
+            <!--<block type="custom/custom_order" name="custom.order" template="custom/order.phtml" after='sales.order.info' />-->
+            <block type="membership/custom_order" name="custom.order" template="custom/order.phtml" after='sales.order.info' />
         </reference>
-    </membership_address_form>
-    
-    <membership_account_edit translate="label">
-        <label>Customer Account Edit Form</label>
-        <update handle="customer_account"/>
-       
-        <reference name="my.account.wrapper">
-            <block type="membership/membership/form_edit" name="membership_edit" template="mycloset_membership/form/edit.phtml"/>
-        </reference>
+    </sales_order_view>
 
-    </membership_account_edit>-->
-    
-         <sales_order_view> <!-- Code From Previous Module -->
-       <reference name="my.account.wrapper">
-           <!--<block type="custom/custom_order" name="custom.order" template="custom/order.phtml" after='sales.order.info' />-->
-         <block type="membership/custom_order" name="custom.order" template="custom/order.phtml" after='sales.order.info' />
-       </reference>
-   </sales_order_view>
-   
-<!--   <checkout_onepage_index>  Adding our new step to onepage block  
-   <reference name="root">
-            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+    <!--My account page cc change implementation-->
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink">
+                <name>chanagecreditcard</name>
+                <path>membership/account/changecreditcard</path>
+                <label>Change credit card</label>
+            </action>
         </reference>
-      <reference name='checkout.onepage'>
-            <action method='setTemplate'><template>custom/checkout/onepage.phtml</template></action>
-            <block type="membership/checkout_onepage_pickup" name="checkout.onepage.excellence" as="excellence" template="custom/checkout/onepage/excellence.phtml"/> 
-       </reference>
-       <reference name='checkout.progress'>  Change the template of progress block 
-             <action method='setTemplate'><template>custom/checkout/onepage/progress.phtml</template></action>
-       </reference>  Here we change the template of the progress block to our custom template created 
-   </checkout_onepage_index>
-   <checkout_onepage_progress>   Change the template of progress block 
-       <reference name='root'>
-           <action method='setTemplate'><template>custom/checkout/onepage/progress.phtml</template></action>
-       </reference>
-   </checkout_onepage_progress>-->
-   
+    </customer_account>
+
+    <membership_account_changecreditcard>
+        <update handle="customer_account" />
+        <reference name="my.account.wrapper">
+            <block type="core/template" name="chanagecreditcard" template="mycloset_membership/changecreditcard.phtml"/>            
+        </reference>
+    </membership_account_changecreditcard>
+
 </layout>
+

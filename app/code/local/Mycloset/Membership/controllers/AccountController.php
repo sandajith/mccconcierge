@@ -304,7 +304,15 @@ class Mycloset_Membership_AccountController extends Mage_Core_Controller_Front_A
 
         $this->_redirect('*/*/logoutSuccess');
     }
-
+     /**
+     * For credit card change page
+     */
+  public function changecreditcardAction()
+    {
+   
+         $this->loadLayout();
+        $this->renderLayout();   
+    }
     /**
      * Logout success page
      */
