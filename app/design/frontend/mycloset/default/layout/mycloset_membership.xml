@@ -144,7 +144,7 @@
             <action method="addLink">
                 <name>chanagecreditcard</name>
                 <path>membership/account/changecreditcard</path>
-                <label>Change credit card</label>
+                <label>Change Credit Card</label>
             </action>
         </reference>
     </customer_account>
