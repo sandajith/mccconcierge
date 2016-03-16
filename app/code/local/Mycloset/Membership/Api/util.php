@@ -80,6 +80,8 @@ function parse_api_response($content) {
         fwrite($fp, print_r($parsedresponse, true));
         fclose($fp);
         echo "<br>";
+       echo $error = $parsedresponse->messages->resultCode;
+        return $error;
     }
     return $parsedresponse;
 }

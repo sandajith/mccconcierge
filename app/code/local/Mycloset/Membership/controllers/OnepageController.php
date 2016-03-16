@@ -3,10 +3,12 @@
 require_once 'Mage/Checkout/controllers/OnepageController.php';
 
 class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageController {
-const PATH_GATE_THRESHOLD = 'membership/general/threshold';
+
+    const PATH_GATE_THRESHOLD = 'membership/general/threshold';
     const PATH_API_LOGIN = 'membership/general/apilogin';
     const PATH_TRANS_KEY = 'membership/general/transkey';
     const PATH_GATE_URL = 'membership/general/gatewayurl';
+
     public function saveShippingAction() {
         if ($this->_expireAjax()) {
             return;
@@ -90,7 +92,7 @@ const PATH_GATE_THRESHOLD = 'membership/general/threshold';
     }
 
     public function savePaymentAction() {
-        
+
         if ($this->_expireAjax()) {
             return;
         }
@@ -101,13 +103,13 @@ const PATH_GATE_THRESHOLD = 'membership/general/threshold';
             }
 
             $data = $this->getRequest()->getPost('payment', array());
-           
+
             $result = $this->getOnepage()->savePayment($data);
- $ccchange = $this->getRequest()->getPost('cc_change');
+            $ccchange = $this->getRequest()->getPost('cc_change');
 
 // cc change
 //if($ccchange){
-   
+
             $customer_id = Mage::getSingleton('customer/session')->getId();
             $mem_amount = Mage::getStoreConfig('membership/general/ccchange');
             $data = $this->getRequest()->getPost();
@@ -224,6 +226,17 @@ const PATH_GATE_THRESHOLD = 'membership/general/threshold';
                     "</createCustomerProfileTransactionRequest>";
             $response = send_xml_request($g_apihost, $g_apipath, $content);
             $parsedresponse = parse_api_response($response);
+           $error_msg = strrchr($parsedresponse, "Error");
+           
+            if ($error_msg) {
+                $result = "Payment failed by invalid element";
+//                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+               
+                Mage::getSingleton('core/session')->addError($result);
+//              
+                 $this->_redirect('checkout/onepage/');
+//          
+            }
             if (isset($parsedresponse->directResponse)) {
                 $directResponseFields = explode(",", $parsedresponse->directResponse);
                 $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error
@@ -271,11 +284,10 @@ const PATH_GATE_THRESHOLD = 'membership/general/threshold';
                             ->setTaxRate(0)
                             ->setMembershipAmount(1)
                             ->save();
-                   
                 }
 //                 $result['redirect'] = $redirectUrl;
             }
-             
+
 //            end cc change
 //            }
             // get section and redirect data

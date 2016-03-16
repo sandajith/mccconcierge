@@ -99,14 +99,14 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                                 <li class="fields">
                                     <div class="field">     
                                         <label for="exp">Card Expiry date</label><br>                                           
-                                        <select name="card_exp_year"  style="width: auto;">
+                                        <select name="card_exp_year" class="year required-entry" style="width: auto;">
                                             <?php
                                             for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
                                                 echo "<option value='$ye'>$ye</option>";
                                             }
                                             ?> 
                                         </select>                                                                                       
-                                        <select name="card_exp_month" style="width: auto;">
+                                        <select name="card_exp_month" class="month validate-cc-exp required-entry" style="width: auto;">
                                             <option value="01">01</option>
                                             <option value="02">02</option>
                                             <option value="03">03</option>

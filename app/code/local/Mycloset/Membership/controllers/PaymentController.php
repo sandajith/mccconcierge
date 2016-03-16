@@ -162,6 +162,16 @@ public function updategatewayAction() {
                 "</createCustomerProfileTransactionRequest>";
         $response = send_xml_request($g_apihost, $g_apipath, $content);
         $parsedresponse = parse_api_response($response);
+         $error_msg=strrchr($parsedresponse,"Error");
+        if($error_msg){
+            $error_msg_string ="Payment failed by invalid element";
+       Mage::getSingleton('core/session')->addError($error_msg_string);
+                             if ($data['checkout'] == 'no') {
+                 $this->_redirect('mycloset/account/changecreditcard/');
+            } else {
+                 $this->_redirect('checkout/onepage/');
+            } 
+        }
         if (isset($parsedresponse->directResponse)) {
             $directResponseFields = explode(",", $parsedresponse->directResponse);
             $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error
@@ -210,7 +220,7 @@ public function updategatewayAction() {
                         ->setMembershipAmount(1)
                         ->save();
                            if ($data['checkout'] == 'no') {
-                 $this->_redirect('creditcard/');
+                 $this->_redirect('mycloset/account/changecreditcard/');
             } else {
                  $this->_redirect('checkout/onepage/');
             }
@@ -293,6 +303,8 @@ public function updategatewayAction() {
 
         $response = send_xml_request($g_apihost, $g_apipath, $content);
         $parsedresponse = parse_api_response($response);
+        
+        
         $parsed_customer_id = $parsedresponse->customerProfileId;
 // Add payment profile
 
@@ -376,13 +388,20 @@ public function updategatewayAction() {
                 "</createCustomerProfileTransactionRequest>";
         $response = send_xml_request($g_apihost, $g_apipath, $content);
         $parsedresponse = parse_api_response($response);
+       $error_msg=strrchr($parsedresponse,"Error");
+        if($error_msg){
+            $error_msg_string ="Payment failed by invalid element";
+       Mage::getSingleton('core/session')->addError($error_msg_string);
+                $this->_redirect('mycloset/payment');
+        }
+        
         if (isset($parsedresponse->directResponse)) {
             $directResponseFields = explode(",", $parsedresponse->directResponse);
-            $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error
-            $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
-            $responseReasonText = $directResponseFields[3];
-            $approvalCode = $directResponseFields[4]; // Authorization code
-            $transId = $directResponseFields[6];
+      $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error
+         $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
+        $responseReasonText = $directResponseFields[3];
+       $approvalCode = $directResponseFields[4]; // Authorization code
+          $transId = $directResponseFields[6];
 //Variables to send e-mail
             $z_firstname = $fname;
             $z_lastname = $lname;
@@ -561,6 +580,7 @@ public function updategatewayAction() {
 
         $response = send_xml_request($g_apihost, $g_apipath, $content);
         $parsedresponse = parse_api_response($response);
+        
         if (isset($parsedresponse->directResponse)) {
             $directResponseFields = explode(",", $parsedresponse->directResponse);
             $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error       
