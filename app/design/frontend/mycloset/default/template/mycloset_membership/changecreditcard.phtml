@@ -69,14 +69,16 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                                 <li class="fields">
                                     <div class="field">     
                                         <label for="exp">Card Expiry date</label><br>                                           
-                                        <select name="card_exp_year" class="validate-cc-exp " style="width: auto;">
+                                        <select name="card_exp_year" id="x_card_year" class="validate-cc-exp " style="width: auto;">
+                                            <option value=""></option>                                          
                                             <?php
                                             for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
                                                 echo "<option value='$ye'>$ye</option>";
                                             }
                                             ?> 
                                         </select>                                                                                       
-                                        <select name="card_exp_month" style="width: auto;">
+                                        <select name="card_exp_month" id="x_card_month" style="width: auto;">
+                                            <option value=""></option>
                                             <option value="01">01</option>
                                             <option value="02">02</option>
                                             <option value="03">03</option>
@@ -151,6 +153,8 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             var ccnum = jqCustom('#x_card_num').val();
             var ccname = jqCustom('#x_card_name').val();
             var cccvv = jqCustom('#x_card_code').val();
+            var ccmonth = jqCustom('#x_card_month').val();
+            var ccyear = jqCustom('#x_card_year').val();
             if (!ccname) {
                 jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter name on credit card .</h5>');
                 return false;
@@ -162,7 +166,15 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
             else if (!cccvv) {
                 jqCustom('#membership_error').html(' <h5 style="color : red;"> Please enter a valid cvv.</h5>');
                 return false;
+            } else if (!ccyear) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please select Card Expiry date.</h5>');
+                return false;
             }
+             else if (!ccmonth) {
+                jqCustom('#membership_error').html(' <h5 style="color : red;"> Please select Card Expiry date.</h5>');
+                return false;
+            }
+            
             else {
                 submitted = true;
                 jqCustom('#pay_submit').css({"display": "none"});

@@ -220,8 +220,10 @@ public function updategatewayAction() {
                         ->setMembershipAmount(1)
                         ->save();
                            if ($data['checkout'] == 'no') {
+                               Mage::getSingleton('core/session')->addSuccess('Successfully changed Credit Card details ');
                  $this->_redirect('mycloset/account/changecreditcard/');
             } else {
+                    Mage::getSingleton('core/session')->addSuccess('Successfully changed Credit Card details ');
                  $this->_redirect('checkout/onepage/');
             }
             

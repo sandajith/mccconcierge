@@ -60,8 +60,9 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
 
         <div class="previous_cc_details">
             <?php foreach ($collection as $creditcard) { ?>
-                <p><?php echo $creditcard->getNameCreditcard(); ?></p>
-                <p><i><?php echo $this->__('Card ending in ') . $creditcard->getCreditcardNum(); ?></i></p>
+                <p><div id="ccname_frm_js">
+                    <?php echo $creditcard->getNameCreditcard(); ?></p></div>
+                <i><?php echo $this->__('Card ending in ');?><div id="ccnum_frm_js"><?php echo $creditcard->getCreditcardNum(); ?></div></i>
             <?php }
             ?>
         </div>
@@ -86,15 +87,15 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                                     <div class="field">
                                         <label for="card_number">Name On Card</label>  
                                         <div class="input-box validate-cc-number">
-                                            <input type="text" class="input-text validate-cc-number" id="x_card_name"  name="x_card_name" value=""></input>
+                                            <input type="text" id="ccsave_cc_owner" class="input-text required-entry" name="x_card_name" value=""></input>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
-                                        <div class="input-box validate-cc-number">
-                                            <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
+                                        <label for="ccsave_cc_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
+                                        <div >
+                                            <input type="text" id="ccsave_cc_number" class="input-text validate-cc-number validate-cc-type validation-failed"  name="x_card_num" value=""></input>
                                         </div>
                                     </div>
                                 </li>
@@ -130,7 +131,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                                     <div class="field">
                                         <label for="CVV">CVV</label>
                                         <div class="input-box">
-                                            <input type="text" id="ccsave_cc_cid" class="input-text cvv required-entry validate-cc-cvn validation-failed" id="x_card_code" size="4" name="x_card_code" value=""></input>
+                                            <input type="text"  id="ccsave_cc_cid" class="input-text cvv required-entry validate-cc-cvn" size="4" name="x_card_code" value=""></input>
                                         </div>
                                     </div>
                                 </li>
@@ -206,7 +207,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
     function changeCreditcard() {
         if (jqCustom('#cc_change').is(":checked")) {
             jqCustom('#payment_cc').show();
-            jqCustom('.previous_cc_details').hide();
+//            jqCustom('.previous_cc_details').hide();
 
         } else {
             jqCustom('#payment_cc').hide();
