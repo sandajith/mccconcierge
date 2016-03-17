@@ -52,7 +52,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                             <ul class="form-list">
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="card_number">Name On Card</label>  
+                                        <label for="card_number">Name On Card<em>*</em></label>  
                                         <div class="input-box validate-cc-number">
                                             <input type="text" class="input-text validate-cc-number" id="x_card_name"  name="x_card_name" value=""></input>
                                         </div>
@@ -60,7 +60,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                                 </li>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="card_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
+                                        <label for="card_number">Credit Card Number<em>*</em></label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
                                         <div class="input-box validate-cc-number">
                                             <input type="text" class="input-text validate-cc-number" id="x_card_num"  name="x_card_num" value=""></input>
                                         </div>
@@ -68,7 +68,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                                 </li>
                                 <li class="fields">
                                     <div class="field">     
-                                        <label for="exp">Card Expiry date</label><br>                                           
+                                        <label for="exp">Card Expiry date<em>*</em></label><br>                                           
                                         <select name="card_exp_year" id="x_card_year" class="validate-cc-exp " style="width: auto;">
                                             <option value=""></option>                                          
                                             <?php
@@ -98,7 +98,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                                 </li>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="CVV">CVV</label>
+                                        <label for="CVV">CVV<em>*</em></label>
                                         <div class="input-box">
                                             <input type="text" class="input-text validate-cc-cvn required" id="x_card_code" size="4" name="x_card_code" value=""></input>
                                         </div>

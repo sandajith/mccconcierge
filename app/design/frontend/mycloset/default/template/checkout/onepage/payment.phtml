@@ -85,7 +85,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                             <ul class="form-list">
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="card_number">Name On Card</label>  
+                                        <label for="card_number">Name On Card<em>*</em></label>  
                                         <div class="input-box validate-cc-number">
                                             <input type="text" id="ccsave_cc_owner" class="input-text required-entry" name="x_card_name" value=""></input>
                                         </div>
@@ -93,7 +93,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                                 </li>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="ccsave_cc_number">Credit Card Number</label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
+                                        <label for="ccsave_cc_number">Credit Card Number<em>*</em></label>  <i>(Visa, Amex and MasterCard currently accepted)</i>
                                         <div >
                                             <input type="text" id="ccsave_cc_number" class="input-text validate-cc-number validate-cc-type validation-failed"  name="x_card_num" value=""></input>
                                         </div>
@@ -101,7 +101,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                                 </li>
                                 <li class="fields">
                                     <div class="field">     
-                                        <label for="exp">Card Expiry date</label><br>                                           
+                                        <label for="exp">Card Expiry date<em>*</em></label><br>                                           
                                         <select name="card_exp_year" id="ccsave_expiration_yr" class="year required-entry validation-failed" style="width: auto;">
                                             <?php
                                             for ($ye = date("Y"); $ye <= date("Y") + 20; $ye++) {
@@ -129,7 +129,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                                 </li>
                                 <li class="fields">
                                     <div class="field">
-                                        <label for="CVV">CVV</label>
+                                        <label for="CVV">CVV<em>*</em></label>
                                         <div class="input-box">
                                             <input type="text"  id="ccsave_cc_cid" class="input-text cvv required-entry validate-cc-cvn" size="4" name="x_card_code" value=""></input>
                                         </div>
