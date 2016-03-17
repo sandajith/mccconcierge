@@ -62,7 +62,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
             <?php foreach ($collection as $creditcard) { ?>
                 <p><div id="ccname_frm_js">
                     <?php echo $creditcard->getNameCreditcard(); ?></p></div>
-                <i><?php echo $this->__('Card ending in ');?><div id="ccnum_frm_js"><?php echo $creditcard->getCreditcardNum(); ?></div></i>
+                <i><?php echo $this->__('Card ending in ');?><div id="ccnum_frm_js" style="display: inline"><?php echo $creditcard->getCreditcardNum(); ?></div></i>
             <?php }
             ?>
         </div>
