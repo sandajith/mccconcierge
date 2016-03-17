@@ -108,7 +108,7 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             $ccchange = $this->getRequest()->getPost('cc_change');
 
 // cc change
-//if($ccchange){
+if($ccchange){
 
             $customer_id = Mage::getSingleton('customer/session')->getId();
             $mem_amount = Mage::getStoreConfig('membership/general/ccchange');
@@ -141,9 +141,9 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
                     "<email>" . $emailid . "</email>" .
                     "</profile>" .
                     "</createCustomerProfileRequest>";
-            $response1 = send_xml_request($g_apihost, $g_apipath, $content);
-            $parsedresponse = parse_api_response($response1);
-            $parsed_customer_id = $parsedresponse->customerProfileId;
+            $response = send_xml_request($g_apihost, $g_apipath, $content);
+            $parsedresponse = parse_api_response($response);
+           $parsed_customer_id = $parsedresponse->customerProfileId;
 // Add payment profile
             $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                     "<createCustomerPaymentProfileRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
@@ -229,13 +229,9 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
            $error_msg = strrchr($parsedresponse, "Error");
            
             if ($error_msg) {
-                $result = "Payment failed by invalid element";
-//                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
-               
-                Mage::getSingleton('core/session')->addError($result);
-//              
-                 $this->_redirect('checkout/onepage/');
-//          
+                $result = "Payment failed by invalid element";             
+                Mage::getSingleton('core/session')->addError($result);             
+                 $this->_redirect('checkout/onepage/');        
             }
             if (isset($parsedresponse->directResponse)) {
                 $directResponseFields = explode(",", $parsedresponse->directResponse);
@@ -289,7 +285,7 @@ class Mycloset_Membership_OnepageController extends Mage_Checkout_OnepageControl
             }
 
 //            end cc change
-//            }
+            }
             // get section and redirect data
 //            $this->getOnepage()->getQuote()->setShippingComment($this->getRequest()->getPost('shippingcomments'))->save();
             $redirectUrl = $this->getOnepage()->getQuote()->getPayment()->getCheckoutRedirectUrl();

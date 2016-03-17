@@ -45,6 +45,8 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     $lname = $customer->getLastname(); // Last Name
     $emailid = $customer->getEmail();
 }
+$userid = Mage::getSingleton('customer/session')->getId();
+$collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
 ?>
 
 
@@ -54,16 +56,16 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     </div>
     <h2 class="legend"></h2>
     <form action="" id="co-payment-form">
-        <strong><?php echo $this->__('Will be billed to card on file') ?></strong>
-    <?php
-   $userid = Mage::getSingleton('customer/session')->getId();
-            $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
-            foreach ($collection as $creditcard) {?>
-                <p><i><?php echo  $creditcard->getNameCreditcard(); ?></i></p>
-                <p><i><?php echo $this->__('Card ending in ') . $creditcard->getCreditcardNum();  ?></i></p>
-                <?php  
-            }?>
-       <input type="checkbox" name="cc_change" value="1" id="cc_change" onchange="changeCreditcard();"/>
+        <strong><?php echo $this->__('Will be billed to card on file') ?></strong></br>
+
+        <div class="previous_cc_details">
+            <?php foreach ($collection as $creditcard) { ?>
+                <p><?php echo $creditcard->getNameCreditcard(); ?></p>
+                <p><i><?php echo $this->__('Card ending in ') . $creditcard->getCreditcardNum(); ?></i></p>
+            <?php }
+            ?>
+        </div>
+        <input type="checkbox" name="cc_change" value="1" id="cc_change" onchange="changeCreditcard();"/>
         <p>Change credit card details 
         </p>
         <fieldset>
@@ -72,7 +74,7 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
         </fieldset>
         <div class="subhead"  id="payment_cc" style="border: #000;display:none;">
             <h2 class="infotitles"><?php echo Mage::helper('customer')->__('Change Credit Card Details') ?></h2>
-            <!--<form method="post"  id="paymentform" action="<?php // echo Mage::getBaseUrl();    ?>membership/payment/updategateway/"  onsubmit="return checkForm();">-->
+            <!--<form method="post"  id="paymentform" action="<?php // echo Mage::getBaseUrl();      ?>membership/payment/updategateway/"  onsubmit="return checkForm();">-->
             <div class="col-md-12 bordered" style="height: auto;">
                 <div class="form-list">
                     <div class="fieldset ">
@@ -162,13 +164,16 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     <div class="tool-tip-content"><img src="<?php echo $this->getSkinUrl('images/cvv.gif') ?>" alt="<?php echo $this->__('Card Verification Number Visual Reference') ?>" title="<?php echo $this->__('Card Verification Number Visual Reference') ?>" /></div>
 </div>
 <div class="buttons-set" id="payment-buttons-container">
-    <!--<p  class="required control-display"><?php // echo $this->__('* Required Fields')      ?></p>-->
-    <p class="back-link "><a href="#" onclick="checkout.back();return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <!--<p  class="required control-display"><?php // echo $this->__('* Required Fields')        ?></p>-->
+    <p class="back-link "><a href="#" onclick="checkout.back();
+            return false;"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
     <button type="button"  class="button" onclick="payment.save();"><span><span><?php echo $this->__('Continue') ?></span></span></button>
     <span class="please-wait" id="payment-please-wait" style="display:none;">
         <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Loading next step...') ?>" title="<?php echo $this->__('Loading next step...') ?>" class="v-middle" /> <?php echo $this->__('Loading next step...') ?>
     </span>
 </div>
+
+
 <script type="text/javascript">
 //<![CDATA[
     function toggleToolTip(event) {
@@ -201,12 +206,13 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     function changeCreditcard() {
         if (jqCustom('#cc_change').is(":checked")) {
             jqCustom('#payment_cc').show();
-            
+            jqCustom('.previous_cc_details').hide();
+
         } else {
             jqCustom('#payment_cc').hide();
-             
+
         }
-      
+
     }
 
 
