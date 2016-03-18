@@ -35,6 +35,8 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     $lname = $customer->getLastname(); // Last Name
     $emailid = $customer->getEmail();
 }
+$userid = Mage::getSingleton('customer/session')->getId();
+$collection = Mage::getModel('membership/payment')->getCollection()->addFieldToFilter('customer_id', $userid);
 ?>
 <div class="fieldset payment-fieldset">
     <div id="membership_error">
@@ -43,7 +45,17 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
     <div class="subhead">
         <h2 class="infotitles"><?php echo Mage::helper('customer')->__('CHANGE CREDIT CARD DETAILS') ?></h2>
         <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
+
             <div class="col-md-12 bordered" style="height: auto;">
+                <strong><?php echo $this->__('Will be billed to card on file') ?></strong></br>
+                <div class="previous_cc_details">
+                    <?php foreach ($collection as $creditcard) { ?>
+                        <p><div id="ccname_frm_js">
+                            <?php echo $creditcard->getNameCreditcard(); ?></p></div>
+                        <i><?php echo $this->__('Card ending in '); ?><div id="ccnum_frm_js" style="display: inline"><?php echo $creditcard->getCreditcardNum(); ?></div></i>
+                    <?php }
+                    ?>
+                </div>
                 <div class="form-list">
                     <div class="fieldset ">
                         <h4 class="legend"><?php echo $this->__('Payment Information') ?></h4>
@@ -170,11 +182,11 @@ if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 jqCustom('#membership_error').html(' <h5 style="color : red;"> Please select Card Expiry date.</h5>');
                 return false;
             }
-             else if (!ccmonth) {
+            else if (!ccmonth) {
                 jqCustom('#membership_error').html(' <h5 style="color : red;"> Please select Card Expiry date.</h5>');
                 return false;
             }
-            
+
             else {
                 submitted = true;
                 jqCustom('#pay_submit').css({"display": "none"});
