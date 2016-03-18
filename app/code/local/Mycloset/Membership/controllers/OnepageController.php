@@ -130,6 +130,30 @@ if($ccchange){
             require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
 
 
+        $quote = Mage::getSingleton('checkout/session')->getQuote();
+
+        $billingAddress = $quote->getBillingAddress();
+//        print_r($billingAddress);
+       
+        $company = $billingAddress->getCompany();
+        $streets = $billingAddress->getstreet();
+        $street1 = $streets[0];
+        $street2 = $streets[1];
+        if ($street2) {
+            $street = $street1 . ', ' . $street2;
+        } else {
+            $street = $street1;
+        }
+        $city = $billingAddress->getCity();
+        $region = $billingAddress->getRegion();
+        $zipcode = $billingAddress->getPostcode();
+        
+        $country_code = $billingAddress->getCountryId();
+        $Country_name = Mage::app()->getLocale()->getCountryTranslation($country_code);
+        $telephone = $billingAddress->getTelephone();
+        $fax = $billingAddress->getFax();
+      
+
 
 // Create new customer profile
             $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
@@ -153,14 +177,14 @@ if($ccchange){
                     "<billTo>" .
                     "<firstName>" . $fname . "</firstName>" .
                     "<lastName>" . $lname . "</lastName>" .
-                    "<company></company>" .
-                    "<address></address>" .
-                    "<city></city>" .
-                    "<state></state>" .
-                    "<zip></zip>" .
-                    "<country></country>" .
-                    "<phoneNumber></phoneNumber>" .
-                    "<faxNumber></faxNumber>" .
+                    "<company>$company</company>" .
+                    "<address>$street</address>" .
+                    "<city>$city</city>" .
+                    "<state>$region</state>" .
+                    "<zip>$zipcode</zip>" .
+                    "<country>$Country_name</country>" .
+                    "<phoneNumber>$telephone</phoneNumber>" .
+                    "<faxNumber>$fax</faxNumber>" .
                     "</billTo>" .
                     "<payment>" .
                     "<creditCard>" .
@@ -183,13 +207,13 @@ if($ccchange){
                     "<address>" .
                     "<firstName>" . $fname . "</firstName>" .
                     "<lastName>" . $lname . "</lastName>" .
-                    "<company></company>" .
-                    "<address></address>" .
-                    "<city></city>" .
-                    "<state></state>" .
-                    "<zip></zip>" .
-                    "<country></country>" .
-                    "<phoneNumber></phoneNumber>" .
+                    "<company>$company</company>" .
+                    "<address>$street</address>" .
+                    "<city>$city</city>" .
+                    "<state>$region</state>" .
+                    "<zip>$zipcode</zip>" .
+                    "<country>$Country_name</country>" .
+                    "<phoneNumber>$telephone</phoneNumber>" .
                     "</address>" .
                     "</createCustomerShippingAddressRequest>";
             $response = send_xml_request($g_apihost, $g_apipath, $content);
