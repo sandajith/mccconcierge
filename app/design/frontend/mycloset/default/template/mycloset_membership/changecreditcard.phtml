@@ -59,7 +59,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
                 <div class="form-list">
                     <div class="fieldset ">
                         <h4 class="legend"><?php echo $this->__('Payment Information') ?></h4>
-                        <p><?php echo $this->__('Change of credit card details will change $ ') . Mage::getStoreConfig('membership/general/ccchange'); ?></p>
+                        <!--<p><?php // echo $this->__('Change of credit card details will change $ ') . Mage::getStoreConfig('membership/general/ccchange'); ?></p>-->
                         <div class="content">
                             <ul class="form-list">
                                 <li class="fields">
@@ -126,13 +126,13 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
             <input type="hidden" name="lastname" value="<?php echo $lname; ?>"/>
             <input type="hidden" name="emailid" value="<?php echo $emailid; ?>"/>
             <input type="hidden" name="checkout" value="<?php echo 'no'; ?>"/>
-
-
+            <p><i><?php echo $this->__('Please be advised, after you change your credit card, you will receive a notice of a $ ') . Mage::getStoreConfig('membership/general/ccchange'). $this->__('transaction. This is a test we perform as a security measure. The  $ ').Mage::getStoreConfig('membership/general/ccchange').$this->__('transaction will be voided and not charged to your account.'); ?></i></p>
             <div class="buttons-set">
 
                 <button id="pay_submit" type="submit" onclick="checkForm()"  title="Submit" class="button"><span><span>Submit</span></span></button>
             </div>
-
+                               
+           
         </form>
     </div>
     <span class="please-wait" id="rplease-wait" style="display:none;">
