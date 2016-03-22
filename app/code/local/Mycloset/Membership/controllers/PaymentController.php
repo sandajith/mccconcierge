@@ -51,6 +51,60 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $customer_id = Mage::getSingleton('customer/session')->getId();
         $mem_amount = Mage::getStoreConfig('membership/general/ccchange');
         $data = $this->getRequest()->getPost();
+
+        //getting default billing address
+        $customerBillingAddressId = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling();
+        $address = Mage::getModel('customer/address')->load($customerBillingAddressId);
+        $billing_firstName = $address->getFirstname();
+        $billing_lastName = $address->getLastname();
+        $billing_company = $address->getCompany();
+        $billing_zip = $address->getPostcode();
+        $billing_city = $address->getCity();
+        $billing_region_id = $address->getRegionId();
+        $billing_streets = $address->getStreet();
+        $billing_street1 = $billing_streets[0];
+        $billing_street2 = $billing_streets[1];
+        if ($billing_street2) {
+            $billing_street = $billing_street1 . ', ' . $billing_street2;
+        } else {
+            $billing_street = $billing_street1;
+        }
+        $billing_telephone = $address->getTelephone();
+       $billing_fax = $address->getFax();
+      
+        $billing_country = $address->getCountry();
+        $billing_country_name = Mage::app()->getLocale()->getCountryTranslation($billing_country);
+        $region_billing = Mage::getModel('directory/region')->load($billing_region_id);
+        $billing_region_name = $region_billing->getName();
+
+
+//getting default shipping address
+        $customerShippingAddressId = Mage::getModel('customer/customer')->load($customer_id)->getDefaultShipping();
+        $defaultShippingAddress = Mage::getModel('customer/address')->load($customerShippingAddressId); //address as object
+//$defaultShippingAddress = $defaultShippingAddress->getData(); //return as array
+
+        $shipping_firstName = $defaultShippingAddress->getFirstname();
+        $shipping_lastName = $defaultShippingAddress->getLastname();
+        $shipping_company = $defaultShippingAddress->getCompany();
+        $shipping_zip = $defaultShippingAddress->getPostcode();
+        $shipping_city = $defaultShippingAddress->getCity();
+        $shipping_region_id = $defaultShippingAddress->getRegionId();
+        $shipping_street = $defaultShippingAddress->getStreet();
+        $street1 = $shipping_street[0];
+        $street2 = $shipping_street[1];
+        if ($street2) {
+            $shipping_street = $street1 . ', ' . $street2;
+        } else {
+            $shipping_street = $street1;
+        }
+        $shipping_telephone = $defaultShippingAddress->getTelephone();
+        $shipping_fax = $defaultShippingAddress->getFax();
+        $shipping_country = $defaultShippingAddress->getCountry();
+        $shipping_Country_name = Mage::app()->getLocale()->getCountryTranslation($shipping_country);
+        $region_shipping = Mage::getModel('directory/region')->load($shipping_region_id);
+        $shipping_region_name = $region_shipping->getName();
+
+        // Posted data
         $emailid = $this->getRequest()->getPost('emailid');
         $fname = $this->getRequest()->getPost('firstname');
         $lname = $this->getRequest()->getPost('lastname');
@@ -65,31 +119,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
+
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
-
-        $quote = Mage::getSingleton('checkout/session')->getQuote();
-
-        $billingAddress = $quote->getBillingAddress();
-//        print_r($billingAddress);
-       
-        $company = $billingAddress->getCompany();
-        $streets = $billingAddress->getstreet();
-        $street1 = $streets[0];
-        $street2 = $streets[1];
-        if ($street2) {
-            $street = $street1 . ', ' . $street2;
-        } else {
-            $street = $street1;
-        }
-        $city = $billingAddress->getCity();
-        $region = $billingAddress->getRegion();
-        $zipcode = $billingAddress->getPostcode();
-        
-        $country_code = $billingAddress->getCountryId();
-        $Country_name = Mage::app()->getLocale()->getCountryTranslation($country_code);
-        $telephone = $billingAddress->getTelephone();
-        $fax = $billingAddress->getFax();
-      
 
 // Create new customer profile
         $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
@@ -111,16 +142,16 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 "<customerProfileId>" . $parsed_customer_id . "</customerProfileId>" .
                 "<paymentProfile>" .
                 "<billTo>" .
-                "<firstName>" . $fname . "</firstName>" .
-                "<lastName>" . $lname . "</lastName>" .
-                "<company>$company</company>" .
-                "<address>$street</address>" .
-                "<city>$city</city>" .
-                "<state>$region</state>" .
-                "<zip>$zipcode</zip>" .
-                "<country>$Country_name</country>" .
-                "<phoneNumber>$telephone</phoneNumber>" .
-                "<faxNumber>$fax</faxNumber>" .
+                "<firstName>" . $billing_firstName . "</firstName>" .
+                "<lastName>" . $billing_lastName . "</lastName>" .
+                "<company>" . $billing_company . "</company>" .
+                "<address>" . $billing_street . "</address>" .
+                "<city>" . $billing_city . "</city>" .
+                "<state>" . $billing_region_name . "</state>" .
+                "<zip>" . $billing_zip . "</zip>" .
+                "<country>" . $billing_country_name . "</country>" .
+                "<phoneNumber>" . $billing_telephone . "</phoneNumber>" .
+                "<faxNumber>" . $billing_fax . "</faxNumber>" .
                 "</billTo>" .
                 "<payment>" .
                 "<creditCard>" .
@@ -141,15 +172,15 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
                 "<customerProfileId>" . $parsed_customer_id . "</customerProfileId>" .
                 "<address>" .
-                "<firstName>" . $fname . "</firstName>" .
-                "<lastName>" . $lname . "</lastName>" .
-                "<company>$company</company>" .
-                "<address>$street</address>" .
-                "<city>$city</city>" .
-                "<state>$region</state>" .
-                "<zip>$zipcode</zip>" .
-                "<country>$Country_name</country>" .
-                "<phoneNumber>$telephone</phoneNumber>" .
+                "<firstName>" . $shipping_firstName . "</firstName>" .
+                "<lastName>" . $shipping_lastName . "</lastName>" .
+                "<company>" . $shipping_company . "</company>" .
+                "<address>" . $shipping_street . "</address>" .
+                "<city>" . $shipping_city . "</city>" .
+                "<state>" . $shipping_region_name . "</state>" .
+                "<zip>" . $shipping_zip . "</zip>" .
+                "<country>" . $shipping_Country_name . "</country>" .
+                "<phoneNumber>" . $shipping_telephone . "</phoneNumber>" .
                 "</address>" .
                 "</createCustomerShippingAddressRequest>";
         $response = send_xml_request($g_apihost, $g_apipath, $content);
