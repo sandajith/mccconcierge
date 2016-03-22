@@ -2113,3 +2113,42 @@ a.cat_01, a.cat_02{
     letter-spacing: 5px;
     margin-bottom: 60px;
 }
+
+.modal-open .modal,
+.fade.in {
+	background: rgba(255, 255, 255, 0.7);
+}
+.modal-content{
+	border-radius: 0;
+	box-shadow: none;
+	border: 3px solid #ccc;
+             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.modal-header{
+	border-bottom: none;
+	padding: 5px;
+	height: 35px;
+}
+.modal-header h4{
+	display: none;
+}
+.modal-body{
+	padding-top: 0;
+	color: #333;
+}
+.modal-body a{
+	color: #333;
+}
+.modal-body p:nth-child(2){
+	text-decoration: underline;
+	text-align: center;
+}
+.modal-dialog{
+	height: 160px;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
