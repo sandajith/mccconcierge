@@ -35,7 +35,7 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab2 extends Mage_Adminhtml_B
      * @return string
      */
     public function getTabLabel() {
-        return $this->__('Membership settings');
+        return $this->__('Membership Settings');
     }
 
     /**
@@ -44,7 +44,7 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab2 extends Mage_Adminhtml_B
      * @return string
      */
     public function getTabTitle() {
-        return $this->__('Cutomer settings section');
+        return $this->__('Cutomer Settings Section');
     }
 
     /**

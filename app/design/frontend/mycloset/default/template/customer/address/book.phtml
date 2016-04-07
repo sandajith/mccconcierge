@@ -32,13 +32,13 @@
 ?>
 <div class="page-title title-buttons subhead-myaccount">
     <h2><?php echo $this->__('Address Book') ?></h2>
-    <button type="button" title="<?php echo $this->__('Add New Address') ?>" class="button addnew-addr" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>';"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
+    <button style="margin-left:0px" type="button" title="<?php echo $this->__('Add New Address') ?>" class="button addnew-addr" onclick="window.location='<?php echo $this->getAddAddressUrl() ?>';"><span><span><?php echo $this->__('Add New Address') ?></span></span></button>
 </div>
 <?php echo $this->getMessagesBlock()->toHtml() ?>
 <div class=" addresses-list">
     <div class=" addresses-primary subhead-myaccount ">
         <h2><?php echo $this->__('Default Addresses') ?></h2>
-        <ol>
+        <ol style="padding-left: 0px">
         <?php if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling()): ?>
             <li class="item ">
                 <div class="addressbook-subhead">

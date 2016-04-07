@@ -45,9 +45,9 @@ if ($myclosetcount > $info['min_storage']) {
             </div>   
             <div class="fieldset">                              
                 <?php if ($cusgroup === '1') {//members group    ?>
-                    <label>Membership Status :</label>&nbsp;&nbsp;<?php echo $group->getCode(); ?><br>
-                    <label>Membership type :</label>&nbsp;&nbsp;<?php echo $info['getmembership_type'] ?> <br>
-                    <label>Membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> <br>
+                    <label>Membership Status:</label>&nbsp;<?php echo $group->getCode(); ?><br>
+                    <label>Membership Type:</label>&nbsp;<?php echo $info['getmembership_type'] ?> <br>
+                    <label>Membership Amount:</label>&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $info['getamount'] ?> <br>
                     <?php
                     if ($region_id == '43') {
                         $request = $taxCalculation->getRateRequest($address, null, null);
@@ -59,14 +59,14 @@ if ($myclosetcount > $info['min_storage']) {
                         $mem_amount111 = $info['getamount'] + $taxable_amount;
                         $mem_amount = number_format($mem_amount111, 2)
                         ?>
-                        <label> Tax Rate :</label> &nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $taxable_amount ?> <br>
-                        <label> Total membership amount :</label>&nbsp;&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $mem_amount ?><br> 
+                        <label> Tax Rate:</label>&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $taxable_amount ?> <br>
+                        <label> Total Membership Amount:</label>&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() . '&nbsp;' . $mem_amount ?><br> 
                         <input type="hidden" id="mem_choose_price" value="<?php echo $mem_amount ?>"/>
                     <?php } else { ?>
                         <input type="hidden" id="mem_choose_price" value="<?php echo $info['getamount'] ?>"/>
                     <?php } ?>
-                    <label>Number of items in MyCloset :</label> <?php echo $myclosetcount; ?></br>                                    
-                    <label>Storage Amount :</label> <?php echo $storageAmount; ?></br>
+                    <label>Number of Items in MyCloset:</label> <?php echo $myclosetcount; ?></br>                                    
+                    <label>Storage Amount:</label> $<?php echo $storageAmount; ?></br>
                     <input type="hidden" id="items_amt" value="<?php echo $info['storage_amt']; ?>"/>
                     <input type="checkbox" checked="checked" id="add5" name="include_membershipcharge" value="<?php
                     if ($region_id == '43') {
@@ -74,9 +74,9 @@ if ($myclosetcount > $info['min_storage']) {
                     } else {
                         echo $info['getamount'];
                     }
-                    ?>"  onclick="UpdateCost();"> &nbsp;Include membership charge for payment <br>
+                    ?>"  onclick="UpdateCost();"> &nbsp;Include Membership Charge for Payment <br>
 
-                    <input type="checkbox" checked="checked" id="storageitems" value="<?php echo $storageAmount ?>"  onclick="UpdateCost();"> &nbsp;Include storage charge for payment
+                    <input type="checkbox" checked="checked" id="storageitems" value="<?php echo $storageAmount ?>"  onclick="UpdateCost();"> &nbsp;Include Storage Charge for Payment
 
                 <?php } elseif ($cusgroup === '4') {//Waiting List group     ?>
                     <h4 style="color: #DF280A;"> <?php echo $group->getCode(); ?></h4>
@@ -106,7 +106,7 @@ if ($myclosetcount > $info['min_storage']) {
             <tbody><tr>
                     <td class="payment-section">
                         <div class="entry-edit-head">
-                            <h4 class="icon-head head-customer-address-list">Additional services</h4>
+                            <h4 class="icon-head head-customer-address-list">Additional Services</h4>
                         </div>   
                         <div class="fieldset">
                             <?php
@@ -120,11 +120,11 @@ if ($myclosetcount > $info['min_storage']) {
                             }
                             ?>
                             <div id="additional-amt" style="border: 1px solid #d6d6d6;padding: 10px;margin: 10px 0;">
-                                <b>Additional payments</b> <br>
+                                <b>Additional Payments</b> <br>
                                 <textarea rows="3" cols="50" name="comment" style="resize: none;">Enter your comments here</textarea><br>
-                                Amount for the service<br><input type="text" id="addvalue" value="0" style="width: 30px;" onkeyup="UpdateCost()" /><br>
+                                Amount for the Service<br><input type="text" id="addvalue" value="0" style="width: 30px;" onkeyup="UpdateCost()" /><br>
                             </div>
-                            <div id="price"><h4>Total cost for additional services $ <span id="priceholder">0</span></h4></div>
+                            <div id="price"><h4>Total Cost for Additional Services $<span id="priceholder">0</span></h4></div>
                         </div>
                     </td>
                 </tr>
@@ -137,7 +137,7 @@ if ($myclosetcount > $info['min_storage']) {
             <tbody><tr>
                     <td class="payment-section">
                         <div class="entry-edit-head">
-                            <h4 class="icon-head head-customer-address-list">Services used by the customer</h4>
+                            <h4 class="icon-head head-customer-address-list">Services Used by the Customer</h4>
                         </div>   
                         <div class="fieldset">
                             <table class="data" id="customer_orders_grid_table" cellspacing="0">
@@ -153,7 +153,7 @@ if ($myclosetcount > $info['min_storage']) {
                                 <thead style=" background: #d6d6d6;">
                                     <tr class="headings">
                                         <th><span class="nobr"><span class="sort-title"></span></span></th>
-                                        <th><span class="nobr"><span class="sort-title">Order Id</span></span></th>
+                                        <th><span class="nobr"><span class="sort-title">Order ID</span></span></th>
                                         <th><span class="nobr"><span class="sort-title">Place Order On</span></span></th>
                                         <th><span class="nobr"><span class="sort-title">Shipping</span></span></th>
                                         <th><span class="nobr"><span class="sort-title">Product  </span></span></th>
@@ -213,7 +213,7 @@ if ($myclosetcount > $info['min_storage']) {
                 </tr>
             </tbody>
         </table>
-        <h5>  Total amount for services used:&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() ?> <span id="ordersum"><?php echo $sum1 ?></span></h5>
+        <h5>  Total Amount for Services Used:&nbsp;<?php echo Mage::app()->getLocale()->currency($currency_code)->getSymbol() ?><span id="ordersum"><?php echo $sum1 ?></span></h5>
         <input id="servicesum" type="hidden" value="<?php echo $sum1; ?>" name="servicesum"/>
         <input type="hidden" id="storeamt" value="<?php echo $storageAmount; ?>" name="storeamt"/>
         <input type="hidden" id="myclosetcount" value="<?php echo $myclosetcount; ?>" name="myclosetcount"/>
@@ -236,7 +236,7 @@ if ($myclosetcount > $info['min_storage']) {
 
     </h2>
     <input type="hidden" id="finalamount" value="<?php echo $grandtotal; ?>" name="amount" />   
-    <button type="submit" class="scalable"  onclick="this.form.action = '<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/'" value="Submit">Pay for the customer</button>
+    <button type="submit" class="scalable"  onclick="this.form.action = '<?php echo Mage::getBaseUrl(); ?>membership/payment/payme/'" value="Submit">Pay for the Customer</button>
 </div>
 <!--</form>-->
 <script type="text/javascript">

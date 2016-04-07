@@ -65,7 +65,7 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab extends Mage_Adminhtml_Bl
      * @return string
      */
     public function getTabLabel() {
-        return $this->__('Membership payments');
+        return $this->__('Membership Payments');
     }
 
     /**
@@ -74,7 +74,7 @@ class Mycloset_Membership_Block_Adminhtml_Customer_Tab extends Mage_Adminhtml_Bl
      * @return string
      */
     public function getTabTitle() {
-        return $this->__('Cutomer payments section');
+        return $this->__('Cutomer Payments Section');
     }
 
     /**

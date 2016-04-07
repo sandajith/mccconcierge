@@ -46,7 +46,7 @@ $collection = Mage::getModel('membership/payment')->getCollection()->addFieldToF
         <h2 class="infotitles"><?php echo Mage::helper('customer')->__('CHANGE CREDIT CARD DETAILS') ?></h2>
         <form method="post"  id="paymentform" action="<?php echo Mage::getBaseUrl(); ?>membership/payment/updategateway/"  onsubmit="return checkForm();">
 
-            <div class="col-md-12 bordered" style="height: auto;">
+            <div class="col-md-12 bordered" style="height: auto; padding-left: 0px">
                 <strong><?php echo $this->__('Will be billed to card on file') ?></strong></br>
                 <div class="previous_cc_details">
                     <?php foreach ($collection as $creditcard) { ?>

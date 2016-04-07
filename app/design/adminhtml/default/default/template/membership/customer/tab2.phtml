@@ -23,7 +23,7 @@ $membership_type = $data['membership_type'];
       <input type="hidden" name="return_url" value="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/customer/edit/id', array('id' => Mage::app()->getRequest()->getParam('id'))) ?>" />
                     <input type="hidden" name="customer_id" value="<?php echo Mage::app()->getRequest()->getParam('id'); ?>" />
                     <?php if ($cusgroup === '1') {//members group  ?>
-                        <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                        <h4> Membership Status: <?php echo $group->getCode(); ?></h4>
                         <ul>
 
                             <li>
@@ -42,31 +42,33 @@ $membership_type = $data['membership_type'];
                                 ?>
 
                             </li>
+                            <br/>
                             <li>
                                 <h4>Lock Membership</h4>
-                                <input type="radio" name="locak_member" id="" value="6"  /><label> Lock Membership (move to notice period )</label></br>
+                                <input type="radio" name="locak_member" id="" value="6"  /><label> Lock Membership (move to notice period)</label></br>
 
                             </li>
+                            <br/>
                             <li>
                                 <h4>Close Membership</h4>
-                                <input type="radio" name="close_mem" id="" value="5"  /><label> Close membership</label></br>
+                                <input type="radio" name="close_mem" id="" value="5"  /><label> Close Membership</label></br>
 
                             </li>
 
                         </ul> 
-                        <button type='submit' class="scalable" value='Submit'  value="Submit">Submit settings</button>
+                        <button type='submit' class="scalable" value='Submit'  value="Submit">Submit Settings</button>
                     <?php } elseif ($cusgroup === '4') {//Waiting List group   
                         ?>
 
-                        <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                        <h4> Membership Status: <?php echo $group->getCode(); ?></h4>
                         <ul>
                             <li>
 
-                            <input type="radio" name="non_paid" id="" value="15"  /><label>Move to non paid membership </label></br> 
+                            <input type="radio" name="non_paid" id="" value="15"  /><label>Move to Non-paid Membership </label></br> 
                         </li> 
                         </ul>
                        
-                        <button type='submit' class="scalable" value='Submit'  value="Submit">Submit settings</button>
+                        <button type='submit' class="scalable" value='Submit'  value="Submit">Submit Settings</button>
                     <?php } elseif ($cusgroup === '6') {// notice period group   
                         ?>
 
@@ -74,13 +76,13 @@ $membership_type = $data['membership_type'];
                         <ul>
                             <li>
 
-                                <input type="radio" name="unlock_mem" id="" value="1"  /><label> Unlock membership</label></br> 
-                                <input type="radio" name="cls_mem" id="" value="5"  /><label> Close membership</label></br> 
+                                <input type="radio" name="unlock_mem" id="" value="1"  /><label> Unlock Membership</label></br> 
+                                <input type="radio" name="cls_mem" id="" value="5"  /><label> Close Membership</label></br> 
                             </li>
                         </ul>
-<button type='submit' class="scalable" value='Submit'  value="Submit">Submit settings</button>
+<button type='submit' class="scalable" value='Submit'  value="Submit">Submit Settings</button>
                     <?php } else {?>
-                            <h4> Membership Status :<?php echo $group->getCode(); ?></h4>
+                            <h4> Membership Status: <?php echo $group->getCode(); ?></h4>
                     <?php }?>
 
               
