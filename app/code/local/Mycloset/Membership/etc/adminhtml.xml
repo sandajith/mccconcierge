@@ -12,6 +12,11 @@
                                         <title>Membership Settings</title> <!-- Used in resources tree -->
                                     </membership>
                                 </children>
+                                 <children>
+                                    <barcloud>
+                                        <title>Security Token</title> <!-- Used in resources tree -->
+                                    </barcloud>
+                                </children>
                             </config>
                         </children>
                     </system>

@@ -25,6 +25,34 @@
                 </observers>
             </adminhtml_customer_prepare_save>
         </events>-->
+   
+        <events>
+<!--            <catalog_product_save_before> observe the event 
+                <observers>
+                    <mycloset_membership>
+                        <type>model</type>
+                        <class>mycloset_membership/observer</class>
+                        <method>autoMetaDescription</method>
+                      
+                    </mycloset_membership>
+                </observers>
+                </catalog_product_save_before>-->
+                  <catalog_product_save_before><!-- observe the event -->
+                <observers>
+                    <barcloud_save_product>
+                        <type>model</type>
+                        <class>mycloset_membership/observer</class>                        
+                        <method>catalogProductSaveBefore</method>
+                    </barcloud_save_product>
+                      <barcloud_edit_product>
+                        <type>model</type>
+                        <class>mycloset_membership/observer</class>                        
+                        <method>catalogProductEditBefore</method>
+                    </barcloud_edit_product>
+                </observers>
+            </catalog_product_save_before>
+        </events>
+   
     </adminhtml>    
     
     <admin>
