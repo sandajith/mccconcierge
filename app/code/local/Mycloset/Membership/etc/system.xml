@@ -5,6 +5,10 @@
             <label>Membership</label>
             <sort_order>150</sort_order>
         </myconf>
+        <myconfbar translate="label">
+            <label>Barcloud</label>
+            <sort_order>160</sort_order>
+        </myconfbar>
     </tabs>
     
     
@@ -81,7 +85,7 @@
                             <show_in_store>0</show_in_store>
                             <comment>Comma separated ip addresses to view highly secure front end pages in front end</comment>
                         </ipaddress> 
-                         <ccchange translate="membership" >
+                        <ccchange translate="membership" >
                             <label>Credit card change amount</label>
                             <sort_order>70</sort_order>
                             <show_in_default>1</show_in_default>
@@ -93,5 +97,45 @@
                 </general>
             </groups>
         </membership>
+        <barcloud translate="label" module="adminhtml">
+            <label>Security Token</label>
+            <tab>myconfbar</tab>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label comment">
+                    <label>General</label>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>                                             
+                        <securitytoken translate="barcloud">
+                            <label>Barcloud Security Token</label>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </securitytoken> 
+                        <barcloudApiUrl translate="barcloud">
+                            <label>Barcloud Api Url</label>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </barcloudApiUrl> 
+                        <barcloudApiKey translate="barcloud">
+                            <label>Barcloud Api Key</label>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </barcloudApiKey> 
+                    </fields>
+                </general>
+            </groups>
+        </barcloud>
     </sections>
 </config>
