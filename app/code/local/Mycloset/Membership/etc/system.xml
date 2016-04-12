@@ -98,7 +98,7 @@
             </groups>
         </membership>
         <barcloud translate="label" module="adminhtml">
-            <label>Security Token</label>
+            <label>Barcloud Settings</label>
             <tab>myconfbar</tab>
             <sort_order>10</sort_order>
             <show_in_default>1</show_in_default>
