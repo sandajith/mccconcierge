@@ -27,30 +27,24 @@
         </events>-->
    
         <events>
-<!--            <catalog_product_save_before> observe the event 
-                <observers>
-                    <mycloset_membership>
-                        <type>model</type>
-                        <class>mycloset_membership/observer</class>
-                        <method>autoMetaDescription</method>
-                      
-                    </mycloset_membership>
-                </observers>
-                </catalog_product_save_before>-->
-                  <catalog_product_save_before><!-- observe the event -->
+            <catalog_product_save_before>
                 <observers>
                     <barcloud_save_product>
                         <type>model</type>
                         <class>mycloset_membership/observer</class>                        
-                        <method>catalogProductSaveBefore</method>
-                    </barcloud_save_product>
-                      <barcloud_edit_product>
-                        <type>model</type>
-                        <class>mycloset_membership/observer</class>                        
                         <method>catalogProductEditBefore</method>
-                    </barcloud_edit_product>
+                    </barcloud_save_product>
                 </observers>
             </catalog_product_save_before>
+            <catalog_product_delete_before>
+                <observers>
+                    <barcloud_delete_product>
+                        <type>model</type>
+                        <class>mycloset_membership/observer</class>                        
+                        <method>deleteProduct</method>
+                    </barcloud_delete_product>
+                </observers>
+            </catalog_product_delete_before>
         </events>
    
     </adminhtml>    
@@ -144,7 +138,7 @@
                     <type_onepage>Mycloset_Membership_Model_Checkout_Type_Onepage</type_onepage>
                 </rewrite>
             </checkout>
-             <catalogsearch>
+            <catalogsearch>
                 <rewrite>
                     <type_onepage>Mycloset_Membership_Model_Catalogsearch_Onepage</type_onepage>
                     <layer>Mycloset_Membership_Model_Catalogsearch_Layer</layer>
@@ -154,19 +148,19 @@
         
         <blocks>
             <catalogsearch>
-				<rewrite>
-					<result>Mycloset_Membership_Block_CatalogSearch_Result</result>
-				</rewrite>
-			</catalogsearch> 
+                <rewrite>
+                    <result>Mycloset_Membership_Block_CatalogSearch_Result</result>
+                </rewrite>
+            </catalogsearch> 
             <membership> 
                 <class>Mycloset_Membership_Block</class> 
                 
             </membership>
             <adminhtml>
-				<rewrite>
-					<customer_grid>Mycloset_Membership_Block_Adminhtml_Customer_Grid</customer_grid>
-				</rewrite>
-	   </adminhtml>
+                <rewrite>
+                    <customer_grid>Mycloset_Membership_Block_Adminhtml_Customer_Grid</customer_grid>
+                </rewrite>
+            </adminhtml>
         </blocks> 
     
         <resources>
@@ -217,7 +211,7 @@
                 </args>
             </checkout>
             
-<!--               <adminhtml>
+            <!--               <adminhtml>
                 <sales>         
                     <args>
                         <modules>
