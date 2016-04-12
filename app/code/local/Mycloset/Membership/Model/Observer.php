@@ -12,21 +12,23 @@ class Mycloset_Membership_Model_Observer {
         $product = $observer->getEvent()->getProduct();
         $customerid = $product->getCustomerId();
         if ($customerid > 0) {
-            $productid = $product->getId();
+//            $productid = $product->getId();
             $productStatus = $product->getProductStatus();
             if ($productStatus) {
                 $_product = Mage::getModel('catalog/product')->load($product->getId());
                 $oldcustomerid = $_product->getCustomerId();
                 if ($oldcustomerid != '') {
-                    $categoryIds = $_product->getCategoryIds();
+                    $categoryIds = $product->getCategoryIds();
+                   
                     if (count($categoryIds)) {
                         $firstCategoryId = $categoryIds[0];
                         $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
                         $categoryname[0] = str_split($_category->getName());
                         foreach ($categoryname as $catname1) {
-                            $catname .=$catname1[0] . $catname1[1];
+                        echo    $catname .=$catname1[0] . $catname1[1];
                         }
                     }
+                 
                 } else {
 //category name
                     $categoryIds = $product->getCategoryIds();
