@@ -137,7 +137,7 @@ class Mycloset_Membership_Model_Observer {
                     }
                     if ($oldcat_id != $newcat_id) { //CHECK WITH CAT_ID
                         $this->deleteAsset($_product);
-                        $this->createAsset($product);
+                        $this->createAsset($observer);
                     } else {
                         $oldsku = $_product->getSku();
                         $product->setSku($oldsku);
