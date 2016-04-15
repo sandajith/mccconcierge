@@ -10,73 +10,90 @@ class Mycloset_Membership_Model_Observer {
 
     public function createAsset($observer) {
         $product = $observer->getEvent()->getProduct();
-        $customerid = $product->getCustomerId();
-        if ($customerid > 0) {
+
+        $categoryIds = $product->getCategoryIds();
+        $firstCategoryId = $categoryIds[1];
+        $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
+        $path = $_category->getPath();
+        $ids = explode('/', $path);
+        if (isset($ids[2])) {
+         $topParent = $ids[2];
+         
+        }
+
+        if ($topParent == 16) {
+            $customerid = $product->getCustomerId();
+
+            if ($customerid > 0) {
 //            $productid = $product->getId();
-            $productStatus = $product->getProductStatus();
-            if ($productStatus) {
-                $_product = Mage::getModel('catalog/product')->load($product->getId());
-                $oldcustomerid = $_product->getCustomerId();
-                if ($oldcustomerid != '') {
-                    $categoryIds = $product->getCategoryIds();
-                   
-                    if (count($categoryIds)) {
-                        $firstCategoryId = $categoryIds[0];
-                        $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
-                        $categoryname[0] = str_split($_category->getName());
-                        foreach ($categoryname as $catname1) {
-                        echo    $catname .=$catname1[0] . $catname1[1];
-                        }
-                    }
-                 
-                } else {
+                $productStatus = $product->getProductStatus();
+                $Status = $product->getStatus(); //check for disabled or enabled product
+                if ($productStatus) {
+
+                    if ($Status == 1) {
+//                     echo "ooooooo".$Status;exit;
+                        $_product = Mage::getModel('catalog/product')->load($product->getId());
+                        $oldcustomerid = $_product->getCustomerId();
+                        if ($oldcustomerid != '') {
+                            $categoryIds = $product->getCategoryIds();
+
+                            if (count($categoryIds)) {
+                                $firstCategoryId = $categoryIds[0];
+                                $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
+                                $categoryname[0] = str_split($_category->getName());
+                                foreach ($categoryname as $catname1) {
+                                    echo $catname .=$catname1[0] . $catname1[1];
+                                }
+                            }
+                        } else {
 //category name
-                    $categoryIds = $product->getCategoryIds();
-                    if (count($categoryIds)) {
-                        $firstCategoryId = $categoryIds[1];
-                        $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
-                        $categoryname[0] = str_split($_category->getName());
-                        foreach ($categoryname as $catname1) {
-                            $catname .=$catname1[0] . $catname1[1];
+                            $categoryIds = $product->getCategoryIds();
+                            if (count($categoryIds)) {
+                                $firstCategoryId = $categoryIds[1];
+                                $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
+                                $categoryname[0] = str_split($_category->getName());
+                                foreach ($categoryname as $catname1) {
+                                    $catname .=$catname1[0] . $catname1[1];
+                                }
+                            }
                         }
-                    }
-                }
-                //get username firstletter      
-                $customerData = Mage::getModel('customer/customer')->load($product->getCustomerId())->getData();
-                $firstname[0] = str_split(ucfirst($customerData['firstname']));
-                $lastname[0] = str_split(ucfirst($customerData['lastname']));
-                foreach ($firstname as $fname) {
-                    $username .= $fname[0];
-                }
-                foreach ($lastname as $lname) {
-                    $username .= $lname[0];
-                }
+//get username firstletter      
+                        $customerData = Mage::getModel('customer/customer')->load($product->getCustomerId())->getData();
+                        $firstname[0] = str_split(ucfirst($customerData['firstname']));
+                        $lastname[0] = str_split(ucfirst($customerData['lastname']));
+                        foreach ($firstname as $fname) {
+                            $username .= $fname[0];
+                        }
+                        foreach ($lastname as $lname) {
+                            $username .= $lname[0];
+                        }
 //coustomerid with 4 digit
-                $customerid = $product->getCustomerId();
-                $fourcustomerdigit = str_pad($customerid, 4, '0', STR_PAD_LEFT);
+                        $customerid = $product->getCustomerId();
+                        $fourcustomerdigit = str_pad($customerid, 4, '0', STR_PAD_LEFT);
 //category count
-                $products = Mage::getModel('catalog/product')
-                        ->getCollection()
-                        ->addAttributeToSelect('*')
-                        ->addAttributeToFilter('customer_id', $customerid)
-                        ->addCategoryFilter($_category)
-                        ->load();
-                $myclosetcount = $products->count();
-                $myclosetcount+=1;
-                $fourdigit_cat_count = str_pad($myclosetcount, 4, '0', STR_PAD_LEFT);
-                $newsku = $username . $fourcustomerdigit . '-' . $catname . $fourdigit_cat_count;
-                $Color = $product->getAttributeText('color');
-                $Condition = $product->getConditionClothingItems();
-                $Description = $product->getDescription();
-                $Name = $product->getName();
-                $Size = $product->getAttributeText('size');
-                $designer = $product->getAttributeText('designer');
-                $shipped_to = $product->getShippedTo();
-                $SecurityToken = Mage::getStoreConfig('barcloud/general/securitytoken');
-                $IPAddress = $_SERVER['REMOTE_ADDR'];
-                $product->setSku($newsku);
+                        $products = Mage::getModel('catalog/product')
+                                ->getCollection()
+                                ->addAttributeToSelect('*')
+                                ->addAttributeToFilter('customer_id', $customerid)
+                                ->addCategoryFilter($_category)
+                                ->load();
+                        $myclosetcount = $products->count();
+                        $myclosetcount+=1;
+                        $fourdigit_cat_count = str_pad($myclosetcount, 4, '0', STR_PAD_LEFT);
+
+                        $newsku = $username . $fourcustomerdigit . '-' . $catname . $fourdigit_cat_count;
+                        $Color = $product->getAttributeText('color');
+                        $Condition = $product->getConditionClothingItems();
+                        $Description = $product->getDescription();
+                        $Name = $product->getName();
+                        $Size = $product->getAttributeText('size');
+                        $designer = $product->getAttributeText('designer');
+                        $shipped_to = $product->getShippedTo();
+                        $SecurityToken = Mage::getStoreConfig('barcloud/general/securitytoken');
+                        $IPAddress = $_SERVER['REMOTE_ADDR'];
+                        $product->setSku($newsku);
 //            Mage::getSingleton('adminhtml/session')->addNotice('SKU of item is ' . $newsku);
-                $data_json = '{
+                        $data_json = '{
   "AssetNumber": "' . $newsku . '",
   "Authorized": true,
   "CheckedOut": false,
@@ -94,7 +111,9 @@ class Mycloset_Membership_Model_Observer {
   "Manufacturer": "' . $designer . '",
   "DisposeTo": "' . $shipped_to . '"
 }';
-                $this->addAsset($data_json, $newsku);
+                        $this->addAsset($data_json, $newsku);
+                    }
+                }
             }
         }
     }
@@ -102,60 +121,105 @@ class Mycloset_Membership_Model_Observer {
     public function catalogProductEditBefore($observer) {
 
         $product = $observer->getEvent()->getProduct();
-        $customerid = $product->getCustomerId();
+       
+// old parent category
+        $categoryIds = $product->getCategoryIds();
+       $firstCategoryId = $categoryIds[1];
+  
+        $_category1 = Mage::getModel('catalog/category')->load($firstCategoryId);
+        $path1 = $_category1->getPath();
+        $ids1 = explode('/', $path1);
+        if (isset($ids1[2])) {
+         $oldParent = $ids1[2];
+        }
+// new parent category
         $_product = Mage::getModel('catalog/product')->load($product->getId());
-        $productStatus = $product->getProductStatus(); //check for "SHOP"
-        $productid = $product->getId();
-        $old_customerid = $_product->getCustomerId();
-        $new_customerid = $product->getCustomerId();
-        // Condition1
-        // $new_customerid and $new_customerid==$old_customerid => simple edit with NO sku update
-        //$cat == old catid  => simple edit with NO sku update
-        //$cat != old catid  => Delete existing asset and Create new asset with newsku
-        // Condition2
-        // $new_customerid and $old_customerid==0 (samplecloset to mycloset) => create sku and create new asset
-        //Condition3 Customer to Sample closet
-        //$new_customerid = 0 and $old_customerid =>Delete asset -YES
+        $cat_ids = $_product->getCategoryIds();
+       $newCategoryId = $cat_ids[0];
+
+        $_category = Mage::getModel('catalog/category')->load($newCategoryId);
+        $path = $_category->getPath();
+        $ids = explode('/', $path);
+        if (isset($ids[2])) {
+          $newParent = $ids[2];
+        }
+      
+        if (($oldParent == 9) && ($newParent == 16)) {
+//            echo 'dfbdhbfhdf';           
+            $this->createAsset($observer);
+        } else if (($oldParent == 16) && ($newParent == 9)) {
+            $this->deleteAsset($_product);
+      
+            } else if ((($oldParent == 16) && ($newParent == 16))) {
+                
+            $customerid = $product->getCustomerId();
+            $_product = Mage::getModel('catalog/product')->load($product->getId());
+            $productStatus = $product->getProductStatus(); //check for "SHOP"
+            $Status = $product->getStatus(); //check for disabled or enabled product
+            $productid = $product->getId();
+            $old_customerid = $_product->getCustomerId();
+            $new_customerid = $product->getCustomerId();
+// Condition1
+// $new_customerid and $new_customerid==$old_customerid => simple edit with NO sku update
+//$cat == old catid  => simple edit with NO sku update
+//$cat != old catid  => Delete existing asset and Create new asset with newsku
+// Condition2
+// $new_customerid and $old_customerid==0 (samplecloset to mycloset) => create sku and create new asset
+//Condition3 Customer to Sample closet
+//$new_customerid = 0 and $old_customerid =>Delete asset -YES
 //        if ($new_customerid > 0) {
-        if ($productid) {
-            if ($productStatus) {
-                if (($old_customerid > 0 ) && ($new_customerid == 0)) {
-                    $this->deleteAsset($_product); //Asset delete, No sku
-                } else if (($old_customerid == 0 ) && ($new_customerid > 0)) {
-                    $this->createAsset($observer); //Create asset, New sku
-                } else if (($new_customerid == $old_customerid) && $new_customerid) {
+//if shop to category......  $this->createAsset($observer);
+//else if category to shop .....   $this->deleteAsset($_product);
+// else
+            if ($productid) {
+                if ($productStatus) {
+                    if ($Status == 1) {
+
+
+                        if (($old_customerid > 0 ) && ($new_customerid == 0)) {//move to sample closet
+                            $this->deleteAsset($_product); //Asset delete, No sku
+                        } else if (($old_customerid == 0 ) && ($new_customerid > 0)) {//sample closet to mycloset
+                            $this->createAsset($observer); //Create asset, New sku
+                        } else if (($new_customerid == $old_customerid) && $new_customerid) {// normal edit
 //                if ($productid) {
-                    $categoryIds = $product->getCategoryIds();
-                    $CategoryId = $categoryIds[0];
-                    $_category = Mage::getModel('catalog/category')->load($CategoryId);
-                    $newcat_id = $_category->getId();
-                    //old product details
-                    $_product = Mage::getModel('catalog/product')->load($product->getId());
-                    $cats = $_product->getCategoryIds();
-                    foreach ($cats as $category_id) {
-                        $_cat = Mage::getModel('catalog/category')->load($category_id);
-                        $oldcat_id = $_cat->getId();
-                        break;
-                    }
-                    if ($oldcat_id != $newcat_id) { //CHECK WITH CAT_ID
-                        $this->deleteAsset($_product);
-                        $this->createAsset($observer);
-                    } else {
-                        $oldsku = $_product->getSku();
-                        $product->setSku($oldsku);
-                        $Color = $product->getAttributeText('color');
-                        $Condition = $product->getConditionClothingItems();
-                        $Description = $product->getDescription();
-                        $Name = $product->getName();
-                        $Size = $product->getAttributeText('size');
-                        $designer = $product->getAttributeText('designer');
-                        $shipped_to = $product->getShippedTo();
-                        date_default_timezone_set("America/New_York");
-                        $modifieddate = date("Y-m-d h:i:sa");
-                        $notes = 'Modified at ' . $modifieddate;
-                        $SecurityToken = Mage::getStoreConfig('barcloud/general/securitytoken');
-                        $IPAddress = $_SERVER['REMOTE_ADDR'];
-                        $data_json = '{
+                            $categoryIds = $product->getCategoryIds();
+                            $CategoryId = $categoryIds[0];
+                            $_category = Mage::getModel('catalog/category')->load($CategoryId);
+                            $newcat_id = $_category->getId();
+//old product details
+                            $_product = Mage::getModel('catalog/product')->load($product->getId());
+                            $cats = $_product->getCategoryIds();
+                            foreach ($cats as $category_id) {
+                                $_cat = Mage::getModel('catalog/category')->load($category_id);
+                                $oldcat_id = $_cat->getId();
+                                break;
+                            }
+                            if ($oldcat_id != $newcat_id) { //CHECK WITH CAT_ID
+                                $this->deleteAsset($_product);
+                                $this->createAsset($observer);
+                            } else {
+
+                                $oldsku = $_product->getSku();
+
+                                if ($oldsku == '') {
+                                    $this->createAsset($observer);
+                                } else {
+
+
+                                    $product->setSku($oldsku);
+                                    $Color = $product->getAttributeText('color');
+                                    $Condition = $product->getConditionClothingItems();
+                                    $Description = $product->getDescription();
+                                    $Name = $product->getName();
+                                    $Size = $product->getAttributeText('size');
+                                    $designer = $product->getAttributeText('designer');
+                                    $shipped_to = $product->getShippedTo();
+                                    date_default_timezone_set("America/New_York");
+                                    $modifieddate = date("Y-m-d h:i:sa");
+                                    $notes = 'Modified at ' . $modifieddate;
+                                    $SecurityToken = Mage::getStoreConfig('barcloud/general/securitytoken');
+                                    $IPAddress = $_SERVER['REMOTE_ADDR'];
+                                    $data_json = '{
   "AssetNumber": "' . $oldsku . '",
   "Authorized": true,
   "CheckedOut": false,
@@ -174,16 +238,19 @@ class Mycloset_Membership_Model_Observer {
   "DisposeTo": "' . $shipped_to . '",
   "Notes": "' . $notes . '"
 }';
-                        $this->updateAsset($data_json);
-                        return true;
+                                    $this->updateAsset($data_json, $oldsku);
+                                    return true;
+                                }
+                            }
+                        } else {
+                            $this->deleteAsset($_product);
+                            $this->createAsset($observer);
+                        }
                     }
-                } else {
-                    $this->deleteAsset($_product);
-                    $this->createAsset($observer);
                 }
+            } else {
+                $this->createAsset($observer);
             }
-        } else {
-            $this->createAsset($observer);
         }
     }
 
@@ -224,12 +291,12 @@ class Mycloset_Membership_Model_Observer {
   "DisposeTo": "' . $shipped_to . '"
 }';
 
-        $this->updateAsset($data_json);
+        $this->updateAsset($data_json, $oldsku);
         return true;
     }
 
     public function addAsset($data_json, $newsku) {
-        $this->alreadyExsistingData($data_json,$newsku);
+        $this->alreadyExsistingData($data_json, $newsku);
         $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
         $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
         $ch = curl_init();
@@ -248,7 +315,8 @@ class Mycloset_Membership_Model_Observer {
         return true;
     }
 
-    public function updateAsset($data_json) {
+    public function updateAsset($data_json, $newsku) {
+
         $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
         $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
 
@@ -269,8 +337,8 @@ class Mycloset_Membership_Model_Observer {
 //return $data->ZGetAssetsResult;
     }
 
-    public function alreadyExsistingData($data_json,$newsku) {
-      $old_data = json_decode($data_json);
+    public function alreadyExsistingData($data_json, $newsku) {
+        $old_data = json_decode($data_json);
         $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
         $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
         $SecurityToken = Mage::getStoreConfig('barcloud/general/securitytoken');
@@ -299,7 +367,7 @@ class Mycloset_Membership_Model_Observer {
   "CreateDate": "\/Date(1427718290000+0300)\/",
   "CreatedBy": "APITest",
   "CurrentLocation": "158",
-  "Description": "' . $old_data->Description. '",
+  "Description": "' . $old_data->Description . '",
   "IPAddress":  "' . $IPAddress . '",
   "MACAddress": "hand held device",
   "Name": "' . $old_data->Name . '",
@@ -308,8 +376,8 @@ class Mycloset_Membership_Model_Observer {
   "Manufacturer": "' . $old_data->Manufacturer . '",
   "DisposeTo": "' . $old_data->DisposeTo . '"
 }';
-                  
-            $this->updateAsset($changed_data);
+
+            $this->updateAsset($changed_data, $newsku);
             return true;
         }
     }
