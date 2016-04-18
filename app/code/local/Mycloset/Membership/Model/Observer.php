@@ -17,46 +17,44 @@ class Mycloset_Membership_Model_Observer {
         $path = $_category->getPath();
         $ids = explode('/', $path);
         if (isset($ids[2])) {
-         $topParent = $ids[2];
-         
+            $topParent = $ids[2];
         }
-
         if ($topParent == 16) {
             $customerid = $product->getCustomerId();
-
             if ($customerid > 0) {
 //            $productid = $product->getId();
                 $productStatus = $product->getProductStatus();
                 $Status = $product->getStatus(); //check for disabled or enabled product
                 if ($productStatus) {
-
                     if ($Status == 1) {
 //                     echo "ooooooo".$Status;exit;
                         $_product = Mage::getModel('catalog/product')->load($product->getId());
                         $oldcustomerid = $_product->getCustomerId();
-                        if ($oldcustomerid != '') {
-                            $categoryIds = $product->getCategoryIds();
-
-                            if (count($categoryIds)) {
-                                $firstCategoryId = $categoryIds[0];
-                                $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
-                                $categoryname[0] = str_split($_category->getName());
-                                foreach ($categoryname as $catname1) {
-                                    echo $catname .=$catname1[0] . $catname1[1];
-                                }
-                            }
-                        } else {
-//category name
-                            $categoryIds = $product->getCategoryIds();
-                            if (count($categoryIds)) {
-                                $firstCategoryId = $categoryIds[1];
-                                $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
-                                $categoryname[0] = str_split($_category->getName());
-                                foreach ($categoryname as $catname1) {
-                                    $catname .=$catname1[0] . $catname1[1];
-                                }
-                            }
+                        $firstCategoryId = ($categoryIds[0] ? $categoryIds[0] : $categoryIds[1]);
+                        $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
+                        $categoryname[0] = str_split($_category->getName());
+                        foreach ($categoryname as $catname1) {
+                            $catname .=$catname1[0] . $catname1[1];
                         }
+//                        if ($oldcustomerid != '') {
+//                            $categoryIds = $product->getCategoryIds();
+//
+//                            if (count($categoryIds)) {
+//                                $firstCategoryId = $categoryIds[0];
+//                                
+//                            }
+//                        } else {
+////category name
+//                            $categoryIds = $product->getCategoryIds();
+//                            if (count($categoryIds)) {
+//                                $firstCategoryId = $categoryIds[1];
+//                                $_category = Mage::getModel('catalog/category')->load($firstCategoryId);
+//                                $categoryname[0] = str_split($_category->getName());
+//                                foreach ($categoryname as $catname1) {
+//                                    $catname .=$catname1[0] . $catname1[1];
+//                                }
+//                            }
+//                        }
 //get username firstletter      
                         $customerData = Mage::getModel('customer/customer')->load($product->getCustomerId())->getData();
                         $firstname[0] = str_split(ucfirst($customerData['firstname']));
@@ -121,37 +119,51 @@ class Mycloset_Membership_Model_Observer {
     public function catalogProductEditBefore($observer) {
 
         $product = $observer->getEvent()->getProduct();
-       
-// old parent category
+
+// new parent category
         $categoryIds = $product->getCategoryIds();
-       $firstCategoryId = $categoryIds[1];
-  
+//        print_r($categoryIds);
+//       
+        $firstCategoryId = $categoryIds[1];
+
         $_category1 = Mage::getModel('catalog/category')->load($firstCategoryId);
         $path1 = $_category1->getPath();
         $ids1 = explode('/', $path1);
         if (isset($ids1[2])) {
-         $oldParent = $ids1[2];
+            $newParent = $ids1[2];
         }
-// new parent category
+// old parent category
         $_product = Mage::getModel('catalog/product')->load($product->getId());
         $cat_ids = $_product->getCategoryIds();
-       $newCategoryId = $cat_ids[0];
+        $oldCategoryId = $cat_ids[0];
 
-        $_category = Mage::getModel('catalog/category')->load($newCategoryId);
+        $_category = Mage::getModel('catalog/category')->load($oldCategoryId);
         $path = $_category->getPath();
         $ids = explode('/', $path);
         if (isset($ids[2])) {
-          $newParent = $ids[2];
+            $oldParent = $ids[2];
         }
-      
-        if (($oldParent == 9) && ($newParent == 16)) {
-//            echo 'dfbdhbfhdf';           
+
+
+        if (($newParent == 16) && ($oldParent == '')) {
+//            echo'old' . $oldParent . '&&   new' . $newParent . '<br> create';
+//            exit;
+
             $this->createAsset($observer);
-        } else if (($oldParent == 16) && ($newParent == 9)) {
+        } else if (($oldParent == 9) && ($newParent == 16)) {
+//            echo'old' . $oldParent . '&&   new' . $newParent . '<br> create';
+//            exit;
+
+            $this->createAsset($observer);
+        } else if (( $newParent == 9 ) && ($oldParent == 16)) {
+//            echo'old' . $oldParent . '&&   new' . $newParent . '<br> delete';
+//            exit;
+
             $this->deleteAsset($_product);
-      
-            } else if ((($oldParent == 16) && ($newParent == 16))) {
-                
+        } else if ((($oldParent == 16) && ($newParent == 16)) || ($oldParent == 16)) {
+//            echo'old' . $oldParent . '&&   new' . $newParent . '<br> edit';
+//            exit;
+
             $customerid = $product->getCustomerId();
             $_product = Mage::getModel('catalog/product')->load($product->getId());
             $productStatus = $product->getProductStatus(); //check for "SHOP"
@@ -261,7 +273,6 @@ class Mycloset_Membership_Model_Observer {
 
 //    public function catalogSampleProductSaveBefore($observer) {
     public function deleteAsset($product) {
-
         $oldsku = $product->getSku('sku');
         $Color = $product->getAttributeText('color');
         $Condition = $product->getConditionClothingItems();
@@ -272,6 +283,7 @@ class Mycloset_Membership_Model_Observer {
         $shipped_to = $product->getShippedTo();
         $SecurityToken = Mage::getStoreConfig('barcloud/general/securitytoken');
         $IPAddress = $_SERVER['REMOTE_ADDR'];
+
         $data_json = '{
   "AssetNumber": "' . $oldsku . '",
   "Authorized": true,
@@ -291,53 +303,73 @@ class Mycloset_Membership_Model_Observer {
   "DisposeTo": "' . $shipped_to . '"
 }';
 
+
         $this->updateAsset($data_json, $oldsku);
         return true;
     }
 
     public function addAsset($data_json, $newsku) {
-        $this->alreadyExsistingData($data_json, $newsku);
-        $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
-        $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_json)));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_URL, $BARCLOUD_API_URL . "/{$barcloudApiKey}/AddAssetPost");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $data = json_decode($output);
-        print "<pre>";
-        print_r($data);
-        print "</pre>";
+        $exsisiting = $this->alreadyExsistingData($data_json, $newsku);
+
+        if ($exsisiting) {
+            $data_result = json_decode($exsisiting);
+
+       $exsisitingsku = $data_result->AssetNumber;
+      
+           $this->updateAsset($exsisiting,$exsisitingsku);
+           
+        } else {
+
+            $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
+            $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_json)));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
+            curl_setopt($ch, CURLOPT_URL, $BARCLOUD_API_URL . "/{$barcloudApiKey}/AddAssetPost");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            $data = json_decode($output);
+            print "<pre>";
+            print_r($data);
+            print "</pre>";
 //return $data->ZGetAssetsResult;
-        return true;
+            return true;
+        }
     }
 
     public function updateAsset($data_json, $newsku) {
 
+        $exsisiting = $this->alreadyExsistingData($data_json, $newsku);
         $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
         $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_json)));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
-        curl_setopt($ch, CURLOPT_URL, $BARCLOUD_API_URL . "/{$barcloudApiKey}/UpdateAssetPOST");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        print "test";
-        $data = json_decode($output);
-        print "<pre>";
-        print_r($data);
-        print "</pre>";
-        return true;
+        if ($exsisiting) {
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_json)));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
+            curl_setopt($ch, CURLOPT_URL, $BARCLOUD_API_URL . "/{$barcloudApiKey}/UpdateAssetPOST");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            print "test";
+            $data = json_decode($output);
+            print "<pre>";
+            print_r($data);
+            print "</pre>";
+            return true;
+        } else {
+           $this->addAsset($data_json, $newsku);
+            return true;
 //return $data->ZGetAssetsResult;
+        }
     }
 
     public function alreadyExsistingData($data_json, $newsku) {
+
         $old_data = json_decode($data_json);
         $BARCLOUD_API_URL = Mage::getStoreConfig('barcloud/general/barcloudApiUrl');
         $barcloudApiKey = Mage::getStoreConfig('barcloud/general/barcloudApiKey');
@@ -347,6 +379,7 @@ class Mycloset_Membership_Model_Observer {
   "SecurityToken": "' . $SecurityToken . '",
   "ObjectIdentifier": "' . $newsku . '"
 }';
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($json_existdata)));
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -356,29 +389,33 @@ class Mycloset_Membership_Model_Observer {
         $output = curl_exec($ch);
         curl_close($ch);
         $data_result = json_decode($output);
+
         $assetsnum = $data_result->AssetNumber;
         if ($assetsnum) {
-            $changed_data = '{
-"AssetNumber": "' . $newsku . '",
-  "Authorized": true,
-  "CheckedOut": false,
-  "Color": "' . $old_data->Color . '",
-  "Condition": "' . $old_data->Condition . '",
-  "CreateDate": "\/Date(1427718290000+0300)\/",
-  "CreatedBy": "APITest",
-  "CurrentLocation": "158",
-  "Description": "' . $old_data->Description . '",
-  "IPAddress":  "' . $IPAddress . '",
-  "MACAddress": "hand held device",
-  "Name": "' . $old_data->Name . '",
-  "SecurityToken": "' . $SecurityToken . '",
-  "Size": "' . $old_data->Size . '",
-  "Manufacturer": "' . $old_data->Manufacturer . '",
-  "DisposeTo": "' . $old_data->DisposeTo . '"
-}';
+//            $changed_data = '{
+//"AssetNumber": "' . $newsku . '",
+//  "Authorized": true,
+//  "CheckedOut": false,
+//  "Color": "' . $old_data->Color . '",
+//  "Condition": "' . $old_data->Condition . '",
+//  "CreateDate": "\/Date(1427718290000+0300)\/",
+//  "CreatedBy": "APITest",
+//  "CurrentLocation": "158",
+//  "Description": "' . $old_data->Description . '",
+//  "IPAddress":  "' . $IPAddress . '",
+//  "MACAddress": "hand held device",
+//  "Name": "' . $old_data->Name . '",
+//  "SecurityToken": "' . $SecurityToken . '",
+//  "Size": "' . $old_data->Size . '",
+//  "Manufacturer": "' . $old_data->Manufacturer . '",
+//  "DisposeTo": "' . $old_data->DisposeTo . '"
+//}';
+//
 
-            $this->updateAsset($changed_data, $newsku);
-            return true;
+        //    return $changed_data;
+             return true;
+        } else {
+            return false;
         }
     }
 
