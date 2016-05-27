@@ -70,8 +70,8 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             $billing_street = $billing_street1;
         }
         $billing_telephone = $address->getTelephone();
-       $billing_fax = $address->getFax();
-      
+        $billing_fax = $address->getFax();
+
         $billing_country = $address->getCountry();
         $billing_country_name = Mage::app()->getLocale()->getCountryTranslation($billing_country);
         $region_billing = Mage::getModel('directory/region')->load($billing_region_id);
@@ -584,38 +584,46 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
     public function paymeAction() {
         $customerid = $this->getRequest()->getPost('customer_entity_id');
         $include_membershipcharge = $this->getRequest()->getPost('include_membershipcharge');
-
-
+//$data1111 =$this->getRequest()->getPost();
+//        print_r($data1111);
+//        exit;
         $payment_details = array();
-        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
-        $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
+        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.      
+       $g_transactionkey_encrypt = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.   
+         $g_transactionkey = Mage::helper('core')->decrypt($g_transactionkey_encrypt);
+      
         $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
         $g_apipath = "/xml/v1/request.api";
+       
         require_once (Mage::getBaseDir('code') . '/local/Mycloset/Membership/Api/util.php');
-        $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+//        $g_loginname = Mage::getStoreConfig(self::PATH_API_LOGIN); // Keep this secure.
+//        $g_transactionkey = Mage::getStoreConfig(self::PATH_TRANS_KEY); // Keep this secure.
+//        $g_apihost = Mage::getStoreConfig(self::PATH_GATE_URL);
+//        $g_apipath = "/xml/v1/request.api";
+           $content = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
                 "<createCustomerProfileTransactionRequest xmlns=\"AnetApi/xml/v1/schema/AnetApiSchema.xsd\">" .
                 MerchantAuthenticationBlock($g_loginname, $g_transactionkey) .
                 "<transaction>" .
                 "<profileTransAuthOnly>" .
-                "<amount>" . $this->getRequest()->getPost('amount') . "</amount>" . // should include tax, shipping, and everything.
+                "<amount>".$this->getRequest()->getPost('amount')."</amount>" . // should include tax, shipping, and everything.
                 "<shipping>" .
                 "<amount>0.00</amount>" .
                 "<name>Free Shipping</name>" .
                 "<description>My Closet Concierge</description>" .
                 "</shipping>" .
                 "<lineItems>" .
-                "<itemId>" . time() . "</itemId>" .
-                "<name>" . $this->getRequest()->getPost('mem_type_name') . "</name>" .
-                "<description>Membership Renewal/Upgrade</description>" .
+                "<itemId>". time() . "</itemId>" .
+                "<name>". $this->getRequest()->getPost('mem_type_name')."</name>" .
+                "<description>Membership Renewal/Upgrade</description>".
                 "<quantity>1</quantity>" .
-                "<unitPrice>" . $this->getRequest()->getPost('servicesum') . "</unitPrice>" .
+                "<unitPrice>". $this->getRequest()->getPost('servicesum'). "</unitPrice>" .
                 "<taxable>false</taxable>" .
                 "</lineItems>" .
-                "<customerProfileId>" . $this->getRequest()->getPost('customer_pro_id') . "</customerProfileId>" .
-                "<customerPaymentProfileId>" . $this->getRequest()->getPost('customer_payment_id') . "</customerPaymentProfileId>" .
-                "<customerShippingAddressId>" . $this->getRequest()->getPost('customer_address_id') . "</customerShippingAddressId>" .
+                "<customerProfileId>". $this->getRequest()->getPost('customer_pro_id')."</customerProfileId>" .
+                "<customerPaymentProfileId>". $this->getRequest()->getPost('customer_payment_id')."</customerPaymentProfileId>" .
+                "<customerShippingAddressId>". $this->getRequest()->getPost('customer_address_id')."</customerShippingAddressId>" .
                 "<order>" .
-                "<invoiceNumber>" . "MCC" . $this->getRequest()->getPost('customer_address_id') . "</invoiceNumber>" .
+                "<invoiceNumber>". "MCC".$this->getRequest()->getPost('customer_address_id')."</invoiceNumber>" .
                 "</order>" .
                 "</profileTransAuthOnly>" .
                 "</transaction>" .
@@ -636,15 +644,17 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
         $response = send_xml_request($g_apihost, $g_apipath, $content);
         $parsedresponse = parse_api_response($response);
-
+      
         if (isset($parsedresponse->directResponse)) {
             $directResponseFields = explode(",", $parsedresponse->directResponse);
-            $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error       
-            $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
+           $responseCode = $directResponseFields[0]; // 1 = Approved 2 = Declined 3 = Error       
+           
+           $responseReasonCode = $directResponseFields[2]; // See http://www.authorize.net/support/AIM_guide.pdf
             $responseReasonText = $directResponseFields[3];
             $approvalCode = $directResponseFields[4]; // Authorization code
             $transId = $directResponseFields[6];
             if ("1" == $responseCode) {
+              
                 $data = array(
                     'customer_id' => $customerid,
                     'transaction_id' => $transId,
@@ -655,8 +665,9 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
 
                 $model = Mage::getModel('membership/paymenthistory')->setData($data);
                 $model->save();
-
-                $path = $this->getRequest()->getPost('return_url') . '?q=success' . '&tranid=' . $transId;
+               
+                      $path = $this->getRequest()->getPost('return_url') . '?q=success' . '&tranid=' . $transId;
+   
                 $this->_redirectUrl($path);
 //// Automatically changed  invoice/ship status to 'complete' after payment
                 $ordernum = $this->getRequest()->getPost('order_id');
@@ -684,6 +695,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
             }
 //// END CODE Automatically changed  invoice/ship status to 'complete' after payment  
         } else if ("2" == $responseCode) {
+              
             $path = $this->getRequest()->getPost('return_url') . '?q=error';
             $this->_redirectUrl($path);
         } else {
