@@ -38,7 +38,7 @@ class Mycloset_Membership_PaymentController extends Mage_Core_Controller_Front_A
         }
         $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();
         $currency_symbol = Mage::app()->getLocale()->currency($currency_code)->getSymbol();
-        echo $currency_symbol . $finalPrice . '<br>' . $details . '@' . $finalPrice . '@' . $membershipType . '@' . $membershipId;
+         $currency_symbol . $finalPrice . '<br>' . $details . '@' . $finalPrice . '@' . $membershipType . '@' . $membershipId;
     }
 
     public function confirmpaymentAction() {

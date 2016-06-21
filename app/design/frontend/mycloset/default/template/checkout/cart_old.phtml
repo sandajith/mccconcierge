@@ -1,0 +1,322 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @see Mage_Checkout_Block_Cart
+ */
+?>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<?php echo $this->getChildHtml('form_before') ?>
+<?php $expression = $this->getItems();
+foreach ($expression as $_item) {
+    $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
+    $product_status = $custom->getAttributeText('product_status');
+    if ($product_status == 'We Have It') {
+        $delivery_cnt = true;
+    } else if (($product_status == 'You Have It') || ($product_status == 'Shipped To')) {
+        $pickup_cnt = true;
+    } else {
+        $product_cnt = true;
+    }
+}
+?>  
+<div class="cart">   
+    <div class="page-title title-buttons subhead">
+        <h2><?php echo $this->__('MY BAG') ?></h2>
+    </div>
+    <form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post">
+        <?php echo $this->getBlockHtml('formkey'); ?>
+         <?php if ($delivery_cnt) { ?>
+        <div class="row myBag">
+            <h4 class="deliveryme"><?php echo $this->__('Delivery ') ?></h4>
+            <div class="col-md-12 dataTable">
+                <div class="row th">
+                    <div class="col-sm-1 hidden-xs"></div>
+                    <div class="col-sm-4 hidden-xs">CATEGORY</div>
+                    <div class="col-sm-4 hidden-xs">DESIGNER</div>
+                    <div class="col-sm-1 hidden-xs">COLOR</div>
+                    <div class="col-sm-1 hidden-xs">SIZE</div>
+                    <div class="col-sm-1 hidden-xs"></div>
+                </div>
+                <?php
+                foreach ($this->getItems() as $_item):
+                    $custom = Mage::getModel('catalog/product')->load($_item->getProductId());
+                    $product_status = $custom->getAttributeText('product_status');
+                    if ($product_status == 'We Have It') {
+                        ?>
+                        <div class="row border_row">
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="thumb">
+                                    <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="90" class="img-responsive" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4 hidden-xs">
+                                <div class="v_middle"><?php
+                                //Get category name by product id
+                                $cats = $custom->getCategoryIds();
+                                foreach ($cats as $categoryId) {
+                                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                                   $category_name_delivey = $category->getName();
+                                    echo ucfirst(strtolower($category_name_delivey)); 
+                                }
+                                ?></div>
+                            </div>
+                            <div class="col-sm-4 hidden-xs v_middles"> 
+                                <div class="v_middle"><?php echo $custom->getAttributeText('designer'); ?></div>
+                            </div>
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="v_middle"><?php echo $custom->getAttributeText('color'); ?></div>
+                            </div>
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="v_middle"><?php echo $custom['size']; ?></div>
+                            </div>
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="v_middle"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo$_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+                            </div>
+
+                            <div class="col-sm-3 visible-xs">
+                                <div class="thumb">
+                                    <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="90" class="img-responsive"  />
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-8 product-name">
+                                 <p><b>Category:</b> <span> <?php
+                                //Get category name by product id
+                                $cats = $custom->getCategoryIds();
+                                foreach ($cats as $categoryId) {
+                                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                                   $category_name_deliver = $category->getName();
+                                    echo ucfirst(strtolower($category_name_deliver));
+                                }
+                                ?></span></p>
+
+                                <p><b>Designer:</b> <span><?php echo $custom->getAttributeText('designer'); ?></span></p>
+                                <p><b>Color:</b> <span><?php echo $custom->getAttributeText('color'); ?></span></p>
+                                <p><b>Size:</b> <span><?php echo $custom['size']; ?></span></p>
+                            </div>
+                            <div class="pull-right"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo$_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+
+
+                        </div>
+
+
+                        <?php
+                    }
+                endforeach;
+                ?> 
+                <div class="row th foot">
+                    <div class="col-xs-12">
+                        <a href="<?php echo $this->getUrl('') ?>my-closet.html" class="pull-left cartButton">
+                            Choose items to deliver
+                        </a>
+                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=19" class=" btn-empty pull-right cartButton" >Clear all items</a>                                  
+                    </div>
+                </div>
+            </div>
+        </div>
+           <?php
+    } if ($pickup_cnt) {
+        ?>
+        <div class="row myBag">
+            <h4><?php echo $this->__('Pick Up') ?></h4>
+            <div class="col-md-12 dataTable">
+                <div class="row th">
+                    <div class="col-sm-1 hidden-xs"></div>
+                    <div class="col-sm-4 hidden-xs">CATEGORY</div>
+                    <div class="col-sm-4 hidden-xs">DESIGNER</div>
+                    <div class="col-sm-1 hidden-xs">COLOR</div>
+                    <div class="col-sm-1 hidden-xs">SIZE</div>
+                    <div class="col-sm-1 hidden-xs"></div>
+                </div>
+                <?php                          
+                foreach ($this->getItems() as $_item):              
+                     $custom = Mage::getModel('catalog/product')->load($_item->getProductId());                 
+                    $product_status = $custom->getAttributeText('product_status');
+                    if ($product_status == 'You Have It' || $product_status == 'Shipped To' ) {                          
+                        ?>
+                        <div class="row border_row">
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="thumb">
+                                    <img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>" width="75" height="90" class="img-responsive" />                              
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4 hidden-xs">
+                                <div class="v_middle"><?php
+                                //Get category name by product id
+                                $cats = $custom->getCategoryIds();
+                                foreach ($cats as $categoryId) {
+                                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                                   $category_name_pickup = $category->getName();
+                                    echo ucfirst(strtolower($category_name_pickup));
+                                }
+                                ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 hidden-xs">
+                                <div class="v_middle"><?php echo $custom->getAttributeText('designer'); ?></div>
+                            </div>
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="v_middle"><?php echo $custom->getAttributeText('color'); ?></div>
+                            </div>
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="v_middle"><?php echo $custom['size']; ?></div>
+                            </div>
+                            <div class="col-sm-1 hidden-xs">
+                                <div class="v_middle"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+                            </div>
+
+                            
+                                <div class="col-sm-3 visible-xs">
+                                    <div class="thumb"><img src="<?php echo $custom->getImageUrl(); //echo $custom->getProductThumbnail()->resize(75);    ?>"width="75" height="90" class="img-responsive"  /> </div>
+                                </div>
+                              
+                                <div class="col-sm-4 col-xs-8 product-name">
+                                    <p><b>Category:</b> <span><?php
+                                //Get category name by product id
+                                $cats = $custom->getCategoryIds();
+                                foreach ($cats as $categoryId) {
+                                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                                    $category_name_pickupme = $category->getName();
+                                    echo ucfirst(strtolower($category_name_pickupme));
+                                }
+                                ?></span></p>
+
+                                <p><b>Designer:</b> <span><?php echo $custom->getAttributeText('designer'); ?></span></p>
+                                <p><b>Color:</b> <span><?php echo $custom->getAttributeText('color'); ?></span></p>
+                                <p><b>Size:</b> <span><?php echo $custom['size']; ?></span></p>
+                                </div>
+                                <div class="pull-right"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
+                                
+                            
+                        </div>
+                        <?php
+                    }
+                endforeach;
+                ?> 
+                <div class="row th foot">                    
+                    <div class="col-xs-12">
+                        <a href="<?php echo $this->getUrl('') ?>my-closet.html" class="pull-left cartButton">
+                            Choose items to pick up
+                        </a>
+                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=20" class=" btn-empty pull-right cartButton" >Clear all items</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+           <?php
+    } if ($product_cnt) {
+        ?>
+        <div class="row myBag">
+            <h4><?php echo $this->__('Products') ?></h4>
+            <div class="col-md-12 dataTable">
+                <div class="row th">
+                    <div class="col-sm-1 hidden-xs"></div>
+                    <div class="col-sm-5 hidden-xs"><?php echo $this->__('PRODUCT NAME') ?></div>
+                    <div class="col-sm-2 hidden-xs"><?php echo $this->__('UNIT PRICE') ?></div>
+                    <div class="col-sm-1 hidden-xs"><?php echo $this->__('QTY') ?></div>
+                    <div class="col-sm-2 hidden-xs"><?php echo $this->__('SUBTOTAL') ?></div>
+                    <div class="col-sm-1 hidden-xs"></div>
+                </div>
+
+               
+
+
+                <?php
+                foreach ($this->getItems() as $_item):
+                    $custom = Mage::getModel('catalog/product')->load($_item->getProductId())
+                            ->getAttributeText('product_status');
+                    if (empty($custom)) {
+                        echo $this->getItemHtml($_item);
+                    }
+                endforeach
+                ?>  
+
+                <div class="row th foot">
+                    <div class="col-xs-12 pdt_btns">
+                        <?php if ($this->getContinueShoppingUrl()): ?>
+                            <a href="<?php echo $this->getUrl('') ?>shop.html" title="<?php echo $this->__('Continue Shopping') ?>" class=" btn-continue pull-left cartButton" ><span><span><?php echo $this->__('Continue Shopping ') ?></span></span></a>
+                        <?php endif;
+                        ?>
+
+                            <button type="submit" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update Shopping Cart'); ?>" class=" pull-right cartButton btn-update"><span><span><?php echo $this->__('Update Shopping Cart'); ?></span></span></button>
+<!--                        <button type="submit" name="update_cart_action" value="empty_cart" title="<?php// echo $this->__('Clear Shopping Cart'); ?>" class=" btn-empty pull-right cartButton" id="empty_cart_button">
+                            <span><span><?php //echo $this->__('Clear Shopping Cart'); ?></span></span>
+                        </button>-->
+                        <a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/?status=30" class=" btn-empty pull-right cartButton" >Clear Shopping Cart</a>
+                        <!--[if lt IE 8]>
+                        <input type="hidden" id="update_cart_action_container" />
+                        <script type="text/javascript">
+                        //<![CDATA[
+                            Event.observe(window, 'load', function()
+                            {
+                                // Internet Explorer (lt 8) does not support value attribute in button elements
+                                $emptyCartButton = $('empty_cart_button');
+                                $cartActionContainer = $('update_cart_action_container');
+                                if ($emptyCartButton && $cartActionContainer) {
+                                    Event.observe($emptyCartButton, 'click', function()
+                                    {
+                                        $emptyCartButton.setAttribute('name', 'update_cart_action_temp');
+                                        $cartActionContainer.setAttribute('name', 'update_cart_action');
+                                        $cartActionContainer.setValue('empty_cart');
+                                    });
+                                }
+    
+                            });
+                        //]]>
+                        </script>
+                        <![endif]-->
+                    </div>
+                </div>
+            </div>
+        </div>
+            <?php
+    }
+    ?>
+<!--            <script type="text/javascript">decorateTable('shopping-cart-table')</script>-->
+        <?php // endif;      ?>
+    </form>
+    <div class="checkout_info mybag-checkout">
+        <div class="col-sm-5 col-md-4 col-lg-3 totalBox">
+
+            <?php echo $this->getChildHtml('totals'); ?>
+            <?php if (!$this->hasError()): ?>
+                <ul class="checkout-types">
+                    <?php foreach ($this->getMethods('methods') as $method): ?>
+
+                        <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+                            <li><?php echo $methodHtml; ?></li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+
+</div>

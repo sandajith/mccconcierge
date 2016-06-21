@@ -94,7 +94,7 @@ foreach ($expression as $_item) {
                                 <div class="v_middle"><?php echo $custom->getAttributeText('color'); ?></div>
                             </div>
                             <div class="col-sm-1 hidden-xs">
-                                <div class="v_middle"><?php echo $custom['size']; ?></div>
+                                <div class="v_middle"><?php echo $custom->getAttributeText('size'); ?></div>
                             </div>
                             <div class="col-sm-1 hidden-xs">
                                 <div class="v_middle"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo$_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>
@@ -186,7 +186,7 @@ foreach ($expression as $_item) {
                                 <div class="v_middle"><?php echo $custom->getAttributeText('color'); ?></div>
                             </div>
                             <div class="col-sm-1 hidden-xs">
-                                <div class="v_middle"><?php echo $custom['size']; ?></div>
+                                <div class="v_middle"><?php echo $custom->getAttributeText('size'); ?></div>
                             </div>
                             <div class="col-sm-1 hidden-xs">
                                 <div class="v_middle"><a href="<?php echo $this->getUrl('') ?>checkout/cart/delete/id/<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Remove item') ?>" class="btn-remove btn-remove2">X</a></div>

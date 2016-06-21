@@ -146,9 +146,9 @@ if (in_array('9', $caid)) {
                 if ($userid) {
                     if ($p['product_status'] == 'We Have It') {
                         ?>
-                        <button id ="btnDeliver" type="button" title="<?php echo $this->__('Deliver Me') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')"><span><span><?php echo $this->__('Deliver Me') ?></span></span></button>
+                        <button type="button" title="<?php echo $this->__('Deliver Me') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')"><span><span><?php echo $this->__('Deliver Me') ?></span></span></button>
                     <?php } else { ?>
-                        <button id ="btnDeliver" title="<?php echo $this->__('Pick Me Up') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')" ><?php echo $this->__('Pick Me Up') ?></button>
+                        <button title="<?php echo $this->__('Pick Me Up') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($product) ?>')" ><?php echo $this->__('Pick Me Up') ?></button>
                         <?php
                     }
                 } else {

@@ -108,19 +108,22 @@ class Mycloset_Membership_PopupController extends Mage_Core_Controller_Front_Act
 //                jqCustom(this).off(event);
 //     });
             jqCustom('.getproductid').click(function () {
+                
                 var productid = jqCustom(this).attr('rel');
                 jqCustom.ajax({
                     url: "<?php echo Mage::getBaseUrl(); ?>" + "mycloset/popup/product?productid=" + productid,
                     type: 'get',
                     dataType: "json",
                     success: function (data) {
-
-                        jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
+        
+    
+    jqCustom('.catname').html(' <h2>' + data['catname'] + '</h2>');
                         jqCustom('.sku').html('<div style="float: right margin-top: 15px;" class="sku">' + data['sku'] + '</div>');
                         jqCustom('.image').html('<img alt="" src="' + data['ImageUrl'] + '"/>');
                         jqCustom('.signature').html(data['designer']);
                          jqCustom('.colorBox').html('<a style=" background:' + data['color'] + '"></a>');
-                        //                        jqCustom('.description').html(data['Description']);
+                         jqCustom('#btnDeliver').attr('onclick',data['add_to_cart']);
+                         
 var productstatus ='';
                         if (data['product_status'] === 'Shipped To') {
                             if (data['shipped_to'] === null) {
@@ -275,6 +278,10 @@ var productstatus ='';
             $product['size'];
         }
         $product['designer'] = $model->getAttributeText('designer'); //product's thumbnail image url
+         $add_to_cart = Mage::helper('checkout/cart')->getAddUrl($model);
+       //$add_to_cart =  Mage::getUrl('checkout/cart/add/').'product/'.$product_id.'/';
+        $product['add_to_cart'] = "setLocation('".$add_to_cart."')"; //product url
+        
         $product['product_status'] = $model->getAttributeText('product_status'); //product's thumbnail image url
         $product['season_select'] = $model->getAttributeText('season'); //product's thumbnail image url
         $attribute = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'season');
